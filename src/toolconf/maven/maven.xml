@@ -1,5 +1,5 @@
 <!--
-                     QueryJ Maven build file
+                     ACM-SL Maven build file
 
    Copyright (C) 2003 ACM-SL
 
@@ -29,7 +29,7 @@
       PMD makes the site generation crash if no errors are
       found. It's better to do it manually.
     -->
-    <attainGoal name="pmd"/>
+    <!--attainGoal name="pmd"/-->
 
     <attainGoal name="faq"/>
 
@@ -50,7 +50,6 @@
     <!--
       JavaNCSS makes the site generation crash if no source files are
       found. Uncomment whenever any source files are added.
-
     <attainGoal name="javancss:do-xml"/>
 
     <attainGoal name="javancss:do-html"/>
@@ -62,6 +61,79 @@
     -->
     <!--attainGoal name="jdiff"/-->
 
+    <!--attainGoal name="pdf"/-->
   </preGoal>
+
+  <!--postGoal name="xdoc:jelly-transform">
+    <ant:echo message="Replacing issue.url"/>
+    <ant:ant antfile="customvars.xml" target="replace-custom-vars"/>
+  </postGoal-->
+
+  <goal name="replace-custom-vars">
+    <ant:echo message="Replacing {issue.url}"/>
+
+    <ant:replaceregexp byline="true">
+      <ant:regexp pattern="\$(.*?)?\{issue.url\}"/>
+      <ant:substitution expression="${issue.url}"/>
+      <ant:fileset dir="../../../target/docs">
+        <ant:include name="*.html"/>
+      </ant:fileset>
+    </ant:replaceregexp>
+
+    <ant:echo message="Replacing CVS keywords"/>
+
+    <ant:replaceregexp byline="true">
+      <ant:regexp pattern="\$(Date:)\s(.*?)\$"/>
+      <ant:substitution expression="\2"/>
+      <ant:fileset dir="../../../target/docs">
+        <ant:include name="*.html"/>
+      </ant:fileset>
+    </ant:replaceregexp>
+
+    <ant:replaceregexp byline="true">
+      <ant:regexp pattern="\$(Author:)\s(.*?)\$"/>
+      <ant:substitution expression="\2"/>
+      <ant:fileset dir="../../../target/docs">
+        <ant:include name="*.html"/>
+      </ant:fileset>
+    </ant:replaceregexp>
+
+    <ant:replaceregexp byline="true">
+      <ant:regexp pattern="\$(Id:)\s(.*?)\$"/>
+      <ant:substitution expression="\2"/>
+      <ant:fileset dir="../../../target/docs">
+        <ant:include name="*.html"/>
+      </ant:fileset>
+    </ant:replaceregexp>
+
+    <!--ant:replaceregexp byline="true">
+      <ant:regexp pattern="\$Name$"/>
+      <ant:substitution expression="\1-\2.\3"/>
+      <ant:fileset dir="../../../target/docs">
+        <ant:include name="*.html"/>
+      </ant:fileset>
+    </ant:replaceregexp-->
+
+    <!--
+    <ant:ant antfile="customvars.xml"/>
+    <ant:replace
+      dir="../../../target/docs"
+      propertyfile="build.properties">
+      <ant:replacefilter 
+        token="${issue.url}" 
+        property="issue.url"/>
+      <ant:replacefilter 
+        token="$Author: " 
+        value=""/>
+      <ant:replacefilter 
+        token="$Date: " 
+        value=""/>
+      <ant:replacefilter 
+        token=" $" 
+        value=""/>
+      <ant:include name="*.html"/>
+    </ant:replace>
+    -->
+  </goal>
 
 </project>
