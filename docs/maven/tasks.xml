@@ -28,39 +28,33 @@
           Adapt some code from other projects to enhance reusability.
           <ul>
             <li>0.5.5b9<br/>
-              Fix <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=37"
+              Fix <a href="${issue.url}37"
               >StringUtils and FileUtils share almost the same method,
-              packageToPath</a>.
-            </li>
-            <li>0.5.5b8<br/>
-              Fix <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=110"
+              packageToPath</a>, and
+              <a href="${issue.url}110"
               >FileUtils#copy doesn't work for binary files</a>.
             </li>
-            <li>0.5.5b7<br/>
-              Fix <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=33"
+            <li>0.5.5b8<br/>
+              Fix <a href="${issue.url}33"
               >Missing Javadoc documentation for RegexpPlugin packages</a>.
             </li>
-            <li>0.5.5b6<br/>
-              <a
-                href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=31"
+            <li>0.5.5b7<br/>
+              <a href="${issue.url}31"
               >Convert RegexpManager into a singleton</a>.
             </li>
+            <li>0.5.5b6<br/>
+              Provide a method to <a href="${issue.url}509">uncapitalize</a> texts.
+            </li>
             <li>0.5.5b5<br/>
-              <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+              <a href="${issue.url}161"
               >Remove Versionable references in org.acmsl.commons.patterns
               package)</a>.
-              <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+              <a href="${issue.url}159"
               >Adapt some WebExtension classes (HttpServletUtils and
               its dependencies)</a>.
             </li>
             <li>0.5.5b4<br/>
-              <a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=158"
+              <a href="${issue.url}158"
               >Adapt some ProxyJ's classes</a> (CheckedException,
               NonCheckedException, ConfigurationException,
               ConfigurationManager).

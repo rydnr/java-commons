@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Fixed issue <a href="${issue.url}509">509</a>.<br/>
+            Released <b>0.5.5b6</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/09/28 06:37:10
+          </td>
+          <td>
             Deployed at new server: <a href="http://maven.acm-sl.org">maven.acm-sl.org</a>.
           </td>
         </tr>

@@ -5,14 +5,19 @@
     <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
   </properties>
   <body>
-    <release version="commons-0_5_5b5" date="$Date$">
+    <release version="commons-0_5_5b6" date="$Date$">
       <action dev="$Author$" type="add">
+        Finished <a href="${issue.url}159">509</a>.
+      </action>
+    </release>
+    <release version="commons-0_5_5b5" date="2004/09/06 07:05:49">
+      <action dev="chous" type="add">
         Finished
         <a
-          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+          href="${issue.url}159"
         >Adapt some WebExtension's classes</a> and
         <a
-          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+          href="${issue.url}161"
         >Remove Versionable references in org.acmsl.commons.patterns
         package)</a>.
       </action>
@@ -21,7 +26,7 @@
       <action dev="chous" type="add">
         Finished
         <a
-          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=157"
+          href="${issue.url}157"
         >Adapt some ProxyJ's classes</a>.
       </action>
     </release>
