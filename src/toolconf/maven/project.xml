@@ -29,7 +29,7 @@
     /home/anoncvs/commons
   </siteDirectory>
   <distributionDirectory>
-    /home/anoncvs/builds/commons/
+    /home/anoncvs/commons/target/distributions
   </distributionDirectory>
 
   <repository>
@@ -146,6 +146,7 @@
       </includes>
       <excludes>
         <exclude>**/RepositoryTest.java</exclude>
+        <exclude>**/Test.java</exclude>
       </excludes>
     </unitTest>
               
