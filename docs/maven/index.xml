@@ -20,7 +20,7 @@
           <strong>Commons</strong> contains:
           <ul>
             <li><b>regexpplugin</b>: API to request <i>regexp</i>
-            services independently of the concrete engine used.</li>
+            services independently of the specific engine used.</li>
             <li><b>patterns</b>: Interfaces and some implementations
             of desing patterns.</li>
             <li><b>versionable</b>: API to export and manage
