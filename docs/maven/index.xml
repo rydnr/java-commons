@@ -50,10 +50,10 @@
           <td>
             Fixed the requirement
             <i><a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+              href="${issue.url}161"
             >Remove Versionable references in org.acmsl.commons.patterns
             package)</a></i>.<br/>
-            Released 0.5.5b5.
+            Released <b>0.5.5b5</b>.
           </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@
           <td>
             Fixed the requirement
             <i><a
-              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+              href="${issue.url}159"
             >Adapt some WebExtension's classes</a></i>.
           </td>
         </tr>
@@ -74,9 +74,9 @@
           <td>
             Fixed the requirement
             <i><a
-            href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=157"
+            href="${issue.url}157"
             >Adapt some ProxyJ's classes</a></i>.<br/>
-            Released 0.5.5b4.
+            Released <b>0.5.5b4</b>.
           </td>
         </tr>
         <tr>
@@ -86,7 +86,7 @@
           <td>
             Added a basic method in FileUtils to read from an input
             stream. Added also a new ReflectionUtils helper class
-            required by WebExtension.
+            required by <a href="http://maven.acm-sl.org/webextension">WebExtension</a>.
           </td>
         </tr>
         <tr>

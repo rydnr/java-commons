@@ -8,7 +8,7 @@
   <organization>
     <name>ACM S.L.</name>
     <url>http://www.acm-sl.org/</url>
-    <logo>http://www.acm-sl.org/images/logo.jpg</logo>
+    <logo>http://www.acm-sl.org/images/logo.png</logo>
   </organization>
   <inceptionYear>2003</inceptionYear>
   <package>org.acmsl.commons</package>
@@ -134,7 +134,7 @@
 
     <sourceDirectory>../../java/</sourceDirectory>
 
-    <unitTestSourceDirectory>../../java/unittests</unitTestSourceDirectory>
+    <unitTestSourceDirectory>../../java</unitTestSourceDirectory>
     <integrationUnitTestSourceDirectory/>
 
     <aspectSourceDirectory/>
@@ -168,7 +168,9 @@
   <reports>
     <report>maven-changelog-plugin</report>
     <report>maven-changes-plugin</report>
+    <!-- We're getting out-of-memory
     <report>maven-checkstyle-plugin</report>
+    -->
 
     <!--
       PMD makes the site generation crash if no errors are
@@ -182,7 +184,9 @@
     <report>maven-junit-report-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-license-plugin</report>
+    <!-- We're getting out-of-memory
     <report>maven-linkcheck-plugin</report>
+    -->
     <report>maven-tasklist-plugin</report>
     <!--
       JellyDoc makes the site generation crash if no errors are
