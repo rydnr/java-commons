@@ -49,12 +49,6 @@
 package org.acmsl.commons.regexpplugin.jakartaoro;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
-
-/*
  * Importing some Jakarta-ORO classes.
  */
 import org.apache.oro.text.regex.MatchResult;
@@ -79,7 +73,7 @@ public class MatchResultOROAdapter
      * instance.
      * @param matchResult Jakarta ORO match result object to adapt.
      */
-    public MatchResultOROAdapter(MatchResult matchResult)
+    public MatchResultOROAdapter(final MatchResult matchResult)
     {
         inmutableSetMatchResult(matchResult);
     }
@@ -88,7 +82,7 @@ public class MatchResultOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetMatchResult(MatchResult adaptee)
+    private void inmutableSetMatchResult(final MatchResult adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -97,7 +91,7 @@ public class MatchResultOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected void setMatchResult(MatchResult adaptee)
+    protected void setMatchResult(final MatchResult adaptee)
     {
         inmutableSetMatchResult(adaptee);
     }
@@ -125,7 +119,7 @@ public class MatchResultOROAdapter
      * returns null. This is not to be confused with a group matching the null
      * string, which will return a String of length 0.
      */
-    public String group(int group)
+    public String group(final int group)
     {
         String result = "";
 
@@ -159,30 +153,5 @@ public class MatchResultOROAdapter
         }
 
         return result;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

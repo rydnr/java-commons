@@ -199,30 +199,6 @@ extends TestCase
     // JUnitDoclet end method setMultiline isMultiline
   }
   
-  /**
-  * Tests AwkCompilerOROAdapterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests AwkCompilerOROAdapterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

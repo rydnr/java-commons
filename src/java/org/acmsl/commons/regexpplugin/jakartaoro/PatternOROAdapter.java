@@ -50,12 +50,6 @@
 package org.acmsl.commons.regexpplugin.jakartaoro;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
-
-/*
  * Importing some Jakarta Oro classes.
  */
 import org.apache.oro.text.regex.Pattern;
@@ -79,16 +73,16 @@ public class PatternOROAdapter
      * Constructs a PatternOROAdapter for given object.
      * @param adaptee the instance to be adapted.
      */
-    public PatternOROAdapter(Pattern adaptee)
+    public PatternOROAdapter(final Pattern adaptee)
     {
-        inmutableSetPattern(adaptee);
+        immutableSetPattern(adaptee);
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetPattern(Pattern adaptee)
+    private void immutableSetPattern(final Pattern adaptee)
     {
         m__Instance = adaptee;
     }
@@ -97,9 +91,9 @@ public class PatternOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected void setPattern(Pattern adaptee)
+    protected void setPattern(final Pattern adaptee)
     {
-        inmutableSetPattern(adaptee);
+        immutableSetPattern(adaptee);
     }
 
     /**
@@ -110,30 +104,5 @@ public class PatternOROAdapter
     Pattern getPattern()
     {
         return m__Instance;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

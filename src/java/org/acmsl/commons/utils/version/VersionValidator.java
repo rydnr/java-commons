@@ -61,7 +61,6 @@ import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.StringValidator;
-import org.acmsl.commons.version.Versionable;
 import org.acmsl.commons.version.Version;
 import org.acmsl.commons.version.VersionFactory;
 
@@ -82,7 +81,6 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$
  * @stereotype Validator
  * @see org.acmsl.commons.version.Version
- * @see org.acmsl.commons.version.Versionable
  */
 public abstract class VersionValidator
     implements  Validator
@@ -117,7 +115,7 @@ public abstract class VersionValidator
      * Specifies a new weak reference.
      * @param utils the utils instance to use.
      */
-    protected static void setReference(VersionValidator validator)
+    protected static void setReference(final VersionValidator validator)
     {
         singleton = new WeakReference(validator);
     }
@@ -187,7 +185,7 @@ public abstract class VersionValidator
 
                     result = null;
                 }
-                catch  (RegexpEngineNotFoundException regexpEngineNotFoundException)
+                catch  (final RegexpEngineNotFoundException regexpEngineNotFoundException)
                 {
                     LogFactory.getLog(VersionValidator.class).error(
                         "no regexp engine found",
@@ -388,36 +386,10 @@ public abstract class VersionValidator
      * @return true if given object contains valid version information,
                according to CVS syntax.
      */
-    public boolean isValid(Version version)
+    public boolean isValid(final Version version)
     {
         return
             (   (version != null)
              && (isValid(version.getVersionInformation())));
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

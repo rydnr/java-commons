@@ -54,8 +54,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
  */
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing Jakarta ORO classes.
@@ -98,9 +96,19 @@ public class Perl5CompilerOROAdapter
      * Specifies the adaptee.
      * @param adaptee the compiler to adapt.
      */
-    protected void setCompiler(Perl5Compiler adaptee)
+    protected final void immutableSetCompiler(
+        final Perl5Compiler adaptee)
     {
         m__Instance = adaptee;
+    }
+
+    /**
+     * Specifies the adaptee.
+     * @param adaptee the compiler to adapt.
+     */
+    protected void setCompiler(final Perl5Compiler adaptee)
+    {
+        immutableSetCompiler(adaptee);
     }
 
     /**
@@ -128,49 +136,62 @@ public class Perl5CompilerOROAdapter
      * @return the Pattern associated to such regular expression.
      * @throws org.acmsl.commons.regexpplugin.MalformedPatternException if
      * given regexp is malformed.
+     * @precondition regexp != null
      */
-    public Pattern compile(String regexp)
+    public Pattern compile(final String regexp)
         throws  org.acmsl.commons.regexpplugin.MalformedPatternException
+    {
+        return
+            compile(regexp, getCompiler(), isCaseSensitive(), isMultiline());
+    }
+
+    /**
+     * Compiles given regular expression and creates a Pattern object to
+     * apply such rule on concrete text contents.
+     * @param regexp the regular expression to compile.
+     * @param compiler the compiler.
+     * @param caseSensitive such option.
+     * @param multiline such option.
+     * @return the Pattern associated to such regular expression.
+     * @throws org.acmsl.commons.regexpplugin.MalformedPatternException if
+     * given regexp is malformed.
+     * @precondition regexp != null
+     * @precondition compiler != null
+     */
+    protected Pattern compile(
+        final String regexp,
+        final Perl5Compiler compiler,
+        final boolean caseSensitive,
+        final boolean multiline)
+      throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
         Pattern result = null;
 
         try
         {
-            Perl5Compiler t_Compiler = getCompiler();
+            int t_iOptions = Perl5Compiler.DEFAULT_MASK;
 
-            if  (t_Compiler != null)
-            {
-                int t_iOptions = Perl5Compiler.DEFAULT_MASK;
+            t_iOptions |=
+                (caseSensitive)
+                ?  0
+                :  Perl5Compiler.CASE_INSENSITIVE_MASK;
 
-                t_iOptions |=
-                    (isCaseSensitive())
-                    ?  0
-                    :  Perl5Compiler.CASE_INSENSITIVE_MASK;
+            t_iOptions |=
+                (multiline)
+                ?  Perl5Compiler.MULTILINE_MASK
+                :  Perl5Compiler.SINGLELINE_MASK;
 
-                t_iOptions |=
-                    (isMultiline())
-                    ?  Perl5Compiler.MULTILINE_MASK
-                    :  Perl5Compiler.SINGLELINE_MASK;
-
-                result =
-                    new PatternOROAdapter(
-                        t_Compiler.compile(
-                            regexp,
-                            t_iOptions));
-            }
-            else 
-            {
-                LogFactory.getLog(getClass()).error(
-                    "Oro compiler unavailable.");
-            }
+            result =
+                new PatternOROAdapter(
+                    compiler.compile(regexp, t_iOptions));
         }
-        catch  (MalformedPatternException malformedPatternException)
+        catch  (final MalformedPatternException malformedPatternException)
         {
             throw
                 new MalformedPatternExceptionOROAdapter(
                     malformedPatternException);
         }
-        catch  (IllegalArgumentException illegalArgumentException)
+        catch  (final IllegalArgumentException illegalArgumentException)
         {
             if  (resetOptions())
             {
@@ -200,14 +221,24 @@ public class Perl5CompilerOROAdapter
         return result;
     }
 
+    /*
+     * Sets whether the compiler should care about case sensitiveness
+     * or not.
+     * @param caseSensitive true for differentiate upper from lower case.
+     */
+    protected final void immutableSetCaseSensitive(final boolean caseSensitive)
+    {
+        m__bCaseSensitive = caseSensitive;
+    }
+
     /**
      * Sets whether the compiler should care about case sensitiveness
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
-    public void setCaseSensitive(boolean caseSensitive)
+    public void setCaseSensitive(final boolean caseSensitive)
     {
-        m__bCaseSensitive = caseSensitive;
+        immutableSetCaseSensitive(caseSensitive);
     }
 
     /**
@@ -225,9 +256,19 @@ public class Perl5CompilerOROAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
-    public void setMultiline(boolean multiline)
+    protected final void immutableSetMultiline(final boolean multiline)
     {
         m__bMultiline = multiline;
+    }
+
+    /**
+     * Sets whether the compiler should care about new line delimiters
+     * or not.
+     * @param multiline false for parsing each line at a time.
+     */
+    public void setMultiline(final boolean multiline)
+    {
+        immutableSetMultiline(multiline);
     }
 
     /**
@@ -238,30 +279,5 @@ public class Perl5CompilerOROAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

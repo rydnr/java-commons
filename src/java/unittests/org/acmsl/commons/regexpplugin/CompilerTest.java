@@ -68,8 +68,6 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Importing JUnit classes.
@@ -253,31 +251,5 @@ public class CompilerTest
         {
             fail("" + throwable);
         }
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

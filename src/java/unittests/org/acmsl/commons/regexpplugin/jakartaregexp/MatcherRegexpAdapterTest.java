@@ -183,30 +183,6 @@ extends TestCase
     // JUnitDoclet end method getMatch
   }
   
-  /**
-  * Tests MatcherRegexpAdapterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests MatcherRegexpAdapterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

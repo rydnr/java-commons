@@ -52,8 +52,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Helper;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing ORO classes.
@@ -116,30 +114,5 @@ public class HelperOROAdapter
         }
         
         return result.toString();
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -49,13 +49,6 @@
  */
 package org.acmsl.commons.patterns.mvc;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
-
 /**
  * Represents entities that play the role of View in a
  * Model-View-Controller architecture.
@@ -64,12 +57,5 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface View
-    extends  Versionable
 {
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

@@ -56,8 +56,6 @@ import org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing Jakarta ORO classes.
@@ -86,14 +84,14 @@ public class Perl5MatcherOROAdapter
      */
     public Perl5MatcherOROAdapter()
     {
-        inmutableSetMatcher(new Perl5Matcher());
+        immutableSetMatcher(new Perl5Matcher());
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the matcher to adapt.
      */
-    private void inmutableSetMatcher(Perl5Matcher adaptee)
+    protected final void immutableSetMatcher(final Perl5Matcher adaptee)
     {
         m__Instance = adaptee;
     }
@@ -102,9 +100,9 @@ public class Perl5MatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the matcher to adapt.
      */
-    protected void setMatcher(Perl5Matcher adaptee)
+    protected void setMatcher(final Perl5Matcher adaptee)
     {
-        inmutableSetMatcher(adaptee);
+        immutableSetMatcher(adaptee);
     }
 
     /**
@@ -120,25 +118,33 @@ public class Perl5MatcherOROAdapter
      * Checks if given text contains specified pattern.
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
-     * @return true if the pattern is found.
+     * @return <code>true</code> if the pattern is found.
+     * @precondition text != null
+     * @precondition pattern != null
+     * @precondition pattern instanceof PatternOROAdapter
      */
-    public boolean contains(String text, Pattern pattern)
+    public boolean contains(final String text, final Pattern pattern)
     {
-        boolean result = false;
+        return contains(text, pattern, getMatcher());
+    }
 
-        Perl5Matcher t_Matcher = getMatcher();
-
-        if  (   (pattern != null)
-             && (pattern instanceof PatternOROAdapter)
-             && (t_Matcher != null))
-        {
-            result =
-                t_Matcher.contains(
-                    text,
-                    ((PatternOROAdapter) pattern).getPattern());
-        }
-
-        return result;
+    /**
+     * Checks if given text contains specified pattern.
+     * @param text the text to analyze.
+     * @param pattern the regular expression to apply.
+     * @param matcher the matcher.
+     * @return <code>true</code> if the pattern is found.
+     * @precondition text != null
+     * @precondition pattern != null
+     * @precondition pattern instanceof PatternOROAdapter
+     * @precondition matcher != null
+     */
+    protected boolean contains(
+        final String text, final Pattern pattern, final Perl5Matcher matcher)
+    {
+        return
+            matcher.contains(
+                text, ((PatternOROAdapter) pattern).getPattern());
     }
 
     /**
@@ -148,41 +154,18 @@ public class Perl5MatcherOROAdapter
      */
     public MatchResult getMatch()
     {
-        MatchResult result = null;
-
-        Perl5Matcher t_Matcher = getMatcher();
-
-        if  (t_Matcher != null)
-        {
-            result =
-                new MatchResultOROAdapter(t_Matcher.getMatch());
-        }
-
-        return result;
+        return getMatch(getMatcher());
     }
 
     /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
+     * Retrieves the last match found due to a previous call to
+     * <i>contains</i> method.
+     * @param matcher the matcher.
+     * @return such match result.
+     * @precondition matcher != null
      */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
+    protected MatchResult getMatch(final Perl5Matcher matcher)
     {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
+        return new MatchResultOROAdapter(matcher.getMatch());
     }
 }

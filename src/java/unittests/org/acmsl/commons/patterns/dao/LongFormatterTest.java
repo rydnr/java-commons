@@ -171,30 +171,6 @@ extends TestCase
     // JUnitDoclet end method format
   }
   
-  /**
-  * Tests LongFormatterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.patterns.dao.LongFormatter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests LongFormatterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.patterns.dao.LongFormatter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

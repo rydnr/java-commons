@@ -171,30 +171,6 @@ extends TestCase
     // JUnitDoclet end method getMatch
   }
   
-  /**
-  * Tests Perl5MatcherOROAdapterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests Perl5MatcherOROAdapterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

@@ -49,12 +49,6 @@
 package org.acmsl.commons.regexpplugin.jdk14regexp;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
-
-/*
  * Importing some JDK1.4 classes.
  */
 import java.util.regex.Pattern;
@@ -78,9 +72,9 @@ public class PatternJDKAdapter
      * Constructs a PatternJDKAdapter for given object.
      * @param adaptee the instance to be adapted.
      */
-    public PatternJDKAdapter(Pattern adaptee)
+    public PatternJDKAdapter(final Pattern adaptee)
     {
-        inmutableSetPattern(adaptee);
+        immutableSetPattern(adaptee);
     }
 
     /**
@@ -88,7 +82,7 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @param adaptee the adaptee.
      */
-    private void inmutableSetPattern(Pattern adaptee)
+    private void immutableSetPattern(final Pattern adaptee)
     {
         m__Instance = adaptee;
     }
@@ -98,9 +92,9 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @param adaptee the adaptee.
      */
-    void setPattern(Pattern adaptee)
+    void setPattern(final Pattern adaptee)
     {
-        m__Instance = adaptee;
+        immutableSetPattern(adaptee);
     }
 
     /**
@@ -111,30 +105,5 @@ public class PatternJDKAdapter
     Pattern getPattern()
     {
         return m__Instance;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

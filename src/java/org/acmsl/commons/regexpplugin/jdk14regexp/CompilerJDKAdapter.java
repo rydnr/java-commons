@@ -55,8 +55,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.jdk14regexp.MalformedPatternExceptionJDKAdapter;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing JDK1.4 regexp classes.
@@ -94,9 +92,28 @@ public class CompilerJDKAdapter
      * apply such rule on concrete text contents.
      * @param regexp the regular expression to compile.
      * @return the Pattern associated to such regular expression.
+     * @throws MalformedPatternException if the regexp is not valid.
      */
-    public org.acmsl.commons.regexpplugin.Pattern compile(String regexp)
+    public org.acmsl.commons.regexpplugin.Pattern compile(final String regexp)
         throws  MalformedPatternException
+    {
+        return compile(regexp, isCaseSensitive(), isMultiline());
+    }
+
+    /**
+     * Compiles given regular expression and creates a Pattern object to
+     * apply such rule on concrete text contents.
+     * @param regexp the regular expression to compile.
+     * @param caseSensitive such condition.
+     * @param multiline such condition.
+     * @return the Pattern associated to such regular expression.
+     * @throws MalformedPatternException if the regexp is not valid.
+     */
+    protected org.acmsl.commons.regexpplugin.Pattern compile(
+        final String regexp,
+        final boolean caseSensitive,
+        final boolean multiline)
+      throws  MalformedPatternException
     {
         org.acmsl.commons.regexpplugin.Pattern result = null;
 
@@ -105,12 +122,12 @@ public class CompilerJDKAdapter
             int t_iOptions = 0;
 
             t_iOptions |=
-                (isCaseSensitive())
+                (caseSensitive)
                 ?  0
                 :  Pattern.CASE_INSENSITIVE;
 
             t_iOptions |=
-                (isMultiline())
+                (multiline)
                 ?  Pattern.MULTILINE
                 :  0;
 
@@ -131,14 +148,14 @@ public class CompilerJDKAdapter
             }
             else 
             {
-                LogFactory.getLog(getClass()).error("pattern compilation error");
+                throw new MalformedPatternException("pattern compilation error");
             }
         }
-        catch  (PatternSyntaxException exception)
+        catch  (final PatternSyntaxException exception)
         {
             throw new MalformedPatternExceptionJDKAdapter(exception);
         }
-        catch  (IllegalArgumentException illegalArgumentException)
+        catch  (final IllegalArgumentException illegalArgumentException)
         {
             if  (resetOptions())
             {
@@ -173,9 +190,19 @@ public class CompilerJDKAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
-    public void setCaseSensitive(boolean caseSensitive)
+    protected final void immutableSetCaseSensitive(final boolean caseSensitive)
     {
         m__bCaseSensitive = caseSensitive;
+    }
+
+    /**
+     * Sets whether the compiler should care about case sensitiveness
+     * or not.
+     * @param caseSensitive true for differentiate upper from lower case.
+     */
+    public void setCaseSensitive(final boolean caseSensitive)
+    {
+        immutableSetCaseSensitive(caseSensitive);
     }
 
     /**
@@ -193,9 +220,19 @@ public class CompilerJDKAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
-    public void setMultiline(boolean multiline)
+    protected final void immutableSetMultiline(final boolean multiline)
     {
         m__bMultiline = multiline;
+    }
+
+    /**
+     * Sets whether the compiler should care about new line delimiters
+     * or not.
+     * @param multiline false for parsing each line at a time.
+     */
+    public void setMultiline(final boolean multiline)
+    {
+        immutableSetMultiline(multiline);
     }
 
     /**
@@ -206,30 +243,5 @@ public class CompilerJDKAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -53,8 +53,6 @@ package org.acmsl.commons.patterns.mvc;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Subject;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents an information model, so it can be displayed and modified
@@ -97,30 +95,5 @@ public abstract class Model
     public boolean isNew()
     {
         return m__bIsNew;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the version.
-     * @return the current version.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the class version.
-     * @return the current version of the class.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

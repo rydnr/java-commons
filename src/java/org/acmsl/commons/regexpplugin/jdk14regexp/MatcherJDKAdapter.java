@@ -54,8 +54,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
  */
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing JDK1.4 regexp classes.
@@ -92,38 +90,37 @@ public class MatcherJDKAdapter
      * Checks if given text contains specified pattern.
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
-     * @return true if the pattern is found.
+     * @return <code>true</code> if the pattern is found.
+     * @precondition text != null
+     * @precondition pattern != null
+     * @precondition pattern instanceof PatternJDKAdapter
      */
     public boolean contains(
-        String text,
-        org.acmsl.commons.regexpplugin.Pattern pattern)
+        final String text,
+        final org.acmsl.commons.regexpplugin.Pattern pattern)
     {
         boolean result = false;
 
-        if  (   (pattern != null)
-             && (pattern instanceof PatternJDKAdapter))
+        Pattern t_Pattern =
+            ((PatternJDKAdapter) pattern).getPattern();
+
+        Matcher t_Matcher = null;
+
+        if  (t_Pattern != null)
         {
-            Pattern t_Pattern =
-                ((PatternJDKAdapter) pattern).getPattern();
+            t_Matcher = t_Pattern.matcher(text);
+        }
+        else 
+        {
+            LogFactory.getLog(getClass()).error(
+                "pattern not accessible");
+        }
 
-            Matcher t_Matcher = null;
+        if  (t_Matcher != null)
+        {
+            result = t_Matcher.find();
 
-            if  (t_Pattern != null)
-            {
-                t_Matcher = t_Pattern.matcher(text);
-            }
-            else 
-            {
-                LogFactory.getLog(getClass()).error(
-                    "pattern not accessible");
-            }
-
-            if  (t_Matcher != null)
-            {
-                result = t_Matcher.find();
-
-                setMatcher(t_Matcher);
-            }
+            setMatcher(t_Matcher);
         }
 
         return result;
@@ -133,9 +130,18 @@ public class MatcherJDKAdapter
      * Specifies the matcher.
      * @param matcher the new matcher.
      */
-    protected void setMatcher(Matcher matcher)
+    protected final void immutableSetMatcher(final Matcher matcher)
     {
         m__Matcher = matcher;
+    }
+
+    /**
+     * Specifies the matcher.
+     * @param matcher the new matcher.
+     */
+    protected void setMatcher(final Matcher matcher)
+    {
+        immutableSetMatcher(matcher);
     }
 
     /**
@@ -154,40 +160,18 @@ public class MatcherJDKAdapter
      */
     public MatchResult getMatch()
     {
-        MatchResult result = null;
-
-        Matcher t_Matcher = getMatcher();
-
-        if  (t_Matcher != null)
-        {
-            result = new MatchResultJDKAdapter(t_Matcher);
-        }
-
-        return result;
-    }
-
-    /*
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
+        return getMatch(getMatcher());
     }
 
     /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
+     * Retrieves the last match found due to a previous call to
+     * <i>contains</i> method.
+     * @param matcher the matcher.
+     * @return such match result.
+     * @precondition matcher != null
      */
-    public static Version getClassVersion()
+    protected MatchResult getMatch(final Matcher matcher)
     {
-        return VERSION;
+        return new MatchResultJDKAdapter(matcher);
     }
 }

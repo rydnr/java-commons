@@ -48,13 +48,6 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
-
 /**
  * Generic marker interface to label all value object classes.
  * @author <a href="mailto:jsanleandro@yahoo.es"
@@ -62,12 +55,5 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface ValueObject
-    extends  Versionable
 {
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

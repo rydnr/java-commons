@@ -57,8 +57,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing Jakarta Regexp classes.
@@ -104,9 +102,18 @@ public class CompilerRegexpAdapter
      * Specifies the adapted instance.
      * @param compiler the compiler to adapt.
      */
-    protected void setRECompiler(RECompiler compiler)
+    protected final void immutableSetRECompiler(final RECompiler compiler)
     {
         m__Instance = compiler;
+    }
+
+    /**
+     * Specifies the adapted instance.
+     * @param compiler the compiler to adapt.
+     */
+    protected void setRECompiler(final RECompiler compiler)
+    {
+        immutableSetRECompiler(compiler);
     }
 
     /**
@@ -132,9 +139,19 @@ public class CompilerRegexpAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
-    public void setCaseSensitive(boolean caseSensitive)
+    protected final void immutableSetCaseSensitive(final boolean caseSensitive)
     {
         m__bCaseSensitive = caseSensitive;
+    }
+
+    /**
+     * Sets whether the compiler should care about case sensitiveness
+     * or not.
+     * @param caseSensitive true for differentiate upper from lower case.
+     */
+    public void setCaseSensitive(final boolean caseSensitive)
+    {
+        immutableSetCaseSensitive(caseSensitive);
     }
 
     /**
@@ -152,9 +169,19 @@ public class CompilerRegexpAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
-    public void setMultiline(boolean multiline)
+    protected final void immutableSetMultiline(final boolean multiline)
     {
         m__bMultiline = multiline;
+    }
+
+    /**
+     * Sets whether the compiler should care about new line delimiters
+     * or not.
+     * @param multiline false for parsing each line at a time.
+     */
+    public void setMultiline(final boolean multiline)
+    {
+        immutableSetMultiline(multiline);
     }
 
     /**
@@ -172,53 +199,68 @@ public class CompilerRegexpAdapter
      * apply such rule on concrete text contents.
      * @param regexp the regular expression to compile.
      * @return the Pattern associated to such regular expression.
-     * @exception MalformedPatternException if given regexp is malformed.
+     * @throws MalformedPatternException if given regexp is malformed.
+     * @precondition regexp != null
      */
-    public Pattern compile(String regexp)
+    public Pattern compile(final String regexp)
         throws  MalformedPatternException
+    {
+        return
+            compile(
+                regexp, getRECompiler(), isCaseSensitive(), isMultiline());
+    }
+
+    /**
+     * Compiles given regular expression and creates a Pattern object to
+     * apply such rule on concrete text contents.
+     * @param regexp the regular expression to compile.
+     * @param compiler the compiler.
+     * @param caseSensitive the case sensitiveness.
+     * @param multiline the multiline.
+     * @return the Pattern associated to such regular expression.
+     * @throws MalformedPatternException if given regexp is malformed.
+     * @precondition regexp != null
+     * @precondition compiler != null
+     */
+    public Pattern compile(
+        final String regexp,
+        final RECompiler compiler,
+        final boolean caseSensitive,
+        final boolean multiline)
+      throws  MalformedPatternException
     {
         Pattern result = null;
 
         try
         {
-            RECompiler t_Compiler = getRECompiler();
+            REProgram t_REProgram = compiler.compile(regexp);
 
-            if  (t_Compiler != null)
+            RE t_RE = new RE(t_REProgram);
+
+            int t_iOptions = 0;
+
+            t_iOptions |=
+                (caseSensitive)
+                ?  RE.MATCH_NORMAL
+                :  RE.MATCH_CASEINDEPENDENT;
+
+            t_iOptions |=
+                (multiline)
+                ?  RE.MATCH_MULTILINE
+                :  RE.MATCH_SINGLELINE;
+
+            if (t_iOptions != 0)
             {
-                REProgram t_REProgram = t_Compiler.compile(regexp);
-
-                RE t_RE = new RE(t_REProgram);
-
-                int t_iOptions = 0;
-
-                t_iOptions |=
-                    (isCaseSensitive())
-                    ?  RE.MATCH_NORMAL
-                    :  RE.MATCH_CASEINDEPENDENT;
-
-                t_iOptions |=
-                    (isMultiline())
-                    ?  RE.MATCH_MULTILINE
-                    :  RE.MATCH_SINGLELINE;
-
-                if (t_iOptions != 0)
-                {
-                    t_RE.setMatchFlags(t_iOptions);
-                }
-
-                result = new PatternRegexpAdapter(t_REProgram, t_RE);
+                t_RE.setMatchFlags(t_iOptions);
             }
-            else 
-            {
-                LogFactory.getLog(getClass()).error(
-                    "compiler not accessible");
-            }
+
+            result = new PatternRegexpAdapter(t_REProgram, t_RE);
         }
-        catch  (RESyntaxException exception)
+        catch  (final RESyntaxException exception)
         {
             throw new MalformedPatternExceptionRegexpAdapter(exception);
         }
-        catch  (IllegalArgumentException illegalArgumentException)
+        catch  (final IllegalArgumentException illegalArgumentException)
         {
             if  (resetOptions())
             {
@@ -249,30 +291,5 @@ public class CompilerRegexpAdapter
         }
 
         return result;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -52,9 +52,6 @@ package org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents a regexp pattern matcher. Different implementations vary but they
@@ -64,7 +61,6 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface Matcher
-    extends  Versionable
 {
     /**
      * Checks if given text contains specified pattern.
@@ -72,7 +68,7 @@ public interface Matcher
      * @param pattern the regular expression to apply.
      * @return true if the pattern is found.
      */
-    public boolean contains(String text, Pattern pattern);
+    public boolean contains(final String text, final Pattern pattern);
 
     /**
      * Retrieves the last match found due to a previous call to
@@ -80,11 +76,4 @@ public interface Matcher
      * @return such match result.
      */
     public MatchResult getMatch();
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

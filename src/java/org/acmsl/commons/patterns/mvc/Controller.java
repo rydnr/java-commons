@@ -53,8 +53,6 @@ package org.acmsl.commons.patterns.mvc;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Observer;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents entities that play the role of Controller in a
@@ -66,10 +64,4 @@ import org.acmsl.commons.version.VersionFactory;
 public interface Controller
     extends  Observer
 {
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

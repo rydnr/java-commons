@@ -48,13 +48,6 @@
  */
 package org.acmsl.commons.regexpplugin;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
-
 /**
  * Represents a regexp pattern. Different implementations vary but they all
  * must respect this set of methods.
@@ -63,12 +56,5 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface Pattern
-    extends  Versionable
 {
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

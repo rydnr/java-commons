@@ -30,7 +30,8 @@
       </subsection>
       <subsection name="0.5.6">
         <p>
-          Remove all hard-links to Versionable package.
+          Remove all <a href="${issue.url}562"
+          >hard-links to Versionable</a> API.
         </p>
       </subsection>
       <subsection name="0.5.5">

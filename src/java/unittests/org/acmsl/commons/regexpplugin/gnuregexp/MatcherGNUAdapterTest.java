@@ -171,30 +171,6 @@ extends TestCase
     // JUnitDoclet end method getMatch
   }
   
-  /**
-  * Tests MatcherGNUAdapterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests MatcherGNUAdapterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

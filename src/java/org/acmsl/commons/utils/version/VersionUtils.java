@@ -117,7 +117,7 @@ public abstract class VersionUtils
      * Specifies a new weak reference.
      * @param utils the utils instance to use.
      */
-    protected static void setReference(VersionUtils utils)
+    protected static void setReference(final VersionUtils utils)
     {
         singleton = new WeakReference(utils);
     }
@@ -187,7 +187,7 @@ public abstract class VersionUtils
 
                     result = null;
                 }
-                catch  (RegexpEngineNotFoundException regexpEngineNotFoundException)
+                catch  (final RegexpEngineNotFoundException regexpEngineNotFoundException)
                 {
                     LogFactory.getLog(VersionUtils.class).error(
                         "no regexp engine found",
@@ -260,7 +260,7 @@ public abstract class VersionUtils
      * @param version the object to analize.
      * @return the concrete version information.
      */
-    public String getVersionInformation(Version version)
+    public String getVersionInformation(final Version version)
     {
         String result = Version.INVALID.getVersionInformation();
 
@@ -399,31 +399,5 @@ public abstract class VersionUtils
         final RegexpEngine regexpEngine)
     {
         return regexpEngine.createMatcher();
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

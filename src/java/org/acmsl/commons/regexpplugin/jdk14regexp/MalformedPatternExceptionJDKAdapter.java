@@ -52,8 +52,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some JDK1.4 regexp classes.
@@ -79,19 +77,19 @@ public class MalformedPatternExceptionJDKAdapter
      * @param exception concrete exception instance to adapt.
      */
     public MalformedPatternExceptionJDKAdapter(
-        PatternSyntaxException exception)
+        final PatternSyntaxException exception)
     {
         super(((exception == null) ? "" : exception.getMessage()));
 
-        inmutableSetPatternSyntaxException(exception);
+        immutableSetPatternSyntaxException(exception);
     }
 
     /**
      * Specifies the adapted exception.
      * @param exception the PatternSyntaxException to adapt.
      */
-    private void inmutableSetPatternSyntaxException(
-        PatternSyntaxException exception)
+    private void immutableSetPatternSyntaxException(
+        final PatternSyntaxException exception)
     {
         m__Adaptee = exception;
     }
@@ -100,9 +98,10 @@ public class MalformedPatternExceptionJDKAdapter
      * Specifies the adapted exception.
      * @param exception the PatternSyntaxException to adapt.
      */
-    protected void setPatternSyntaxException(PatternSyntaxException exception)
+    protected void setPatternSyntaxException(
+        final PatternSyntaxException exception)
     {
-        inmutableSetPatternSyntaxException(exception);
+        immutableSetPatternSyntaxException(exception);
     }
 
     /**
@@ -112,30 +111,5 @@ public class MalformedPatternExceptionJDKAdapter
     protected PatternSyntaxException getPatternSyntaxException()
     {
         return m__Adaptee;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -199,30 +199,6 @@ extends TestCase
     // JUnitDoclet end method compile
   }
   
-  /**
-  * Tests CompilerRegexpAdapterTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests CompilerRegexpAdapterTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**
@@ -236,6 +212,26 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method testcase.testVault
+// JUnitDoclet begin method setCaseSensitive isCaseSensitive
+    boolean[] t_aTests = {true, false};
+    
+    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
+    {
+      compilerregexpadapter.setCaseSensitive(t_aTests[t_iTestIndex]);
+      assertEquals(
+      t_aTests[t_iTestIndex],
+      compilerregexpadapter.isCaseSensitive());
+    }
+// JUnitDoclet end method setCaseSensitive isCaseSensitive
+// JUnitDoclet begin method setMultiline isMultiline
+    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
+    {
+      compilerregexpadapter.setMultiline(t_aTests[t_iTestIndex]);
+      assertEquals(
+      t_aTests[t_iTestIndex],
+      compilerregexpadapter.isMultiline());
+    }
+// JUnitDoclet end method setMultiline isMultiline
     // JUnitDoclet end method testcase.testVault
   }
   

@@ -52,8 +52,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some Jakarta Regexp classes.
@@ -87,18 +85,17 @@ public class PatternRegexpAdapter
      * @param adaptee the instance to be adapted.
      * @param re the required RE instance.
      */
-    public PatternRegexpAdapter(REProgram adaptee, RE re)
+    public PatternRegexpAdapter(final REProgram adaptee, final RE re)
     {
-        inmutableSetREProgram(adaptee);
-
-        inmutableSetRE(re);
+        immutableSetREProgram(adaptee);
+        immutableSetRE(re);
     }
 
     /**
      * Specifies the instance to adapt.
      * @param adaptee the REProgram to be adapted.
      */
-    private void inmutableSetREProgram(REProgram adaptee)
+    private void immutableSetREProgram(final REProgram adaptee)
     {
         m__Instance = adaptee;
     }
@@ -107,9 +104,9 @@ public class PatternRegexpAdapter
      * Specifies the instance to adapt.
      * @param adaptee the REProgram to be adapted.
      */
-    protected void setREProgram(REProgram adaptee)
+    protected void setREProgram(final REProgram adaptee)
     {
-        inmutableSetREProgram(adaptee);
+        immutableSetREProgram(adaptee);
     }
 
     /**
@@ -125,7 +122,7 @@ public class PatternRegexpAdapter
      * Sets the RE reference.
      * @param re such reference.
      */
-    private void inmutableSetRE(RE re)
+    private void immutableSetRE(final RE re)
     {
         m__RE = re;
     }
@@ -134,9 +131,9 @@ public class PatternRegexpAdapter
      * Sets the RE reference.
      * @param re such reference.
      */
-    void setRE(RE re)
+    void setRE(final RE re)
     {
-        inmutableSetRE(re);
+        immutableSetRE(re);
     }
 
     /**
@@ -147,30 +144,5 @@ public class PatternRegexpAdapter
     RE getRE()
     {
         return m__RE;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

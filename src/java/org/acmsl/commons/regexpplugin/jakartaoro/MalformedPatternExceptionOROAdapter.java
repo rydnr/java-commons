@@ -33,8 +33,8 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description:	Adapts jakarta ORO malformed pattern exceptions to follow this
- *				API.
+ * Description: Adapts jakarta ORO malformed pattern exceptions to follow this
+ *              API.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -49,12 +49,6 @@
 package org.acmsl.commons.regexpplugin.jakartaoro;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
-
-/*
  * Importing Jakarta-ORO classes.
  */
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -66,7 +60,7 @@ import org.apache.oro.text.regex.MalformedPatternException;
  * @version $Revision$
  */
 public class MalformedPatternExceptionOROAdapter
-    extends	org.acmsl.commons.regexpplugin.MalformedPatternException
+    extends  org.acmsl.commons.regexpplugin.MalformedPatternException
 {
     /**
      * Private reference to the actual exception.
@@ -78,19 +72,19 @@ public class MalformedPatternExceptionOROAdapter
      * @param exception concrete exception instance to adapt.
      */
     public MalformedPatternExceptionOROAdapter(
-        MalformedPatternException exception)
+        final MalformedPatternException exception)
     {
         super(((exception == null) ? "" : exception.getMessage()));
 
-        inmutableSetMalformedPatternException(exception);
+        immutableSetMalformedPatternException(exception);
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the exception to adapt.
      */
-    private void inmutableSetMalformedPatternException(
-        MalformedPatternException adaptee)
+    private void immutableSetMalformedPatternException(
+        final MalformedPatternException adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -100,9 +94,9 @@ public class MalformedPatternExceptionOROAdapter
      * @param adaptee the exception to adapt.
      */
     protected void setMalformedPatternException(
-        MalformedPatternException adaptee)
+        final MalformedPatternException adaptee)
     {
-        inmutableSetMalformedPatternException(adaptee);
+        immutableSetMalformedPatternException(adaptee);
     }
 
     /**
@@ -112,30 +106,5 @@ public class MalformedPatternExceptionOROAdapter
     public MalformedPatternException getMalformedPatternException()
     {
         return m__Adaptee;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -51,8 +51,6 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Utils;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing JDK1.3 classes.
@@ -92,7 +90,7 @@ public abstract class ThrowableUtils
      * Specifies a new weak reference.
      * @param utils the utils instance to use.
      */
-    protected static void setReference(ThrowableUtils utils)
+    protected static void setReference(final ThrowableUtils utils)
     {
         singleton = new WeakReference(utils);
     }
@@ -136,7 +134,7 @@ public abstract class ThrowableUtils
      * @param throwable the error to output.
      * @return its stack trace.
      */
-    public String getStackTrace(Throwable throwable)
+    public String getStackTrace(final Throwable throwable)
     {
         String result = "";
 
@@ -156,7 +154,7 @@ public abstract class ThrowableUtils
             {
                 t_swResult.close();
             }
-            catch  (IOException ioException)
+            catch  (final IOException ioException)
             {
                 LogFactory.getLog(getClass()).fatal(
                     "Strange and exceptional error",
@@ -165,31 +163,5 @@ public abstract class ThrowableUtils
         }
 
         return result;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

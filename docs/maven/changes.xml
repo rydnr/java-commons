@@ -6,10 +6,20 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_5"
+      version="commons-0_5_6"
       date="$Date$"
+      description="Refactoring">
+      <action dev="$Author$" type="update">
+        Removed all <a href="${issue.url}562">hard links to Version API</a>, since
+        they are managed by <a href="http://www.acm-sl.org/antversion">AntVersion</a>
+        from now on.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_5"
+      date="2004/12/01 07:49:54"
       description="Enhancement">
-      <action dev="$Author$" type="add">
+      <action dev="chous" type="add">
         Added missing <i>package.html</i> files for <b>RegexpPlugin</b> packages (#33).
       </action>
     </release>

@@ -50,8 +50,6 @@ package unittests.org.acmsl.commons.utils.net;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.utils.net.URLUtils;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing JUnit classes.
@@ -192,30 +190,5 @@ public class URLUtilsTest
             t_URLUtils.putParamInQueryString(
                 "www.foo.bar/search?a=1&a=2", "a", "2")
                     .equals("www.foo.bar/search?a=1&a=2"));
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -50,8 +50,6 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes
  */
 import org.acmsl.commons.patterns.Comparator;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some JDK classes.

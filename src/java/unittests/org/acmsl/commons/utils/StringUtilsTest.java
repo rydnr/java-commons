@@ -50,8 +50,6 @@ package unittests.org.acmsl.commons.utils;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.utils.StringUtils;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some JDK classes.

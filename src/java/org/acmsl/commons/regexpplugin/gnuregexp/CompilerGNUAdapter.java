@@ -57,8 +57,6 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing GNU Regexp 1.1.4 classes.
@@ -200,30 +198,5 @@ public class CompilerGNUAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -40,6 +40,17 @@
             $Date$
           </td>
           <td>
+            Removed all <a href="${issue.url}562">hard links to Version API</a>, since
+            they are managed by <a href="http://www.acm-sl.org/antversion">AntVersion</a>
+            from now on.<br/>
+            Released <b>0.5.6</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/12/01 07:49:54
+          </td>
+          <td>
             Added missing <i>package.html</i> files for <b>RegexpPlugin</b> packages (#33).<br/>
             Released <b>0.5.5</b>.
           </td>

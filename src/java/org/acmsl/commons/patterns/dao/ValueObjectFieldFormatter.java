@@ -51,9 +51,7 @@ package org.acmsl.commons.patterns.dao;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
+import org.acmsl.commons.patterns.dao.ValueObjectField;
 
 /**
  * Represents entities able to format value object fields.
@@ -62,19 +60,11 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface ValueObjectFieldFormatter
-    extends  Versionable
 {
     /**
      * Formats the field in a correct way.
      * @param valueObjectField the field to format.
      * @return the String format.
      */
-    public String format(ValueObjectField valueObjectField);
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
+    public String format(final ValueObjectField valueObjectField);
 }

@@ -52,9 +52,6 @@ package org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents a regexp helper. Different implementations vary but they all
@@ -64,7 +61,6 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface Helper
-    extends  Versionable
 {
     /**
      * Finds all occurrences of a specified pattern in given input contents,
@@ -75,13 +71,7 @@ public interface Helper
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
      */
-    public String replaceAll(String input, String pattern, String replacement)
-        throws  MalformedPatternException;
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
+    public String replaceAll(
+        final String input, final String pattern, final String replacement)
+      throws  MalformedPatternException;
 }

@@ -54,8 +54,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some Jakarta Regexp classes.
@@ -87,9 +85,18 @@ public class MatcherRegexpAdapter
      * Sets the instance to adapt.
      * @param adaptee the re object to adapt.
      */
-    protected void setRE(RE adaptee)
+    protected final void immutableSetRE(final RE adaptee)
     {
         m__RE = adaptee;
+    }
+
+    /**
+     * Sets the instance to adapt.
+     * @param adaptee the re object to adapt.
+     */
+    protected void setRE(final RE adaptee)
+    {
+        immutableSetRE(adaptee);
     }
 
     /**
@@ -105,27 +112,23 @@ public class MatcherRegexpAdapter
      * Checks if given text contains specified pattern.
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
-     * @return true if the pattern is found.
+     * @return <code>true</code> if the pattern is found.
+     * @precondition pattern != null
+     * @precondition pattern instanceof PatternRegexpAdapter
      */
-    public boolean contains(String text, Pattern pattern)
+    public boolean contains(
+        final String text, final Pattern pattern)
     {
         boolean result = false;
 
-        if  (   (pattern != null)
-             && (pattern instanceof PatternRegexpAdapter))
-        {
-            PatternRegexpAdapter t_PatternAdapter =
-                (PatternRegexpAdapter) pattern;
+        PatternRegexpAdapter t_PatternAdapter =
+            (PatternRegexpAdapter) pattern;
 
-            RE t_RE = t_PatternAdapter.getRE();
+        RE t_RE = t_PatternAdapter.getRE();
 
-            if  (t_RE != null)
-            {
-                setRE(t_RE);
+        setRE(t_RE);
 
-                result = t_RE.match(text);
-            }
-        }
+        result = t_RE.match(text);
 
         return result;
     }
@@ -137,40 +140,18 @@ public class MatcherRegexpAdapter
      */
     public MatchResult getMatch()
     {
-        MatchResult result = null;
-
-        RE t_RE = getRE();
-
-        if  (t_RE != null)
-        {
-            result = new MatchResultRegexpAdapter(t_RE);
-        }
-
-        return result;
+        return getMatch(getRE());
     }
 
     /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
+     * Retrieves the last match found due to a previous call to
+     * <i>contains</i> method.
+     * @param re the RE instance.
+     * @return such match result.
+     * @precondition re != null
      */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
+    protected MatchResult getMatch(final RE re)
     {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
+        return new MatchResultRegexpAdapter(re);
     }
 }

@@ -52,8 +52,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.MatchResult;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /*
  * Importing some Jakarta Regexp classes.
@@ -80,7 +78,7 @@ public class MatchResultRegexpAdapter
      * Regexp-specific instance.
      * @param matchResult Jakarta Regexp match result object to adapt.
      */
-    public MatchResultRegexpAdapter(RE matchResult)
+    public MatchResultRegexpAdapter(final RE matchResult)
     {
         inmutableSetRE(matchResult);
     }
@@ -89,7 +87,7 @@ public class MatchResultRegexpAdapter
      * Specifies the instance to adapt.
      * @param matchResult the adaptee.
      */
-    private void inmutableSetRE(RE matchResult)
+    private void inmutableSetRE(final RE matchResult)
     {
         m__Adaptee = matchResult;
     }
@@ -98,7 +96,7 @@ public class MatchResultRegexpAdapter
      * Specifies the instance to adapt.
      * @param matchResult the adaptee.
      */
-    protected void setRE(RE matchResult)
+    protected void setRE(final RE matchResult)
     {
         inmutableSetRE(matchResult);
     }
@@ -119,18 +117,23 @@ public class MatchResultRegexpAdapter
      * @param group Nesting level of subexpression.
      * @return A string containing the indicated pattern subgroup.
      */
-    public String group(int group)
+    public String group(final int group)
     {
-        String result = "";
+        return group(group, getRE());
+    }
 
-        RE t_RE = getRE();
-
-        if  (t_RE != null)
-        {
-            result = t_RE.getParen(group);
-        }
-
-        return result;
+    /**
+     * Taken from Jakarta Regexp javadoc:
+     * <i>Gets the contents of a parenthesized subexpression after a
+     * successful match</i>.
+     * @param group Nesting level of subexpression.
+     * @param re the RE instance.
+     * @return a string containing the indicated pattern subgroup.
+     * @precondition re != null
+     */
+    protected String group(final int group, final RE re)
+    {
+        return re.getParen(group);
     }
 
     /**
@@ -141,40 +144,19 @@ public class MatchResultRegexpAdapter
      */
     public int groups()
     {
-        int result = 0;
-
-        RE t_RE = getRE();
-
-        if  (t_RE != null)
-        {
-            t_RE.getParenCount();
-        }
-
-        return result;
+        return groups(getRE());
     }
 
     /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
+     * Taken from Jakarta Regexp 1.2 javadoc:
+     * <i>Returns the number of parenthesized subexpressions available
+     * after a successful match.</i>.
+     * @param re the RE instance.
+     * @return such value.
+     * @precondition re != null
      */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
+    protected int groups(final RE re)
     {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
+        return re.getParenCount();
     }
 }

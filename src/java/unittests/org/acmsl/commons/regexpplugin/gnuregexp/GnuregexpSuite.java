@@ -108,10 +108,10 @@ public class GnuregexpSuite
     
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngineTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.MatchResultGNUAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.MatchResultGNUAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapterTest.class);
     
     
     
