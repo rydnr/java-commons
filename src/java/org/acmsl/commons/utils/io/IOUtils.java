@@ -59,6 +59,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.ref.WeakReference;
 import java.lang.StringBuffer;
 
@@ -253,10 +255,22 @@ public abstract class IOUtils
         catch  (final IOException ioException)
         {
             LogFactory.getLog(getClass()).error(
-                "Cannot read file",
-                ioException);
+                "Cannot read file", ioException);
         }
 
         return result;
+    }
+
+    /**
+     * Writes given information to the stream.
+     * @param content the content to write.
+     * @precondition content != null
+     * @precondition output != null
+     */
+    public void write(final String content, final OutputStream output)
+    {
+        PrintStream t_Printer = new PrintStream(output);
+        t_Printer.print(content);
+        t_Printer.flush();
     }
 }

@@ -1318,7 +1318,19 @@ public abstract class StringUtils
     }
 
     /**
-     * Separates any capitalized text, such as "thisTest", 
+     * Uncapitalizes the begining of given text.
+     * @param input such input.
+     * @return the processed input.
+     * @precondition input != null
+     * @precondition input.length() > 1
+     */
+    public String unCapitalizeStart(final String input)
+    {
+        return input.substring(0, 1).toLowerCase() + input.substring(1);
+    }
+
+    /**
+     * Uncapitalizes given text, i.e. "thisTest"
      * to "this<code>separator</code>test".
      * @param input the input to process.
      * @param separator the separator.
@@ -1338,7 +1350,7 @@ public abstract class StringUtils
     }
 
     /**
-     * Separates any capitalized text, such as "thisTest", 
+     * Uncapitalizes given text, i.e. "thisTest"
      * to "this<code>separator</code>test".
      * @param input the input to process.
      * @param separator the separator.
