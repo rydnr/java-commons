@@ -152,6 +152,11 @@
           version="1.0.3"
           jar="commons-logging-1.0.3.jar"/>
 
+        <jarDependency
+          name="commons-beanutils"
+          version="1.7.0"
+          jar="commons-beanutils-1.7.0.jar"/>
+
       </greebo>
 
       <!-- Build dependencies -->

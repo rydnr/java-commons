@@ -8,7 +8,7 @@
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
     License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
+    version 2 of the License, or any later version.
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -127,7 +127,7 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
-    public boolean areEqual(int first, int second)
+    public boolean areEqual(final int first, final int second)
     {
         return (first == second);
     }
@@ -138,7 +138,7 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
-    public boolean areEqual(long first, long second)
+    public boolean areEqual(final long first, final long second)
     {
         return (first == second);
     }
@@ -149,7 +149,7 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
-    public boolean areEqual(float first, float second)
+    public boolean areEqual(final float first, final float second)
     {
         return (first == second);
     }
@@ -160,7 +160,7 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
-    public boolean areEqual(double first, double second)
+    public boolean areEqual(final double first, final double second)
     {
         return (first == second);
     }
@@ -171,7 +171,7 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
-    public boolean areEqual(Object first, Object second)
+    public boolean areEqual(final Object first, final Object second)
     {
         return
             (    (first == second)
@@ -179,31 +179,5 @@ public abstract class EqualityComparator
                   && (second != null)
                   && (first.equals(second))
                   && (second.equals(first))));
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -159,30 +159,6 @@ extends TestCase
     // JUnitDoclet end method iterator
   }
   
-  /**
-  * Tests ValueObjectPrimaryKeyTestgetVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.patterns.dao.ValueObjectPrimaryKey#getVersion()
-  */
-  public void testGetVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getVersion
-    // JUnitDoclet end method getVersion
-  }
-  
-  /**
-  * Tests ValueObjectPrimaryKeyTestgetClassVersion()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.patterns.dao.ValueObjectPrimaryKey#getClassVersion()
-  */
-  public void testGetClassVersion()
-  throws Exception
-  {
-    // JUnitDoclet begin method getClassVersion
-    // JUnitDoclet end method getClassVersion
-  }
-  
   
   
   /**

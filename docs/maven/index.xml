@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Fixed issue <a href="${issue.url}516">516</a>.<br/>
+            Released <b>0.5.5b8</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/10/06 04:25:26
+          </td>
+          <td>
             Fixed issue <a href="${issue.url}511">511</a>.<br/>
             Released <b>0.5.5b7</b>.
           </td>

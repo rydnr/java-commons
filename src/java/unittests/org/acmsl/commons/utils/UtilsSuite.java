@@ -111,6 +111,8 @@ public class UtilsSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.utils");
     
+    suite.addTestSuite(unittests.org.acmsl.commons.utils.ConversionUtilsTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
     
     suite.addTest(unittests.org.acmsl.commons.utils.http.HttpSuite.suite());
     suite.addTest(unittests.org.acmsl.commons.utils.io.IoSuite.suite());
@@ -121,7 +123,6 @@ public class UtilsSuite
     
     // JUnitDoclet begin method suite
     suite.addTestSuite(unittests.org.acmsl.commons.utils.StringUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
     // JUnitDoclet end method suite
     
     return suite;

@@ -161,7 +161,6 @@
           build.xml
         [..][/]
     build.number
-    deploy.number
     package.number
     test.number
  @requires AspectJ libraries and Ant tasks.
@@ -288,7 +287,6 @@
           build.xml
         [..][/]
     build.number
-    deploy.number
     package.number
     test.number
         </echo>
@@ -335,7 +333,7 @@
         <!--
          Requests CVS to perform the keyword clean substitution.
         -->
-        <cvs command="update -kv src/toolconf/ant/build.properties"/>
+        <!--cvs command="update -kv src/toolconf/ant/build.properties"/-->
 
         <!--
          Reads some specific properties from an external property file.
@@ -346,12 +344,12 @@
          Removes the build.properties file to get rid of the sticky
          keyword substitution setting.
         -->
-        <delete file="src/toolconf/ant/build.properties"/>
+        <!--delete file="src/toolconf/ant/build.properties"/-->
 
         <!--
          Restores build.properties state.
         -->
-        <cvs command="update -A src/toolconf/ant/build.properties"/>
+        <!--cvs command="update -A src/toolconf/ant/build.properties"/-->
 
         <!--
          Displays some project information.
@@ -1282,19 +1280,6 @@
           file="${jdk.X.Y.src.dir}"/>
 
         <!--
-         Checks if web.xml is available.
-        -->
-        <available property="web.xml.available" file="${web.xml.path}"/>
-
-        <!--
-         Checks if deploy.path is available.
-        -->
-        <available
-            property="deploy.path.available"
-            file="${deploy.path}"
-            type="dir"/>
-
-        <!--
          Checks if antlr.jar is available.
         -->
         <available property="antlr.jar.available" file="antlr.jar">
@@ -1822,54 +1807,6 @@
     </target>
 
     <!--
-     Checks if the <i>web.xml</i> file is present.
-     @depends init to initialize all required properties.
-     @unless web.xml exists, the process will fail.
-     @param web.xml.available the flag that indicates if such file is present.
-     @param web.xml.path the expected location of the <i>web.xml</i> file.
-     @calls fail to stop the process if <i>web.xml</i> is not present.
-     @return the execution ends if the <i>web.xml</i> is not available.
-    -->
-    <target
-        name="web.xml.available"
-        depends="init" 
-        unless="web.xml.available"
-        description="Checks if the web.xml file is present.">
-
-        <!--
-         Indicates the error message and exits.
-        -->
-        <fail message="Expecting web.xml at ${web.xml.path}.
-                       The process stops because the project doesn't seem to be
-                       deployable, or it's not correctly configured."/>
-    </target>
-
-    <!--
-     Checks if the <i>deploy.path</i> folder is present.
-     @depends init to initialize all required properties.
-     @unless deploy.path exists, the process will fail.
-     @param deploy.path.available the flag that indicates if such folder is
-            present.
-     @param deploy.path the expected location of the <i>deploy.path</i> folder.
-     @calls fail to stop the process if <i>deploy.path</i> is not present.
-     @return the execution ends if the <i>deploy.path</i> is not available.
-    -->
-    <target
-      name="deploy.path.available"
-      depends="init" 
-      unless="deploy.path.available"
-      description="Checks if deploy.path folder is present.">
-
-      <!--
-       Indicates the error message and exits.
-      -->
-      <fail message="Expecting deploy.path at ${deploy.path}.
-                     The process stops because the project doesn't seem to be
-                     deployable, or it's not correctly configured."/>
-
-    </target>
-
-    <!--
      Checks if the <i>project.jar</i> file is present.
      @depends init.properties to initialize all required properties.
      @param project.jar the expected location of the <i>project.jar</i> file.
@@ -2003,55 +1940,6 @@
        Deletes the ${antdoc.dir} folder.
       -->
       <delete dir="${antdoc.dir}"/>
-
-    </target>
-
-    <!--
-     Cleans up previous deployments.
-     @depends init to initialize all required properties.
-     @param web.xml.path the location of the web.xml file.
-     @param deploy.path the application server's webapps folder.
-    -->
-    <target
-      name="clean.war"
-      depends="init"
-      description="Removes any file or folder created during
-                                      deployment.">
-
-      <!--
-       Checks if web.xml is present.
-      -->
-      <available file="${web.xml.path}" property="web.xml.present"/>
-
-      <!--
-       Stops the build if the project is not web-based.
-      -->
-      <fail unless="web.xml.present">Project not deployable.</fail>
-
-      <!--
-       Checks if deploy path is correctly configured.
-      -->
-      <available
-        file="${deploy.path}"
-        type="dir"
-        property="deploy.path.present"/>
-
-      <!--
-       Stops the build otherwise.
-      -->
-      <fail unless="deploy.path.present">
-        deploy.path property not defined!
-      </fail>
-
-      <!--
-       Deletes the expanded application folder.
-      -->
-      <delete dir="${deploy.path}/${project.name}"/>
-
-      <!--
-       Deletes the application's already deployed WAR file.
-      -->
-      <delete file="${deploy.path}/${project.name}.war"/>
 
     </target>
 
@@ -2191,7 +2079,7 @@
 
       <mkdir dir="${javadoc.src.dir}"/>
 
-      <!--javadoc
+      <javadoc
         packagenames="${organization.type}.*"
         defaultexcludes="yes"
         classpathref="unit.test.class.path"
@@ -2199,16 +2087,16 @@
         docletpathref="java.development.class.path"
         additionalparam="-d ../../../${java.src.dir} -buildall -naming org.acmsl.junitdoclet.AcmslNamingStrategy -testintest">
 
-        <sourcepath-->
+        <sourcepath>
 
           <!-- ORDER MATTERS -->
-          <!--pathelement location="${javadoc.src.dir}"/>
+          <pathelement location="${javadoc.src.dir}"/>
 
           <path refid="java.source.and.javadoc.path"/>
 
         </sourcepath>
 
-    </javadoc-->
+    </javadoc>
   </target>
 
 <!--         END CODE GENERATION SECTION                                    -->
@@ -2448,27 +2336,6 @@
     </target>
 
     <!--
-     Updates how many times the project has been deployed.
-     @depends init.properties to initialize all required properties.
-     @param project.base.folder the project's root folder.
-     @calls build.number to increment the deployment number.
-     @return the deploy.number file has been updated, incrementing its number
-             by one.
-    -->
-    <target
-      name="update.deploy.number"
-      depends="init.properties"
-      description="Updates how many times the project has been
-                                    deployed.">
-
-      <!--
-       Updates the deployment count.
-      -->
-      <buildnumber file="${project.base.folder}/deploy.number"/>
-
-    </target>
-
-    <!--
      Updates how many times the project has been packaged.
      @depends init.properties to initialize all required properties.
      @param project.base.folder the project's root folder.
@@ -2618,149 +2485,127 @@
           basedir="${classes.dir}"
           manifest="${classes.dir}/META-INF/MANIFEST.MF"/>
 
+        <condition property="isUnix">
+          <os family="unix"/>
+        </condition>
+
+        <antcall target="_jar.copy"/>
+        <antcall target="_jar.symlink"/>
+
+    </target>
+
+    <!--
+     Copies project's latest jar file to files with no version in their name, so they can
+     be referred without explicit version information.
+     @depends init to define all properties.
+     @calls  copy to copy the file.
+     @return the new files.
+    -->
+    <target
+      name="_jar.copy"
+      depends="init"
+      description="Copies to version-less filenames the project's latest jar file."
+      unless="isUnix">
+
+        <property environment="env"/>
+
         <!--
          Copies such jar file to one with no build.number information
          in its name.
         -->
         <copy
-          file="${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
-          tofile="${build.dir}/${project.name}-${project.version}${project.status}.jar"/>
+          file="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          tofile="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}.jar"/>
+
+        <copy
+          file="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          tofile="${basedir}/${build.dir}/${project.name}.jar"/>
+
+        <condition property="maven.available.locally">
+          <available type="dir" file="${env.MAVEN_HOME}/repository"/>
+        </condition>
+
+        <antcall target="_jar.copy.to.maven"/>
 
     </target>
 
     <!--
-     Prepares the environment for creating the Web ARchive.
-     @depends clean.war to clean up previous Web ARchives.
-     @depends project.jar.available to ensure the project is already packaged.
-     @param deploy.path the deploy path.
-     @param project.name the project's name to build the WAR file.
-     @param web.xml.path the web.xml path.
-     @param build.dir the folder where to find the jar version of the project's
-            classes.
-     @param project.name the project's name.
-     @return the creation of the war file.
+     Copies the latest jar file to the local Maven repository, if it's installed.
+     @depends init to set required properties.
+     @param env.MAVEN_HOME/repository the local Maven repository
+     @calls copy to copy the new jar file to Maven.
+     @return the publishing of the jar file to Maven.
     -->
     <target
-      name="prepare.war"
-      depends="clean.war,project.jar.available"
-      description="Prepares the environment for creating the Web
-                                  ARchive.">
+      name="_jar.copy.to.maven"
+      depends="init"
+      description="Copies the latest jar file to the local Maven repository, if it's installed."
+      if="maven.available.locally">
 
-      <!--
-       Creates any missing folders
-      -->
-      <mkdir dir="${html.dir}"/>
-
-      <!--
-       Takes the needed classpath into a single property.
-      -->
-      <property name="war.libs" refid="runtime.class.path"/>
-
-      <!--
-       Takes the needed configuration files into a single property.
-      -->
-      <property name="war.conf" refid="configuration.path"/>
+        <copy
+          file="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          tofile="${env.MAVEN_HOME}/repository/${project.name}/jars/${project.name}-${project.version}${project.status}.jar"/>
 
     </target>
 
     <!--
-     Creates the Web ARchive with the application, after cleaning up
-     previous deployments.
-     @depends clean.war to clean up previous Web ARchives.
-     @param deploy.path the deploy path.
-     @param project.name the project's name to build the WAR file.
-     @param web.xml.path the web.xml path.
-     @param build.dir the folder where to find the jar version of the project's
-            classes.
-     @param project.name the project's name.
-     @param war.lib.temp.dir the temporary folder where to copy the required
-            libraries.
-     @param war.temp.script.path the path of the temporary script used to
-            copy the correct libraries to the <i>war.lib.temp.dir</> folder.
-     @calls war to actually create the war file.
-     @return the creation of the war file.
+     Creates sumbolic links for project's latest jar file.
+     @depends init to define all properties.
+     @calls symlink to declare the symbolic links.
+     @return the new links.
     -->
     <target
-      name="war"
-      depends="prepare.war"
-      description="Creates the Web ARchive.">
+      name="_jar.symlink"
+      depends="init"
+      description="Creates symbolic links for project's latest jar file."
+      if="isUnix">
 
-      <taskdef
-        name="warpath"
-        classname="org.acmsl.webextension.WarPath"
-        classpathref="java.development.class.path"/>
-
-      <!--
-       Creates the war file.
-      -->
-      <warpath
-        warfile="${deploy.path}/${project.name}.war"
-        webxml="${web.xml.path}"
-        copyfoldercontents="true">
-
-        <libpath>
-
-          <path refid="java.libonly.runtime.class.path"/>
-
-          <pathelement
-          location="${build.dir}/${project.name}-${project.version}${project.status}.jar"/>
-
-        </libpath>
+        <property environment="env"/>
 
         <!--
-         HTML are stored inside /${html.prefix}
+         Creates symlinks for latest jar file.
         -->
-        <zipfileset dir="${html.dir}" prefix="${html.war.prefix}"/>
+        <symlink
+          action="single"
+          overwrite="true"
+          resource="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          link="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}.jar"/>
 
-        <!--
-         JSPs are stored inside /${jsp.prefix}
-        -->
-        <zipfileset dir="${jsp.dir}" prefix="${jsp.war.prefix}">
-          <include name="**/*.jsp"/>
-          <exclude name="WEB-INF/web.xml"/>
-        </zipfileset>
+        <symlink
+          action="single"
+          overwrite="true"
+          resource="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          link="${basedir}/${build.dir}/${project.name}.jar"/>
 
-        <!--
-         Images are stored inside /${images.prefix}
-        -->
-        <zipfileset
-          dir="${web.images.dir}"
-          prefix="${images.war.prefix}"/>
+        <condition property="maven.available.locally">
+          <available type="dir" file="${env.MAVEN_HOME}/repository"/>
+        </condition>
 
-        <!--
-         Stylesheets are stored inside /${css.prefix}
-        -->
-        <zipfileset
-          dir="${web.css.dir}"
-          prefix="${css.war.prefix}"/>
-
-        <!--
-         Include all configuration files into the classes folder.
-        -->
-        <classespath refid="configuration.path"/>
-
-        <!--
-         As well as descriptors, under WEB-INF.
-        -->
-        <webinf dir="${web-inf.dir}">
-
-          <include name="*"/>
-          <exclude name="web.xml"/>
-
-        </webinf>
-
-        <!--
-         Tlds are stored inside /WEB-INF/${tld.prefix}
-        -->
-        <zipfileset dir="${tld.dir}" prefix="WEB-INF/${tld.war.prefix}">
-
-          <include name="*.tld"/>
-
-        </zipfileset>
-
-      </warpath>
+        <antcall target="_jar.symlink.to.maven"/>
 
     </target>
+
+    <!--
+     Creates symlinks to the latest jar file in the local Maven repository, if it's installed.
+     @depends init to set required properties.
+     @param env.MAVEN_HOME/repository the local Maven repository
+     @calls symlink to create the symlink to the new jar file in Maven.
+     @return the publishing of the jar file to Maven.
+    -->
+    <target
+      name="_jar.symlink.to.maven"
+      depends="init"
+      description="Creates symlinks to the latest jar file in the local Maven repository, if it's installed."
+      if="maven.available.locally">
+
+        <symlink
+          action="single"
+          overwrite="true"
+          resource="${basedir}/${build.dir}/${project.name}-${project.version}${project.status}-${build.number}.jar"
+          link="${env.MAVEN_HOME}/repository/${project.name}/jars/${project.name}-${project.version}${project.status}.jar"/>
+
+    </target>
+
 <!--         END JAR/WAR/EAR CREATION TASKS SECTION                         -->
 
 <!--         BEGIN API GENERATION TASKS SECTION                             -->
@@ -2815,12 +2660,16 @@
 
           </sourcepath>
 
-          <bottom><![CDATA[<i>Copyright &#169; 2003 ACM S.L.</i>]]></bottom>
+          <bottom><![CDATA[<i>Copyright &#169; 2004 ACM S.L.</i>]]></bottom>
 
+          <tag
+            name="precondition"
+            scope="all"
+            description="Preconditions: "/>
           <tag
             name="todo"
             scope="all"
-            description="To do:"/>
+            description="WARNING (not finished):"/>
           <tag
             name="testfamily"
             scope="all"
@@ -2931,17 +2780,21 @@
         depends="junitdoclet"
         description="Executes all defined unit tests.">
 
+        <property name="unit-test-path" refid="unit.test.class.path"/>
+
+        <echo message="${unit-test-path}"/>
+
         <!--
          Actual JUnit invokation.
         -->
         <java
-          fork="true"
-          classname="${junit.runner.classname}"
-          taskname="JUnit"
-          failonerror="true"
-          classpathref="unit.test.class.path">
+            fork="true"
+            classname="${junit.runner.classname}"
+            taskname="JUnit"
+            failonerror="true"
+            classpathref="unit.test.class.path">
 
-          <arg value="${project.base.suite}"/>
+            <arg value="${project.base.suite}"/>
 
         </java>
 
@@ -3039,33 +2892,6 @@
 
     </target>
 
-    <!--
-     Debugs defined unit tests.
-     @depends junitdoclet to manage the unit tests.
-     @param project.base.suite the JUnit suite that contains all tests.
-     @param classpath the classpath.
-     @param project.build the project compiled classes.
-     @calls java to invoke the JUnit framework.
-     @return the debugging environment.
-    -->
-    <target
-        name="debug.unit.tests"
-        depends="junitdoclet"
-        description="DEbugs defined unit tests.">
-
-        <property name="unit-test-path" refid="unit.test.class.path"/>
-
-        <echo message="${unit-test-path}"/>
-
-        <!--
-         Debug unit tests.
-        -->
-        <exec executable="java">
-          <arg line="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -cp ${unit-test-path} ${junit.runner.classname} ${project.base.suite}"/>
-        </exec>
-
-    </target>
-
 <!--         END DEBUG TASKS SECTION                                        -->
 
 <!--         BEGIN REBUILD TASKS SECTION                                    -->
@@ -3120,34 +2946,6 @@
         description="Rebuilds the classes and executes the tests."/>
 
 <!--         END REBUILD TASKS SECTION                                      -->
-
-<!--         BEGIN DEPLOY TASKS SECTION                                     -->
-
-    <!--
-     Deploys the application from scratch.
-     @depends rebuild to rebuild the application from scratch.
-     @depends war to package the application into a stand-alone war file.
-     @return the clean deployment of the web application.
-    -->
-    <target
-        name="deploy"
-        depends="rebuild, update.deploy.number, war"
-        description="Deploys the application from scratch."/>
-
-    <!--
-     Deploys the application from scratch, with optimizations.
-     @depends rebuild.final to rebuild the application from scratch, with
-              optimizations.
-     @depends war to package the application into a stand-alone war file.
-     @return the clean and deployment of the optimized web application.
-    -->
-    <target
-        name="deploy.final"
-        depends="rebuild.final, update.package.number, war"
-        description="Deploys the application from scratch, with
-                                     optimizations."/>
-
-<!--         END DEPLOY TASKS SECTION                                       -->
 
 <!--         BEGIN PROJECT PACKAGING TASKS SECTION                          -->
 
@@ -3555,9 +3353,6 @@ junit.runner.classname=junit.swingui.TestRunner
 
 # Project base JUnit suite.
 project.base.suite=
-
-# Deploy path
-deploy.path=$${TOMCAT_HOME}/webapps
         </echo>
 
         <!--
@@ -3565,13 +3360,6 @@ deploy.path=$${TOMCAT_HOME}/webapps
         -->
         <echo
             file="${new.project.base.folder}/src/toolconf/packaged.number"
-            message="build.number=0"/>
-
-        <!--
-               Initializes the deployment count.
-        -->
-        <echo
-            file="${new.project.base.folder}/src/toolconf/deployed.number"
             message="build.number=0"/>
 
         <!--
@@ -3811,104 +3599,6 @@ deploy.path=$${TOMCAT_HOME}/webapps
     </target>
 
 <!--         END ANTLR TASK SECTION                                         -->
-
-<!--         BEGIN WEBEXTENSION TASK SECTION                                -->
-
-    <!--
-     Executes the webextension plugin.
-     @depends prepare.war to actually build WebExtension library.
-     @return the execution of the WebExtension mechanism.
-    -->
-    <target
-        name="webextension"
-        depends="prepare.war">
-
-        <!--
-         Definition of the WebExtension task.
-        -->
-        <taskdef
-            name="webextension"
-            classname="org.acmsl.webextension.WebExtension"
-            classpathref="runtime.class.path"/>
-
-        <!--
-         Actual WebExtension invocation.
-        -->
-        <webextension
-            warfile="${deploy.path}/${project.name}.war"
-            webxml="${web.xml.path}"
-            libpathref="runtime.class.path"
-            mapping="webext">
-
-            <!--
-             Includes the runtime class path.
-            <libpath refid="runtime.class.path"/>
-            -->
-
-            <!--
-             Include all configuration files into the classes folder.
-            -->
-            <classespath refid="configuration.path"/>
-
-            <!--
-             HTML are stored inside /${html.prefix}
-            -->
-            <zipfileset dir="${html.dir}" prefix="${html.war.prefix}"/>
-
-            <!--
-             JSPs are stored inside /${jsp.prefix}
-            -->
-            <zipfileset dir="${jsp.dir}" prefix="${jsp.war.prefix}"/>
-
-            <!--
-             Images are stored inside /${images.prefix}
-            -->
-            <zipfileset
-                dir="${web.images.dir}"
-                prefix="${images.war.prefix}"/>
-
-        </webextension>
-
-    </target>
-
-<!--         END WEBEXTENSION TASK SECTION                                  -->
-
-<!--         BEGIN COPYPATH TASK SECTION                                    -->
-
-    <!--
-     Executes the CopyPath plugin.
-     @depends project.jar.available to actually build CopyPath library.
-     @return the execution of the CopyPath task.
-    -->
-    <target
-      name="copypath"
-      depends="project.jar.available">
-
-        <!--
-         Definition of the CopyPath task.
-        -->
-        <taskdef
-            name="copypath"
-            classname="org.acmsl.webextension.CopyPath"
-            classpathref="runtime.class.path"/>
-
-        <property
-            name="java-compile-class-path"
-            refid="java.compile.class.path"/>
-
-        <echo message="${java-compile-class-path}"/>
-
-        <!--
-         Actual WebExtension invocation.
-        -->
-        <copypath
-            copyfoldercontents="false"
-            sourcepathref="java.compile.class.path"
-            toDir="/tmp/copypath/abc"/>
-
-    </target>
-
-<!--         END COPYPATH TASK SECTION                                      -->
 
 <!--         BEGIN AUTOCONF SECTION                                         -->
 
