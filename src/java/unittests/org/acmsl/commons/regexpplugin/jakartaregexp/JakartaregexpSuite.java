@@ -106,12 +106,12 @@ public class JakartaregexpSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.regexpplugin.jakartaregexp");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatchResultRegexpAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngineTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.PatternRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngineTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatchResultRegexpAdapterTest.class);
     
     
     

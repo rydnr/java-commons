@@ -52,7 +52,6 @@ package unittests.org.acmsl.commons.version;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Importing JUnit classes.
@@ -105,36 +104,10 @@ public class VersionTest
      */
     public void testGetValue()
     {
-        Version t_Version = new Version(VERSION.getVersionInformation()) {};
+        Version t_Version = new Version("1.3");
 
-        assertTrue(
-            t_Version.getVersionInformation().equals(
-                VERSION.getVersionInformation()));
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
+        assertEquals(
+            "1.3",
+            t_Version.getVersionInformation());
     }
 }

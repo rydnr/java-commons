@@ -106,6 +106,7 @@ public class VersionSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.version");
     
+    suite.addTestSuite(unittests.org.acmsl.commons.version.VersionTest.class);
     
     
     

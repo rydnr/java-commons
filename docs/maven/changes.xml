@@ -6,10 +6,19 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_6"
+      version="commons-0_5_7b1"
       date="$Date$"
       description="Refactoring">
       <action dev="$Author$" type="update">
+        Minor <a href="${issue.url}570">refactoring</a>, on
+        Version package.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_6"
+      date="2004/12/01 08:50:26"
+      description="Refactoring">
+      <action dev="chous" type="update">
         Removed all <a href="${issue.url}562">hard links to Version API</a>, since
         they are managed by <a href="http://www.acm-sl.org/antversion">AntVersion</a>
         from now on.

@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Minor <a href="${issue.url}570">refactoring</a> on <i>Version</i> package.
+            Released <b>0.5.7b1</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/12/01 08:50:26
+          </td>
+          <td>
             Removed all <a href="${issue.url}562">hard links to Version API</a>, since
             they are managed by <a href="http://www.acm-sl.org/antversion">AntVersion</a>
             from now on.<br/>

@@ -52,7 +52,6 @@ package org.acmsl.commons.version;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents objects suitable to be queried for version
@@ -69,11 +68,4 @@ public interface Versionable
      * @return the version object with such information.
      */
     public Version getVersion();
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

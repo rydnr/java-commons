@@ -106,11 +106,11 @@ public class Jdk14regexpSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.regexpplugin.jdk14regexp");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatchResultJDKAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngineTest.class);
     
     

@@ -108,8 +108,8 @@ public class PatternsSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.patterns");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.SubjectTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.patterns.ArrayListChainAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.patterns.SubjectTest.class);
     
     suite.addTest(unittests.org.acmsl.commons.patterns.dao.DaoSuite.suite());
     suite.addTest(unittests.org.acmsl.commons.patterns.mvc.MvcSuite.suite());

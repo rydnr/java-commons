@@ -49,11 +49,6 @@
  */
 package org.acmsl.commons.version;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Versionable;
-
 /**
  * Is included in all classes in which version information is
  * susceptible of being requested.
@@ -61,8 +56,7 @@ import org.acmsl.commons.version.Versionable;
            >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public abstract class Version
-    implements  Versionable
+public class Version
 {
     /**
      * Actual version information.
@@ -77,17 +71,18 @@ public abstract class Version
     /**
      * Constructs a Version object with given information.
      * @param versionInfo the information about the version.
+     * @precondition versionInfo != null
      */
-    public Version(String versionInfo)
+    public Version(final String versionInfo)
     {
-        inmutableSetVersionInformation(versionInfo);
+        immutableSetVersionInformation(versionInfo);
     }
 
     /**
      * Specifies the version information.
      * @param versionInfo the new version.
      */
-    private void inmutableSetVersionInformation(String versionInfo)
+    private void immutableSetVersionInformation(final String versionInfo)
     {
         m__strVersionInformation = versionInfo;
     }
@@ -96,9 +91,9 @@ public abstract class Version
      * Specifies the version information.
      * @param versionInfo the new version.
      */
-    protected void setVersionInformation(String versionInfo)
+    protected void setVersionInformation(final String versionInfo)
     {
-        inmutableSetVersionInformation(versionInfo);
+        immutableSetVersionInformation(versionInfo);
     }
 
     /**
@@ -108,31 +103,5 @@ public abstract class Version
     public String getVersionInformation()
     {
         return m__strVersionInformation;
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -18,12 +18,16 @@
             <li>Model stateful behaviours via a new package called
               <i>automata</i>.
             </li>
-            <li>0.5.5b14<br/>
+            <li>0.5.7b2<br/>
               Fix <a href="${issue.url}37"
               >StringUtils and FileUtils share almost the same method,
               packageToPath</a>, and
               <a href="${issue.url}110"
               >FileUtils#copy doesn't work for binary files</a>.
+            </li>
+            <li>0.5.7b1<br/>
+              <a href="${issue.url}570">Refactor</a> Version package
+              to avoid unnecessary CVS dependency.
             </li>
           </ul>
         </p>

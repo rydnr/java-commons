@@ -55,7 +55,6 @@ import unittests.org.acmsl.commons.utils.http.HttpSuite;
 import unittests.org.acmsl.commons.utils.io.IoSuite;
 import unittests.org.acmsl.commons.utils.net.NetSuite;
 import unittests.org.acmsl.commons.utils.regexp.RegexpSuite;
-import unittests.org.acmsl.commons.utils.version.VersionSuite;
 
 
 /*
@@ -118,7 +117,6 @@ public class UtilsSuite
     suite.addTest(unittests.org.acmsl.commons.utils.io.IoSuite.suite());
     suite.addTest(unittests.org.acmsl.commons.utils.net.NetSuite.suite());
     suite.addTest(unittests.org.acmsl.commons.utils.regexp.RegexpSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.version.VersionSuite.suite());
     
     
     // JUnitDoclet begin method suite
