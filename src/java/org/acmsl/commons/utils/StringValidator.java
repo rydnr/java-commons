@@ -126,36 +126,10 @@ public abstract class StringValidator
      * @param value the string to be checked.
      * @return true whenever given value is empty or null.
      */
-    public boolean isEmpty(String value)
+    public boolean isEmpty(final String value)
     {
         return
             (   (value == null)
              || (value.trim().length() == 0));
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

@@ -848,8 +848,8 @@ public abstract class StringUtils
 
         try
         {
-            if  (   (text      != null)
-                 && (words     != null))
+            if  (   (text != null)
+                 && (words != null))
             {
                 Helper t_Helper = RegexpManager.createHelper();
 
@@ -1552,5 +1552,75 @@ public abstract class StringUtils
         }
 
         return result;
+    }
+
+    /**
+     * Trims start and end lines, if they contain nothing but spaces.
+     * @param text the text to trim.
+     * @return the trimmed text.
+     * @precondition text != null
+     */
+    public String removeFirstAndLastBlankLines(final String text)
+    {
+        return
+            removeFirstAndLastBlankLines(text, StringValidator.getInstance());
+    }
+
+    /**
+     * Trims start and end lines, if they contain nothing but spaces.
+     * @param text the text to trim.
+     * @param stringValidator the StringValidator instance.
+     * @return the trimmed text.
+     * @precondition text != null
+     * @precondition stringValidator != null
+     */
+    protected String removeFirstAndLastBlankLines(
+        final String text, final StringValidator stringValidator)
+    {
+        StringBuffer result = new StringBuffer();
+
+        StringTokenizer t_StringTokenizer =
+            new StringTokenizer(text, "\n", false);
+
+        String t_strFirstLine = null;
+        String t_strLastLine = null;
+        String t_strCurrentLine = null;
+
+        while  (t_StringTokenizer.hasMoreTokens())
+        {
+            t_strCurrentLine = t_StringTokenizer.nextToken();
+
+            if  (t_strFirstLine == null)
+            {
+                t_strFirstLine = t_strCurrentLine;
+            }
+            else if  (t_StringTokenizer.hasMoreTokens())
+            {
+                result.append(t_strCurrentLine);
+                result.append("\n");
+            }
+        }
+
+        t_strLastLine = t_strCurrentLine;
+
+        if  (stringValidator.isEmpty(t_strFirstLine))
+        {
+            t_strFirstLine = t_strFirstLine.trim();
+        }
+        else
+        {
+            t_strFirstLine += "\n";
+        }
+
+        if  (stringValidator.isEmpty(t_strLastLine))
+        {
+            t_strLastLine = t_strLastLine.trim();
+        }
+        else if  (text.endsWith("\n"))
+        {
+            t_strLastLine += "\n";
+        }
+
+        return t_strFirstLine + result + t_strLastLine;
     }
 }

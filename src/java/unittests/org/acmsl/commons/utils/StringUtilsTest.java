@@ -302,4 +302,31 @@ public class StringUtilsTest
 
         assertEquals(1, t_iOutput);
     }
+
+    /**
+     * Tests the StringUtils.removeFirstAndLastBlankLines(text) method.
+     * @see StringUtils#removeFirstAndLastBlankLines(String)
+     */
+    public void testRemoveFirstAndLastBlankLines()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = " line 1   \n    and line 2";
+
+        String t_strOutput =
+            t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
+
+        assertEquals(t_strInput, t_strOutput);
+
+        t_strInput = " \nline 1   \n    and line 2\n     ";
+
+        t_strOutput =
+            t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
+
+        System.out.println("~" + t_strOutput + "~");
+
+        assertEquals("line 1   \n    and line 2\n", t_strOutput);
+    }
 }
