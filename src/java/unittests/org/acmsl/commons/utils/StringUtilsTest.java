@@ -166,6 +166,42 @@ public class StringUtilsTest
             t_strJustified);
     }
 
+
+    /**
+     * Tests the StringUtils.uncapitalize(text, separator) method.
+     * @see StringUtils#uncapitalize(String,String)
+     */
+    public void testUncapitalize()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = "thisIsATest";
+
+        String t_strUnCapitalized =
+            t_StringUtils.unCapitalize(t_strInput, "-");
+
+        assertEquals(
+            "this-is-a-test", t_strUnCapitalized);
+
+        t_strInput = "thisIsAnotherTest";
+
+        t_strUnCapitalized =
+            t_StringUtils.unCapitalize(t_strInput, "-");
+
+        assertEquals(
+            "this-is-another-test", t_strUnCapitalized);
+
+        t_strInput = "this Is yetAnotherTest";
+
+        t_strUnCapitalized =
+            t_StringUtils.unCapitalize(t_strInput, "-");
+
+        assertEquals(
+            "this -is yet-another-test", t_strUnCapitalized);
+    }
+
     /**
      * Concrete version object updated everytime it's checked-in in a CVS
      * repository.

@@ -166,7 +166,7 @@
         <jarDependency
           name="gnu-regexp"
           version="1.1.4"
-          jar="gnu-regexp-1.1.3.jar"/>
+          jar="gnu-regexp-1.1.4.jar"/>
 
         <jarDependency
           name="junit"
@@ -183,6 +183,11 @@
           version="1.2"
           jar="regexp-1.2.jar"/>
 
+        <jarDependency
+          name="servletapi"
+          version="2.3"
+          jar="servletapi-2.3.jar"/>
+
       </greebo>
 
       <!-- Development dependencies -->
@@ -196,8 +201,8 @@
 
         <jarDependency
           name="junitdoclet"
-          version="1.0.3"
-          jar="junitdoclet-acmsl-1.0.3.jar"/>
+          version="1.0.2"
+          jar="junitdoclet-acmsl-1.0.2.jar"/>
 
         <jarDependency
           name="antmake"
@@ -210,17 +215,17 @@
           jar="contractchecker-0.4.7.jar"/>
 
         <jarDependency
-          name="aspectjrt"
+          name="aspectj"
           version="1.2"
           jar="aspectjrt-1.2.jar"/>
 
         <jarDependency
-          name="aspectjtools"
+          name="aspectj"
           version="1.2"
           jar="aspectjtools-1.2.jar"/>
 
         <jarDependency
-          name="ant-doxygen"
+          name="ant"
           version="1.4"
           jar="ant_doxygen-1.4.jar"/>
 
@@ -236,7 +241,7 @@
 
       </greebo>
 
-      <!-- Runtime dependencies -->
+      <!-- Runtime dependencies
       <greebo dir="${dependencies.lib.java.runtime.dir}">
         <repository
           url="file:///${maven.dependencies.path}"
@@ -246,6 +251,7 @@
         <repository url="http://www.ibiblio.org/maven" type="maven"/>
 
       </greebo>
+      <-->
 
       <!-- Unit test dependencies -->
       <greebo dir="${dependencies.lib.java.unittest.dir}">
@@ -259,7 +265,7 @@
         <jarDependency
           name="gnu-regexp"
           version="1.1.4"
-          jar="gnu-regexp-1.1.3.jar"/>
+          jar="gnu-regexp-1.1.4.jar"/>
 
         <jarDependency
           name="junit"
