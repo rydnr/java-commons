@@ -54,9 +54,6 @@ package org.acmsl.commons.patterns.dao;
  */
 import org.acmsl.commons.patterns.dao.ValueObjectField;
 import org.acmsl.commons.patterns.dao.ValueObjectFieldIterator;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Importing some JDK classes.
@@ -71,7 +68,6 @@ import java.util.Iterator;
  * @version $Revision$
  */
 public class ValueObjectPrimaryKey
-    implements  Versionable
 {
     /**
      * Field collection.
@@ -133,39 +129,5 @@ public class ValueObjectPrimaryKey
         {
             return (ValueObjectField) m__Iterator.next();
         }
-
-        /**
-         * Retrieves the version.
-         * @return the current version.
-         */
-        public Version getVersion()
-        {
-            return this.VERSION;
-        }
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the version.
-     * @return the current version.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the class version.
-     * @return the current version of the class.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

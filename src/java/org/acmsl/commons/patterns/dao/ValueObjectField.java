@@ -55,9 +55,6 @@ import org.acmsl.commons.patterns.dao.ValueObjectFieldFormatter;
 import org.acmsl.commons.patterns.dao.IntFormatter;
 import org.acmsl.commons.patterns.dao.LongFormatter;
 import org.acmsl.commons.patterns.dao.StringFormatter;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents any information stored inside a value object.
@@ -66,7 +63,6 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public class ValueObjectField
-    implements  Versionable
 {
     /**
      * Field name.
@@ -84,19 +80,19 @@ public class ValueObjectField
      * @param formatter the entity able to format this field correctly.
      */
     public ValueObjectField(
-        java.lang.String name,
-        ValueObjectFieldFormatter formatter)
+        final java.lang.String name,
+        final ValueObjectFieldFormatter formatter)
     {
-        inmutableSetName(name);
+        immutableSetName(name);
 
-        inmutableSetFormatter(formatter);
+        immutableSetFormatter(formatter);
     }
 
     /**
      * Sets field's name.
      * @param name the name of the field.
      */
-    private void inmutableSetName(java.lang.String name)
+    private void immutableSetName(java.lang.String name)
     {
         m__strName = name;
     }
@@ -107,7 +103,7 @@ public class ValueObjectField
      */
     protected void setName(java.lang.String name)
     {
-        inmutableSetName(name);
+        immutableSetName(name);
     }
 
     /**
@@ -123,7 +119,8 @@ public class ValueObjectField
      * Sets the formatter.
      * @param formatter the formatter itself.
      */
-    private void inmutableSetFormatter(ValueObjectFieldFormatter formatter)
+    private void immutableSetFormatter(
+        final ValueObjectFieldFormatter formatter)
     {
         m__Formatter = formatter;
     }
@@ -132,9 +129,10 @@ public class ValueObjectField
      * Sets the formatter.
      * @param formatter the formatter itself.
      */
-    protected void setFormatter(ValueObjectFieldFormatter formatter)
+    protected void setFormatter(
+        final ValueObjectFieldFormatter formatter)
     {
-        inmutableSetFormatter(formatter);
+        immutableSetFormatter(formatter);
     }
 
     /**
@@ -152,7 +150,18 @@ public class ValueObjectField
      */
     public java.lang.String toString()
     {
-        return m__Formatter.format(this);
+        return toString(getFormatter());
+    }
+
+    /**
+     * Formats the field in a correct way.
+     * @param formatter the formatter.
+     * @return this field in String format.
+     * @precondition formatter != null
+     */
+    protected java.lang.String toString(final ValueObjectFieldFormatter formatter)
+    {
+        return formatter.format(this);
     }
 
     /**
@@ -170,19 +179,28 @@ public class ValueObjectField
          * Constructs a field using given name.
          * @param name the name of the field.
          */
-        public Int(java.lang.String name, int value)
+        public Int(final java.lang.String name, final int value)
         {
             super(name, IntFormatter.getInstance());
-            setValue(value);
+            immutableSetValue(value);
         }
 
         /**
          * Sets the value.
          * @param value the value
          */
-        private void setValue(int value)
+        private void immutableSetValue(final int value)
         {
             m__iValue = value;
+        }
+
+        /**
+         * Sets the value.
+         * @param value the value
+         */
+        protected void setValue(final int value)
+        {
+            immutableSetValue(value);
         }
 
         /**
@@ -214,20 +232,30 @@ public class ValueObjectField
          * @param name the name of the field.
          * @param value field's value.
          */
-        public String(java.lang.String name, java.lang.String value)
+        public String(
+            final java.lang.String name, final java.lang.String value)
         {
             super(name, StringFormatter.getInstance());
 
-            setValue(value);
+            immutableSetValue(value);
         }
 
         /**
          * Sets the value.
          * @param value the value
          */
-        private void setValue(java.lang.String value)
+        private void immutableSetValue(final java.lang.String value)
         {
             m__strValue = value;
+        }
+
+        /**
+         * Sets the value.
+         * @param value the value
+         */
+        protected void setValue(final java.lang.String value)
+        {
+            immutableSetValue(value);
         }
 
         /**
@@ -259,19 +287,28 @@ public class ValueObjectField
          * @param name the name of the field.
          * @param value field's value.
          */
-        public Long(java.lang.String name, long value)
+        public Long(final java.lang.String name, final long value)
         {
             super(name, LongFormatter.getInstance());
-            setValue(value);
+            immutableSetValue(value);
         }
 
         /**
          * Sets the value.
          * @param value the value
          */
-        private void setValue(long value)
+        private void immutableSetValue(final long value)
         {
             m__lValue = value;
+        }
+
+        /**
+         * Sets the value.
+         * @param value the value
+         */
+        protected void setValue(final long value)
+        {
+            immutableSetValue(value);
         }
 
         /**
@@ -282,30 +319,5 @@ public class ValueObjectField
         {
             return m__lValue;
         }
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the version.
-     * @return the current version.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the class version.
-     * @return the current version of the class.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }

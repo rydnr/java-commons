@@ -34,7 +34,7 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description:	Knows how to iterate over ValueObjectField elements.
+ * Description: Knows how to iterate over ValueObjectField elements.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -52,9 +52,6 @@ package org.acmsl.commons.patterns.dao;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Knows how to iterate over ValueObjectField elements.
@@ -64,7 +61,6 @@ import org.acmsl.commons.version.VersionFactory;
  * @version $Revision$
  */
 public interface ValueObjectFieldIterator
-    extends  Versionable
 {
     /**
      * Checks whether there's more fields to browse or not.
@@ -77,11 +73,4 @@ public interface ValueObjectFieldIterator
      * @return the next field.
      */
     public ValueObjectField next();
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }
