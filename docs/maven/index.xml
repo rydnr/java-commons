@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Added missing <i>package.html</i> files for <b>RegexpPlugin</b> packages (#33).<br/>
+            Released <b>0.5.5b13</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/12/01 07:31:40
+          </td>
+          <td>
             Converted <i>RegexpManager</i> (#31) into a lightweight façade to access
             <i>RegexpEngine</i> instances, using a mechanism adapted from
             <a href="http://jakarta.apache.org/commons/logging/">Commons-Logging</a>'s <i>LogFactory</i>.<br/>
