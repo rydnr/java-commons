@@ -141,6 +141,7 @@ public class EnglishGrammarUtils
         put("water", "water", map);
         put("fish", "fish", map);
         put("role", "roles", map);
+        put("attribute", "attributes", map);
     }
 
     /**

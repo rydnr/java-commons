@@ -195,6 +195,8 @@ extends TestCase
         assertEquals(t_EnglishGrammarUtils.getPlural("CUSTOMER"), "CUSTOMERS");
         assertEquals(t_EnglishGrammarUtils.getPlural("role"), "roles");
         assertEquals(t_EnglishGrammarUtils.getPlural("ROLE"), "ROLES");
+        assertEquals(t_EnglishGrammarUtils.getPlural("attribute"), "attributes");
+        assertEquals(t_EnglishGrammarUtils.getPlural("ATTRIBUTE"), "ATTRIBUTES");
     // JUnitDoclet end method getPlural
   }
   
@@ -231,6 +233,8 @@ extends TestCase
         assertEquals(t_EnglishGrammarUtils.getSingular("CUSTOMERS"), "CUSTOMER");
         assertEquals(t_EnglishGrammarUtils.getSingular("roles"), "role");
         assertEquals(t_EnglishGrammarUtils.getSingular("ROLES"), "ROLE");
+        assertEquals(t_EnglishGrammarUtils.getSingular("attributes"), "attribute");
+        assertEquals(t_EnglishGrammarUtils.getSingular("ATTRIBUTES"), "ATTRIBUTE");
     // JUnitDoclet end method getSingular
   }
   
