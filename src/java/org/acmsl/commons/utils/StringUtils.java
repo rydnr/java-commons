@@ -236,7 +236,7 @@ public abstract class StringUtils
                             boolean t_bCaseSensitive = t_Compiler.isCaseSensitive();
                             t_Compiler.setCaseSensitive(true);
                             result.immutableSetUnCapitalizePattern(
-                                t_Compiler.compile("\\s*([^A-Z]*)([A-Z]?)?(.*)"));
+                                t_Compiler.compile("\\s*([^A-Z\\s]*)\\s*([A-Z]?)?(.*)"));
                             t_Compiler.setCaseSensitive(t_bCaseSensitive);
                         }
                         catch  (final MalformedPatternException exception)
@@ -1334,8 +1334,7 @@ public abstract class StringUtils
                 separator,
                 StringValidator.getInstance(),
                 getUnCapitalizePattern(),
-                RegexpManager.createMatcher(),
-                RegexpManager.createHelper());
+                RegexpManager.createMatcher());
     }
 
     /**
@@ -1346,22 +1345,19 @@ public abstract class StringUtils
      * @param stringValidator the StringValidator instance.
      * @param pattern the regexp pattern to use.
      * @param matcher the matcher instance to use.
-     * @param helper the helper.
      * @return the processed input.
      * @precondition input != null
      * @precondition separator != null
      * @precondition stringValidator != null
      * @precondition pattern != null
      * @precondition matcher != null
-     * @precondition helper != null
      */
     protected String unCapitalize(
         final String input,
         final String separator,
         final StringValidator stringValidator,
         final Pattern pattern,
-        final Matcher matcher,
-        final Helper helper)
+        final Matcher matcher)
     {
         StringBuffer t_sbResult = new StringBuffer();
 
@@ -1387,17 +1383,20 @@ public abstract class StringUtils
                         t_sbResult.append(t_strCurrentWord);
                     }
 
+                    // the rest is parsed next.
+                    t_strTextToProcess = t_MatchResult.group(3);
+
+                    if  (!stringValidator.isEmpty(t_strTextToProcess))
+                    {
+                        t_sbResult.append(separator);
+                    }
+
                     String t_strUpperCaseLetter = t_MatchResult.group(2);
 
                     if  (!stringValidator.isEmpty(t_strUpperCaseLetter))
                     {
-                        t_sbResult.append(separator);
-
                         t_sbResult.append(t_strUpperCaseLetter.toLowerCase());
                     }
-
-                    // the rest is parsed next.
-                    t_strTextToProcess = t_MatchResult.group(3);
                 }
             }
 
@@ -1417,7 +1416,7 @@ public abstract class StringUtils
                 "Cannot find any regexp engine.", exception);
         }
 
-        return helper.replaceAll(t_sbResult.toString(), "\\s+", separator);
+        return t_sbResult.toString();
     }
 
     /**
