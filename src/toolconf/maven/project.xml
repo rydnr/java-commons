@@ -22,7 +22,7 @@
   </description>
 
   <url>http://maven.acm-sl.org/commons/</url>
-  <logo>http://maven.acm-sl.org/images/commons.png</logo>
+  <!--logo>http://maven.acm-sl.org/images/commons.png</logo-->
   <issueTrackingUrl>http://bugzilla.acm-sl.org/</issueTrackingUrl>
   <siteAddress>cvs.acm-sl.org</siteAddress>
   <siteDirectory>

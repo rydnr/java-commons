@@ -1421,28 +1421,123 @@ public abstract class StringUtils
     }
 
     /**
-     * Concrete version object updated everytime it's checked-in in a
-     * CVS repository.
+     * Adds given prefix and suffix to each line of given text.
+     * <code>
+     * applyToEachLine(" line 1   \n    and line 2", "||" , "//").equals(
+     *     "||line 1//\n||   and line 2//\n")
+     * </code>
+     * @param text the text.
+     * @param prefix the line prefix.
+     * @param suffix the line suffix.
+     * @return the processed text.
+     * @precondition text != null
+     * @precondition prefix != null
+     * @precondition suffix != null
      */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
+    public String applyToEachLine(
+        final String text, final String prefix, final String suffix)
     {
-        return VERSION;
+        StringBuffer result = new StringBuffer();
+
+        StringTokenizer t_StringTokenizer =
+            new StringTokenizer(text, "\n", false);
+
+        int t_iInitialIndent = retrieveMinimumIndentInAllLines(text);
+
+        StringBuffer t_sbInitialIndent = new StringBuffer();
+
+        for (int t_iIndex = 0; t_iIndex < t_iInitialIndent; t_iIndex++)
+        {
+            t_sbInitialIndent.append(" ");
+        }
+
+        String t_strInitialIndent = t_sbInitialIndent.toString();
+
+        boolean t_bFirstLine = true;
+
+        String t_strCurrentLine = null;
+        String t_strTrimmedCurrentLine = null;
+
+        while  (t_StringTokenizer.hasMoreTokens())
+        {
+            t_strCurrentLine = t_StringTokenizer.nextToken();
+
+            t_strTrimmedCurrentLine = t_strCurrentLine.trim();
+
+            result.append(prefix);
+
+            if  (!t_bFirstLine)
+            {
+                t_iInitialIndent =
+                    t_strCurrentLine.indexOf(t_strTrimmedCurrentLine);
+
+                if  (t_iInitialIndent > t_strInitialIndent.length())
+                {
+                    result.append(
+                        t_strCurrentLine.substring(
+                            t_strInitialIndent.length(), t_iInitialIndent));
+                }
+            }
+
+            result.append(t_strTrimmedCurrentLine);
+            result.append(suffix);
+            result.append("\n");
+
+            if  (t_bFirstLine)
+            {
+                t_bFirstLine = false;
+            }
+        }
+
+        return result.toString();
     }
 
     /**
-     * Retrieves the current version of this class. It's defined because
-     * this is a utility class that cannot be instantiated.
-     * @return the object with class version information.
+     * Finds out the minimum indent of all lines in given text.
+     * <code>
+     * retrieveMinimumIndentInAllLines(" line 1   \n    and line 2", "||" , "//") == 1
+     * </code>
+     * <code>
+     * retrieveMinimumIndentInAllLines("    line 1   \n  .  and line 2", "||" , "//") == 2
+     * </code>
+     * @param text the text.
+     * @return such information.
+     * @precondition text != null
      */
-    public static Version getClassVersion()
+    public int retrieveMinimumIndentInAllLines(final String text)
     {
-        return VERSION;
+        int result = -1;
+
+        StringTokenizer t_StringTokenizer =
+            new StringTokenizer(text, "\n", false);
+
+        int t_iInitialIndent = -1;
+
+        String t_strCurrentLine = null;
+        String t_strTrimmedCurrentLine = null;
+
+        while  (t_StringTokenizer.hasMoreTokens())
+        {
+            t_strCurrentLine = t_StringTokenizer.nextToken();
+
+            t_strTrimmedCurrentLine = t_strCurrentLine.trim();
+
+            t_iInitialIndent =
+                t_strCurrentLine.indexOf(t_strTrimmedCurrentLine);
+
+            if  (   (   (t_iInitialIndent > 0)
+                     && (t_iInitialIndent < result))
+                 || (result == -1))
+            {
+                result = t_iInitialIndent;
+            }
+        }
+
+        if  (result == -1)
+        {
+            result = 0;
+        }
+
+        return result;
     }
 }

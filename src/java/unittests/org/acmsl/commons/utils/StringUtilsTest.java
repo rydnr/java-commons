@@ -229,27 +229,54 @@ public class StringUtilsTest
     }
 
     /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
+     * Tests the StringUtils.applyToEachLine(text, prefix, suffix) method.
+     * @see StringUtils#applyToEachLine(String,String,String)
      */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
+    public void testApplyToEachLine()
     {
-        return VERSION;
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = " line 1   \n    and line 2";
+
+        String t_strOutput =
+            t_StringUtils.applyToEachLine(
+                t_strInput, "||", "//");
+
+        assertEquals("||line 1//\n||   and line 2//\n", t_strOutput);
+
+        t_strInput = "    line 1   \n .   and line 2";
+
+        t_strOutput =
+            t_StringUtils.applyToEachLine(
+                t_strInput, "||", "//");
+
+        assertEquals("||line 1//\n||.   and line 2//\n", t_strOutput);
     }
 
     /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
+     * Tests the StringUtils.retrieveMinimumIndentInAllLines(text) method.
+     * @see StringUtils#retrieveMinimumIndentInAllLines(String)
      */
-    public static Version getClassVersion()
+    public void testRetrieveMinimumIndentInAllLines()
     {
-        return VERSION;
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = " line 1   \n    and line 2";
+
+        int t_iOutput =
+            t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
+
+        assertEquals(1, t_iOutput);
+
+        t_strInput = "    line 1   \n .   and line 2";
+
+        t_iOutput =
+            t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
+
+        assertEquals(1, t_iOutput);
     }
 }

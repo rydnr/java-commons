@@ -6,10 +6,19 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_5b10"
+      version="commons-0_5_5b11"
       date="$Date$"
       description="Enhancement">
-      <action dev="$Author$" type="update">
+      <action dev="$Author$" type="add">
+        Implemented a method to process (keeping relative indentation)
+        all lines of a given text <a href="${issue.url}537">537</a>.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_5b10"
+      date="2004/10/16 09:16:54"
+      description="Enhancement">
+      <action dev="chous" type="update">
         DataAccessException is now <a href="${issue.url}520">non-checked</a>.
       </action>
     </release>

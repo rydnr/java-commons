@@ -40,6 +40,16 @@
             $Date$
           </td>
           <td>
+            Implemented a method to process (keeping relative indentation)
+            all lines of a given text <a href="${issue.url}537">537</a>.<br/>
+            Released <b>0.5.5b11</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/10/28 10:11:10
+          </td>
+          <td>
             DataAccessException is now <a href="${issue.url}520">non-checked</a>.<br/>
             Released <b>0.5.5b10</b>.
           </td>
