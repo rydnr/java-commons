@@ -27,20 +27,24 @@
         <p>
           Adapt some code from other projects to enhance reusability.
           <ul>
-            <li>0.5.5b9<br/>
+            <li>0.5.5b10<br/>
               Fix <a href="${issue.url}37"
               >StringUtils and FileUtils share almost the same method,
               packageToPath</a>, and
               <a href="${issue.url}110"
               >FileUtils#copy doesn't work for binary files</a>.
             </li>
-            <li>0.5.5b8<br/>
+            <li>0.5.5b9<br/>
               Fix <a href="${issue.url}33"
               >Missing Javadoc documentation for RegexpPlugin packages</a>.
             </li>
-            <li>0.5.5b7<br/>
+            <li>0.5.5b8<br/>
               <a href="${issue.url}31"
               >Convert RegexpManager into a singleton</a>.
+            </li>
+            <li>0.5.5b7<br/>
+              <a href="${issue.url}510"
+              >Add a method to convert a word to its plural form</a>.
             </li>
             <li>0.5.5b6<br/>
               Provide a method to <a href="${issue.url}509">uncapitalize</a> texts.

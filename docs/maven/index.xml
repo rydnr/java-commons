@@ -17,7 +17,7 @@
       </p>
       <subsection name="Status">
         <p>
-          <strong>Commons</strong> 0.5.5b5 contains:
+          <strong>Commons</strong> contains:
           <ul>
             <li><b>regexpplugin</b>: API to request <i>regexp</i>
             services independently of the concrete engine used.</li>
@@ -38,6 +38,15 @@
         <tr>
           <td>
             $Date$
+          </td>
+          <td>
+            Fixed issue <a href="${issue.url}510">510</a>.<br/>
+            Released <b>0.5.5b7</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/10/01 06:31:09
           </td>
           <td>
             Fixed issue <a href="${issue.url}509">509</a>.<br/>

@@ -8,7 +8,7 @@
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
     License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
+    version 2 of the License, or any later version.
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,7 +32,7 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description:	Provides some useful methods when working with characters and
+ * Description: Provides some useful methods when working with characters and
  *              buffers.
  *
  * Last modified by: $Author$ at $Date$
@@ -131,7 +131,8 @@ public abstract class CharUtils
      * @param offset the subcontents length.
      * @return the sub-buffer, or null if any parameter is invalid.
      */
-    public char[] subbuffer(char[] buffer, int start, int offset)
+    public char[] subbuffer(
+        final char[] buffer, final int start, final int offset)
     {
         char[] result = EMPTY_CHAR_ARRAY;
 
@@ -164,7 +165,7 @@ public abstract class CharUtils
      * @param start the starting position of the desired subcontents.
      * @return the sub-buffer.
      */
-    public char[] subbuffer(char[] buffer, int start)
+    public char[] subbuffer(final char[] buffer, final int start)
     {
         char[] result = EMPTY_CHAR_ARRAY;
 
