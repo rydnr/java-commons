@@ -140,8 +140,7 @@ public class EnglishGrammarUtils
         put("woman", "women", map);
         put("water", "water", map);
         put("fish", "fish", map);
-        put("role", "roles", map);
-        put("attribute", "attributes", map);
+        put("bus", "buses", map);
     }
 
     /**
@@ -336,8 +335,8 @@ public class EnglishGrammarUtils
 
             if  (result.endsWith("s"))
             {
-                if  (   (result.endsWith("es"))
-                     || (result.endsWith("xes"))
+//                if  (   (result.endsWith("es"))
+                if  (   (result.endsWith("xes"))
                      || (result.endsWith("shes"))
                      || (result.endsWith("ches")))
                 {
