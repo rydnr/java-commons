@@ -40,6 +40,14 @@
             $Date$
           </td>
           <td>
+            Deployed at new server: <a href="http://maven.acm-sl.org">maven.acm-sl.org</a>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/09/06 07:05:49
+          </td>
+          <td>
             Fixed the requirement
             <i><a
               href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"

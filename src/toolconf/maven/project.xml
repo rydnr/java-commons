@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <name>Commons</name>
   <id>commons</id>
-  <groupId>org.acmlsl</groupId>
+  <groupId>org.acmsl.commons</groupId>
   <currentVersion>0.5.5b5</currentVersion>
   <organization>
     <name>ACM S.L.</name>
@@ -11,33 +11,33 @@
     <logo>http://www.acm-sl.org/images/logo.png</logo>
   </organization>
   <inceptionYear>2003</inceptionYear>
-  <package>org.acmsl</package>
+  <package>org.acmsl.commons</package>
 
   <shortDescription>
-    ACM-SL commons
+    ACM-SL Commons
   </shortDescription>
 
   <description>
     Base module reused in all ACM-SL projects.
   </description>
 
-  <url>http://lite/projects/commons/</url>
-  <logo>http://lite/projects/images/queryj.png</logo>
-  <issueTrackingUrl>http://lite/bugzilla/</issueTrackingUrl>
-  <siteAddress>lite</siteAddress>
+  <url>http://maven.acm-sl.org/commons/</url>
+  <logo>http://maven.acm-sl.org/images/commons.png</logo>
+  <issueTrackingUrl>http://bugzilla.acm-sl.org/</issueTrackingUrl>
+  <siteAddress>cvs.acm-sl.org</siteAddress>
   <siteDirectory>
-    /home/httpd/projects/commons
+    /home/anoncvs/commons
   </siteDirectory>
   <distributionDirectory>
-    /home/httpd/projects/queryj/builds/
+    /home/anoncvs/builds/commons/
   </distributionDirectory>
 
   <repository>
     <connection>
-      scm:cvs:pserver:anoncvs@lite:/var/lib/cvs:dev/commons
+      scm:cvs:pserver:anoncvs@cvs.acm-sl.org:/var/cvs:commons
     </connection>
     <url>
-      http://lite/viewcvs/viewcvs.cgi/commons
+      http://cvs.acm-sl.org/viewcvs/viewcvs.cgi/commons
     </url>
   </repository>
 
@@ -47,25 +47,25 @@
     <mailingList>
       <name>Commons User List</name>
       <subscribe>
-        commons-users-subscribe@lists.lite
+        users-subscribe@commons.acm-sl.org
       </subscribe>
       <unsubscribe>
-        commons-users-unsubscribe@lists.lite
+        users-unsubscribe@commons.acm-sl.org
       </unsubscribe>
       <archive>
-        http://lite/mailinglists/commons-users@lists.lite/
+        http://maven.acm-sl.org/mailinglists/users@commons.acm-sl.org/
       </archive>
     </mailingList>
     <mailingList>
       <name>Commons Developer List</name>
       <subscribe>
-        queryj-cvs-subscribe@lists.sourceforge.net
+        cvs-subscribe@commons.acm-sl.org
       </subscribe>
       <unsubscribe>
-        commons-cvs-unsubscribe@lists.lite
+        cvs-unsubscribe@commons.acm-sl.org
       </unsubscribe>
       <archive>
-        http://lite/mailinglists/commons-cvs@lists.lite
+        http://maven.acm-sl.org/mailinglists/cvs@commons.acm-sl.org
       </archive>
     </mailingList>
   </mailingLists>
@@ -75,7 +75,7 @@
     <developer>
       <name>Jose San Leandro</name>
       <id>chous</id>
-      <email>chous@our.home</email>
+      <email>jsanleandro@yahoo.es</email>
       <organization>ACM-SL</organization>
     </developer>
   </developers>
@@ -122,7 +122,7 @@
   <build>
 
     <nagEmailAddress>
-      chous@our.home
+      chous@acm-sl.org
     </nagEmailAddress>
 
     <sourceDirectory>../../java/</sourceDirectory>
