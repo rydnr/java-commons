@@ -140,6 +140,7 @@ public class EnglishGrammarUtils
         put("woman", "women", map);
         put("water", "water", map);
         put("fish", "fish", map);
+        put("role", "roles", map);
     }
 
     /**

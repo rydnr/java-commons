@@ -40,7 +40,16 @@
             $Date$
           </td>
           <td>
-            Minor <a href="${issue.url}570">refactoring</a> on <i>Version</i> package.
+            Fixed <a href="${issue.url}576">minor</a> issue.<br/>
+            Released <b>0.5.7b2</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/12/03 06:57:15
+          </td>
+          <td>
+            Minor <a href="${issue.url}570">refactoring</a> on <i>Version</i> package.<br/>
             Released <b>0.5.7b1</b>.
           </td>
         </tr>

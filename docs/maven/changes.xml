@@ -6,10 +6,18 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_7b1"
+      version="commons-0_5_7b2"
       date="$Date$"
-      description="Refactoring">
+      description="bugfix">
       <action dev="$Author$" type="update">
+        Minor <a href="${issue.url}576">issue</a> closed.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_7b1"
+      date="2004/12/03 06:57:15"
+      description="Refactoring">
+      <action dev="chous" type="update">
         Minor <a href="${issue.url}570">refactoring</a>, on
         Version package.
       </action>

@@ -193,6 +193,8 @@ extends TestCase
         assertEquals(t_EnglishGrammarUtils.getPlural("DISH"), "DISHES");
         assertEquals(t_EnglishGrammarUtils.getPlural("customer"), "customers");
         assertEquals(t_EnglishGrammarUtils.getPlural("CUSTOMER"), "CUSTOMERS");
+        assertEquals(t_EnglishGrammarUtils.getPlural("role"), "roles");
+        assertEquals(t_EnglishGrammarUtils.getPlural("ROLE"), "ROLES");
     // JUnitDoclet end method getPlural
   }
   
@@ -227,6 +229,8 @@ extends TestCase
         assertEquals(t_EnglishGrammarUtils.getSingular("DISHES"), "DISH");
         assertEquals(t_EnglishGrammarUtils.getSingular("customers"), "customer");
         assertEquals(t_EnglishGrammarUtils.getSingular("CUSTOMERS"), "CUSTOMER");
+        assertEquals(t_EnglishGrammarUtils.getSingular("roles"), "role");
+        assertEquals(t_EnglishGrammarUtils.getSingular("ROLES"), "ROLE");
     // JUnitDoclet end method getSingular
   }
   
