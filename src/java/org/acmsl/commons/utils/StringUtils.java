@@ -995,7 +995,7 @@ public abstract class StringUtils
      */
     public String extractPackageName(final String text)
     {
-        return extractPackageGroup(text, 2);
+        return capitalize(extractPackageGroup(text, 2), '_');
     }
 
     /**
@@ -1042,8 +1042,6 @@ public abstract class StringUtils
                     result = t_MatchResult.group(group);
                 }
             }
-
-            result = capitalize(result, '_');
         }
         catch  (final RegexpEngineNotFoundException exception)
         {
