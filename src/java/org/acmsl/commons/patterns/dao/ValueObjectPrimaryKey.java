@@ -82,7 +82,7 @@ public class ValueObjectPrimaryKey
      * Adds a field to this primary key.
      * @param field the field to add.
      */
-    protected void add(ValueObjectField field)
+    protected void add(final ValueObjectField field)
     {
         m__alFields.add(field);
     }

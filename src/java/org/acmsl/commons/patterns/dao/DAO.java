@@ -73,7 +73,7 @@ public interface DAO
      * @return the information associated to such id in the underlying
      * persistente layer.
      */
-    public ValueObject load(ValueObjectPrimaryKey pk);
+    public ValueObject load(final ValueObjectPrimaryKey pk);
 
     /**
      * Stores the value object into the persistent layer.
@@ -81,14 +81,14 @@ public interface DAO
      * @param reload whether or not the reload is needed.
      * @return true if the operation ends up successfully.
      */
-    public ValueObject store(ValueObject valueObject, boolean reload);
+    public ValueObject store(final ValueObject valueObject, boolean reload);
 
     /**
      * Removes a value object in the persistence layer.
      * @param valueObject the value object to be removed.
      * @return true if the operation ends up successfully.
      */
-    public abstract boolean remove(ValueObject valueObject);
+    public abstract boolean remove(final ValueObject valueObject);
 
     /**
      * Removes a value object in the persistence layer.
@@ -97,8 +97,7 @@ public interface DAO
      * @return true if the operation ends up successfully.
      */
     public abstract ValueObject update(
-       ValueObject valueObject,
-       boolean reload);
+       final ValueObject valueObject, final boolean reload);
 
     /**
      * Concrete version object updated everytime it's checked-in in a
