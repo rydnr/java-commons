@@ -58,7 +58,7 @@ import org.acmsl.commons.patterns.dao.DAO;
  * @version $Revision$
  */
 public class DataAccessException
-    extends  Exception
+    extends  RuntimeException
 {
     /**
      * Specifies the DAO which throws the error.

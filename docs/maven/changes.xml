@@ -6,10 +6,18 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_5b9"
+      version="commons-0_5_5b10"
       date="$Date$"
+      description="Enhancement">
+      <action dev="$Author$" type="update">
+        DataAccessException is now <a href="${issue.url}520">non-checked</a>.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_5b9"
+      date="2004/10/15 06:33:07"
       description="Feature added">
-      <action dev="$Author$" type="add">
+      <action dev="chous" type="add">
         Closed reopened issue <a href="${issue.url}510">510</a>.
       </action>
     </release>

@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            DataAccessException is now <a href="${issue.url}520">non-checked</a>.<br/>
+            Released <b>0.5.5b10</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/10/15 06:33:07
+          </td>
+          <td>
             Closed reopnened issue <a href="${issue.url}510">510</a>.<br/>
             Released <b>0.5.5b9</b>.
           </td>
