@@ -111,6 +111,7 @@ public class Jdk14regexpSuite
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatchResultJDKAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapterTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngineTest.class);
     
     
     

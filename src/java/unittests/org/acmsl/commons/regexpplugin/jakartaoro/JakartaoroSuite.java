@@ -106,6 +106,7 @@ public class JakartaoroSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.regexpplugin.jakartaoro");
     
+    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngineTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.AwkMatcherOROAdapterTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapterTest.class);
