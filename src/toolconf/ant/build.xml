@@ -331,25 +331,32 @@
         </tstamp>
 
         <!--
+         Reads some specific properties from an external property files.
+        -->
+        <property file="src/toolconf/ant/build.properties"/>
+        <property file="src/toolconf/ant/project.properties"/>
+        <property file="src/toolconf/ant/user.properties"/>
+
+        <!--
          Requests CVS to perform the keyword clean substitution.
         -->
-        <!--cvs command="update -kv src/toolconf/ant/build.properties"/-->
+        <cvs command="update -kv src/toolconf/ant/version.properties"/>
 
         <!--
          Reads some specific properties from an external property file.
         -->
-        <property file="src/toolconf/ant/build.properties"/>
+        <property file="src/toolconf/ant/version.properties"/>
 
         <!--
-         Removes the build.properties file to get rid of the sticky
+         Removes the version.properties file to get rid of the sticky
          keyword substitution setting.
         -->
-        <!--delete file="src/toolconf/ant/build.properties"/-->
+        <delete file="src/toolconf/ant/version.properties"/>
 
         <!--
-         Restores build.properties state.
+         Restores version.properties state.
         -->
-        <!--cvs command="update -A src/toolconf/ant/build.properties"/-->
+        <cvs command="update -A src/toolconf/ant/version.properties"/>
 
         <!--
          Displays some project information.
@@ -2888,6 +2895,33 @@
 
             <arg value="${debug.suspend}"/>
 
+        </exec>
+
+    </target>
+
+    <!--
+     Debugs defined unit tests.
+     @depends junitdoclet to manage the unit tests.
+     @param project.base.suite the JUnit suite that contains all tests.
+     @param classpath the classpath.
+     @param project.build the project compiled classes.
+     @calls java to invoke the JUnit framework.
+     @return the debugging environment.
+    -->
+    <target
+        name="debug.unit.tests"
+        depends="junitdoclet"
+        description="DEbugs defined unit tests.">
+
+        <property name="unit-test-path" refid="unit.test.class.path"/>
+
+        <echo message="${unit-test-path}"/>
+
+        <!--
+         Debug unit tests.
+        -->
+        <exec executable="java">
+          <arg line="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -cp ${unit-test-path} ${junit.runner.classname} ${project.base.suite}"/>
         </exec>
 
     </target>
