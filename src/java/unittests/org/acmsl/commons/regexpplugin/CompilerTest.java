@@ -52,15 +52,20 @@ package unittests.org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapter;
+import org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngine;
 import org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter;
+import org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngine;
 import org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapter;
 import org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapter;
 import org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter;
+import org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngine;
 import org.acmsl.commons.regexpplugin.jakartaregexp.PatternRegexpAdapter;
 import org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter;
+import org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngine;
 import org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter;
+import org.acmsl.commons.regexpplugin.Pattern;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.version.Version;
@@ -104,27 +109,59 @@ public class CompilerTest
      * Tests the compiler.compile() method.
      * @see org.acmsl.commons.regexpplugin.Compiler#compile(String)
      */
+    public void testDefaultCompile()
+    {
+        try
+        {
+            RegexpManager t_RegexpManager = RegexpManager.getInstance();
+
+            assertNotNull(t_RegexpManager);
+
+            RegexpEngine t_RegexpEngine = t_RegexpManager.getEngine();
+
+            assertNotNull(t_RegexpEngine);
+
+            Compiler t_Compiler = t_RegexpEngine.createCompiler();
+
+            assertNotNull(t_Compiler);
+
+            Pattern t_Pattern = t_Compiler.compile(REGEXP);
+
+            assertNotNull(t_Pattern);
+        }
+        catch  (final Throwable throwable)
+        {
+            fail("" + throwable);
+        }
+    }
+
+    /**
+     * Tests the compiler.compile() method.
+     * @see org.acmsl.commons.regexpplugin.Compiler#compile(String)
+     */
     public void testJakartaOroCompile()
     {
         try
         {
-            RegexpManager.useJakartaOroPerl5();
+            RegexpEngine t_RegexpEngine = new ORORegexpEngine();
 
-            Compiler t_Compiler = RegexpManager.createCompiler();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Compiler != null);
+            Compiler t_Compiler = t_RegexpEngine.createCompiler();
+
+            assertNotNull(t_Compiler);
 
             assertTrue(t_Compiler instanceof Perl5CompilerOROAdapter);
 
             Pattern t_Pattern = t_Compiler.compile(REGEXP);
 
-            assertTrue(t_Pattern != null);
+            assertNotNull(t_Pattern);
 
             assertTrue(t_Pattern instanceof PatternOROAdapter);
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -136,23 +173,25 @@ public class CompilerTest
     {
         try
         {
-            RegexpManager.useJakartaRegexp();
+            RegexpEngine t_RegexpEngine = new JakartaRegexpEngine();
 
-            Compiler t_Compiler = RegexpManager.createCompiler();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Compiler != null);
+            Compiler t_Compiler = t_RegexpEngine.createCompiler();
+
+            assertNotNull(t_Compiler);
 
             assertTrue(t_Compiler instanceof CompilerRegexpAdapter);
 
             Pattern t_Pattern = t_Compiler.compile(REGEXP);
 
-            assertTrue(t_Pattern != null);
+            assertNotNull(t_Pattern);
 
             assertTrue(t_Pattern instanceof PatternRegexpAdapter);
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -164,23 +203,25 @@ public class CompilerTest
     {
         try
         {
-            RegexpManager.useJDK14Regexp();
+            RegexpEngine t_RegexpEngine = new JDKRegexpEngine();
 
-            Compiler t_Compiler = RegexpManager.createCompiler();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Compiler != null);
+            Compiler t_Compiler = t_RegexpEngine.createCompiler();
+
+            assertNotNull(t_Compiler);
 
             assertTrue(t_Compiler instanceof CompilerJDKAdapter);
 
             Pattern t_Pattern = t_Compiler.compile(REGEXP);
 
-            assertTrue(t_Pattern != null);
+            assertNotNull(t_Pattern);
 
             assertTrue(t_Pattern instanceof PatternJDKAdapter);
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -192,23 +233,25 @@ public class CompilerTest
     {
         try
         {
-            RegexpManager.useGNURegexp();
+            RegexpEngine t_RegexpEngine = new GNURegexpEngine();
 
-            Compiler t_Compiler = RegexpManager.createCompiler();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Compiler != null);
+            Compiler t_Compiler = t_RegexpEngine.createCompiler();
+
+            assertNotNull(t_Compiler);
 
             assertTrue(t_Compiler instanceof CompilerGNUAdapter);
 
             Pattern t_Pattern = t_Compiler.compile(REGEXP);
 
-            assertTrue(t_Pattern != null);
+            assertNotNull(t_Pattern);
 
             assertTrue(t_Pattern instanceof PatternGNUAdapter);
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 

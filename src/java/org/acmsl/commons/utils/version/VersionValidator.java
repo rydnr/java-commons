@@ -52,12 +52,14 @@ package org.acmsl.commons.utils.version;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Validator;
-import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.Pattern;
-import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
+import org.acmsl.commons.regexpplugin.Matcher;
+import org.acmsl.commons.regexpplugin.Pattern;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
+import org.acmsl.commons.regexpplugin.RegexpManager;
+import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.StringValidator;
 import org.acmsl.commons.version.Versionable;
 import org.acmsl.commons.version.Version;
@@ -157,7 +159,7 @@ public abstract class VersionValidator
             {
                 try
                 {
-                    t_Compiler = RegexpManager.createCompiler();
+                    t_Compiler = createCompiler(RegexpManager.getInstance());
 
                     if  (t_Compiler != null)
                     {
@@ -283,7 +285,8 @@ public abstract class VersionValidator
 
                 //  The first thing is to construct the compiler and
                 // pattern-related stuff.
-                Matcher t_PatternMatcher = RegexpManager.createMatcher();
+                Matcher t_PatternMatcher =
+                    createMatcher(RegexpManager.getInstance());
 
                 if  (t_PatternMatcher != null)
                 {
@@ -317,6 +320,66 @@ public abstract class VersionValidator
         }
 
         return result;
+    }
+
+    /**
+     * Creates the compiler.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp compiler.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Compiler createCompiler(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createCompiler(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the compiler.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp compiler.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Compiler createCompiler(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createCompiler();
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp matcher.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createMatcher(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp matcher.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createMatcher();
     }
 
     /**

@@ -61,6 +61,24 @@ import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing JDK classes.
+ */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Properties;
+
 /**
  * Manages which regexp engine to use, acting as a facade hiding all
  * details of building or retrieving implementations.
@@ -68,383 +86,642 @@ import org.apache.commons.logging.LogFactory;
            >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public final class RegexpManager
+public class RegexpManager
     implements  Manager
 {
     /**
-     * Engine name position in the array object.
+     * The default engine.
      */
-    protected static final int NAME = 0;
+    public static final String DEFAULT_ENGINE =
+        "org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngine";
 
     /**
-     * Engine version position in the array object.
+     * The name of the property used to identify the implementation
+     * class name.
      */
-    protected static final int ENGINE_VERSION = 1;
+    public static final String ENGINE_PROPERTY =
+        "org.acmsl.commons.regexpplugin.RegexpEngine";
 
     /**
-     * Engine class package position in the array object.
+     * The name of the properties file to search for.
      */
-    protected static final int PACKAGE = 2;
+    public static final String CONFIGURATION_SETTINGS =
+        "regexpplugin.properties";
 
     /**
-     * Compiler position in the array object.
+     * JDK1.3+ <a href="http://java.sun.com/j2se/1.3/docs/guide/jar/jar.html#Service%20Provider"
+     * >'Service Provider' specification</a>.
+     * 
      */
-    protected static final int COMPILER = 3;
+    protected static final String SERVICE_ID =
+        "META-INF/services/org.acmsl.regexpplugin.RegexpEngine";
 
     /**
-     * Match result position in the array object.
+     * The cached engines.
      */
-    protected static final int MATCHER = 4;
+    private static final Hashtable m__htCachedEngines = new Hashtable();
 
     /**
-     * Helper result position in the array object.
+     * Singleton implemented as a weak reference.
      */
-    protected static final int HELPER = 5;
+    private static WeakReference m__Singleton;
 
     /**
-     * Jakarta Oro Perl5
+     * Protected constructor to avoid accidental instantiation.
      */
-    private static final String[] JAKARTA_ORO_PERL5 =
-        new String[]
-        {
-            "Jakarta Oro Perl 5",
-            "2.0.6",
-            "org.apache.oro.text.perl",
-            "org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter"
-        };
+    protected RegexpManager() {};
 
     /**
-     * Jakarta Oro Awk
-     * @deprecated Awk engine is not working correctly!
+     * Specifies a new weak reference.
+     * @param manager the manager instance to use.
      */
-    private static final String[] JAKARTA_ORO_AWK =
-        new String[]
-        {
-            "Jakarta Oro Awk",
-            "2.0.6",
-            "org.apache.oro.text.awk",
-            "org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaoro.AwkMatcherOROAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter"
-        };
-
-    /**
-     * Jakarta Regexp
-     */
-    private static final String[] JAKARTA_REGEXP =
-        new String[]
-        {
-            "Jakarta Regexp",
-            "1.2",
-            "org.apache.regexp",
-            "org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapter",
-            "org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapter"
-        };
-
-    /**
-     * JDK1.4
-     */
-    private static final String[] JDK14_REGEXP =
-        new String[]
-        {
-            "JDK1.4 Regular Expresions",
-            "1.4",
-            "java.util.regex",
-            "org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter",
-            "org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapter",
-            "org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapter"
-        };
-
-    /**
-     * GNU Regexp
-     */
-    private static final String[] GNU_REGEXP_114 =
-        new String[]
-        {
-            "GNU Regexp",
-            "1.1.4",
-            "gnu.regexp",
-            "org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapter",
-            "org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapter",
-            "org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapter"
-        };
-
-    /**
-     * Singleton instance.
-     */
-    private static RegexpManager m__Singleton;
-
-    /**
-     * Private reference to the engine type.
-     */
-    private String[] m__astrEngine = JAKARTA_ORO_PERL5;
-
-    /**
-     * Private constructor to avoid accidental instantiation.
-     */
-    private RegexpManager()  {};
-
-    /**
-     * Common method to retrieve the singleton object.
-     * @return the singleton instance.
-     */
-    private static RegexpManager getInstance()
+    protected static void setReference(final RegexpManager manager)
     {
-        RegexpManager result = m__Singleton;
+        m__Singleton = new WeakReference(manager);
+    }
 
-        if  (m__Singleton == null)
+    /**
+     * Retrieves the weak reference.
+     * @return such reference.
+     */
+    protected static WeakReference getReference()
+    {
+        return m__Singleton;
+    }
+
+    /**
+     * Retrieves a CvsLogFileManager instance.
+     * @return such instance.
+     */
+    public static RegexpManager getInstance()
+    {
+        RegexpManager result = null;
+
+        WeakReference t_Reference = getReference();
+
+        if  (t_Reference != null) 
         {
-            m__Singleton = new RegexpManager();
+            result =
+                (RegexpManager) t_Reference.get();
+        }
 
-            result = m__Singleton;
+        if  (result == null) 
+        {
+            result = new RegexpManager();
+
+            setReference(result);
         }
 
         return result;
     }
 
     /**
-     * Retrieves current engine information.
+     * Retrieves the cached engines.
+     * @return such map.
+     */
+    protected Map getCachedEngines()
+    {
+        return m__htCachedEngines;
+    }
+
+    /**
+     * Retrieves current engine.
+     * Note: The lookup mechanism is adapted from Commons-Logging.
      * @return the engine information.
      */
-    protected String[] getEngine()
+    public RegexpEngine getEngine()
     {
-        return m__astrEngine;
+        RegexpEngine result = null;
+
+        // Identify the class loader we will be using
+        ClassLoader t_ContextClassLoader =
+            (ClassLoader) AccessController.doPrivileged(
+                new PrivilegedAction()
+                {
+                    public Object run()
+                    {
+                        return getContextClassLoader();
+                    }
+                });
+
+        // Return any previously registered engine for this class loader
+        result = getCachedEngine(t_ContextClassLoader);
+
+        InputStream t_isStream = null;
+
+        Properties t_htProperties = null;
+
+        if  (result == null)
+        {
+
+            // First, try the system property
+            try
+            {
+                String engineClass =
+                    System.getProperty(ENGINE_PROPERTY);
+
+                if  (engineClass != null)
+                {
+                    result = createEngine(engineClass, t_ContextClassLoader);
+                }
+            }
+            catch  (final SecurityException securityException)
+            {
+                LogFactory.getLog(getClass()).info(
+                    "Could not load environment property " + ENGINE_PROPERTY,
+                    securityException);
+            }
+        }
+
+        if  (result == null)
+        {
+            // Second, try to find a service by using the JDK1.3 jar
+            // discovery mechanism. This will allow users to plug a logger
+            // by just placing it in the lib/ directory of the webapp ( or in
+            // CLASSPATH or equivalent ). This is similar to the second
+            // step, except that it uses the (standard?) jdk1.3 location in the jar.
+
+            try
+            {
+                t_isStream =
+                    getResourceAsStream(
+                        t_ContextClassLoader, SERVICE_ID);
+
+                if  (t_isStream != null)
+                {
+                    // This code is needed by EBCDIC and other strange systems.
+                    // It's a fix for bugs reported in xerces
+                    BufferedReader t_brReader;
+
+                    try
+                    {
+                        t_brReader =
+                            new BufferedReader(
+                                new InputStreamReader(
+                                    t_isStream, "UTF-8"));
+                    }
+                    catch  (final UnsupportedEncodingException invalidEncoding)
+                    {
+                        LogFactory.getLog(getClass()).info(
+                            "System doesn't support UTF-8",
+                            invalidEncoding);
+
+                        t_brReader =
+                            new BufferedReader(
+                                new InputStreamReader(t_isStream));
+                    }
+
+                    String engineClassName = t_brReader.readLine();
+                    t_brReader.close();
+
+                    if  (   (engineClassName != null)
+                         && (!"".equals(engineClassName)))
+                    {
+                        result =
+                            createEngine(
+                                engineClassName, t_ContextClassLoader);
+                    }
+                }
+            }
+            catch  (final Exception exception)
+            {
+                LogFactory.getLog(getClass()).info(
+                    "Could not find JDK1.3 service provider for RegexpPlugin",
+                    exception);
+            }
+        }
+
+        if  (result == null)
+        {
+            // Third try a properties file.
+            // If the properties file exists, it'll be read and the properties
+            // used. IMHO ( costin ) System property and JDK1.3 jar service
+            // should be enough for detecting the class name. The properties
+            // should be used to set the attributes ( which may be specific to
+            // the webapp, even if a default logger is set at JVM level by a
+            // system property )
+
+            // Load properties file.
+            Properties t_Properties = null;
+
+            try
+            {
+                t_isStream =
+                    getResourceAsStream(
+                        t_ContextClassLoader, CONFIGURATION_SETTINGS);
+            }
+            catch  (final SecurityException securityException)
+            {
+                LogFactory.getLog(getClass()).info(
+                    "Could not load " + CONFIGURATION_SETTINGS
+                    + ". Trying /" + CONFIGURATION_SETTINGS,
+                    securityException);
+            }
+
+            try
+            {
+                t_isStream =
+                    getResourceAsStream(
+                        t_ContextClassLoader, "/" + CONFIGURATION_SETTINGS);
+            }
+            catch  (final SecurityException securityException)
+            {
+                LogFactory.getLog(getClass()).info(
+                    "Could not load /" + CONFIGURATION_SETTINGS,
+                    securityException);
+            }
+
+            if  (t_isStream != null)
+            {
+                try
+                {
+                    t_htProperties = new Properties();
+                    t_htProperties.load(t_isStream);
+                    t_isStream.close();
+                }
+                catch  (final IOException ioException)
+                {
+                    LogFactory.getLog(getClass()).info(
+                        "Could not load configuration properties.",
+                        ioException);
+                }
+                catch  (final SecurityException securityException)
+                {
+                    LogFactory.getLog(getClass()).info(
+                        "Could not load configuration properties.",
+                        securityException);
+                }
+            }
+        }
+
+        if  (   (result == null)
+             && (t_htProperties != null))
+        {
+            String engineClass =
+                t_htProperties.getProperty(ENGINE_PROPERTY);
+
+            if  (engineClass != null)
+            {
+                result = createEngine(engineClass, t_ContextClassLoader);
+            }
+        }
+
+
+        // Fourth, try the fallback implementation class
+        if  (result == null)
+        {
+            result =
+                createEngine(
+                    DEFAULT_ENGINE, RegexpEngine.class.getClassLoader());
+        }
+
+        if  (result != null)
+        {
+            /**
+             * Always cache using context class loader.
+             */
+            cacheEngine(t_ContextClassLoader, result);
+        }
+
+        return result;
     }
 
     /**
-     * Sets the current engine.
-     * @param engine the engine information.
+     * Returns the thread context class loader if available.
+     * The thread context class loader is available for JDK 1.2
+     * or later, if certain security conditions are met.
+     * Note: This logic is adapted from Commons-Logging.
+     * @throws RegexpPluginMisconfiguredException if a suitable class loader
+     * cannot be identified.
      */
-    protected void setEngine(String[] engine)
+    protected ClassLoader getContextClassLoader()
+        throws RegexpPluginMisconfiguredException
     {
-        m__astrEngine = engine;
-    }
-
-    /**
-     * Sets Jakarta ORO Perl5 implementation to be the engine used.
-     */
-    public static void useJakartaOroPerl5()
-    {
-        getInstance().useJakartaOroPerl5Engine();
-    }
-
-    /**
-     * Sets Jakarta ORO Perl5 implementation to be the engine used.
-     */
-    private void useJakartaOroPerl5Engine()
-    {
-        setEngine(JAKARTA_ORO_PERL5);
-    }
-
-    /**
-     * Sets Jakarta ORO Awk implementation to be the engine used.
-     * @deprecated Awk engine is not working correctly!
-     */
-    public static void useJakartaOroAwk()
-    {
-        getInstance().useJakartaOroAwkEngine();
-    }
-
-    /**
-     * Sets Jakarta ORO Awk implementation to be the engine used.
-     * @deprecated Awk engine is not working correctly!
-     */
-    private void useJakartaOroAwkEngine()
-    {
-        setEngine(JAKARTA_ORO_AWK);
-    }
-
-    /**
-     * Sets Jakarta Regexp implementation to be the engine used.
-     */
-    public static void useJakartaRegexp()
-    {
-        getInstance().useJakartaRegexpEngine();
-    }
-
-    /**
-     * Sets Jakarta Regexp implementation to be the engine used.
-     */
-    private void useJakartaRegexpEngine()
-    {
-        setEngine(JAKARTA_REGEXP);
-    }
-
-    /**
-     * Sets JDK1.4 regexp implementation to be the engine used.
-     */
-    public static void useJDK14Regexp()
-    {
-        getInstance().useJDK14RegexpEngine();
-    }
-
-    /**
-     * Sets JDK1.4 regexp implementation to be the engine used.
-     */
-    private void useJDK14RegexpEngine()
-    {
-        setEngine(JDK14_REGEXP);
-    }
-
-    /**
-     * Sets GNU Regexp implementation to be the engine used.
-     */
-    public static void useGNURegexp()
-    {
-        getInstance().useGNURegexpEngine();
-    }
-
-    /**
-     * Sets GNU Regexp implementation to be the engine used.
-     */
-    private void useGNURegexpEngine()
-    {
-        setEngine(GNU_REGEXP_114);
-    }
-
-    /**
-     * Creates a new compiler.
-     * @return the new compiler.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
-     */
-    public static Compiler createCompiler()
-        throws  RegexpEngineNotFoundException
-    {
-        return createSpecificCompiler(getInstance().getEngine());
-    }
-
-    /**
-     * Creates a new helper instance.
-     * @return such kind of object.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
-     */
-    public static Helper createHelper()
-        throws  RegexpEngineNotFoundException
-    {
-        return createSpecificHelper(getInstance().getEngine());
-    }
-
-    /**
-     * Creates a compiler determined by given class name.
-     * @param className the class name of the compiler.
-     * @return the compiler object, or null if the class name is incorrect.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
-     */
-    protected static Compiler createSpecificCompiler(String[] engine)
-        throws  RegexpEngineNotFoundException
-    {
-        Compiler result = null;
+        ClassLoader result = null;
 
         try
         {
-            result = (Compiler) Class.forName(engine[COMPILER]).newInstance();
-        }
-        catch  (Exception exception)
-        {
-            LogFactory.getLog(RegexpManager.class).error(
-                "Compiler instantiation error.",
-                exception);
+            // Are we running on a JDK 1.2 or later system?
+            Method t_Method =
+                Thread.class.getMethod("getContextClassLoader", null);
 
-            throw
-                new RegexpEngineNotFoundException(
-                    engine[NAME],
-                    engine[ENGINE_VERSION],
-                    engine[PACKAGE],
-                    engine[COMPILER],
-                    engine[MATCHER],
-                    engine[HELPER]);
+            // Get the thread context class loader (if there is one)
+            try
+            {
+                result =
+                    (ClassLoader) t_Method.invoke(Thread.currentThread(), null);
+            }
+            catch  (final IllegalAccessException illegalAccessException)
+            {
+                throw
+                    new RegexpPluginMisconfiguredException(
+                        "unexpected.illegalaccessexception",
+                        illegalAccessException);
+            }
+            catch  (final InvocationTargetException invocationTargetException)
+            {
+                /**
+                 * InvocationTargetException is thrown by 'invoke' when
+                 * the method being invoked (getContextClassLoader) throws
+                 * an exception.
+                 *
+                 * getContextClassLoader() throws SecurityException when
+                 * the context class loader isn't an ancestor of the
+                 * calling class's class loader, or if security
+                 * permissions are restricted.
+                 *
+                 * In the first case (not related), we want to ignore and
+                 * keep going.  We cannot help but also ignore the second
+                 * with the logic below, but other calls elsewhere (to
+                 * obtain a class loader) will trigger this exception where
+                 * we can make a distinction.
+                 */
+                if  (invocationTargetException.getTargetException()
+                     instanceof SecurityException)
+                {
+                    LogFactory.getLog(RegexpManager.class).info(
+                        "Could not retrieve context class loader.",
+                        invocationTargetException);
+                }
+                else
+                {
+                    // Capture 'e.getTargetException()' exception for details
+                    // alternate: log 'e.getTargetException()', and pass back 'e'.
+                    new RegexpPluginMisconfiguredException(
+                        "unexpected.illegalaccessexception",
+                        invocationTargetException.getTargetException());
+                }
+            }
+        }
+        catch  (final NoSuchMethodException noSuchMethodException)
+        {
+            // Assume we are running on JDK 1.1
+            result = RegexpEngine.class.getClassLoader();
+        }
+
+        // Return the selected class loader
+        return result;
+    }
+
+    /**
+     * Retrieves the cached engine associated to given contextClassLoader.
+     * @param contextClassLoader the context class loader.
+     * @param engines the engine collection.
+     * @return the engine.
+     * @precondition engines != null
+     */
+    protected RegexpEngine getCachedEngine(
+        final ClassLoader contextClassLoader)
+    {
+        return getCachedEngine(contextClassLoader, getCachedEngines());
+    }
+
+    /**
+     * Check cached engines (keyed by contextClassLoader).
+     * @param contextClassLoader the context class loader.
+     * @param engines the cached engines.
+     * @precondition engines != null
+     */
+    protected RegexpEngine getCachedEngine(
+        final ClassLoader contextClassLoader,
+        final Map engines)
+    {
+        RegexpEngine result = null;
+
+        if  (contextClassLoader != null)
+        {
+            result = (RegexpEngine) engines.get(contextClassLoader);
         }
 
         return result;
     }
 
     /**
-     * Creates a compiler determined by given class name.
-     * @param className the class name of the compiler.
-     * @return the compiler object, or null if the class name is incorrect.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
+     * Annotates a new engine to the cache.
+     * @param classLoader the key.
+     * @param engine the engine.
      */
-    protected static Helper createSpecificHelper(String[] engine)
-        throws  RegexpEngineNotFoundException
+    protected void cacheEngine(
+        final ClassLoader classLoader, final RegexpEngine engine)
     {
-        Helper result = null;
-
-        try
-        {
-            result = (Helper) Class.forName(engine[HELPER]).newInstance();
-        }
-        catch  (Exception exception)
-        {
-            LogFactory.getLog(RegexpManager.class).error(
-                "Helper instantiation error.",
-                exception);
-
-            exception.printStackTrace(System.err);
-
-            throw
-                new RegexpEngineNotFoundException(
-                    engine[NAME],
-                    engine[ENGINE_VERSION],
-                    engine[PACKAGE],
-                    engine[COMPILER],
-                    engine[MATCHER],
-                    engine[HELPER]);
-        }
-
-        return result;
+        cacheEngine(classLoader, engine, getCachedEngines());
     }
 
     /**
-     * Creates a new pattern matcher.
-     * @return the new matcher.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
+     * Annotates a new engine to the cache.
+     * @param classLoader the key.
+     * @param engine the engine.
+     * @param engines the cached engines.
+     * @precondition engines != null
      */
-    public static Matcher createMatcher()
-        throws  RegexpEngineNotFoundException
+    protected void cacheEngine(
+        final ClassLoader classLoader,
+        final RegexpEngine engine,
+        final Map engines)
     {
-        return createSpecificMatcher(getInstance().getEngine());
+        if  (   (classLoader != null)
+             && (engine != null))
+        {
+            engines.put(classLoader, engine);
+        }
     }
 
     /**
-     * Creates a matcher determined by given class name.
-     * @param className the class name of the matcher.
-     * @return the matcher object, or null if the class name is incorrect.
-     * @throws RegexpEngineNotFoundException whenever the instantiation
-     * of the engine classes fails.
+     * Return a new instance of the specified <code>RegexpEngine</code>
+     * implementation class, loaded by the specified class loader.
+     * If that fails, try the class loader used to load the
+     * RegexpEngine.
+     * @param engineClass Fully qualified name of the <code>RegexpEngine</code>
+     * implementation class.
+     * @param classLoader ClassLoader from which to load this class.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
      */
-    private static Matcher createSpecificMatcher(String[] engine)
-        throws  RegexpEngineNotFoundException
+    public RegexpEngine createEngine(final String engineClass)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
     {
-        Matcher result = null;
+        return createEngine(engineClass, getContextClassLoader());
+    }
 
-        try
+    /**
+     * Return a new instance of the specified <code>RegexpEngine</code>
+     * implementation class, loaded by the specified class loader.
+     * If that fails, try the class loader used to load the
+     * RegexpEngine.
+     * @param engineClass Fully qualified name of the <code>RegexpEngine</code>
+     * implementation class.
+     * @param classLoader ClassLoader from which to load this class.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     */
+    protected RegexpEngine createEngine(
+        final String engineClass, final ClassLoader classLoader)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        Object result =
+            AccessController.doPrivileged(
+                new PrivilegedAction()
+                {
+                    public Object run()
+                    {
+                        Object innerResult = null;
+
+                        // This will be used to diagnose bad configurations
+                        // and allow a useful message to be sent to the user
+                        Class t_RegexpEngineClass = null;
+
+                        try
+                        {
+                            if  (classLoader != null)
+                            {
+                                try
+                                {
+                                    // First the given class loader param
+                                    // (thread class loader)
+                                    // Warning: must typecast here & allow
+                                    // exception to be generated/caught &
+                                    // recast properly.
+                                    t_RegexpEngineClass =
+                                        classLoader.loadClass(engineClass);
+
+                                    innerResult =
+                                        (RegexpEngine)
+                                            t_RegexpEngineClass.newInstance();
+
+                                }
+                                catch  (final ClassNotFoundException
+                                        classNotFoundException)
+                                {
+                                    if  (   classLoader
+                                         == RegexpEngine.class.getClassLoader())
+                                    {
+                                        // Nothing more to try, onwards.
+                                        throw classNotFoundException;
+                                    }
+                                    // ignore exception, continue
+                                }
+                                catch  (final NoClassDefFoundError
+                                        noClassDefFoundException)
+                                {
+                                    if  (   classLoader
+                                         == RegexpEngine.class.getClassLoader())
+                                    {
+                                        // Nothing more to try, onwards.
+                                        throw noClassDefFoundException;
+                                    }
+                                    // ignore exception, continue
+                                }
+                                catch  (final ClassCastException classCastException)
+                                {
+                                    if  (   classLoader
+                                         == RegexpEngine.class.getClassLoader())
+                                    {
+                                        // Nothing more to try, onwards (bug in
+                                        // loader implementation).
+                                        throw classCastException;
+                                    }
+                                    // Ignore exception, continue
+                                }
+                            }
+
+                            /* At this point, either classLoader == null, OR
+                             * classLoader was unable to load engineClass.
+                             * Try the class loader that loaded this class:
+                             * RegexpEngine.getClassLoader().
+                             *
+                             * Notes:
+                             * a) RegexpEngine.class.getClassLoader() may return
+                             *    'null'if RegexpEngine is loaded by the bootstrap
+                             *    classloader.
+                             * b) The Java endorsed library mechanism is instead
+                             *    Class.forName(engineClass);
+                             */
+
+                            // Warning: must typecast here & allow exception
+                            // to be generated/caught & recast properly.
+                            t_RegexpEngineClass = Class.forName(engineClass);
+
+                            innerResult =
+                                (RegexpEngine)
+                                    t_RegexpEngineClass.newInstance();
+                        }
+                        catch  (final Exception exception)
+                        {
+                            // Check to see if we've got a bad configuration
+                            if  (   (t_RegexpEngineClass != null)
+                                 && (!RegexpEngine.class.isAssignableFrom(
+                                         t_RegexpEngineClass)))
+                            {
+                                innerResult =
+                                    new RegexpPluginMisconfiguredException(
+                                          "implementation.does.not."
+                                        + "implement.regexpegine",
+                                        exception);
+                            }
+                            else
+                            {
+                                innerResult =
+                                    new RegexpPluginMisconfiguredException(
+                                        "unexpected.problem", exception);
+                            }
+                        }
+
+                        return innerResult;
+                    }
+                });
+
+        if  (result instanceof RegexpPluginMisconfiguredException)
         {
-            result = (Matcher) Class.forName(engine[MATCHER]).newInstance();
+            throw (RegexpPluginMisconfiguredException) result;
         }
-        catch  (Exception exception)
+
+        if  (result == null)
         {
-            LogFactory.getLog(RegexpManager.class).error(
-                "Matcher instantiation error.",
-                exception);
-
-            throw
-                new RegexpEngineNotFoundException(
-                    engine[NAME],
-                    engine[ENGINE_VERSION],
-                    engine[PACKAGE],
-                    engine[COMPILER],
-                    engine[MATCHER],
-                    engine[HELPER]);
+            throw new RegexpEngineNotFoundException(engineClass);
         }
 
-        return result;
+        return (RegexpEngine) result;
+    }
+
+    /**
+     * Retrieves the stream associated to the resource
+     * whose name is given, using a concrete class loader.
+     * @param loader the class loader.
+     * @param name the resource name.
+     * @return the stream.
+     * @precondition name != null
+     */
+    protected InputStream getResourceAsStream(
+        final ClassLoader loader, final String name)
+    {
+        return
+            (InputStream)
+                AccessController.doPrivileged(
+                    new PrivilegedAction()
+                    {
+                        public Object run()
+                        {
+                            Object result = null;
+
+                            if  (loader != null)
+                            {
+                                result = loader.getResourceAsStream(name);
+                            }
+                            else
+                            {
+                                result =
+                                    ClassLoader
+                                        .getSystemResourceAsStream(name);
+                            }
+
+                            return result;
+                        }
+                    });
     }
 }

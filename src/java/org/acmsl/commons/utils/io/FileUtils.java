@@ -51,8 +51,10 @@ import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
+import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 
 /*
  * Importing some JDK1.3 classes.
@@ -735,7 +737,7 @@ public abstract class FileUtils
 
         try
         {
-            Helper t_Helper = RegexpManager.createHelper();
+            Helper t_Helper = createHelper(RegexpManager.getInstance());
 
             result =
                 t_Helper.replaceAll(packageName, "\\.", File.separator);
@@ -764,7 +766,64 @@ public abstract class FileUtils
                 "Cannot find any regexp engine.",
                 regengNotFoundException);
         }
+        catch  (final RegexpPluginMisconfiguredException
+                      regexpPluginMisconfiguredException)
+        {
+            /*
+             * This exception is thrown if RegexpPlugin cannot be configured
+             * properly at runtime. Not only this one, but any method provided
+             * by thisclass that use regexps will not work.
+             */
+            LogFactory.getLog(getClass()).fatal(
+                "Cannot configure RegexpPlugin.",
+                regexpPluginMisconfiguredException);
+        }
 
         return result;
+    }
+
+    /**
+     * Creates the helper.
+     * @return the regexp helper.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     */
+    protected static synchronized Helper createHelper()
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createHelper(RegexpManager.getInstance());
+    }
+
+    /**
+     * Creates the helper.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp helper.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Helper createHelper(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createHelper(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the helper.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp helper.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Helper createHelper(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createHelper();
     }
 }

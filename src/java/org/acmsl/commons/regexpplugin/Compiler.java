@@ -54,19 +54,15 @@ package org.acmsl.commons.regexpplugin;
  */
 import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.Versionable;
-import org.acmsl.commons.version.VersionFactory;
 
 /**
  * Represents a regexp compiler. Different implementations vary but they all
  * must respect this set of methods.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
 public interface Compiler
-    extends  Versionable
 {
     /**
      * Compiles given regular expression and creates a Pattern object to
@@ -75,7 +71,7 @@ public interface Compiler
      * @return the Pattern associated to such regular expression.
      * @throws MalformedPatternException if given regexp is malformed.
      */
-    public Pattern compile(String regexp)
+    public Pattern compile(final String regexp)
         throws  MalformedPatternException;
 
     /**
@@ -104,11 +100,4 @@ public interface Compiler
      * @return  true if the compiler understands new line delimiters.
      */
     public boolean isMultiline();
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
 }

@@ -53,8 +53,10 @@ package org.acmsl.commons.utils.http;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
+import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.regexp.RegexpUtils;
 
 /*
@@ -565,6 +567,51 @@ public abstract class HttpServletUtils
     }
 
     /**
+     * Creates the matcher.
+     * @return the regexp matcher.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     */
+    protected static synchronized Matcher createMatcher()
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createMatcher(RegexpManager.getInstance());
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp matcher.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createMatcher(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp matcher.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createMatcher();
+    }
+
+    /**
      * Parses a name=value text, splitting it in two strings.
      * @param unparsed the text to parse.
      * @return a two-element array, first for the left part, second for the
@@ -576,7 +623,9 @@ public abstract class HttpServletUtils
     public String[] parseNameValuePair(final String unparsed)
         throws  RegexpEngineNotFoundException
     {
-        return parseNameValuePair(unparsed, RegexpManager.createMatcher());
+        return
+            parseNameValuePair(
+                unparsed, createMatcher(RegexpManager.getInstance()));
     }
 
     /**

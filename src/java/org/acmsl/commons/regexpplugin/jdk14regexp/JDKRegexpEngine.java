@@ -33,8 +33,8 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description: Designed to be thrown at runtime when the
- *              specified regexp engine is not found.
+ * Description: Adapts JDK 1.4 Regexp package to be used as a
+ *              RegexpPlugin implementation.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -46,77 +46,52 @@
  * $Id$
  *
  */
-package org.acmsl.commons.regexpplugin;
+package org.acmsl.commons.regexpplugin.jdk14regexp;
 
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.ConfigurationException;
+import org.acmsl.commons.regexpplugin.Compiler;
+import org.acmsl.commons.regexpplugin.Helper;
+import org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter;
+import org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapter;
+import org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapter;
+import org.acmsl.commons.regexpplugin.Matcher;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 
 /**
- * Designed to be thrown at runtime when the specified regexp engine
- * is not found.
+ * Adapts JDK 1.4 Regexp package to be used as a RegexpPlugin implementation.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public class RegexpEngineNotFoundException
-    extends  ConfigurationException
+public class JDKRegexpEngine
+    implements RegexpEngine
 {
     /**
-     * The key for this exception in the bundle.
+     * Creates a compiler instance.
+     * @return such instance.
      */
-    protected static final String MESSAGE_KEY = "regexp.engine.not.found";
-
-    /**
-     * Engine name.
-     */
-    private String m__strEngineClass;
-
-    /**
-     * Builds an exception to indicate the regexp engine was not found.
-     * @param engineClass the class name of the Regexp implementation whose
-     * instatiation has failed.
-     * @precondition engineClass != null
-     */
-    public RegexpEngineNotFoundException(final String engineClass)
+    public Compiler createCompiler()
     {
-        super(
-            MESSAGE_KEY,
-            new Object[]
-            {
-                engineClass,
-            });
-
-        inmutableSetEngineClass(engineClass);
+        return new CompilerJDKAdapter();
     }
 
     /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
+     * Creates a matcher instance.
+     * @return such instance.
      */
-    private void inmutableSetEngineClass(final String engineClass)
+    public Matcher createMatcher()
     {
-        m__strEngineClass = engineClass;
+        return new MatcherJDKAdapter();
     }
 
     /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
+     * Creates a helper instance.
+     * @return such instance.
      */
-    protected void setEngineClass(final String engineClass)
+    public Helper createHelper()
     {
-        inmutableSetEngineClass(engineClass);
-    }
-
-    /**
-     * Retrieves the implementation class name.
-     * @return implementation class.
-     */
-    public String getEngineClass()
-    {
-        return m__strEngineClass;
+        return new HelperJDKAdapter();
     }
 }

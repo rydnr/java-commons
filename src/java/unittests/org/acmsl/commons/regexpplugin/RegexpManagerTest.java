@@ -148,186 +148,29 @@ extends TestCase
   }
   
   /**
-  * Tests RegexpManagerTestuseJakartaOroPerl5()
+  * Tests RegexpManagerTestgetEngine()
   * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#useJakartaOroPerl5()
+  * @see org.acmsl.commons.regexpplugin.RegexpManager#getEngine()
   */
-  public void testUseJakartaOroPerl5()
+  public void testGetEngine()
   throws Exception
   {
-    // JUnitDoclet begin method useJakartaOroPerl5
+    // JUnitDoclet begin method getEngine
         try
         {
-            RegexpManager.useJakartaOroPerl5();
+            RegexpManager t_RegexpManager = RegexpManager.getInstance();
 
-            org.acmsl.commons.regexpplugin.Compiler t_Compiler = RegexpManager.createCompiler();
+            org.acmsl.commons.regexpplugin.RegexpEngine t_RegexpEngine =
+                t_RegexpManager.getEngine();
 
-            assertTrue(t_Compiler != null);
-
-            assertTrue(t_Compiler instanceof org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapter);
+            assertNotNull(t_RegexpEngine);
         }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
+        catch  (final Throwable throwable)
         {
-            assertTrue("Regexp engine not found.", false);
-        }
-    // JUnitDoclet end method useJakartaOroPerl5
-  }
-  
-  /**
-  * Tests RegexpManagerTestuseJakartaOroAwk()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#useJakartaOroAwk()
-  */
-  public void testUseJakartaOroAwk()
-  throws Exception
-  {
-    // JUnitDoclet begin method useJakartaOroAwk
-    // JUnitDoclet end method useJakartaOroAwk
-  }
-  
-  /**
-  * Tests RegexpManagerTestuseJakartaRegexp()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#useJakartaRegexp()
-  */
-  public void testUseJakartaRegexp()
-  throws Exception
-  {
-    // JUnitDoclet begin method useJakartaRegexp
-        try
-        {
-            RegexpManager.useJakartaRegexp();
-
-            org.acmsl.commons.regexpplugin.Compiler t_Compiler = RegexpManager.createCompiler();
-
-            assertTrue(t_Compiler != null);
-
-            assertTrue(t_Compiler instanceof org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter);
-        }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
-        {
-            assertTrue("Regexp engine not found.", false);
-        }
-    // JUnitDoclet end method useJakartaRegexp
-  }
-  
-  /**
-  * Tests RegexpManagerTestuseJDK14Regexp()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#useJDK14Regexp()
-  */
-  public void testUseJDK14Regexp()
-  throws Exception
-  {
-    // JUnitDoclet begin method useJDK14Regexp
-        try
-        {
-            RegexpManager.useJDK14Regexp();
-
-            org.acmsl.commons.regexpplugin.Compiler t_Compiler = RegexpManager.createCompiler();
-
-            assertTrue(t_Compiler != null);
-
-            assertTrue(t_Compiler instanceof org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter);
-        }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
-        {
-            assertTrue("Regexp engine not found.", false);
-        }
-    // JUnitDoclet end method useJDK14Regexp
-  }
-  
-  /**
-  * Tests RegexpManagerTestuseGNURegexp()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#useGNURegexp()
-  */
-  public void testUseGNURegexp()
-  throws Exception
-  {
-    // JUnitDoclet begin method useGNURegexp
-        try
-        {
-            RegexpManager.useGNURegexp();
-
-            org.acmsl.commons.regexpplugin.Compiler t_Compiler = RegexpManager.createCompiler();
-
-            assertTrue(t_Compiler != null);
-
-            assertTrue(t_Compiler instanceof org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapter);
-        }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
-        {
-            assertTrue("Regexp engine not found.", false);
-        }
-    // JUnitDoclet end method useGNURegexp
-  }
-  
-  /**
-  * Tests RegexpManagerTestcreateCompiler()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#createCompiler()
-  */
-  public void testCreateCompiler()
-  throws Exception
-  {
-    // JUnitDoclet begin method createCompiler
-        try
-        {
-            RegexpManager.useJakartaOroPerl5();
-
-            org.acmsl.commons.regexpplugin.Compiler t_Compiler = RegexpManager.createCompiler();
-
-            assertTrue(t_Compiler != null);
-
-            assertTrue(t_Compiler instanceof org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapter);
-        }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
-        {
-            assertTrue("Regexp engine not found.", false);
+            fail("" + throwable);
         }
     // JUnitDoclet end method createCompiler
   }
-  
-  /**
-  * Tests RegexpManagerTestcreateHelper()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#createHelper()
-  */
-  public void testCreateHelper()
-  throws Exception
-  {
-    // JUnitDoclet begin method createHelper
-        try
-        {
-            RegexpManager.useJakartaOroPerl5();
-
-            org.acmsl.commons.regexpplugin.Helper t_Helper = RegexpManager.createHelper();
-
-            assertTrue(t_Helper != null);
-
-            assertTrue(t_Helper instanceof org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter);
-        }
-        catch  (org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException regexpEngineNotFoundException)
-        {
-            assertTrue("Regexp engine not found.", false);
-        }
-    // JUnitDoclet end method createHelper
-  }
-  
-  /**
-  * Tests RegexpManagerTestcreateMatcher()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.RegexpManager#createMatcher()
-  */
-  public void testCreateMatcher()
-  throws Exception
-  {
-    // JUnitDoclet begin method createMatcher
-    // JUnitDoclet end method createMatcher
-  }
-  
-  
   
   /**
   * JUnitDoclet moves marker to this method, if there is not match

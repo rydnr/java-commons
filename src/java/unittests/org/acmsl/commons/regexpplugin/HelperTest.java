@@ -52,10 +52,15 @@ package unittests.org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Helper;
+import org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngine;
 import org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapter;
 import org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter;
+import org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngine;
 import org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapter;
+import org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngine;
 import org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapter;
+import org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngine;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.version.Version;
@@ -114,28 +119,63 @@ public class HelperTest
      * Tests the helper.replaceAll() method.
      * @see Helper#replaceAll(String,String,String)
      */
+    public void testDefaultReplaceAll()
+    {
+        try
+        {
+            RegexpManager t_RegexpManager = RegexpManager.getInstance();
+
+            assertNotNull(t_RegexpManager);
+
+            RegexpEngine t_RegexpEngine = t_RegexpManager.getEngine();
+
+            assertNotNull(t_RegexpEngine);
+
+            Helper t_Helper = t_RegexpEngine.createHelper();
+
+            assertNotNull(t_Helper);
+
+            String t_strResult =
+                t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
+
+            assertNotNull(t_strResult);
+
+            assertTrue(t_strResult.equals(SUCCESS));
+        }
+        catch  (final Throwable throwable)
+        {
+            fail("" + throwable);
+        }
+    }
+
+    /**
+     * Tests the helper.replaceAll() method.
+     * @see Helper#replaceAll(String,String,String)
+     */
     public void testJakartaOroReplaceAll()
     {
         try
         {
-            RegexpManager.useJakartaOroPerl5();
+            RegexpEngine t_RegexpEngine = new ORORegexpEngine();
 
-            Helper t_Helper = RegexpManager.createHelper();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Helper != null);
+            Helper t_Helper = t_RegexpEngine.createHelper();
+
+            assertNotNull(t_Helper);
 
             assertTrue(t_Helper instanceof HelperOROAdapter);
 
             String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertTrue(t_strResult != null);
+            assertNotNull(t_strResult);
 
             assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -147,24 +187,26 @@ public class HelperTest
     {
         try
         {
-            RegexpManager.useJakartaRegexp();
+            RegexpEngine t_RegexpEngine = new JakartaRegexpEngine();
 
-            Helper t_Helper = RegexpManager.createHelper();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Helper != null);
+            Helper t_Helper = t_RegexpEngine.createHelper();
+
+            assertNotNull(t_Helper);
 
             assertTrue(t_Helper instanceof HelperRegexpAdapter);
 
             String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertTrue(t_strResult != null);
+            assertNotNull(t_strResult);
 
             assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -176,24 +218,26 @@ public class HelperTest
     {
         try
         {
-            RegexpManager.useJDK14Regexp();
+            RegexpEngine t_RegexpEngine = new JDKRegexpEngine();
 
-            Helper t_Helper = RegexpManager.createHelper();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Helper != null);
+            Helper t_Helper = t_RegexpEngine.createHelper();
+
+            assertNotNull(t_Helper);
 
             assertTrue(t_Helper instanceof HelperJDKAdapter);
 
             String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertTrue(t_strResult != null);
+            assertNotNull(t_strResult);
 
             assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 
@@ -205,24 +249,26 @@ public class HelperTest
     {
         try
         {
-            RegexpManager.useGNURegexp();
+            RegexpEngine t_RegexpEngine = new GNURegexpEngine();
 
-            Helper t_Helper = RegexpManager.createHelper();
+            assertNotNull(t_RegexpEngine);
 
-            assertTrue(t_Helper != null);
+            Helper t_Helper = t_RegexpEngine.createHelper();
+
+            assertNotNull(t_Helper);
 
             assertTrue(t_Helper instanceof HelperGNUAdapter);
 
             String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertTrue(t_strResult != null);
+            assertNotNull(t_strResult);
 
             assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (Exception exception)
+        catch  (final Throwable throwable)
         {
-            fail("" + exception);
+            fail("" + throwable);
         }
     }
 

@@ -52,6 +52,7 @@ package org.acmsl.commons;
  * Importing project classes.
  */
 import org.acmsl.commons.patterns.I14able;
+import org.acmsl.commons.utils.StringValidator;
 
 /*
  * Importing some JDK classes.
@@ -59,6 +60,8 @@ import org.acmsl.commons.patterns.I14able;
 import java.io.Serializable;
 import java.lang.Throwable;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -255,7 +258,46 @@ public class BundleI14able
         final Object[] params,
         final ResourceBundle bundle)
     {
-        return buildMessage(bundle.getString(key), params);
+        return
+            buildMessage(
+                bundle.getString(key),
+                translateParams(
+                    params, bundle, StringValidator.getInstance()));
+    }
+
+    /**
+     * Translates any elements of given array for which translation is
+     * defined in the bundle.
+     * @param params the parameters.
+     * @param bundle the bundle.
+     * @param stringValidator the StringValidator instance.
+     * @return the translated parameters.
+     * @precondition params != null
+     * @precondition bundle != null
+     * @precondition stringValidator != null
+     */
+    protected Object[] translateParams(
+        final Object[] params,
+        final ResourceBundle bundle,
+        final StringValidator stringValidator)
+    {
+        Collection t_cResult = new ArrayList();
+
+        for  (int t_iIndex = 0; t_iIndex < params.length; t_iIndex++)
+        {
+            String t_strTranslation = bundle.getString("" + params[t_iIndex]);
+
+            if  (stringValidator.isEmpty(t_strTranslation))
+            {
+                t_cResult.add(params[t_iIndex]);
+            }
+            else
+            {
+                t_cResult.add(t_strTranslation);
+            }
+        }
+
+        return t_cResult.toArray(params);
     }
 
     /**

@@ -33,8 +33,8 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description: Designed to be thrown at runtime when the
- *              specified regexp engine is not found.
+ * Description: Designed to be thrown at runtime when RegexpPlugin is not
+ *              properly configured.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -54,69 +54,49 @@ package org.acmsl.commons.regexpplugin;
 import org.acmsl.commons.ConfigurationException;
 
 /**
- * Designed to be thrown at runtime when the specified regexp engine
- * is not found.
+ * Designed to be thrown at runtime when RegexpPlugin is not
+ * properly configured.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public class RegexpEngineNotFoundException
+public class RegexpPluginMisconfiguredException
     extends  ConfigurationException
 {
     /**
      * The key for this exception in the bundle.
      */
-    protected static final String MESSAGE_KEY = "regexp.engine.not.found";
+    protected static final String MESSAGE_KEY = "regexpplugin.misconfigured";
 
     /**
-     * Engine name.
+     * Builds a misconfiguration exception with given information.
+     * @param detail the detail.
      */
-    private String m__strEngineClass;
-
-    /**
-     * Builds an exception to indicate the regexp engine was not found.
-     * @param engineClass the class name of the Regexp implementation whose
-     * instatiation has failed.
-     * @precondition engineClass != null
-     */
-    public RegexpEngineNotFoundException(final String engineClass)
+    public RegexpPluginMisconfiguredException(final String detail)
     {
         super(
             MESSAGE_KEY,
             new Object[]
             {
-                engineClass,
+                detail
             });
-
-        inmutableSetEngineClass(engineClass);
     }
 
     /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
+     * Builds a misconfiguration exception with given information.
+     * @param detail the detail.
+     * @param throwable the cause.
      */
-    private void inmutableSetEngineClass(final String engineClass)
+    public RegexpPluginMisconfiguredException(
+        final String detail, final Throwable throwable)
     {
-        m__strEngineClass = engineClass;
-    }
-
-    /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
-     */
-    protected void setEngineClass(final String engineClass)
-    {
-        inmutableSetEngineClass(engineClass);
-    }
-
-    /**
-     * Retrieves the implementation class name.
-     * @return implementation class.
-     */
-    public String getEngineClass()
-    {
-        return m__strEngineClass;
+        super(
+            MESSAGE_KEY,
+            new Object[]
+            {
+                MESSAGE_KEY + "." + detail,
+                throwable.getMessage(),
+                throwable
+            });
     }
 }

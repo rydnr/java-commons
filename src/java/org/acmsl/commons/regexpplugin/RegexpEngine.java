@@ -33,8 +33,7 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description: Designed to be thrown at runtime when the
- *              specified regexp engine is not found.
+ * Description: Represents a regexp engine.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -48,75 +47,37 @@
  */
 package org.acmsl.commons.regexpplugin;
 
+
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.ConfigurationException;
+import org.acmsl.commons.regexpplugin.Compiler;
+import org.acmsl.commons.regexpplugin.Matcher;
+import org.acmsl.commons.regexpplugin.Helper;
 
 /**
- * Designed to be thrown at runtime when the specified regexp engine
- * is not found.
+ * Represents a regexp engine.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public class RegexpEngineNotFoundException
-    extends  ConfigurationException
+public interface RegexpEngine
 {
     /**
-     * The key for this exception in the bundle.
+     * Creates a compiler instance.
+     * @return such instance.
      */
-    protected static final String MESSAGE_KEY = "regexp.engine.not.found";
+    public Compiler createCompiler();
 
     /**
-     * Engine name.
+     * Creates a matcher instance.
+     * @return such instance.
      */
-    private String m__strEngineClass;
+    public Matcher createMatcher();
 
     /**
-     * Builds an exception to indicate the regexp engine was not found.
-     * @param engineClass the class name of the Regexp implementation whose
-     * instatiation has failed.
-     * @precondition engineClass != null
+     * Creates a helper instance.
+     * @return such instance.
      */
-    public RegexpEngineNotFoundException(final String engineClass)
-    {
-        super(
-            MESSAGE_KEY,
-            new Object[]
-            {
-                engineClass,
-            });
-
-        inmutableSetEngineClass(engineClass);
-    }
-
-    /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
-     */
-    private void inmutableSetEngineClass(final String engineClass)
-    {
-        m__strEngineClass = engineClass;
-    }
-
-    /**
-     * Specifies the implementation class name.
-     * @param engineClass the implementation class.
-     * @precondition engineClass != null
-     */
-    protected void setEngineClass(final String engineClass)
-    {
-        inmutableSetEngineClass(engineClass);
-    }
-
-    /**
-     * Retrieves the implementation class name.
-     * @return implementation class.
-     */
-    public String getEngineClass()
-    {
-        return m__strEngineClass;
-    }
+    public Helper createHelper();
 }

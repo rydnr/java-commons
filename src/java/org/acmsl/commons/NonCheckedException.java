@@ -63,7 +63,7 @@ import java.util.Locale;
 /**
  * Represents any exception which doesn't require to be catched.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendariz</a>
+ *         >Jose San Leandro Armendariz</a>
  * @version $Revision$
  */
 public abstract class NonCheckedException

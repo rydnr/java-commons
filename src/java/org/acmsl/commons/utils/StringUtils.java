@@ -55,8 +55,10 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
+import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
+import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.StringValidator;
 import org.acmsl.commons.version.Version;
 import org.acmsl.commons.version.VersionFactory;
@@ -161,7 +163,7 @@ public abstract class StringUtils
         {
             try 
             {
-                t_Compiler = createCompiler();
+                t_Compiler = createCompiler(RegexpManager.getInstance());
 
                 if  (t_Compiler != null)
                 {
@@ -254,6 +256,7 @@ public abstract class StringUtils
                             result = null;
                         }
                     }
+
                 }
                 else 
                 {
@@ -424,17 +427,6 @@ public abstract class StringUtils
     }
 
     /**
-     * Creates the compiler.
-     * @return the regexp compiler.
-     */
-    protected static synchronized Compiler createCompiler()
-        throws  RegexpEngineNotFoundException
-    {
-        return RegexpManager.createCompiler();
-
-    }
-
-    /**
      * Removes all duplicates of specified char in given text.
      * @param text the text to parse.
      * @param lookfor the char to remove duplicates.
@@ -507,7 +499,7 @@ public abstract class StringUtils
                 replacement,
                 StringValidator.getInstance(),
                 getCompiler(),
-                RegexpManager.createMatcher());
+                createMatcher(RegexpManager.getInstance()));
     }
 
     /**
@@ -739,7 +731,7 @@ public abstract class StringUtils
             {
                 String t_strValue = capitalize(value, separator);
 
-                Helper t_Helper = RegexpManager.createHelper();
+                Helper t_Helper = createHelper(RegexpManager.getInstance());
 
                 result = t_Helper.replaceAll(t_strValue, "\\W", "");
             }
@@ -851,7 +843,7 @@ public abstract class StringUtils
             if  (   (text != null)
                  && (words != null))
             {
-                Helper t_Helper = RegexpManager.createHelper();
+                Helper t_Helper = createHelper(RegexpManager.getInstance());
 
                 for  (int t_iIndex = 0; t_iIndex < words.length; t_iIndex++) 
                 {
@@ -934,7 +926,7 @@ public abstract class StringUtils
             if  (   (t_strText      != null)
                  && (separator != null))
             {
-                Matcher t_Matcher = RegexpManager.createMatcher();
+                Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
                 MatchResult t_MatchResult = null;
 
@@ -1025,7 +1017,7 @@ public abstract class StringUtils
         {
             if  (result != null)
             {
-                Matcher t_Matcher = RegexpManager.createMatcher();
+                Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
                 MatchResult t_MatchResult = null;
 
@@ -1087,7 +1079,7 @@ public abstract class StringUtils
             {
                 String t_strPackageName = packageName;
 
-                Matcher t_Matcher = RegexpManager.createMatcher();
+                Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
                 MatchResult t_MatchResult = null;
 
@@ -1209,7 +1201,7 @@ public abstract class StringUtils
                     t_strLinePrefix = "";
                 }
 
-                Matcher t_Matcher = RegexpManager.createMatcher();
+                Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
                 MatchResult t_MatchResult = null;
 
@@ -1336,7 +1328,7 @@ public abstract class StringUtils
                 separator,
                 StringValidator.getInstance(),
                 getUnCapitalizePattern(),
-                RegexpManager.createMatcher());
+                createMatcher(RegexpManager.getInstance()));
     }
 
     /**
@@ -1630,5 +1622,95 @@ public abstract class StringUtils
         }
 
         return t_strFirstLine + result + t_strLastLine;
+    }
+
+    /**
+     * Creates the compiler.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp compiler.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Compiler createCompiler(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createCompiler(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the compiler.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp compiler.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Compiler createCompiler(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createCompiler();
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp matcher.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createMatcher(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the matcher.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp matcher.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Matcher createMatcher(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createMatcher();
+    }
+
+    /**
+     * Creates the helper.
+     * @param regexpManager the RegexpManager instance.
+     * @return the regexp helper.
+     * @throws RegexpEngineNotFoundException if a suitable instance
+     * cannot be created.
+     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
+     * misconfigured.
+     * @precondition regexpManager != null
+     */
+    protected static synchronized Helper createHelper(
+        final RegexpManager regexpManager)
+      throws RegexpEngineNotFoundException,
+             RegexpPluginMisconfiguredException
+    {
+        return createHelper(regexpManager.getEngine());
+    }
+
+    /**
+     * Creates the helper.
+     * @param regexpEngine the RegexpEngine instance.
+     * @return the regexp helper.
+     * @precondition regexpEngine != null
+     */
+    protected static synchronized Helper createHelper(
+        final RegexpEngine regexpEngine)
+    {
+        return regexpEngine.createHelper();
     }
 }
