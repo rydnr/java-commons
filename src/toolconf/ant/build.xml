@@ -2191,7 +2191,7 @@
 
       <mkdir dir="${javadoc.src.dir}"/>
 
-      <javadoc
+      <!--javadoc
         packagenames="${organization.type}.*"
         defaultexcludes="yes"
         classpathref="unit.test.class.path"
@@ -2199,16 +2199,16 @@
         docletpathref="java.development.class.path"
         additionalparam="-d ../../../${java.src.dir} -buildall -naming org.acmsl.junitdoclet.AcmslNamingStrategy -testintest">
 
-        <sourcepath>
+        <sourcepath-->
 
           <!-- ORDER MATTERS -->
-          <pathelement location="${javadoc.src.dir}"/>
+          <!--pathelement location="${javadoc.src.dir}"/>
 
           <path refid="java.source.and.javadoc.path"/>
 
         </sourcepath>
 
-    </javadoc>
+    </javadoc-->
   </target>
 
 <!--         END CODE GENERATION SECTION                                    -->
@@ -2931,21 +2931,17 @@
         depends="junitdoclet"
         description="Executes all defined unit tests.">
 
-        <property name="unit-test-path" refid="unit.test.class.path"/>
-
-        <echo message="${unit-test-path}"/>
-
         <!--
          Actual JUnit invokation.
         -->
         <java
-            fork="true"
-            classname="${junit.runner.classname}"
-            taskname="JUnit"
-            failonerror="true"
-            classpathref="unit.test.class.path">
+          fork="true"
+          classname="${junit.runner.classname}"
+          taskname="JUnit"
+          failonerror="true"
+          classpathref="unit.test.class.path">
 
-            <arg value="${project.base.suite}"/>
+          <arg value="${project.base.suite}"/>
 
         </java>
 
@@ -3039,6 +3035,33 @@
 
             <arg value="${debug.suspend}"/>
 
+        </exec>
+
+    </target>
+
+    <!--
+     Debugs defined unit tests.
+     @depends junitdoclet to manage the unit tests.
+     @param project.base.suite the JUnit suite that contains all tests.
+     @param classpath the classpath.
+     @param project.build the project compiled classes.
+     @calls java to invoke the JUnit framework.
+     @return the debugging environment.
+    -->
+    <target
+        name="debug.unit.tests"
+        depends="junitdoclet"
+        description="DEbugs defined unit tests.">
+
+        <property name="unit-test-path" refid="unit.test.class.path"/>
+
+        <echo message="${unit-test-path}"/>
+
+        <!--
+         Debug unit tests.
+        -->
+        <exec executable="java">
+          <arg line="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -cp ${unit-test-path} ${junit.runner.classname} ${project.base.suite}"/>
         </exec>
 
     </target>

@@ -199,7 +199,7 @@ public class StringUtilsTest
             t_StringUtils.unCapitalize(t_strInput, "-");
 
         assertEquals(
-            "this -is yet-another-test", t_strUnCapitalized);
+            "this-is-asdyet-another-test", t_strUnCapitalized);
     }
 
     /**

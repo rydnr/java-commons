@@ -202,6 +202,11 @@
         <jarDependency
           name="junitdoclet"
           version="1.0.2"
+          jar="junitdoclet-1.0.2.jar"/>
+
+        <jarDependency
+          name="junitdoclet"
+          version="1.0.2"
           jar="junitdoclet-acmsl-1.0.2.jar"/>
 
         <jarDependency
