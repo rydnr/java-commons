@@ -720,46 +720,10 @@ public abstract class StringUtils
     }
 
     /**
-     * Substitutes most common HTML reserved characters with their escaped
-     * version.
-     * i.e. it takes all "<" and replaces them with "&amp;lt;".
-     * @param htmlContent the html contents to escape.
-     * @return the escaped version of such contents.
-     */
-    public String escapeHTML(final String htmlContents)
-    {
-        String result = htmlContents;
-
-        result = replace(result, "<", "&lt;");
-        result = replace(result, ">", "&gt;");
-        result = replace(result, "\"", "&quot;");
-        result = replace(result, "'", "&apos;");
-
-        return result;
-    }
-
-    /**
-     * Substitutes most common HTML escape sequences with their unescaped
-     * version.
-     * i.e. it takes all "&amp;lt;" and replaces them with "<".
-     * @param htmlContent the escaped html contents.
-     * @return the unescaped version of such contents.
-     */
-    public String unescapeHTML(final String htmlContents)
-    {
-        String result = htmlContents;
-
-        result = replace(result, "&lt;", "<");
-        result = replace(result, "&gt;", ">");
-        result = replace(result, "&quot;", "\"");
-        result = replace(result, "&apos;", "'");
-
-        return result;
-    }
-
-    /**
      * Normalizes given value, whose words are defined by a concrete char
-     * separator.
+     * separator. In this situation, <i>normalization</i> means
+     * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
+     * characters.
      * @param value the value to normalize.
      * @param separator the word separator.
      * @return the normalized version.
@@ -797,7 +761,8 @@ public abstract class StringUtils
 
     /**
      * Capitalizes the words contained in given string, using a concrete char
-     * separator.
+     * separator. For instance,
+     * <code>capitalize("asd-efg", '-').equals("AsdEfg")</code>.
      * @param text the text to process.
      * @param separator the word separator.
      * @return the capitalized string.
@@ -837,7 +802,7 @@ public abstract class StringUtils
     }
 
     /**
-     * Capitalizes the words contained in given string, using a concrete char
+     * Normalizes the words contained in given string, using a concrete char
      * separator. The first letter is always in lower case.
      * @param text the text to process.
      * @param separator the word separator.
@@ -867,6 +832,9 @@ public abstract class StringUtils
 
     /**
      * Capitalizes the contents, using given separator, and word list.
+     * This is the same as, replacing all words from the list in the
+     * input to its capitalized versions, and finally
+     * applying <code>toJavaMethod(text, separator)</code> to the result.
      * @param text the text.
      * @param separator the separator.
      * @param words the predefined words.
@@ -1027,6 +995,29 @@ public abstract class StringUtils
      */
     public String extractPackageName(final String text)
     {
+        return extractPackageGroup(text, 2);
+    }
+
+    /**
+     * Extracts the class name from given fully-qualified class identifier.
+     * @param text the text.
+     * @return the class name.
+     */
+    public String extractClassName(final String text)
+    {
+        return extractPackageGroup(text, 1);
+    }
+
+    /**
+     * Extracts a concrete group in sub-package regexp from given text.
+     * @param text the text.
+     * @param group the group.
+     * @return the selected group.
+     * @precondition ((group == 1) || (group == 2))
+     */
+    protected String extractPackageGroup(
+        final String text, final int group)
+    {
         String result = text;
 
         try
@@ -1048,7 +1039,7 @@ public abstract class StringUtils
                     t_MatchResult = t_Matcher.getMatch();
 
                     // the rest is parsed next.
-                    result = t_MatchResult.group(2);
+                    result = t_MatchResult.group(group);
                 }
             }
 
@@ -1158,7 +1149,7 @@ public abstract class StringUtils
     }
 
     /**
-     * Justifies given text to not exceed specified margin,
+     * Justifies given text to avoid exceeding specified margin,
      * if possible.
      * @param text the text to justify.
      * @param linePrefix the prefix to add to all justified lines.
@@ -1171,7 +1162,7 @@ public abstract class StringUtils
     }
 
     /**
-     * Justifies given text to not exceed specified margin,
+     * Justifies given text to avoid exceeding specified margin,
      * if possible.
      * @param text the text to justify.
      * @param linePrefix the prefix to add to all justified lines.
@@ -1186,7 +1177,7 @@ public abstract class StringUtils
     }
 
     /**
-     * Justifies given text to not exceed specified margin,
+     * Justifies given text to avoid exceeding specified margin,
      * if possible.
      * @param text the text to justify.
      * @param linePrefix the prefix to add to all justified lines.
@@ -1195,7 +1186,7 @@ public abstract class StringUtils
      * @return the justified text.
      * @precondition stringValidator != null
      */
-    public String justify(
+    protected String justify(
         final String text,
         final String linePrefix,
         final int margin,
@@ -1331,7 +1322,7 @@ public abstract class StringUtils
 
     /**
      * Uncapitalizes given text, i.e. "thisTest"
-     * to "this<code>separator</code>test".
+     * to "this<code>[separator]</code>test".
      * @param input the input to process.
      * @param separator the separator.
      * @return the processed input.
@@ -1351,7 +1342,7 @@ public abstract class StringUtils
 
     /**
      * Uncapitalizes given text, i.e. "thisTest"
-     * to "this<code>separator</code>test".
+     * to "this<code>[separator]</code>test".
      * @param input the input to process.
      * @param separator the separator.
      * @param stringValidator the StringValidator instance.

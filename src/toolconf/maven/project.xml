@@ -101,12 +101,26 @@
       <version>1.7.0</version>
       <url>http://jakarta.apache.org/commons/beanutils/</url>
       <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>true</required.to.build>
+      </properties>
+    </dependency>
+
+    <!--dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.1</version>
+      <url>http://jakarta.apache.org/commons/collections/</url>
+      <properties>
         <required.to.compile>false</required.to.compile>
         <required.to.run>true</required.to.run>
         <required.to.test>true</required.to.test>
-        <required.to.build>false</required.to.build>
+        <required.to.build>true</required.to.build>
+        <injected.by>commons-beanutils</injected.by>
       </properties>
-    </dependency>
+    </dependency-->
 
     <dependency>
       <groupId>gnu-regexp</groupId>

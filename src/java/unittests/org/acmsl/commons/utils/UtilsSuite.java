@@ -122,7 +122,6 @@ public class UtilsSuite
     
     
     // JUnitDoclet begin method suite
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.StringUtilsTest.class);
     // JUnitDoclet end method suite
     
     return suite;
