@@ -44,7 +44,9 @@
             </li>
             <li>0.5.5b7<br/>
               <a href="${issue.url}510"
-              >Add a method to convert a word to its plural form</a>.
+              >Add a method to convert a word to its plural form</a>,
+              <a href="${issue.url}510"
+              >Add a method to convert a word to its singular form</a>.
             </li>
             <li>0.5.5b6<br/>
               Provide a method to <a href="${issue.url}509">uncapitalize</a> texts.

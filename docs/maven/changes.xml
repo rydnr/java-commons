@@ -7,7 +7,8 @@
   <body>
     <release version="commons-0_5_5b7" date="$Date$">
       <action dev="$Author$" type="add">
-        Finished <a href="${issue.url}510">510</a>.
+        Finished <a href="${issue.url}510">510</a> and
+        Finished <a href="${issue.url}511">511</a>.
       </action>
     </release>
     <release version="commons-0_5_5b6" date="2004/10/01 06:31:09">
