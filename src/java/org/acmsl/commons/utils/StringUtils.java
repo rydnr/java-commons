@@ -1583,8 +1583,9 @@ public abstract class StringUtils
             new StringTokenizer(text, "\n", false);
 
         String t_strFirstLine = null;
-        String t_strLastLine = null;
+        String t_strLastLine = "";
         String t_strCurrentLine = null;
+        boolean t_bJustOneLine = false;
 
         while  (t_StringTokenizer.hasMoreTokens())
         {
@@ -1592,6 +1593,10 @@ public abstract class StringUtils
 
             if  (t_strFirstLine == null)
             {
+                if  (!t_StringTokenizer.hasMoreTokens())
+                {
+                    t_bJustOneLine = true;
+                }
                 t_strFirstLine = t_strCurrentLine;
             }
             else if  (t_StringTokenizer.hasMoreTokens())
@@ -1601,24 +1606,27 @@ public abstract class StringUtils
             }
         }
 
-        t_strLastLine = t_strCurrentLine;
+        if  (!t_bJustOneLine)
+        {
+            t_strLastLine = t_strCurrentLine;
 
-        if  (stringValidator.isEmpty(t_strFirstLine))
-        {
-            t_strFirstLine = t_strFirstLine.trim();
-        }
-        else
-        {
-            t_strFirstLine += "\n";
-        }
+            if  (stringValidator.isEmpty(t_strFirstLine))
+            {
+                t_strFirstLine = t_strFirstLine.trim();
+            }
+            else
+            {
+                t_strFirstLine += "\n";
+            }
 
-        if  (stringValidator.isEmpty(t_strLastLine))
-        {
-            t_strLastLine = t_strLastLine.trim();
-        }
-        else if  (text.endsWith("\n"))
-        {
-            t_strLastLine += "\n";
+            if  (stringValidator.isEmpty(t_strLastLine))
+            {
+                t_strLastLine = t_strLastLine.trim();
+            }
+            else if  (text.endsWith("\n"))
+            {
+                t_strLastLine += "\n";
+            }
         }
 
         return t_strFirstLine + result + t_strLastLine;

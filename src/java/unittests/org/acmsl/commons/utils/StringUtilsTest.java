@@ -325,8 +325,14 @@ public class StringUtilsTest
         t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        System.out.println("~" + t_strOutput + "~");
-
         assertEquals("line 1   \n    and line 2\n", t_strOutput);
+
+        t_strInput =
+            "insert into customers (customer_id, name) values (?, \"test\")";
+
+        t_strOutput =
+            t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
+
+        assertEquals(t_strInput, t_strOutput);
     }
 }
