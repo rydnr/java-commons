@@ -6,7 +6,7 @@
   </properties>
   <body>
     <release
-      version="commons-0_5_5b13"
+      version="commons-0_5_5"
       date="$Date$"
       description="Enhancement">
       <action dev="$Author$" type="add">

@@ -14,8 +14,18 @@
 
       <subsection name="0.5.7">
         <p>
-          Model stateful behaviours via a new package called
-          <i>automata</i>.
+          <ul>
+            <li>Model stateful behaviours via a new package called
+              <i>automata</i>.
+            </li>
+            <li>0.5.5b14<br/>
+              Fix <a href="${issue.url}37"
+              >StringUtils and FileUtils share almost the same method,
+              packageToPath</a>, and
+              <a href="${issue.url}110"
+              >FileUtils#copy doesn't work for binary files</a>.
+            </li>
+          </ul>
         </p>
       </subsection>
       <subsection name="0.5.6">
@@ -27,14 +37,7 @@
         <p>
           Adapt some code from other projects to enhance reusability.
           <ul>
-            <li>0.5.5b14<br/>
-              Fix <a href="${issue.url}37"
-              >StringUtils and FileUtils share almost the same method,
-              packageToPath</a>, and
-              <a href="${issue.url}110"
-              >FileUtils#copy doesn't work for binary files</a>.
-            </li>
-            <li>0.5.5b13<br/>
+            <li>0.5.5<br/>
               Fix <a href="${issue.url}33"
               >Missing Javadoc documentation for RegexpPlugin packages</a>.
             </li>
