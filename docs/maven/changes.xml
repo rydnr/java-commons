@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
+  </properties>
+  <body>
+    <release version="commons-0_5_5b5" date="$Date$">
+      <action dev="$Author$" type="add">
+        Finished
+        <a
+          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+        >Adapt some WebExtension's classes</a> and
+        <a
+          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+        >Remove Versionable references in org.acmsl.commons.patterns
+        package)</a>.
+      </action>
+    </release>
+    <release version="commons-0_5_5b4" date="2004/06/11 07:16:58">
+      <action dev="chous" type="add">
+        Finished
+        <a
+          href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=157"
+        >Adapt some ProxyJ's classes</a>.
+      </action>
+    </release>
+    <release version="commons-0_5_5b3" date="2004/05/16 10:30:10">
+      <action dev="chous" type="add">
+        Added a basic method in FileUtils to read from an input
+        stream. Added also a new ReflectionUtils helper class
+        required by WebExtension.
+      </action>
+    </release>
+    <release version="commons-0_5_5b2" date="2004/02/24 16:25:10">
+      <action
+        dev="chous"
+        type="add"
+        due-to="Jose San Leandro"
+        due-to-email="jsanleandro@yahoo.es">
+        Removed the relationship between Utils and Versionable, since
+        that would be performed via compiler extensions, not at
+        source-code level.
+      </action>
+    </release>
+    <release version="commons-0_5_5b1" date="2004/02/23 10:41:57">
+      <action
+        dev="chous"
+        type="add"
+        due-to="Jose San Leandro"
+        due-to-email="jsanleandro@yahoo.es">
+        Started basic design of stateful entities.
+      </action>
+    </release>
+    <release version="commons-0_5_4" date="2004/02/15 14:07:05">
+      <action
+        dev="chous"
+        type="add"
+        due-to="Jose San Leandro"
+        due-to-email="jsanleandro@yahoo.es">
+        Previous changes not recorded.
+      </action>
+    </release>
+  </body>
+</document>

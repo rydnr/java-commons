@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<document>
+
+  <properties>
+    <title>Tasks</title>
+    <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
+  </properties>
+
+  <body>
+    <section name="Tasks">
+      <p>
+        Lists of "to-do"s and ideas for future versions.
+      </p>
+
+      <subsection name="0.7">
+        <p>
+          Remove all hard-links to Versionable package.
+        </p>
+      </subsection>
+      <subsection name="0.6">
+        <p>
+          Model stateful behaviours via a new package called
+          <i>automata</i>.
+        </p>
+      </subsection>
+      <subsection name="0.5.5">
+        <p>
+          Adapt some code from other projects to enhance reusability.
+          <ul>
+            <li>0.5.5b9<br/>
+              Fix <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=37"
+              >StringUtils and FileUtils share almost the same method,
+              packageToPath</a>.
+            </li>
+            <li>0.5.5b8<br/>
+              Fix <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=110"
+              >FileUtils#copy doesn't work for binary files</a>.
+            </li>
+            <li>0.5.5b7<br/>
+              Fix <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=33"
+              >Missing Javadoc documentation for RegexpPlugin packages</a>.
+            </li>
+            <li>0.5.5b6<br/>
+              <a
+                href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=31"
+              >Convert RegexpManager into a singleton</a>.
+            </li>
+            <li>0.5.5b5<br/>
+              <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+              >Remove Versionable references in org.acmsl.commons.patterns
+              package)</a>.
+              <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+              >Adapt some WebExtension classes (HttpServletUtils and
+              its dependencies)</a>.
+            </li>
+            <li>0.5.5b4<br/>
+              <a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=158"
+              >Adapt some ProxyJ's classes</a> (CheckedException,
+              NonCheckedException, ConfigurationException,
+              ConfigurationManager).
+            </li>
+          </ul>
+        </p>
+      </subsection>
+      <subsection name="0.5.4">
+        <p>
+          Previous milestones not recorded.
+        </p>
+      </subsection>
+    </section>
+
+  </body>
+</document>

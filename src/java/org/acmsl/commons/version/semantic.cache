@@ -1,0 +1,14 @@
+;; Object semantic.cache
+;; SEMANTICDB Tags save file
+(semanticdb-project-database "semantic.cache"
+  :file "semantic.cache"
+  :tables (list 
+   (semanticdb-table "VersionFactory.java"
+    :file "VersionFactory.java"
+    :pointmax 5475
+    :major-mode 'jde-mode
+    :tokens '(("org.acmsl.commons.version" package nil nil nil [1742 1776]) ("org.acmsl.commons.patterns.Factory" include nil nil nil [1819 1861]) ("org.acmsl.commons.utils.StringValidator" include nil nil nil [1862 1909]) ("org.acmsl.commons.utils.version.VersionValidator" include nil nil nil [1910 1966]) ("org.acmsl.commons.version.Version" include nil nil nil [1967 2008]) ("org.acmsl.commons.version.Versionable" include nil nil nil [2009 2054]) ("java.lang.ref.WeakReference" include nil nil nil [2094 2129]) ("org.apache.commons.logging.LogFactory" include nil nil nil [2176 2221]) ("VersionFactory" type "class" (("singleton" variable "WeakReference" nil ((typemodifiers "private" "static")) nil ((reparse-symbol . class_body_declarations)) [2650 2689]) ("VersionFactory" function nil nil ((typemodifiers "protected")) nil ((reparse-symbol . class_body_declarations)) [2775 2804]) ("setReference" function "void" (("factory" variable "VersionFactory" nil nil nil ((reparse-symbol . formal_parameter_list)) [2948 2970])) ((typemodifiers "protected" "static")) nil ((reparse-symbol . class_body_declarations)) [2913 3031]) ("getReference" function "WeakReference" nil ((typemodifiers "protected" "static")) nil ((reparse-symbol . class_body_declarations)) [3121 3204]) ("getInstance" function "VersionFactory" nil ((typemodifiers "public" "static")) nil ((reparse-symbol . class_body_declarations)) [3300 3708]) ("createVersion" function "Version" (("versionInfo" variable "String" nil nil nil ((reparse-symbol . formal_parameter_list)) [3882 3900])) ((typemodifiers "public" "static")) nil ((reparse-symbol . class_body_declarations)) [3846 4779]) ("VERSION" variable "Version" nil ((typemodifiers "public" "static" "final")) nil ((reparse-symbol . class_body_declarations)) [4894 4989]) ("getVersion" function "Version" nil ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [5121 5184]) ("getClassVersion" function "Version" nil ((typemodifiers "public" "static")) nil ((reparse-symbol . class_body_declarations)) [5397 5472])) (nil "Factory") ((typemodifiers "public" "abstract")) nil nil [2517 5474]))
+    :unmatched-syntax '((close-paren 5473 . 5474) (close-paren 5435 . 5436) (open-paren 5434 . 5435) (close-paren 5147 . 5148) (open-paren 5146 . 5147) (close-paren 3900 . 3901) (open-paren 3881 . 3882) (close-paren 3341 . 3342) (open-paren 3340 . 3341) (close-paren 3165 . 3166) (open-paren 3164 . 3165) (close-paren 2970 . 2971) (open-paren 2947 . 2948) (punctuation 2804 . 2805) (close-paren 2800 . 2801) (open-paren 2799 . 2800) (open-paren 2578 . 2579))
+    )
+   )
+  )

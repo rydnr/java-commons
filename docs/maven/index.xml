@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<document>
+
+  <properties>
+    <title>Overview</title>
+    <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
+  </properties>
+
+  <body>
+
+    <section name="Overview">
+      <p>
+        <strong>Commons</strong> provides a set of libraries, services
+        and APIs meant to be the most basic, general-purpose
+        horizontal module for all <i>ACM-SL</i> projects.
+      </p>
+      <subsection name="Status">
+        <p>
+          <strong>Commons</strong> 0.5.5b5 contains:
+          <ul>
+            <li><b>regexpplugin</b>: API to request <i>regexp</i>
+            services independently of the concrete engine used.</li>
+            <li><b>patterns</b>: Interfaces and some implementations
+            of desing patterns.</li>
+            <li><b>versionable</b>: API to export and manage
+            per-file <i>CVS</i> information.</li>
+            <li><b>utils</b>: General-purpose helper classes.</li>
+            <li><b>automata</b>: API to model stateful behaviours.</li>
+          </ul>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="News">
+      
+      <table>
+        <tr>
+          <td>
+            $Date$
+          </td>
+          <td>
+            Fixed the requirement
+            <i><a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=161"
+            >Remove Versionable references in org.acmsl.commons.patterns
+            package)</a></i>.<br/>
+            Released 0.5.5b5.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/06/12 18:29:19
+          </td>
+          <td>
+            Fixed the requirement
+            <i><a
+              href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=159"
+            >Adapt some WebExtension's classes</a></i>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            $Date$
+          </td>
+          <td>
+            Fixed the requirement
+            <i><a
+            href="http://bugzilla.our.home/bugzilla/show_bug.cgi?id=157"
+            >Adapt some ProxyJ's classes</a></i>.<br/>
+            Released 0.5.5b4.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/05/16 10:30:11
+          </td>
+          <td>
+            Added a basic method in FileUtils to read from an input
+            stream. Added also a new ReflectionUtils helper class
+            required by WebExtension.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/02/24 16:25:14
+          </td>
+          <td>
+            Removed the relationship between Utils and Versionable,
+            since that would be performed via compiler extensions, not
+            at source-code level.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/02/23 10:42:16
+          </td>
+          <td>
+            Added <b>Automata</b>'s basic interfaces.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2004/02/15 14:07:09
+          </td>
+          <td>
+            Previous news not recorded.
+          </td>
+        </tr>
+      </table>
+      
+    </section>
+
+  </body>
+</document>

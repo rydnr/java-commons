@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<project>
+  <pomVersion>3</pomVersion>
+  <name>Commons</name>
+  <id>commons</id>
+  <groupId>org.acmlsl</groupId>
+  <currentVersion>0.5.5b3</currentVersion>
+  <organization>
+    <name>ACM S.L.</name>
+    <url>http://www.acm-sl.org/</url>
+    <logo>http://www.acm-sl.org/images/logo.png</logo>
+  </organization>
+  <inceptionYear>2003</inceptionYear>
+  <package>org.acmsl</package>
+
+  <shortDescription>
+    ACM-SL commons
+  </shortDescription>
+
+  <description>
+    Base module reused in all ACM-SL projects.
+  </description>
+
+  <url>http://lite/projects/commons/</url>
+  <logo>http://lite/projects/images/queryj.png</logo>
+  <issueTrackingUrl>http://lite/bugzilla/</issueTrackingUrl>
+  <siteAddress>lite</siteAddress>
+  <siteDirectory>
+    /home/httpd/projects/commons
+  </siteDirectory>
+  <distributionDirectory>
+    /home/httpd/projects/queryj/builds/
+  </distributionDirectory>
+
+  <repository>
+    <connection>
+      scm:cvs:pserver:anoncvs@lite:/var/lib/cvs:dev/commons
+    </connection>
+    <url>
+      http://lite/viewcvs/viewcvs.cgi/commons
+    </url>
+  </repository>
+
+  <versions/>
+
+  <mailingLists>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>
+        commons-users-subscribe@lists.lite
+      </subscribe>
+      <unsubscribe>
+        commons-users-unsubscribe@lists.lite
+      </unsubscribe>
+      <archive>
+        http://lite/mailinglists/commons-users@lists.lite/
+      </archive>
+    </mailingList>
+    <mailingList>
+      <name>Commons Developer List</name>
+      <subscribe>
+        queryj-cvs-subscribe@lists.sourceforge.net
+      </subscribe>
+      <unsubscribe>
+        commons-cvs-unsubscribe@lists.lite
+      </unsubscribe>
+      <archive>
+        http://lite/mailinglists/commons-cvs@lists.lite
+      </archive>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+
+    <developer>
+      <name>Jose San Leandro</name>
+      <id>chous</id>
+      <email>chous@our.home</email>
+      <organization>ACM-SL</organization>
+    </developer>
+  </developers>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.3</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+
+    <dependency>
+      <groupId>gnu-regexp</groupId>
+      <artifactId>gnu-regexp</artifactId>
+      <version>1.1.4</version>
+      <url>http://jakarta.apache.org/commons/</url>
+    </dependency>
+
+    <dependency>
+      <groupId>regexp</groupId>
+      <artifactId>regexp</artifactId>
+      <version>1.2</version>
+      <url>http://jakarta.apache.org/regexp/</url>
+    </dependency>
+
+    <dependency>
+      <groupId>oro</groupId>
+      <artifactId>oro</artifactId>
+      <version>2.0.7</version>
+      <url>http://jakarta.apache.org/oro/</url>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <url>http://www.junit.org</url>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <nagEmailAddress>
+      chous@our.home
+    </nagEmailAddress>
+
+    <sourceDirectory>src/java/</sourceDirectory>
+
+    <unitTestSourceDirectory>src/java/unittests</unitTestSourceDirectory>
+    <integrationUnitTestSourceDirectory/>
+
+    <aspectSourceDirectory/>
+
+    <!-- Unit test cases -->
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+        <exclude>**/RepositoryTest.java</exclude>
+      </excludes>
+    </unitTest>
+              
+    <!-- J A R  R E S O U R C E S -->
+    <!-- Resources that are packaged up inside the JAR file -->
+    <resources>
+      <includes>
+        <include>*.xsd</include>
+        <include>log4j.properties</include>
+      </includes>
+    </resources>
+
+    <!-- Integration unit test cases -->
+    <integrationUnitTest/>
+
+    <jars/>
+
+  </build>
+
+  <reports>
+    <report>maven-changelog-plugin</report>
+    <report>maven-changes-plugin</report>
+    <report>maven-checkstyle-plugin</report>
+
+    <!--
+      PMD makes the site generation crash if no errors are
+      found. It's better to do it manually.
+    -->
+    <report>maven-pmd-plugin</report>
+    <report>maven-developer-activity-plugin</report>
+    <report>maven-file-activity-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-jxr-plugin</report>
+    <report>maven-license-plugin</report>
+    <report>maven-linkcheck-plugin</report>
+    <report>maven-tasklist-plugin</report>
+    <!--
+      JellyDoc makes the site generation crash if no errors are
+      found. It's better to do it manually.
+    <report>maven-jellydoc-plugin</report>
+    -->
+  </reports>
+</project>

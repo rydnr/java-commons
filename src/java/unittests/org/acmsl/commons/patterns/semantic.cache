@@ -1,0 +1,14 @@
+;; Object semantic.cache
+;; SEMANTICDB Tags save file
+(semanticdb-project-database "semantic.cache"
+  :file "semantic.cache"
+  :tables (list 
+   (semanticdb-table "ArrayListChainAdapterTest.java"
+    :file "ArrayListChainAdapterTest.java"
+    :pointmax 4925
+    :major-mode 'jde-mode
+    :tokens '(("unittests.org.acmsl.commons.patterns" package nil nil nil [1713 1758]) ("org.acmsl.commons.patterns.ArrayListChainAdapter" include nil nil nil [1801 1857]) ("org.acmsl.commons.patterns.CommandHandler" include nil nil nil [1858 1907]) ("org.acmsl.commons.patterns.Command" include nil nil nil [1908 1950]) ("junit.framework.TestCase" include nil nil nil [1988 2020]) ("ArrayListChainAdapterTest" type "class" (("m__TestedInstance" variable "ArrayListChainAdapter" nil ((typemodifiers "private")) nil ((reparse-symbol . class_body_declarations)) [2566 2614]) ("ArrayListChainAdapterTest" function nil (("name" variable "String" nil nil nil ((reparse-symbol . formal_parameter_list)) [2763 2774])) ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [2730 2808]) ("setTestedInstance" function "void" (("testedInstance" variable "ArrayListChainAdapter" nil nil nil ((reparse-symbol . formal_parameter_list)) [2947 2983])) ((typemodifiers "protected")) nil ((reparse-symbol . class_body_declarations)) [2914 3040]) ("getTestedInstance" function "ArrayListChainAdapter" nil ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [3136 3230]) ("setUp" function "void" nil ((typemodifiers "protected")) nil ((reparse-symbol . class_body_declarations)) [3376 3466]) ("runTest" function "void" nil ((typemodifiers "protected")) nil ((reparse-symbol . class_body_declarations)) [3515 3570]) ("testAdd" function "void" nil ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [3732 4067]) ("DummyCommandHandler" type "class" (("handle" function "boolean" (("command" variable "Command" nil ((typemodifiers "final")) nil ((reparse-symbol . formal_parameter_list)) [4849 4870])) ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [4827 4916])) (nil "CommandHandler") ((typemodifiers "public")) nil ((reparse-symbol . class_body_declarations)) [4268 4922])) ("TestCase" "org.acmsl.commons.patterns.Test") ((typemodifiers "public")) nil nil [2399 4924]))
+    :unmatched-syntax '((close-paren 4923 . 4924) (close-paren 4921 . 4922) (close-paren 4870 . 4871) (open-paren 4848 . 4849) (open-paren 4340 . 4341) (close-paren 3752 . 3753) (open-paren 3751 . 3752) (close-paren 3538 . 3539) (open-paren 3537 . 3538) (close-paren 3397 . 3398) (open-paren 3396 . 3397) (close-paren 3183 . 3184) (open-paren 3182 . 3183) (close-paren 2983 . 2984) (open-paren 2946 . 2947) (close-paren 2774 . 2775) (open-paren 2762 . 2763) (open-paren 2511 . 2512))
+    )
+   )
+  )
