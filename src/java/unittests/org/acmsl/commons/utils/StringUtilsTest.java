@@ -253,6 +253,29 @@ public class StringUtilsTest
                 t_strInput, "||{0}{1}//");
 
         assertEquals("||line 1//\n||.   and line 2//\n", t_strOutput);
+
+        t_strOutput =
+            t_StringUtils.applyToEachLine( 
+                  "      update customers\n" 
+                + "      set name = ?\n" 
+                + "      where customer_id in\n" 
+                + "      (\n" 
+                + "        select person_id\n" 
+                + "        from people\n" 
+                + "        where last_name like '?%'\n" 
+                + "      )\n", 
+                "{0}|{1}");
+
+        assertEquals(
+                  "|update customers\n" 
+                + "|set name = ?\n" 
+                + "|where customer_id in\n" 
+                + "|(\n" 
+                + "  |select person_id\n" 
+                + "  |from people\n" 
+                + "  |where last_name like '?%'\n" 
+                + "|)\n",
+                t_strOutput);
     }
 
     /**

@@ -1480,6 +1480,10 @@ public abstract class StringUtils
                           t_strCurrentLine.substring(
                               t_strInitialIndent.length(), t_iInitialIndent);
                 }
+                else
+                {
+                    t_strCurrentIndent = "";
+                }
             }
 
             result.append(
