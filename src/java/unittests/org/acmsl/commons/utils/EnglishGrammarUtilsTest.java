@@ -1,98 +1,176 @@
 /*
-                        ACM-SL Commons
+                      Project tests
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+Copyright (C) 2003  Jose San Leandro Armend?riz
+jsanleandro@yahoo.es
+chousz@yahoo.com
 
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public
-    License as published by the Free Software Foundation; either
-    version 2 of the License, or any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
 
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-    You should have received a copy of the GNU General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+You should have received a copy of the GNU General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+Thanks to ACM S.L. for distributing this library under the GPL license.
+Contact info: jsr000@terra.es
+Postal Address: c/Playa de Lagoa, 1
+Urb. Valdecaba?as
+Boadilla del monte
+28660 Madrid
+Spain
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
-
- ******************************************************************************
- *
- * Filename: $RCSfile$
- *
- * Author: Jose San Leandro Armendáriz
- *
- * Description: Performs some unit tests on EnglishGrammarUtils class.
- *
- * File version: $Revision$
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id$
- *
- */
+******************************************************************************
+*
+* Filename: $RCSfile$
+*
+* Author: Jose San Leandro Armend?riz
+*
+* Description: Executes all tests defined for package
+*              unittests.org.acmsl.commons.utils.
+*
+* Last modified by: $Author$ at $Date$
+*
+* File version: $Revision$
+*
+* Project version: $Name$
+*
+* $Id$
+*/
 package unittests.org.acmsl.commons.utils;
 
 /*
- * Importing some ACM-SL classes.
- */
+* Importing project classes.
+*/
+// JUnitDoclet begin import
 import org.acmsl.commons.utils.EnglishGrammarUtils;
-import org.acmsl.commons.version.Version;
-import org.acmsl.commons.version.VersionFactory;
+// JUnitDoclet end import
 
 /*
- * Importing some JDK classes.
- */
-import java.io.File;
-
-/*
- * Importing JUnit classes.
- */
+* Importing JUnit classes.
+*/
 import junit.framework.TestCase;
 
-/**
- * Performs some unit tests on EnglishGrammarUtils class.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision$
- * @testfamily JUnit
- * @testkind testcase
- * @testsetup Default TestCase
- * @testedclass org.acmsl.commons.utils.EnglishGrammarUtils
- * @see org.acmsl.commons.utils.EnglishGrammarUtils
- */
-public class EnglishGrammarUtilsTest
-    extends     TestCase
-    implements  org.acmsl.commons.patterns.Test
-{
-    /**
-     * Constructs a test case with the given name.
-     * @param name the test case name.
-     */
-    public EnglishGrammarUtilsTest(final String name)
-    {
-        super(name);
-    }
+/*
+This file is part of  JUnitDoclet, a project to generate basic
+test cases  from source code and  helping to keep them in sync
+during refactoring.
 
-    /**
-     * Tests the EnglishGrammarUtils.getPlural(word) method.
-     * @see EnglishGrammarUtils#getPlural(String)
-     */
-    public void testGetPlural()
-    {
+Copyright (C) 2002  ObjectFab GmbH  (http://www.objectfab.de/)
+
+This library is  free software; you can redistribute it and/or
+modify  it under the  terms of  the  GNU Lesser General Public
+License as published  by the  Free Software Foundation; either
+version 2.1  of the  License, or  (at your option)  any  later
+version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or  FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You  should  have  received a  copy of the  GNU Lesser General
+Public License along with this  library; if not, write  to the
+Free  Software  Foundation, Inc.,  59 Temple Place,  Suite 330,
+Boston, MA  02111-1307  USA
+*/
+
+
+/**
+* Tests EnglishGrammarUtilsTest class.
+* @version $Revision$
+* @see org.acmsl.commons.utils.EnglishGrammarUtils
+*/
+public class EnglishGrammarUtilsTest
+// JUnitDoclet begin extends_implements
+extends TestCase
+// JUnitDoclet end extends_implements
+{
+  // JUnitDoclet begin class
+  org.acmsl.commons.utils.EnglishGrammarUtils englishgrammarutils = null;
+  // JUnitDoclet end class
+  
+  /**
+  * Creates a EnglishGrammarUtilsTest with given name.
+  * @param name such name.
+  */
+  public EnglishGrammarUtilsTest(String name)
+  {
+    // JUnitDoclet begin method EnglishGrammarUtilsTest
+    super(name);
+    // JUnitDoclet end method EnglishGrammarUtilsTest
+  }
+  
+  /**
+  * Creates an instance of the tested class.
+  * @return such instance.
+  
+  */
+  public org.acmsl.commons.utils.EnglishGrammarUtils createInstance()
+  throws Exception
+  {
+    // JUnitDoclet begin method testcase.createInstance
+    return org.acmsl.commons.utils.EnglishGrammarUtils.getInstance();
+    // JUnitDoclet end method testcase.createInstance
+  }
+  
+  /**
+  * Performs any required steps before each test.
+  * @throws Exception if an unexpected situation occurs.
+  */
+  protected void setUp()
+  throws Exception
+  {
+    // JUnitDoclet begin method testcase.setUp
+    super.setUp();
+    englishgrammarutils = createInstance();
+    // JUnitDoclet end method testcase.setUp
+  }
+  
+  /**
+  * Performs any required steps after each test.
+  * @throws Exception if an unexpected situation occurs.
+  */
+  protected void tearDown()
+  throws Exception
+  {
+    // JUnitDoclet begin method testcase.tearDown
+    englishgrammarutils = null;
+    super.tearDown();
+    // JUnitDoclet end method testcase.tearDown
+  }
+  
+  /**
+  * Tests EnglishGrammarUtilsTestgetInstance()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.EnglishGrammarUtils#getInstance()
+  */
+  public void testGetInstance()
+  throws Exception
+  {
+    // JUnitDoclet begin method getInstance
+        EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
+
+        assertNotNull(t_EnglishGrammarUtils);
+    // JUnitDoclet end method getInstance
+  }
+  
+  /**
+  * Tests EnglishGrammarUtilsTestgetPlural()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.EnglishGrammarUtils#getPlural(java.lang.String)
+  */
+  public void testGetPlural()
+  throws Exception
+  {
+    // JUnitDoclet begin method getPlural
         EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
 
         assertNotNull(t_EnglishGrammarUtils);
@@ -115,14 +193,18 @@ public class EnglishGrammarUtilsTest
         assertEquals(t_EnglishGrammarUtils.getPlural("DISH"), "DISHES");
         assertEquals(t_EnglishGrammarUtils.getPlural("customer"), "customers");
         assertEquals(t_EnglishGrammarUtils.getPlural("CUSTOMER"), "CUSTOMERS");
-    }
-
-    /**
-     * Tests the EnglishGrammarUtils.getSingular(word) method.
-     * @see EnglishGrammarUtils#getSingular(String)
-     */
-    public void testGetSingular()
-    {
+    // JUnitDoclet end method getPlural
+  }
+  
+  /**
+  * Tests EnglishGrammarUtilsTestgetSingular()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.EnglishGrammarUtils#getSingular(java.lang.String)
+  */
+  public void testGetSingular()
+  throws Exception
+  {
+    // JUnitDoclet begin method getSingular
         EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
 
         assertNotNull(t_EnglishGrammarUtils);
@@ -145,5 +227,29 @@ public class EnglishGrammarUtilsTest
         assertEquals(t_EnglishGrammarUtils.getSingular("DISHES"), "DISH");
         assertEquals(t_EnglishGrammarUtils.getSingular("customers"), "customer");
         assertEquals(t_EnglishGrammarUtils.getSingular("CUSTOMERS"), "CUSTOMER");
-    }
+    // JUnitDoclet end method getSingular
+  }
+  
+  
+  
+  /**
+  * JUnitDoclet moves marker to this method, if there is not match
+  * for them in the regenerated code and if the marker is not empty.
+  * This way, no test gets lost when regenerating after renaming.
+  * Method testVault is supposed to be empty.
+  * @throws Exception if an unexpected situation occurs.
+  */
+  public void testVault()
+  throws Exception
+  {
+    // JUnitDoclet begin method testcase.testVault
+    // JUnitDoclet end method testcase.testVault
+  }
+  
+  public static void main(String[] args)
+  {
+    // JUnitDoclet begin method testcase.main
+    junit.textui.TestRunner.run(EnglishGrammarUtilsTest.class);
+    // JUnitDoclet end method testcase.main
+  }
 }

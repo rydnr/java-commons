@@ -87,6 +87,12 @@
       <artifactId>commons-logging</artifactId>
       <version>1.0.3</version>
       <url>http://jakarta.apache.org/commons/logging/</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>true</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -94,6 +100,12 @@
       <artifactId>commons-beanutils</artifactId>
       <version>1.7.0</version>
       <url>http://jakarta.apache.org/commons/beanutils/</url>
+      <properties>
+        <required.to.compile>false</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>false</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -101,6 +113,12 @@
       <artifactId>gnu-regexp</artifactId>
       <version>1.1.4</version>
       <url>http://jakarta.apache.org/commons/</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>false</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -108,6 +126,12 @@
       <artifactId>regexp</artifactId>
       <version>1.2</version>
       <url>http://jakarta.apache.org/regexp/</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>false</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -115,6 +139,12 @@
       <artifactId>oro</artifactId>
       <version>2.0.7</version>
       <url>http://jakarta.apache.org/oro/</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>true</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>true</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -122,6 +152,12 @@
       <artifactId>servletapi</artifactId>
       <version>2.3</version>
       <url>http://java.sun.com/j2ee</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>false</required.to.run>
+        <required.to.test>false</required.to.test>
+        <required.to.build>false</required.to.build>
+      </properties>
     </dependency>
 
     <dependency>
@@ -129,6 +165,25 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <url>http://www.junit.org</url>
+      <properties>
+        <required.to.compile>true</required.to.compile>
+        <required.to.run>false</required.to.run>
+        <required.to.test>true</required.to.test>
+        <required.to.build>false</required.to.build>
+      </properties>
+    </dependency>
+
+    <dependency>
+      <groupId>junitdoclet</groupId>
+      <artifactId>junitdoclet-acmsl</artifactId>
+      <version>1.0.2</version>
+      <url>http://junitdoclet.sourceforge.net</url>
+      <properties>
+        <required.to.compile>false</required.to.compile>
+        <required.to.run>false</required.to.run>
+        <required.to.test>false</required.to.test>
+        <required.to.build>true</required.to.build>
+      </properties>
     </dependency>
 
   </dependencies>
