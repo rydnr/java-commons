@@ -4,7 +4,7 @@
   <name>Commons</name>
   <id>commons</id>
   <groupId>org.acmsl.commons</groupId>
-  <currentVersion>0.5.5b7</currentVersion>
+  <currentVersion>0.5.5b8</currentVersion>
   <organization>
     <name>ACM S.L.</name>
     <url>http://www.acm-sl.org/</url>
@@ -86,7 +86,14 @@
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.3</version>
-      <url>http://jakarta.apache.org/commons/</url>
+      <url>http://jakarta.apache.org/commons/logging/</url>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.7.0</version>
+      <url>http://jakarta.apache.org/commons/beanutils/</url>
     </dependency>
 
     <dependency>
