@@ -5,8 +5,19 @@
     <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
   </properties>
   <body>
-    <release version="commons-0_5_5b8" date="$Date$">
+    <release
+      version="commons-0_5_5b9"
+      date="$Date$"
+      description="Feature added">
       <action dev="$Author$" type="add">
+        Closed reopened issue <a href="${issue.url}510">510</a>.
+      </action>
+    </release>
+    <release
+      version="commons-0_5_5b8"
+      date="2004/10/13 06:25:54"
+      description="Feature added">
+      <action dev="chous" type="add">
         Finished <a href="${issue.url}516">516</a>.
       </action>
     </release>

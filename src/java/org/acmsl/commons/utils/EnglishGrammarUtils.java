@@ -177,7 +177,9 @@ public class EnglishGrammarUtils
         final String singular, final String plural, final Map map)
     {
         map.put(buildSingularKey(singular), plural);
+        map.put(buildSingularKey(plural), plural);
         map.put(buildPluralKey(plural), singular);
+        map.put(buildPluralKey(singular), singular);
     }
 
     /**
@@ -267,17 +269,17 @@ public class EnglishGrammarUtils
     /**
      * Converts given word to plural.
      * @param word the word to convert.
-     * @param pluralExceptions words whose plural form is not
+     * @param irregularSingularForms words whose singular form is not
      * constructed using the regular rules.
      * @return the converted word.
      * @precondition word != null
-     * @precondition pluralExceptions != null
+     * @precondition irregularSingularForms != null
      */
     protected String getPlural(
-        final String word, final Map irregularPluralForms)
+        final String word, final Map irregularSingularForms)
     {
         String result =
-            (String) irregularPluralForms.get(buildSingularKey(word));
+            (String) irregularSingularForms.get(buildSingularKey(word));
 
         if  (result == null)
         {
@@ -316,11 +318,11 @@ public class EnglishGrammarUtils
     /**
      * Converts given word to singular.
      * @param word the word to convert.
-     * @param pluralExceptions words whose plural form is not
+     * @param irregularPluralForms words whose plural form is not
      * constructed using the regular rules.
      * @return the converted word.
      * @precondition word != null
-     * @precondition pluralExceptions != null
+     * @precondition irregularPluralForms != null
      */
     protected String getSingular(
         final String word, final Map irregularPluralForms)

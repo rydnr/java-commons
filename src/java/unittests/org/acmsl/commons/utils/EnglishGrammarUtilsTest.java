@@ -101,8 +101,12 @@ public class EnglishGrammarUtilsTest
         assertEquals(t_EnglishGrammarUtils.getPlural("CAR"), "CARS");
         assertEquals(t_EnglishGrammarUtils.getPlural("man"), "men");
         assertEquals(t_EnglishGrammarUtils.getPlural("MAN"), "MEN");
+        assertEquals(t_EnglishGrammarUtils.getPlural("men"), "men");
+        assertEquals(t_EnglishGrammarUtils.getPlural("MEN"), "MEN");
         assertEquals(t_EnglishGrammarUtils.getPlural("woman"), "women");
         assertEquals(t_EnglishGrammarUtils.getPlural("WOMAN"), "WOMEN");
+        assertEquals(t_EnglishGrammarUtils.getPlural("women"), "women");
+        assertEquals(t_EnglishGrammarUtils.getPlural("WOMEN"), "WOMEN");
         assertEquals(t_EnglishGrammarUtils.getPlural("bus"), "buses");
         assertEquals(t_EnglishGrammarUtils.getPlural("BUS"), "BUSES");
         assertEquals(t_EnglishGrammarUtils.getPlural("peach"), "peaches");
@@ -127,8 +131,12 @@ public class EnglishGrammarUtilsTest
         assertEquals(t_EnglishGrammarUtils.getSingular("CARS"), "CAR");
         assertEquals(t_EnglishGrammarUtils.getSingular("men"), "man");
         assertEquals(t_EnglishGrammarUtils.getSingular("MEN"), "MAN");
+        assertEquals(t_EnglishGrammarUtils.getSingular("man"), "man");
+        assertEquals(t_EnglishGrammarUtils.getSingular("MAN"), "MAN");
         assertEquals(t_EnglishGrammarUtils.getSingular("women"), "woman");
         assertEquals(t_EnglishGrammarUtils.getSingular("WOMEN"), "WOMAN");
+        assertEquals(t_EnglishGrammarUtils.getSingular("woman"), "woman");
+        assertEquals(t_EnglishGrammarUtils.getSingular("WOMAN"), "WOMAN");
         assertEquals(t_EnglishGrammarUtils.getSingular("buses"), "bus");
         assertEquals(t_EnglishGrammarUtils.getSingular("BUSES"), "BUS");
         assertEquals(t_EnglishGrammarUtils.getSingular("peaches"), "peach");
@@ -137,30 +145,5 @@ public class EnglishGrammarUtilsTest
         assertEquals(t_EnglishGrammarUtils.getSingular("DISHES"), "DISH");
         assertEquals(t_EnglishGrammarUtils.getSingular("customers"), "customer");
         assertEquals(t_EnglishGrammarUtils.getSingular("CUSTOMERS"), "CUSTOMER");
-    }
-
-    /**
-     * Concrete version object updated everytime it's checked-in in a CVS
-     * repository.
-     */
-    public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
-
-    /**
-     * Retrieves the current version of this object.
-     * @return the version object with such information.
-     */
-    public Version getVersion()
-    {
-        return VERSION;
-    }
-
-    /**
-     * Retrieves the current version of this class.
-     * @return the object with class version information.
-     */
-    public static Version getClassVersion()
-    {
-        return VERSION;
     }
 }
