@@ -242,7 +242,7 @@ public class StringUtilsTest
 
         String t_strOutput =
             t_StringUtils.applyToEachLine(
-                t_strInput, "||{0}//");
+                t_strInput, "||{0}{1}//");
 
         assertEquals("||line 1//\n||   and line 2//\n", t_strOutput);
 
@@ -250,7 +250,7 @@ public class StringUtilsTest
 
         t_strOutput =
             t_StringUtils.applyToEachLine(
-                t_strInput, "||{0}//");
+                t_strInput, "||{0}{1}//");
 
         assertEquals("||line 1//\n||.   and line 2//\n", t_strOutput);
     }

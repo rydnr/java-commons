@@ -1424,9 +1424,11 @@ public abstract class StringUtils
     /**
      * Adds given prefix and suffix to each line of given text.
      * <code>
-     * applyToEachLine(" line 1   \n    and line 2", "||{0}//").equals(
+     * applyToEachLine(" line 1   \n    and line 2", "||{0}{1}//").equals(
      *     "||line 1//\n||   and line 2//\n")
      * </code>
+     * 0 - indentation spaces
+     * 1 - trimmed text
      * @param text the text.
      * @param format the format.
      * @return the processed text.
@@ -1459,7 +1461,7 @@ public abstract class StringUtils
 
         MessageFormat t_Formatter = new MessageFormat(format);
 
-        String t_strProcessedLine = null;
+        String t_strCurrentIndent = "";
 
         while  (t_StringTokenizer.hasMoreTokens())
         {
@@ -1474,15 +1476,19 @@ public abstract class StringUtils
 
                 if  (t_iInitialIndent > t_strInitialIndent.length())
                 {
-                    t_strTrimmedCurrentLine =
+                    t_strCurrentIndent =
                           t_strCurrentLine.substring(
-                              t_strInitialIndent.length(), t_iInitialIndent)
-                        + t_strTrimmedCurrentLine;
+                              t_strInitialIndent.length(), t_iInitialIndent);
                 }
             }
 
             result.append(
-                t_Formatter.format(new Object[] {t_strTrimmedCurrentLine}));
+                t_Formatter.format(
+                    new Object[]
+                    {
+                        t_strCurrentIndent,
+                        t_strTrimmedCurrentLine
+                    }));
 
             result.append("\n");
 
