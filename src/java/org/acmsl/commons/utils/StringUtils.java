@@ -66,6 +66,7 @@ import org.acmsl.commons.version.VersionFactory;
  */
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringTokenizer;
@@ -1423,19 +1424,17 @@ public abstract class StringUtils
     /**
      * Adds given prefix and suffix to each line of given text.
      * <code>
-     * applyToEachLine(" line 1   \n    and line 2", "||" , "//").equals(
+     * applyToEachLine(" line 1   \n    and line 2", "||{0}//").equals(
      *     "||line 1//\n||   and line 2//\n")
      * </code>
      * @param text the text.
-     * @param prefix the line prefix.
-     * @param suffix the line suffix.
+     * @param format the format.
      * @return the processed text.
      * @precondition text != null
-     * @precondition prefix != null
-     * @precondition suffix != null
+     * @precondition format != null
      */
     public String applyToEachLine(
-        final String text, final String prefix, final String suffix)
+        final String text, final String format)
     {
         StringBuffer result = new StringBuffer();
 
@@ -1458,13 +1457,15 @@ public abstract class StringUtils
         String t_strCurrentLine = null;
         String t_strTrimmedCurrentLine = null;
 
+        MessageFormat t_Formatter = new MessageFormat(format);
+
+        String t_strProcessedLine = null;
+
         while  (t_StringTokenizer.hasMoreTokens())
         {
             t_strCurrentLine = t_StringTokenizer.nextToken();
 
             t_strTrimmedCurrentLine = t_strCurrentLine.trim();
-
-            result.append(prefix);
 
             if  (!t_bFirstLine)
             {
@@ -1473,14 +1474,16 @@ public abstract class StringUtils
 
                 if  (t_iInitialIndent > t_strInitialIndent.length())
                 {
-                    result.append(
-                        t_strCurrentLine.substring(
-                            t_strInitialIndent.length(), t_iInitialIndent));
+                    t_strTrimmedCurrentLine =
+                          t_strCurrentLine.substring(
+                              t_strInitialIndent.length(), t_iInitialIndent)
+                        + t_strTrimmedCurrentLine;
                 }
             }
 
-            result.append(t_strTrimmedCurrentLine);
-            result.append(suffix);
+            result.append(
+                t_Formatter.format(new Object[] {t_strTrimmedCurrentLine}));
+
             result.append("\n");
 
             if  (t_bFirstLine)
