@@ -34,8 +34,8 @@
  *
  * Author: Jose San Leandro Armendáriz
  *
- * Description: Marks all entities able to access and retrieve
- *              <i>value objects</i>.
+ * Description: Data Access Object able to access and retrieve ValueObject
+ *              elements.
  *
  * Last modified by: $Author$ at $Date$
  *
@@ -49,12 +49,52 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+/*
+ * Importing some ACM-SL classes.
+ */
+import org.acmsl.commons.patterns.dao.DAO;
+import org.acmsl.commons.patterns.dao.ValueObjectPrimaryKey;
+
 /**
- * Marks all entities able to access and retrieve <i>value objects</i>.
+ * Data Access Object able to access and retrieve ValueObject elements.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public interface DAO
+public interface ValueObjectDAO
+    extends DAO
 {
+    /**
+     * Loads a value object from the persistence layer with given id.
+     * @param pk the identifier used to select the concrete value object to
+     * load.
+     * @return the information associated to such id in the underlying
+     * persistente layer.
+     */
+    public ValueObject find(final ValueObjectPrimaryKey pk);
+
+    /**
+     * Stores the value object into the persistent layer.
+     * @param valueObject the information to be persisted.
+     * @param reload whether or not the reload is needed.
+     * @return true if the operation ends up successfully.
+     */
+    public ValueObject insert(
+        final ValueObject valueObject, final boolean reload);
+
+    /**
+     * Removes a value object in the persistence layer.
+     * @param valueObject the value object to be removed.
+     * @return true if the operation ends up successfully.
+     */
+    public boolean delete(final ValueObject valueObject);
+
+    /**
+     * Removes a value object in the persistence layer.
+     * @param valueObject the value object to be removed.
+     * @param reload whether or not the reload is needed.
+     * @return true if the operation ends up successfully.
+     */
+    public ValueObject update(
+       final ValueObject valueObject, final boolean reload);
 }
