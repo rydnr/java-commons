@@ -86,6 +86,25 @@ public class ConversionUtilsTest
     }
 
     /**
+     * Tests the ConversionUtils.toString(String) method.
+     * @see ConversionUtils#toString(String)
+     */
+    public void testToString()
+    {
+        ConversionUtils t_ConversionUtils =
+            ConversionUtils.getInstance();
+
+        assertNotNull(t_ConversionUtils);
+
+        assertTrue("a".equals(t_ConversionUtils.toString("a")));
+        assertTrue(
+            Boolean.TRUE.toString().equals(
+                t_ConversionUtils.toString(Boolean.TRUE.toString())));
+        assertTrue("a".equals(t_ConversionUtils.toString("a")));
+        assertTrue("something else".equals(t_ConversionUtils.toString("something else")));
+    }
+
+    /**
      * Tests the ConversionUtils.toBoolean(String) method.
      * @see ConversionUtils#toBoolean(String)
      */

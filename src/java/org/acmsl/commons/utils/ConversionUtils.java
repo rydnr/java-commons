@@ -128,6 +128,17 @@ public class ConversionUtils
     }
 
     /**
+     * Retrieves the given value (useful for code generators, to avoid
+     * type-aware logic, and instead using toXXX(value), where XXX is the type).
+     * @param value the value.
+     * @return given value.
+     */
+    public String toString(final String value)
+    {
+        return value;
+    }
+
+    /**
      * Converts given String to boolean.
      * @param value the value to convert.
      * @return the converted value.
