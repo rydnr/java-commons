@@ -86,6 +86,42 @@ public class StringUtilsTest
     }
 
     /**
+     * Tests the <code>StringUtils.replace(text, original, replacement)</code>
+     * method.
+     * @see StringUtils#replace(String,String,String)
+     */
+    public void testReplace()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        assertEquals(
+            "com-foo-bar",
+            t_StringUtils.replace("com.foo.bar", ".", "-"));
+
+        assertEquals(
+            "com.-oo.bar",
+            t_StringUtils.replace("com.foo.bar", "f", "-"));
+    }
+
+    /**
+     * Tests the <code>StringUtils.escapeRegexp(text)</code>
+     * method.
+     * @see StringUtils#escapeRegexp(String)
+     */
+    public void testEscapeRegexp()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        assertEquals(
+            "c\\$om\\.\\(foo\\)\\*\\.bar\\^", // c\$om\.\(foo\)\*\.bar\^
+        t_StringUtils.escapeRegexp("c$om.(foo)*.bar^"));
+    }
+
+    /**
      * Tests the StringUtils.packageToFilePath(packageName) method.
      * @see StringUtils#packageToFilePath(String)
      */

@@ -79,7 +79,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Provides some useful methods when working with Strings.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @stereotype tested
  * @testcase unittests.org.acmsl.commons.utils.TestStringUtils
  * @version $Revision$
@@ -491,13 +491,51 @@ public abstract class StringUtils
         final String replacement)
     {
         return
-            replace(
+            replaceRegexp(
                 content,
-                original,
-                replacement,
-                StringValidator.getInstance(),
-                getCompiler(),
-                createMatcher(RegexpManager.getInstance()));
+                escapeRegexp(original),
+                replacement);
+    }
+
+    /**
+     * Escapes given string to avoid conflicts with regexp patterns.
+     * @param text the text to escape.
+     * @return the escaped text.
+     */
+    public String escapeRegexp(final String text)
+    {
+        String result = text;
+
+        result = replaceRegexp(result, escapeRegexpChar('.'), escapeChar('.'));
+        result = replaceRegexp(result, escapeRegexpChar('*'), escapeChar('*'));
+        result = replaceRegexp(result, escapeRegexpChar('?'), escapeChar('?'));
+        result = replaceRegexp(result, escapeRegexpChar('('), escapeChar('('));
+        result = replaceRegexp(result, escapeRegexpChar(')'), escapeChar(')'));
+        result = replaceRegexp(result, escapeRegexpChar('^'), escapeChar('^'));
+        result = replaceRegexp(result, escapeRegexpChar('$'), escapeChar('$'));
+
+        return result;
+    }
+
+    /**
+     * Builds the escaped version of given character.
+     * @param character the character to escape.
+     * @return the escaped version.
+     */
+    protected String escapeRegexpChar(final char character)
+    {
+        return "\\" + character;
+    }
+
+    /**
+     * Builds the escaped version of given character.
+     * @param character the character to escape.
+     * @return the escaped version.
+     */
+    protected String escapeChar(final char character)
+    {
+        // The escaping mechanism is the same as for regexps.
+        return escapeRegexpChar(character);
     }
 
     /**
@@ -505,71 +543,37 @@ public abstract class StringUtils
      * @param content the text content to update.
      * @param original the text to replace.
      * @param replacement the replacement.
-     * @param stringValidator the StringValdiator instance.
-     * @param compiler the compiler.
-     * @parma matcher the matcher.
      * @return the updated version of the original text.
-     * @precondition stringValidator != null
-     * @precondition compiler != null
-     * @precondition matcher != null
      */
-    protected String replace(
+    protected String replaceRegexp(
+        final String content,
+        final String original,
+        final String replacement)
+    {
+        return
+            replaceRegexp(
+                content,
+                original,
+                replacement,
+                createHelper(RegexpManager.getInstance()));
+    }
+
+    /**
+     * Replaces a sequence with another inside a text content.
+     * @param content the text content to update.
+     * @param original the text to replace.
+     * @param replacement the replacement.
+     * @param helper the helper.
+     * @return the updated version of the original text.
+     * @precondition helper != null
+     */
+    protected String replaceRegexp(
         final String content,
         final String original,
         final String replacement,
-        final StringValidator stringValidator,
-        final Compiler compiler,
-        final Matcher matcher)
+        final Helper helper)
     {
-        StringBuffer t_sbResult = new StringBuffer();
-
-        try
-        {
-            MatchResult t_MatchResult = null;
-
-            Pattern t_Pattern =
-                compiler.compile(
-                    "(.*?)" + original + "(.*)");
-
-            String t_strTextToProcess = content;
-
-            if  (t_Pattern != null)
-            {
-                while   (   (!stringValidator.isEmpty(t_strTextToProcess))
-                         && (matcher.contains(content, t_Pattern)))
-                {
-                    t_MatchResult = matcher.getMatch();
-
-                    t_sbResult.append(t_MatchResult.group(1) + replacement);
-
-                    // the rest is parsed next.
-                    t_strTextToProcess = t_MatchResult.group(2);
-                }
-            }
-
-            if  (!stringValidator.isEmpty(t_strTextToProcess))
-            {
-                t_sbResult.append(t_strTextToProcess);
-            }
-        }
-        catch (final MalformedPatternException exception)
-        {
-            LogFactory.getLog(getClass()).warn(
-                "Malformed pattern (possibly a quote symbol conflict)",
-                exception);
-        }
-        catch  (final RegexpEngineNotFoundException exception)
-        {
-            /*
-             * This exception is thrown only if no regexp library is available
-             * at runtime. Not only this one, but any method provided by this
-             * class that use regexps will not work.
-             */
-            LogFactory.getLog(getClass()).error(
-                "Cannot find any regexp engine", exception);
-        }
-
-        return t_sbResult.toString();
+        return helper.replaceAll(content, original, replacement);
     }
 
     /**
