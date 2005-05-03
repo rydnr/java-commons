@@ -4,7 +4,7 @@
   <name>Commons</name>
   <id>commons</id>
   <groupId>org.acmsl.commons</groupId>
-  <currentVersion>0.5.7b2</currentVersion>
+  <currentVersion>0.5.7b3</currentVersion>
   <organization>
     <name>ACM S.L.</name>
     <url>http://www.acm-sl.org/</url>
@@ -41,7 +41,13 @@
     </url>
   </repository>
 
-  <versions/>
+  <versions>
+    <version>
+      <id>0.5.7b3</id>
+      <name>0.5.7b3</name>
+      <tag>commons-0_5_7b3</tag>
+    </version>
+  </versions>
 
   <mailingLists>
     <mailingList>

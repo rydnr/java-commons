@@ -63,7 +63,7 @@ import java.lang.ref.WeakReference;
  * @stereotype validator
  * @version $Revision$
  */
-public abstract class EqualityComparator
+public class EqualityComparator
     implements  Comparator
 {
     /**
@@ -80,7 +80,7 @@ public abstract class EqualityComparator
      * Specifies a new weak reference.
      * @param comparator the comparator instance to use.
      */
-    protected static void setReference(EqualityComparator comparator)
+    protected static void setReference(final EqualityComparator comparator)
     {
         singleton = new WeakReference(comparator);
     }
@@ -111,7 +111,7 @@ public abstract class EqualityComparator
 
         if  (result == null) 
         {
-            result = new EqualityComparator() {};
+            result = new EqualityComparator();
 
             setReference(result);
         }
@@ -136,9 +136,73 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
+    public boolean areEqual(final int[] first, final int[] second)
+    {
+        boolean result = false;
+
+        if  (   (first != null)
+             && (second != null))
+        {
+            result = (first.length == second.length);
+        }
+
+        if  (result)
+        {
+            for  (int t_iIndex = 0; t_iIndex < first.length; t_iIndex++)
+            {
+                result = areEqual(first[t_iIndex], second[t_iIndex]);
+
+                if  (!result)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    /**
+     * Checks if given values are equal.
+     * @param first the first value to compare.
+     * @param second the second value to compare.
+     * @return <code>true</code> if both values are equal.
+     */
     public boolean areEqual(final long first, final long second)
     {
         return (first == second);
+    }
+
+    /**
+     * Checks if given values are equal.
+     * @param first the first value to compare.
+     * @param second the second value to compare.
+     * @return <code>true</code> if both values are equal.
+     */
+    public boolean areEqual(final long[] first, final long[] second)
+    {
+        boolean result = false;
+
+        if  (   (first != null)
+             && (second != null))
+        {
+            result = (first.length == second.length);
+        }
+
+        if  (result)
+        {
+            for  (int t_iIndex = 0; t_iIndex < first.length; t_iIndex++)
+            {
+                result = areEqual(first[t_iIndex], second[t_iIndex]);
+
+                if  (!result)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
     }
 
     /**
@@ -158,9 +222,73 @@ public abstract class EqualityComparator
      * @param second the second value to compare.
      * @return <code>true</code> if both values are equal.
      */
+    public boolean areEqual(final float[] first, final float[] second)
+    {
+        boolean result = false;
+
+        if  (   (first != null)
+             && (second != null))
+        {
+            result = (first.length == second.length);
+        }
+
+        if  (result)
+        {
+            for  (int t_iIndex = 0; t_iIndex < first.length; t_iIndex++)
+            {
+                result = areEqual(first[t_iIndex], second[t_iIndex]);
+
+                if  (!result)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    /**
+     * Checks if given values are equal.
+     * @param first the first value to compare.
+     * @param second the second value to compare.
+     * @return <code>true</code> if both values are equal.
+     */
     public boolean areEqual(final double first, final double second)
     {
         return (first == second);
+    }
+
+    /**
+     * Checks if given values are equal.
+     * @param first the first value to compare.
+     * @param second the second value to compare.
+     * @return <code>true</code> if both values are equal.
+     */
+    public boolean areEqual(final double[] first, final double[] second)
+    {
+        boolean result = false;
+
+        if  (   (first != null)
+             && (second != null))
+        {
+            result = (first.length == second.length);
+        }
+
+        if  (result)
+        {
+            for  (int t_iIndex = 0; t_iIndex < first.length; t_iIndex++)
+            {
+                result = areEqual(first[t_iIndex], second[t_iIndex]);
+
+                if  (!result)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
     }
 
     /**
@@ -172,10 +300,43 @@ public abstract class EqualityComparator
     public boolean areEqual(final Object first, final Object second)
     {
         return
-            (    (first == second)
-              || (   (first  != null)
-                  && (second != null)
-                  && (first.equals(second))
-                  && (second.equals(first))));
+            (   (first == second)
+             || (   (first  != null)
+                 && (second != null)
+                 && (first.equals(second))
+                 && (second.equals(first))));
     }
+
+    /**
+     * Checks if given values are equal.
+     * @param first the first value to compare.
+     * @param second the second value to compare.
+     * @return <code>true</code> if both values are equal.
+     */
+    public boolean areEqual(final Object[] first, final Object[] second)
+    {
+        boolean result = false;
+
+        if  (   (first != null)
+             && (second != null))
+        {
+            result = (first.length == second.length);
+        }
+
+        if  (result)
+        {
+            for  (int t_iIndex = 0; t_iIndex < first.length; t_iIndex++)
+            {
+                result = areEqual(first[t_iIndex], second[t_iIndex]);
+
+                if  (!result)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
+    }
+
 }
