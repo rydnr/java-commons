@@ -4,7 +4,7 @@
   <name>Commons</name>
   <id>commons</id>
   <groupId>org.acmsl.commons</groupId>
-  <currentVersion>0.5.7b3</currentVersion>
+  <currentVersion>0.5.7b4-SNAPSHOT</currentVersion>
   <organization>
     <name>ACM S.L.</name>
     <url>http://www.acm-sl.org/</url>
