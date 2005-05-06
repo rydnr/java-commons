@@ -71,19 +71,68 @@ public abstract class ChainOfResponsibilityManager
                 Manager
 {
     /**
+     * Flag inidicating whether the chain has been initialized or not.
+     */
+    private boolean m__bChainInitialized;
+
+    /**
      * Constructs a manager object by calling initialization code.
      */
     protected ChainOfResponsibilityManager()
     {
-        immutableInitChain();
+        immutableSetChainInitialized(false);
     }
 
     /**
-     * Performs all needed initial actions.
+     * Specifies whether the chain has been initialized.
+     * @param flag such flag.
      */
-    protected void immutableInitChain()
+    protected final void immutableSetChainInitialized(final boolean flag)
     {
-        buildChain();
+        m__bChainInitialized = flag;
+    }
+
+    /**
+     * Retrieves whether the chain has been initialized.
+     * @return such flag.
+     */
+    protected final boolean immutableGetChainInitialized()
+    {
+        return m__bChainInitialized;
+    }
+
+    /**
+     * Retrieves the chain.
+     * @return the chain.
+     */
+    protected final Chain immutableGetChain()
+    {
+        return immutableGetChain(immutableGetChainInitialized());
+    }
+
+    /**
+     * Retrieves the chain.
+     * @param chainInitialized whether the chain was initialized already.
+     * @return the chain.
+     */
+    protected Chain immutableGetChain(final boolean chainInitialized)
+    {
+        Chain result = null;
+
+        if  (!chainInitialized)
+        {
+            buildChain();
+        }
+
+        result = getChain();
+
+        if  (   (result != null)
+             && (!chainInitialized))
+        {
+            immutableSetChainInitialized(true);
+        }
+
+        return result;
     }
 
     /**
@@ -99,7 +148,42 @@ public abstract class ChainOfResponsibilityManager
      */
     public void add(final CommandHandler commandHandler)
     {
-        Chain t_Chain = getChain();
+        add(commandHandler, immutableGetChainInitialized());
+    }
+
+    /**
+     * Adds given command handler to the chain.
+     * @param commandHandler the command handler to add.
+     * @param chainInitialized whether the chain is initialized.
+     * @precondition commandHandler != null
+     */
+    protected void add(
+        final CommandHandler commandHandler, final boolean chainInitialized)
+    {
+        Chain t_Chain = null;
+
+        if  (chainInitialized)
+        {
+            t_Chain = getChain();
+        }
+        else
+        {
+            t_Chain = immutableGetChain(false);
+        }
+
+        add(commandHandler, t_Chain);
+    }
+
+    /**
+     * Adds given command handler to the chain.
+     * @param commandHandler the command handler to add.
+     * @param chain the chain.
+     * @precondition commandHandler != null
+     */
+    protected void add(
+        final CommandHandler commandHandler, final Chain chain)
+    {
+        Chain t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.contains(commandHandler)))
@@ -115,7 +199,42 @@ public abstract class ChainOfResponsibilityManager
      */
     public void addFirst(final CommandHandler commandHandler)
     {
-        Chain t_Chain = getChain();
+        addFirst(commandHandler, immutableGetChainInitialized());
+    }
+
+    /**
+     * Adds given command handler to the first position in the chain.
+     * @param commandHandler the command handler to add.
+     * @param chainInitialized whether the chain is initialized.
+     * @precondition commandHandler != null
+     */
+    protected void addFirst(
+        final CommandHandler commandHandler, final boolean chainInitialized)
+    {
+        Chain t_Chain = null;
+
+        if  (chainInitialized)
+        {
+            t_Chain = getChain();
+        }
+        else
+        {
+            t_Chain = immutableGetChain(false);
+        }
+
+        addFirst(commandHandler, t_Chain);
+    }
+
+    /**
+     * Adds given command handler to the first position in the chain.
+     * @param commandHandler the command handler to add.
+     * @param chain the chain.
+     * @precondition commandHandler != null
+     */
+    protected void addFirst(
+        final CommandHandler commandHandler, final Chain chain)
+    {
+        Chain t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.contains(commandHandler)))
@@ -128,15 +247,60 @@ public abstract class ChainOfResponsibilityManager
      * Retrieves the link of the chain just after the one given commandHandler
      * takes.
      * @param commandHandler the handler just before the desired link.
-     * @return the next hanlder in the chain.
+     * @return the next handler in the chain.
      * @precondition commandHandler != null
      */
     public CommandHandler getNextChainLink(
         final CommandHandler commandHandler)
     {
+        return
+            getNextChainLink(
+                commandHandler,
+                immutableGetChainInitialized());
+    }
+
+    /**
+     * Retrieves the link of the chain just after the one given commandHandler
+     * takes.
+     * @param commandHandler the handler just before the desired link.
+     * @param chainInitialized whether the chain is already initialized.
+     * @return the next handler in the chain.
+     * @precondition commandHandler != null
+     */
+    protected CommandHandler getNextChainLink(
+        final CommandHandler commandHandler, final boolean chainInitialized)
+    {
+        Chain t_Chain = null;
+
+        if  (chainInitialized)
+        {
+            t_Chain = getChain();
+        }
+        else
+        {
+            t_Chain = immutableGetChain(false);
+        }
+
+        return
+            getNextChainLink(
+                commandHandler,
+                t_Chain);
+    }
+
+    /**
+     * Retrieves the link of the chain just after the one given commandHandler
+     * takes.
+     * @param commandHandler the handler just before the desired link.
+     * @param chain the chain.
+     * @return the next handler in the chain.
+     * @precondition commandHandler != null
+p     */
+    protected CommandHandler getNextChainLink(
+        final CommandHandler commandHandler, final Chain chain)
+    {
         CommandHandler result = null;
 
-        Chain t_Chain = getChain();
+        Chain t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.isEmpty()))
