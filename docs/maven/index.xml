@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Minor issues fixed and/or refactored.
+            Released <b>0.5.7b4</b>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2005/05/03 12:03:57
+          </td>
+          <td>
             Fixed <a href="${issue.url}609">minor</a> issue.<br/>
             Released <b>0.5.7b3</b>.
           </td>

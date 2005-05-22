@@ -2,19 +2,27 @@
 <document>
   <properties>
     <title>Changes</title>
-    <author email="jsanleandro@yahoo.es">Jose San Leandro</author>
+    <author email="chous@acm-sl.org">Jose San Leandro</author>
   </properties>
   <body>
     <release
-      version="commons-0_5_7b3"
+      version="0.5.7b4"
       date="$Date$"
       description="enhancement">
       <action dev="$Author$" type="update">
+        Minor issues fixed or refactored.
+      </action>
+    </release>
+    <release
+      version="0.5.7b3"
+      date="2005/05/03 12:03:57"
+      description="enhancement">
+      <action dev="chous" type="update">
         Minor <a href="${issue.url}609">issue</a> closed.
       </action>
     </release>
     <release
-      version="commons-0_5_7b2"
+      version="0.5.7b2"
       date="2004/12/20 17:25:04"
       description="bugfix">
       <action dev="chous" type="update">
@@ -22,7 +30,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_7b1"
+      version="0.5.7b1"
       date="2004/12/03 06:57:15"
       description="Refactoring">
       <action dev="chous" type="update">
@@ -31,7 +39,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_6"
+      version="0.5.6"
       date="2004/12/01 08:50:26"
       description="Refactoring">
       <action dev="chous" type="update">
@@ -41,7 +49,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5"
+      version="0.5.5"
       date="2004/12/01 07:49:54"
       description="Enhancement">
       <action dev="chous" type="add">
@@ -49,7 +57,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5b12"
+      version="0.5.5b12"
       date="2004/12/01 07:31:40"
       description="Refactoring">
       <action dev="chous" type="update">
@@ -59,7 +67,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5b11"
+      version="0.5.5b11"
       date="2004/11/08 08:18:42"
       description="Enhancement">
       <action dev="chous" type="add">
@@ -68,7 +76,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5b10"
+      version="0.5.5b10"
       date="2004/10/16 09:16:54"
       description="Enhancement">
       <action dev="chous" type="update">
@@ -76,7 +84,7 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5b9"
+      version="0.5.5b9"
       date="2004/10/15 06:33:07"
       description="Feature added">
       <action dev="chous" type="add">
@@ -84,25 +92,25 @@
       </action>
     </release>
     <release
-      version="commons-0_5_5b8"
+      version="0.5.5b8"
       date="2004/10/13 06:25:54"
       description="Feature added">
       <action dev="chous" type="add">
         Finished <a href="${issue.url}516">516</a>.
       </action>
     </release>
-    <release version="commons-0_5_5b7" date="2004/10/06 04:25:26">
-      <action dev="$Author$" type="add">
+    <release version="0.5.5b7" date="2004/10/06 04:25:26">
+      <action dev="chous" type="add">
         Finished <a href="${issue.url}510">510</a> and
         Finished <a href="${issue.url}511">511</a>.
       </action>
     </release>
-    <release version="commons-0_5_5b6" date="2004/10/01 06:31:09">
+    <release version="0.5.5b6" date="2004/10/01 06:31:09">
       <action dev="chous" type="add">
         Finished <a href="${issue.url}509">509</a>.
       </action>
     </release>
-    <release version="commons-0_5_5b5" date="2004/09/06 07:05:49">
+    <release version="0.5.5b5" date="2004/09/06 07:05:49">
       <action dev="chous" type="add">
         Finished
         <a
@@ -114,7 +122,7 @@
         package)</a>.
       </action>
     </release>
-    <release version="commons-0_5_5b4" date="2004/06/11 07:16:58">
+    <release version="0.5.5b4" date="2004/06/11 07:16:58">
       <action dev="chous" type="add">
         Finished
         <a
@@ -122,39 +130,39 @@
         >Adapt some ProxyJ's classes</a>.
       </action>
     </release>
-    <release version="commons-0_5_5b3" date="2004/05/16 10:30:10">
+    <release version="0.5.5b3" date="2004/05/16 10:30:10">
       <action dev="chous" type="add">
         Added a basic method in FileUtils to read from an input
         stream. Added also a new ReflectionUtils helper class
         required by WebExtension.
       </action>
     </release>
-    <release version="commons-0_5_5b2" date="2004/02/24 16:25:10">
+    <release version="0.5.5b2" date="2004/02/24 16:25:10">
       <action
         dev="chous"
         type="add"
         due-to="Jose San Leandro"
-        due-to-email="jsanleandro@yahoo.es">
+        due-to-email="chous@acm-sl.org">
         Removed the relationship between Utils and Versionable, since
         that would be performed via compiler extensions, not at
         source-code level.
       </action>
     </release>
-    <release version="commons-0_5_5b1" date="2004/02/23 10:41:57">
+    <release version="0.5.5b1" date="2004/02/23 10:41:57">
       <action
         dev="chous"
         type="add"
         due-to="Jose San Leandro"
-        due-to-email="jsanleandro@yahoo.es">
+        due-to-email="chous@acm-sl.org">
         Started basic design of stateful entities.
       </action>
     </release>
-    <release version="commons-0_5_4" date="2004/02/15 14:07:05">
+    <release version="0.5.4" date="2004/02/15 14:07:05">
       <action
         dev="chous"
         type="add"
         due-to="Jose San Leandro"
-        due-to-email="jsanleandro@yahoo.es">
+        due-to-email="chous@acm-sl.org">
         Previous changes not recorded.
       </action>
     </release>
