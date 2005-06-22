@@ -1,9 +1,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2004  Jose San Leandro Armend&aacute;riz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-2005  Jose San Leandro Armend&aacute;riz
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,7 +19,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
+    Contact info: jose.sanleandro@acm-sl.org
     Postal Address: c/Playa de Lagoa, 1
                     Urb. Valdecaba&ntilde;as
                     Boadilla del monte
@@ -47,19 +46,43 @@
 package org.acmsl.commons.utils;
 
 /*
+ * Importing project classes.
+ */
+import org.acmsl.commons.patterns.Utils;
+
+/*
+ * Importing Commons-Logging classes.
+ */
+import org.apache.commons.logging.LogFactory;
+
+/*
  * Importing some JDK classes.
  */
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Provides some useful methods when working with reflection.
- * @author <a href="mailto:jose.sanleandro@ventura24.es">Jose San Leandro</a>
- * @version $Revision$
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro</a>
+ * @version $Revision$ at $Date$
  */
-public abstract class ReflectionUtils
+public class ReflectionUtils
+    implements  Utils
 {
+    /**
+     * A cached empty class array.
+     */
+    public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
+    
+    /**
+     * A cached empty field array.
+     */
+    public static final Field[] EMPTY_FIELD_ARRAY = new Field[0];
+    
     /**
      * Singleton implemented as a weak reference.
      */
@@ -106,7 +129,7 @@ public abstract class ReflectionUtils
 
         if  (result == null) 
         {
-            result = new ReflectionUtils() {};
+            result = new ReflectionUtils();
 
             setReference(result);
         }
@@ -122,13 +145,24 @@ public abstract class ReflectionUtils
      */
     public Class[] retrieveSuperClasses(final Object object)
     {
-        Class[] result = new Class[0];
+        return retrieveSuperClasses(object.getClass());
+    }
+    
+    /**
+     * Retrieves the parent classes of given class.
+     * @param classInstance the class to analyze.
+     * @return the ordered collection of superclasses.
+     * @precondition classInstance != null
+     */
+    public Class[] retrieveSuperClasses(final Class classInstance)
+    {
+        Class[] result = EMPTY_CLASS_ARRAY;
 
         Collection t_cSuperClasses = new ArrayList();
 
-        t_cSuperClasses.add(object.getClass());
+        t_cSuperClasses.add(classInstance);
 
-        retrieveSuperClasses(object.getClass(), t_cSuperClasses);
+        retrieveSuperClasses(classInstance, t_cSuperClasses);
 
         result = (Class[]) t_cSuperClasses.toArray(result);
 
@@ -153,5 +187,168 @@ public abstract class ReflectionUtils
 
             retrieveSuperClasses(parent, collection);
         }
+    }
+
+    /**
+     * Retrieves the members (not only public ones)
+     * matching a concrete type, declared in given class.
+     * This method will likely fail under a security manager
+     * without explicit permissions.
+     * @param classInstance the class instance.
+     * @param type the type to match.
+     * @return such member instance.
+     * @precondition classInstance != null
+     * @precondition type != null
+     */
+    public Field[] getMember(final Class classInstance, final Class type)
+    {
+        Collection t_cResult = new ArrayList();
+
+        Class[] t_aClasses = retrieveSuperClasses(classInstance);
+        
+        int t_iLength = (t_aClasses != null) ? t_aClasses.length : 0;
+        
+        for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+        {
+            t_cResult.addAll(
+                getClassMembersAsCollection(t_aClasses[t_iIndex], type));
+        }
+        
+        return (Field[]) t_cResult.toArray(EMPTY_FIELD_ARRAY);
+    }
+    
+    /**
+     * Retrieves the members (not only public ones)
+     * matching a concrete type, declared in given class.
+     * This method will likely fail under a security manager
+     * without explicit permissions.
+     * @param classInstance the class instance.
+     * @param type the type to match.
+     * @return such member instance.
+     * @precondition classInstance != null
+     * @precondition type != null
+     */
+    public Field[] getClassMembers(final Class classInstance, final Class type)
+    {
+        Field[] result = EMPTY_FIELD_ARRAY;
+        
+        Collection t_cMembers =
+            getClassMembersAsCollection(classInstance, type);
+        
+        if  (t_cMembers != null)
+        {
+            result = (Field[]) t_cMembers.toArray(EMPTY_FIELD_ARRAY);
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Retrieves the members (not only public ones)
+     * matching a concrete type, declared in given class.
+     * This method will likely fail under a security manager
+     * without explicit permissions.
+     * @param classInstance the class instance.
+     * @param type the type to match.
+     * @return such fields.
+     * @precondition classInstance != null
+     * @precondition type != null
+     */
+    public Collection getClassMembersAsCollection(
+        final Class classInstance, final Class type)
+    {
+        Collection result = new ArrayList();
+
+        Field[] t_Aux = null;
+        
+        try
+        {
+            t_Aux = classInstance.getDeclaredFields();
+        }
+        catch  (final Throwable throwable)
+        {
+            try
+            {
+                LogFactory.getLog(getClass()).warn(
+                    "Cannot retrieve " + classInstance + " members",
+                    throwable);
+            }
+            catch  (final Throwable classLoadingProblem)
+            {
+                System.err.println(
+                        "Error using Commons-Logging. This can happen "
+                      + "due to Log4J class-loading issues.");
+
+                classLoadingProblem.printStackTrace(System.err);
+            }
+        }
+
+        List t_lMembers = Arrays.asList(t_Aux);
+
+        int t_iLength = (t_Aux != null) ? t_Aux.length : 0;
+
+        Field t_CurrentField = null;
+        
+        Class t_CurrentMemberClass = null;
+        
+        for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+        {
+            t_CurrentField = t_Aux[t_iIndex];
+
+            if  (t_CurrentField != null)
+            {
+                t_CurrentMemberClass = t_CurrentField.getType();
+
+                if  (   (t_CurrentMemberClass != null)
+                     && (   (t_CurrentMemberClass.equals(type)
+                         || (type.isAssignableFrom(t_CurrentMemberClass))
+                         || (t_CurrentMemberClass.isAssignableFrom(type)))))
+                {
+                    result.add(t_CurrentField);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves the value of given field, for a concrete instance.
+     * @param instance the instance.
+     * @param field the field.
+     * @return the field value, on given instance, or <code>null</code>
+     * if such field doesn't exist or is not accessible.
+     * @precondition instance != null
+     * @precondition field != null
+     */
+    public Object getFieldValue(final Object instance, final Field field)
+    {
+        Object result = null;
+        
+        try
+        {
+            result = field.get(instance);
+        }
+        catch  (final Throwable throwable)
+        {
+            try
+            {
+                LogFactory.getLog(getClass()).info(
+                      "Cannot retrieve the value of "
+                    + "the field " + field
+                    + " on instance " + instance,
+                      throwable);
+            }
+            catch  (final Throwable classLoadingProblem)
+            {
+                System.err.println(
+                        "Error using Commons-Logging. This can happen "
+                      + "due to Log4J class-loading issues.");
+
+                classLoadingProblem.printStackTrace(System.err);
+            }
+        }
+        
+        return result;
     }
 }

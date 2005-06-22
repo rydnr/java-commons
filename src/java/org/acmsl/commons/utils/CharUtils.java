@@ -1,9 +1,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -21,7 +20,7 @@
 
 
     Thanks to ACM S.L. for distributing this library under the LGPL license.
-    Contact info: jsr000@terra.es
+    Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
                     Urb. Valdecabañas
                     Boadilla del monte
@@ -59,11 +58,11 @@ import java.lang.ref.WeakReference;
 
 /**
  * Provides some useful methods when working with characters and buffers.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @author <a href="mailto:chous@acm-sl.org"
+ *         >Jose San Leandro Armend&aacute;riz</a>
+ * @version $Revision$ at $Date$
  */
-public abstract class CharUtils
+public class CharUtils
     implements  Utils
 {
     /**
@@ -116,7 +115,7 @@ public abstract class CharUtils
 
         if  (result == null) 
         {
-            result = new CharUtils() {};
+            result = new CharUtils();
         }
         
         return result;

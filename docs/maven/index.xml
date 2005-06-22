@@ -40,6 +40,15 @@
             $Date$
           </td>
           <td>
+            Added new methods to <tt>ReflectionUtils</tt> to retrieve
+            fields.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2005/05/22 17:08:33
+          </td>
+          <td>
             Minor issues fixed and/or refactored.
             Released <b>0.5.7b4</b>.
           </td>
