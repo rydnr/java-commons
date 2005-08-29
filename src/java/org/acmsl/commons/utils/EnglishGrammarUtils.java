@@ -61,7 +61,7 @@ import java.util.Map;
 /**
  * Provides some grammar rules for English language.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
 public class EnglishGrammarUtils
