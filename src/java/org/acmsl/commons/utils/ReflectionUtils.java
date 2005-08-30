@@ -60,6 +60,8 @@ import org.apache.commons.logging.LogFactory;
  */
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -349,6 +351,81 @@ public class ReflectionUtils
             }
         }
         
+        return result;
+    }
+
+    /**
+     * Returns the thread context class loader if available.
+     * The thread context class loader is available for JDK 1.2
+     * or later, if certain security conditions are met.
+     * Note: This logic is adapted from Commons-Logging.
+     * @return the class loader.
+     * @throws IllegalAccessException when trying to access
+     * <code>Thread.getContextClassLoader()</code> via reflection.
+     * @throws InvocationTargetException when trying to access
+     * <code>Thread.getContextClassLoader()</code> via reflection, and
+     * the target exception is not a <code>SecurityException</code>..
+     */
+    public ClassLoader getContextClassLoader()
+        throws IllegalAccessException,
+               InvocationTargetException
+    {
+        ClassLoader result = null;
+        
+        try
+        {
+            // Are we running on a JDK 1.2 or later system?
+            Method t_Method =
+                Thread.class.getMethod("getContextClassLoader", null);
+
+            // Get the thread context class loader (if there is one)
+            try
+            {
+                result =
+                    (ClassLoader) t_Method.invoke(Thread.currentThread(), null);
+            }
+            catch  (final IllegalAccessException illegalAccessException)
+            {
+                throw illegalAccessException;
+            }
+            catch  (final InvocationTargetException invocationTargetException)
+            {
+                /**
+                 * InvocationTargetException is thrown by 'invoke' when
+                 * the method being invoked (getContextClassLoader) throws
+                 * an exception.
+                 *
+                 * getContextClassLoader() throws SecurityException when
+                 * the context class loader isn't an ancestor of the
+                 * calling class's class loader, or if security
+                 * permissions are restricted.
+                 *
+                 * In the first case (not related), we want to ignore and
+                 * keep going.  We cannot help but also ignore the second
+                 * with the logic below, but other calls elsewhere (to
+                 * obtain a class loader) will trigger this exception where
+                 * we can make a distinction.
+                 */
+                if  (invocationTargetException.getTargetException()
+                     instanceof SecurityException)
+                {
+                    LogFactory.getLog(ReflectionUtils.class).info(
+                        "Could not retrieve context class loader.",
+                        invocationTargetException);
+                }
+                else
+                {
+                    throw invocationTargetException;
+                }
+            }
+        }
+        catch  (final NoSuchMethodException noSuchMethodException)
+        {
+            // Assume we are running on JDK 1.1
+            result = ReflectionUtils.class.getClassLoader();
+        }
+
+        // Return the selected class loader
         return result;
     }
 }

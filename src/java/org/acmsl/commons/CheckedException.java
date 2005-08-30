@@ -92,7 +92,8 @@ public abstract class CheckedException
             new _BundleI14able(
                 messageKey,
                 params,
-                retrieveExceptionsBundleName()) {});
+                retrieveExceptionsBundleProperty(),
+                retrieveExceptionsBundleName()));
     }
 
     /**
@@ -114,7 +115,8 @@ public abstract class CheckedException
             new _BundleI14able(
                 messageKey,
                 params,
-                retrieveExceptionsBundleName()) {});
+                retrieveExceptionsBundleProperty(),
+                retrieveExceptionsBundleName()));
     }
 
     /**
@@ -227,6 +229,29 @@ public abstract class CheckedException
     }
 
     /**
+     * Retrieves the exceptions bundle property.
+     * @return such property.
+     */
+    protected String retrieveExceptionsBundleProperty()
+    {
+        return
+            retrieveExceptionsBundleProperty(
+                CommonsBundleRepository.getInstance());
+    }
+
+    /**
+     * Retrieves the exceptions bundle property.
+     * @param bundleRepository the bundle repository.
+     * @return such property.
+     * @precondition bundleRepository != null
+     */
+    protected String retrieveExceptionsBundleProperty(
+        final CommonsBundleRepository bundleRepository)
+    {
+        return bundleRepository.getExceptionsBundleProperty();
+    }
+
+    /**
      * Retrieves the exceptions bundle.
      * @return such bundle name.
      */
@@ -270,9 +295,9 @@ public abstract class CheckedException
 
     /**
      * BundleI14able suited for CheckedException class.
-     * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armendariz</a>
-     * @version $Revision$ $Date$
+     * @author <a href="mailto:chous@acm-sl.org"
+     * >Jose San Leandro Armendariz</a>
+     * @version $Revision$ at $Date$
      */
     protected class _BundleI14able
         extends  BundleI14able
@@ -281,14 +306,16 @@ public abstract class CheckedException
          * Creates a _BundleI14able with given information.
          * @param messageKey the key to build the exception message.
          * @param params the parameters to build the exception message.
+         * @param systemProperty the system property.
          * @param bundleName the name of the bundle.
          */
         protected _BundleI14able(
             final String messageKey,
             final Object[] params,
+            final String systemProperty,
             final String bundleName)
         {
-            super(messageKey, params, bundleName);
+            super(messageKey, params, systemProperty, bundleName);
         }
     }
 }

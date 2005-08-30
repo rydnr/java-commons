@@ -1,9 +1,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,7 +19,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
+    Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
                     Urb. Valdecabañas
                     Boadilla del monte
@@ -55,6 +54,8 @@ import org.acmsl.commons.patterns.Manager;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
+import org.acmsl.commons.utils.ReflectionUtils;
+
 
 /*
  * Importing some commons-logging classes.
@@ -82,9 +83,8 @@ import java.util.Properties;
 /**
  * Manages which regexp engine to use, acting as a facade hiding all
  * details of building or retrieving implementations.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
+ * @version $Revision$ at $Date$ by $Author$
  */
 public class RegexpManager
     implements  Manager
@@ -92,7 +92,7 @@ public class RegexpManager
     /**
      * Configures whether to use class loaders or not.
      */
-    private boolean useClassLoader = true;
+    private boolean m__bUseClassLoader;
 
     /**
      * The default engine.
@@ -116,7 +116,6 @@ public class RegexpManager
     /**
      * JDK1.3+ <a href="http://java.sun.com/j2se/1.3/docs/guide/jar/jar.html#Service%20Provider"
      * >'Service Provider' specification</a>.
-     * 
      */
     protected static final String SERVICE_ID =
         "META-INF/services/org.acmsl.regexpplugin.RegexpEngine";
@@ -132,9 +131,22 @@ public class RegexpManager
     private static WeakReference m__Singleton;
 
     /**
+     * Creates a <code>RegexpManager</code> instance to use or not
+     * class loaders.
+     * @param useClassLoader whether to use it or not.
+     */
+    protected RegexpManager(final boolean useClassLoader)
+    {
+        immutableSetUsingClassLoader(useClassLoader);
+    }
+
+    /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected RegexpManager() {};
+    protected RegexpManager()
+    {
+        this(true);
+    }
 
     /**
      * Specifies a new weak reference.
@@ -155,7 +167,24 @@ public class RegexpManager
     }
 
     /**
-     * Retrieves a CvsLogFileManager instance.
+     * Retrieves a <code>RegexpManager</code> instance.
+     * @param useClassLoader whether to use class loader or not.
+     * @return such instance.
+     */
+    public static RegexpManager getInstance(final boolean useClassLoader)
+    {
+        RegexpManager result = getInstance();
+        
+        if  (result.isUsingClassLoader() != useClassLoader)
+        {
+            result = new RegexpManager(useClassLoader);
+        }
+
+        return result;
+    }
+    
+    /**
+     * Retrieves a <code>RegexpManager</code> instance.
      * @return such instance.
      */
     public static RegexpManager getInstance()
@@ -181,6 +210,33 @@ public class RegexpManager
     }
 
     /**
+     * Specifies whether to use class loader or not.
+     * @param flag such flag.
+     */
+    protected final void immutableSetUsingClassLoader(final boolean flag)
+    {
+        m__bUseClassLoader = flag;
+    }
+    
+    /**
+     * Specifies whether to use class loader or not.
+     * @param flag such flag.
+     */
+    public void setUsingClassLoader(final boolean flag)
+    {
+        immutableSetUsingClassLoader(flag);
+    }
+
+    /**
+     * Retrieves whether the engine is using a class loader or not.
+     * @return such flag.
+     */
+    public boolean isUsingClassLoader()
+    {
+        return m__bUseClassLoader;
+    }
+    
+    /**
      * Retrieves the cached engines.
      * @return such map.
      */
@@ -195,6 +251,17 @@ public class RegexpManager
      * @return the engine information.
      */
     public RegexpEngine getEngine()
+    {
+        return getEngine(isUsingClassLoader());
+    }
+    
+    /**
+     * Retrieves current engine.
+     * Note: The lookup mechanism is adapted from Commons-Logging.
+     * @param usingClassLoader whether to use class loader or not.
+     * @return the engine information.
+     */
+    protected RegexpEngine getEngine(final boolean useClassLoader)
     {
         RegexpEngine result = null;
 
@@ -416,72 +483,50 @@ public class RegexpManager
      * The thread context class loader is available for JDK 1.2
      * or later, if certain security conditions are met.
      * Note: This logic is adapted from Commons-Logging.
+     * @return the class loader.
      * @throws RegexpPluginMisconfiguredException if a suitable class loader
      * cannot be identified.
      */
     protected ClassLoader getContextClassLoader()
         throws RegexpPluginMisconfiguredException
     {
+        return getContextClassLoader(ReflectionUtils.getInstance());
+    }
+    
+    /**
+     * Returns the thread context class loader if available.
+     * The thread context class loader is available for JDK 1.2
+     * or later, if certain security conditions are met.
+     * Note: This logic is adapted from Commons-Logging.
+     * @param reflectionUtils the <code>ReflectionUtils</code> instance.
+     * @return the class loader.
+     * @throws RegexpPluginMisconfiguredException if a suitable class loader
+     * cannot be identified.
+     * @precondition reflectionUtils != null
+     */
+    protected ClassLoader getContextClassLoader(
+        final ReflectionUtils reflectionUtils)
+      throws RegexpPluginMisconfiguredException
+    {
         ClassLoader result = null;
 
         try
         {
-            // Are we running on a JDK 1.2 or later system?
-            Method t_Method =
-                Thread.class.getMethod("getContextClassLoader", null);
-
-            // Get the thread context class loader (if there is one)
-            try
-            {
-                result =
-                    (ClassLoader) t_Method.invoke(Thread.currentThread(), null);
-            }
-            catch  (final IllegalAccessException illegalAccessException)
-            {
-                throw
-                    new RegexpPluginMisconfiguredException(
-                        "unexpected.illegalaccessexception",
-                        illegalAccessException);
-            }
-            catch  (final InvocationTargetException invocationTargetException)
-            {
-                /**
-                 * InvocationTargetException is thrown by 'invoke' when
-                 * the method being invoked (getContextClassLoader) throws
-                 * an exception.
-                 *
-                 * getContextClassLoader() throws SecurityException when
-                 * the context class loader isn't an ancestor of the
-                 * calling class's class loader, or if security
-                 * permissions are restricted.
-                 *
-                 * In the first case (not related), we want to ignore and
-                 * keep going.  We cannot help but also ignore the second
-                 * with the logic below, but other calls elsewhere (to
-                 * obtain a class loader) will trigger this exception where
-                 * we can make a distinction.
-                 */
-                if  (invocationTargetException.getTargetException()
-                     instanceof SecurityException)
-                {
-                    LogFactory.getLog(RegexpManager.class).info(
-                        "Could not retrieve context class loader.",
-                        invocationTargetException);
-                }
-                else
-                {
-                    // Capture 'e.getTargetException()' exception for details
-                    // alternate: log 'e.getTargetException()', and pass back 'e'.
-                    new RegexpPluginMisconfiguredException(
-                        "unexpected.illegalaccessexception",
-                        invocationTargetException.getTargetException());
-                }
-            }
+            result = reflectionUtils.getContextClassLoader();
         }
-        catch  (final NoSuchMethodException noSuchMethodException)
+        catch  (final IllegalAccessException illegalAccessException)
         {
-            // Assume we are running on JDK 1.1
-            result = RegexpEngine.class.getClassLoader();
+            throw
+                new RegexpPluginMisconfiguredException(
+                    "unexpected.illegalaccessexception",
+                    illegalAccessException);
+        }
+        catch  (final InvocationTargetException invocationTargetException)
+        {
+            throw
+                new RegexpPluginMisconfiguredException(
+                    "unexpected.invocationtargetexception",
+                    invocationTargetException.getTargetException());
         }
 
         // Return the selected class loader

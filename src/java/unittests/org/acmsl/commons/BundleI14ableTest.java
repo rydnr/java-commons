@@ -102,7 +102,7 @@ extends TestCase
         public _BundleI14able(
             final String key, final Object[] params, final String bundleName)
         {
-            super(key, params, bundleName);
+            super(key, params, null, bundleName);
         }
     }
 

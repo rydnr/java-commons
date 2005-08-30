@@ -64,10 +64,15 @@ import java.lang.ref.WeakReference;
            >Jose San Leandro Armendáriz</a>
  * @version $Revision$ $Date$
  */
-public abstract class CommonsBundleRepository
+public class CommonsBundleRepository
     implements  Repository,
                 Singleton
 {
+    /**
+     * The exceptions system property.
+     */
+    protected static final String EXCEPTIONS_SYSTEM_PROPERTY = "org.acmsl.commons.exceptions";
+
     /**
      * The exceptions bundle.
      */
@@ -77,6 +82,11 @@ public abstract class CommonsBundleRepository
      * The constants bundle.
      */
     protected static final String CONSTANTS_BUNDLE = "commons-constants";
+
+    /**
+     * The grammar system property.
+     */
+    protected static final String GRAMMAR_SYSTEM_PROPERTY = "org.acmsl.commons.utils.grammar";
 
     /**
      * The grammar bundle.
@@ -130,12 +140,21 @@ public abstract class CommonsBundleRepository
 
         if  (result == null) 
         {
-            result = new CommonsBundleRepository() {};
+            result = new CommonsBundleRepository();
 
             setReference(result);
         }
         
         return result;
+    }
+
+    /**
+     * Retrieves the exceptions' system property.
+     * @return such property.
+     */
+    public String getExceptionsBundleProperty()
+    {
+        return EXCEPTIONS_SYSTEM_PROPERTY;
     }
 
     /**
@@ -154,6 +173,15 @@ public abstract class CommonsBundleRepository
     public String getConstantsBundleName()
     {
         return CONSTANTS_BUNDLE;
+    }
+
+    /**
+     * Retrieves the grammar's system property.
+     * @return such property.
+     */
+    public String getGrammarBundleProperty()
+    {
+        return GRAMMAR_SYSTEM_PROPERTY;
     }
 
     /**

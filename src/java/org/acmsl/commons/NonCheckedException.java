@@ -1,9 +1,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2004  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,7 +19,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
+    Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
                     Urb. Valdecabañas
                     Boadilla del monte
@@ -62,9 +61,9 @@ import java.util.Locale;
 
 /**
  * Represents any exception which doesn't require to be catched.
- * @author <a href="mailto:jsanleandro@yahoo.es"
- *         >Jose San Leandro Armendariz</a>
- * @version $Revision$
+ * @author <a href="mailto:chous@acm-sl.org"
+ * >Jose San Leandro Armendariz</a>
+ * @version $Revision$ at $Date$ by $Author$
  */
 public abstract class NonCheckedException
     extends     RuntimeException
@@ -84,14 +83,15 @@ public abstract class NonCheckedException
      * @precondition params != null
      */
     protected NonCheckedException(
-        final String messageKey,
-        final Object[] params)
+        final String messageKey, final Object[] params)
     {
         super(messageKey);
+
         immutableSetBundleI14able(
             new _BundleI14able(
                 messageKey,
                 params,
+                retrieveExceptionsBundleProperty(),
                 retrieveExceptionsBundleName()) {});
     }
 
@@ -110,10 +110,12 @@ public abstract class NonCheckedException
         final Throwable cause)
     {
         super(messageKey, cause);
+
         immutableSetBundleI14able(
             new _BundleI14able(
                 messageKey,
                 params,
+                retrieveExceptionsBundleProperty(),
                 retrieveExceptionsBundleName()) {});
     }
 
@@ -227,6 +229,29 @@ public abstract class NonCheckedException
     }
 
     /**
+     * Retrieves the exceptions system property.
+     * @return such bundle name.
+     */
+    protected String retrieveExceptionsBundleProperty()
+    {
+        return
+            retrieveExceptionsBundleProperty(
+                CommonsBundleRepository.getInstance());
+    }
+
+    /**
+     * Retrieves the exceptions system property.
+     * @param bundleRepository the bundle repository.
+     * @return such property.
+     * @precondition bundleRepository != null
+     */
+    protected String retrieveExceptionsBundleProperty(
+        final CommonsBundleRepository bundleRepository)
+    {
+        return bundleRepository.getExceptionsBundleProperty();
+    }
+
+    /**
      * Retrieves the exceptions bundle.
      * @return such bundle name.
      */
@@ -270,8 +295,8 @@ public abstract class NonCheckedException
 
     /**
      * BundleI14able suited for NonCheckedException class.
-     * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armendariz</a>
+     * @author <a href="mailto:chous@acm-sl.org"
+     * >Jose San Leandro Armendariz</a>
      * @version $Revision$ $Date$
      */
     protected class _BundleI14able
@@ -281,14 +306,16 @@ public abstract class NonCheckedException
          * Creates a _BundleI14able with given information.
          * @param messageKey the key to build the exception message.
          * @param params the parameters to build the exception message.
+         * @param systemProperty the system property.
          * @param bundleName the name of the bundle.
          */
         protected _BundleI14able(
             final String messageKey,
             final Object[] params,
+            final String systemProperty,
             final String bundleName)
         {
-            super(messageKey, params, bundleName);
+            super(messageKey, params, systemProperty, bundleName);
         }
     }
 }
