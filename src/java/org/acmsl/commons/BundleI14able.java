@@ -498,11 +498,12 @@ public class BundleI14able
      * and locale.
      * @param key the message key.
      * @param params the message parameters.
-     * @param bundle the resource bundle.
+     * @param firstBundle the first resource bundle.
+     * @param secondBundle the second resource bundle.
      * @return the customized message.
      * @precondition key != null
      * @precondition params != null
-     * @precondition bundle != null
+     * @precondition (firstBundle != null) || (secondBundle != null)
      */
     protected String buildMessage(
         final String key,
@@ -513,10 +514,16 @@ public class BundleI14able
         String result = null;
 
         ResourceBundle t_ActualBundle = firstBundle;
-        
-        String t_strValue = firstBundle.getString(key);
-        
-        if  (t_strValue == null)
+
+        String t_strValue = null;
+
+        if  (firstBundle != null)
+        {
+            t_strValue = firstBundle.getString(key);
+        }
+
+        if  (   (t_strValue == null)
+             && (secondBundle != null))
         {
             t_strValue = secondBundle.getString(key);
 
@@ -526,13 +533,21 @@ public class BundleI14able
             }
         }
         
-        Object[] t_aParams =
-            translateParams(
-                params,
-                t_ActualBundle,
-                StringValidator.getInstance());
+        Object[] t_aParams = EMPTY_OBJECT_ARRAY;
 
-        result = buildMessage(t_strValue, t_aParams);
+        if  (t_ActualBundle != null)
+        {
+            t_aParams =
+                translateParams(
+                    params,
+                    t_ActualBundle,
+                    StringValidator.getInstance());
+        }
+
+        if  (t_strValue != null)
+        {
+            result = buildMessage(t_strValue, t_aParams);
+        }
 
         return result;
     }
