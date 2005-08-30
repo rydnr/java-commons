@@ -56,6 +56,7 @@ import org.acmsl.commons.patterns.Utils;
  */
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -65,7 +66,7 @@ import java.util.Map;
  * @version $Revision$
  */
 public class EnglishGrammarUtils
-    implements  Utils
+    extends  GrammarUtils
 {
     /**
      * Singleton implemented as a weak reference.
@@ -73,14 +74,12 @@ public class EnglishGrammarUtils
     private static WeakReference singleton;
 
     /**
-     * The irregular plural word list.
-     */
-    private static Map m__mIrregularPluralForms;
-
-    /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected EnglishGrammarUtils()  {};
+    protected EnglishGrammarUtils()
+    {
+        super(new Locale("en"));
+    }
 
     /**
      * Specifies a new weak reference.
@@ -98,137 +97,6 @@ public class EnglishGrammarUtils
     protected static WeakReference getReference()
     {
         return singleton;
-    }
-
-    /**
-     * Specifies the irregular plural forms.
-     * @param map the collection.
-     * @precondition map != null
-     */
-    protected static synchronized final void setIrregularPluralForms(
-        final Map map)
-    {
-        m__mIrregularPluralForms = map;
-    }
-
-    /**
-     * Retrieves the plural exceptions.
-     * @return such exceptions.
-     */
-    protected static final Map getIrregularPluralForms()
-    {
-        Map result = m__mIrregularPluralForms;
-
-        if  (result == null)
-        {
-            result = new HashMap();
-            initIrregularPluralForms(result);
-            setIrregularPluralForms(result);
-        }
-
-        return result;
-    }
-
-    /**
-     * Initializes the plural exceptions.
-     * @param map the map.
-     * @precondition map != null
-     */
-    protected static void initIrregularPluralForms(final Map map)
-    {
-        put("man", "men", map);
-        put("woman", "women", map);
-        put("water", "water", map);
-        put("fish", "fish", map);
-        put("bus", "buses", map);
-    }
-
-    /**
-     * Builds a plural key.
-     * @param word the word.
-     * @precondition word != null
-     */
-    protected static Object buildPluralKey(final String word)
-    {
-        return ".|plural:" + word.toLowerCase() + "|.";
-    }
-
-    /**
-     * Builds a plural key.
-     * @param word the word.
-     * @precondition word != null
-     */
-    protected static Object buildSingularKey(final String word)
-    {
-        return ".|singular:" + word.toLowerCase() + "|.";
-    }
-
-    /**
-     * Puts the irregular plural version of given word.
-     * @param singular the word in singular form.
-     * @param plural the word in plural form.
-     * @param map the map.
-     * @precondition singular != null
-     * @precondition plural != null
-     * @precondition map != null
-     */
-    protected static void put(
-        final String singular, final String plural, final Map map)
-    {
-        map.put(buildSingularKey(singular), plural);
-        map.put(buildSingularKey(plural), plural);
-        map.put(buildPluralKey(plural), singular);
-        map.put(buildPluralKey(singular), singular);
-    }
-
-    /**
-     * Retrieves the irregular plural form of given word.
-     * @param singular the word.
-     * @return the plural form.
-     * @precondition singular != null
-     */
-    protected String getIrregularPlural(final String singular)
-    {
-        return getIrregularPlural(singular, getIrregularPluralForms());
-    }
-
-    /**
-     * Retrieves the irregular plural form of given word.
-     * @param singular the word.
-     * @param irregularPluralForms the irregular plural forms.
-     * @return the plural form.
-     * @precondition singular != null
-     * @precondition irregularPluralForms != null
-     */
-    protected String getIrregularPlural(
-        final String singular, final Map irregularPluralForms)
-    {
-        return (String) irregularPluralForms.get(buildSingularKey(singular));
-    }
-
-    /**
-     * Retrieves the irregular singular form of given word.
-     * @param plural the word.
-     * @return the plural form.
-     * @precondition plural != null
-     */
-    protected String getIrregularSingular(final String plural)
-    {
-        return getIrregularSingular(plural, getIrregularPluralForms());
-    }
-
-    /**
-     * Retrieves the irregular singular form of given word.
-     * @param plural the word.
-     * @param irregularPluralForms the irregular plural forms.
-     * @return the plural form.
-     * @precondition plural != null
-     * @precondition irregularPluralForms != null
-     */
-    protected String getIrregularSingular(
-        final String plural, final Map irregularPluralForms)
-    {
-        return (String) irregularPluralForms.get(buildPluralKey(plural));
     }
 
     /**
@@ -255,45 +123,24 @@ public class EnglishGrammarUtils
     }
 
     /**
-     * Converts given word to plural.
-     * @param word the word to convert.
-     * @return the converted word.
+     * Manages the regular plural forms.
+     * @param word the word.
+     * @return the regular plural form.
      * @precondition word != null
      */
-    public String getPlural(final String word)
+    protected String getRegularPluralForm(final String word)
     {
-        return getPlural(word, getIrregularPluralForms());
-    }
+        String result = word.trim().toLowerCase();
 
-    /**
-     * Converts given word to plural.
-     * @param word the word to convert.
-     * @param irregularSingularForms words whose singular form is not
-     * constructed using the regular rules.
-     * @return the converted word.
-     * @precondition word != null
-     * @precondition irregularSingularForms != null
-     */
-    protected String getPlural(
-        final String word, final Map irregularSingularForms)
-    {
-        String result =
-            (String) irregularSingularForms.get(buildSingularKey(word));
-
-        if  (result == null)
+        if  (   (result.endsWith("s"))
+             || (result.endsWith("x"))
+             || (result.endsWith("sh"))
+             || (result.endsWith("ch")))
         {
-            result = word.trim().toLowerCase();
-
-            if  (   (result.endsWith("s"))
-                 || (result.endsWith("x"))
-                 || (result.endsWith("sh"))
-                 || (result.endsWith("ch")))
-            {
-                result += "e";
-            }
-
-            result += "s";
+            result += "e";
         }
+
+        result += "s";
 
         if  (word.trim().toUpperCase().equals(word))
         {
@@ -304,47 +151,26 @@ public class EnglishGrammarUtils
     }
 
     /**
-     * Converts given word to singular.
-     * @param word the word to convert.
-     * @return the converted word.
+     * Manages the regular singular forms.
+     * @param word the word.
+     * @return the regular plural form.
      * @precondition word != null
      */
-    public String getSingular(final String word)
+    protected String getRegularSingularForm(final String word)
     {
-        return getSingular(word, getIrregularPluralForms());
-    }
+        String result = word.trim().toLowerCase();
 
-    /**
-     * Converts given word to singular.
-     * @param word the word to convert.
-     * @param irregularPluralForms words whose plural form is not
-     * constructed using the regular rules.
-     * @return the converted word.
-     * @precondition word != null
-     * @precondition irregularPluralForms != null
-     */
-    protected String getSingular(
-        final String word, final Map irregularPluralForms)
-    {
-        String result =
-            (String) irregularPluralForms.get(buildPluralKey(word));
-
-        if  (result == null)
+        if  (result.endsWith("s"))
         {
-            result = word.trim().toLowerCase();
-
-            if  (result.endsWith("s"))
+//            if  (   (result.endsWith("es"))
+            if  (   (result.endsWith("xes"))
+                 || (result.endsWith("shes"))
+                 || (result.endsWith("ches")))
             {
-//                if  (   (result.endsWith("es"))
-                if  (   (result.endsWith("xes"))
-                     || (result.endsWith("shes"))
-                     || (result.endsWith("ches")))
-                {
-                    result = result.substring(0, result.length() - 1);
-                }
-
                 result = result.substring(0, result.length() - 1);
             }
+
+            result = result.substring(0, result.length() - 1);
         }
 
         if  (word.trim().toUpperCase().equals(word))

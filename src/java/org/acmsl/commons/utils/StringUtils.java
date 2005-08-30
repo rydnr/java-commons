@@ -88,6 +88,11 @@ public abstract class StringUtils
     implements  Utils
 {
     /**
+     * A cached empty string array.
+     */
+    protected final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    /**
      * Singleton implemented as a weak reference.
      */
     private static WeakReference singleton;
@@ -925,7 +930,7 @@ public abstract class StringUtils
 
         try
         {
-            if  (   (t_strText      != null)
+            if  (   (t_strText != null)
                  && (separator != null))
             {
                 Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
@@ -1624,6 +1629,46 @@ public abstract class StringUtils
         }
 
         return t_strFirstLine + result + t_strLastLine;
+    }
+
+    /**
+     * Retrieves the last word, using given separators.
+     * @param phrase the phrase.
+     * @param separators the separators.
+     * @return the last word.
+     * @precondition phrase != null
+     * @precondition separators != null
+     */
+    public String retrieveLastWord(
+        final String phrase, final String[] separators)
+    {
+        String result = phrase;
+
+        Collection t_cTokens = null;
+
+        String[] t_astrTokens = null;
+
+        for  (int t_iSeparatorIndex = 0;
+                 (   (t_iSeparatorIndex < separators.length)
+                  && (result != null));
+                  t_iSeparatorIndex++)
+        {
+            t_cTokens = tokenize(result, separators[t_iSeparatorIndex]);
+
+            if  (t_cTokens != null)
+            {
+                t_astrTokens =
+                    (String[]) t_cTokens.toArray(EMPTY_STRING_ARRAY);
+            }
+
+            if  (   (t_astrTokens != null)
+                 && (t_astrTokens.length > 0))
+            {
+                result = t_astrTokens[t_astrTokens.length - 1];
+            }
+        }
+
+        return result;
     }
 
     /**

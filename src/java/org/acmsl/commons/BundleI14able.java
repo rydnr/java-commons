@@ -63,18 +63,29 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+/*
+ * Importing Commons Logging classes.
+ */
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents Throwable instances with support for messages in different
  * languages.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendariz</a>
+ *         >Jose San Leandro Armendariz</a>
  * @version $Revision$
  */
 public class BundleI14able
     implements  I14able
 {
+    /**
+     * An empty object array.
+     */
+    protected static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
     /**
      * The message key.
      */
@@ -107,6 +118,20 @@ public class BundleI14able
         immutableSetMessageKey(messageKey);
         immutableSetParams(params);
         immutableSetBundleName(bundleName);
+    }
+
+    /**
+     * Creates a BundleI14able with given message.
+     * @param messageKey the key to build the exception message.
+     * @param bundleName the name of the bundle.
+     * @precondition messageKey != null
+     * @precondition bundleName != null
+     */
+    protected BundleI14able(
+        final String messageKey,
+        final String bundleName)
+    {
+        this(messageKey, EMPTY_OBJECT_ARRAY, bundleName);
     }
 
     /**
@@ -285,7 +310,17 @@ public class BundleI14able
 
         for  (int t_iIndex = 0; t_iIndex < params.length; t_iIndex++)
         {
-            String t_strTranslation = bundle.getString("" + params[t_iIndex]);
+            String t_strTranslation = null;
+
+            try
+            {
+                t_strTranslation = bundle.getString("" + params[t_iIndex]);
+            }
+            catch  (final MissingResourceException exception)
+            {
+                LogFactory.getLog(getClass()).debug(
+                    "No parameter translation found for: " + params[t_iIndex]);
+            }
 
             if  (stringValidator.isEmpty(t_strTranslation))
             {

@@ -90,6 +90,11 @@ public class RegexpManager
     implements  Manager
 {
     /**
+     * Configures whether to use class loaders or not.
+     */
+    private boolean useClassLoader = true;
+
+    /**
      * The default engine.
      */
     public static final String DEFAULT_ENGINE =
@@ -193,19 +198,40 @@ public class RegexpManager
     {
         RegexpEngine result = null;
 
-        // Identify the class loader we will be using
-        ClassLoader t_ContextClassLoader =
-            (ClassLoader) AccessController.doPrivileged(
-                new PrivilegedAction()
-                {
-                    public Object run()
+        ClassLoader t_ClassLoader = getClass().getClassLoader();
+
+        if  (useClassLoader)
+        {
+            // Identify the class loader we will be using
+            t_ClassLoader = 
+                (ClassLoader) AccessController.doPrivileged(
+                    new PrivilegedAction()
                     {
-                        return getContextClassLoader();
-                    }
-                });
+                        public Object run()
+                            {
+                                return getContextClassLoader();
+                            }
+                    });
+        }
+
+        result = getEngineUsingClassLoader(t_ClassLoader);
+
+        return result;
+    }
+
+    /**
+     * Retrieves current engine.
+     * Note: The lookup mechanism is adapted from Commons-Logging.
+     * @param classLoader the class loader.
+     * @return the engine information.
+     * @precondition classLoader != null
+     */
+    protected RegexpEngine getEngineUsingClassLoader(final ClassLoader classLoader)
+    {
+        RegexpEngine result = null;
 
         // Return any previously registered engine for this class loader
-        result = getCachedEngine(t_ContextClassLoader);
+        result = getCachedEngine(classLoader);
 
         InputStream t_isStream = null;
 
@@ -222,7 +248,7 @@ public class RegexpManager
 
                 if  (engineClass != null)
                 {
-                    result = createEngine(engineClass, t_ContextClassLoader);
+                    result = createEngine(engineClass, classLoader);
                 }
             }
             catch  (final SecurityException securityException)
@@ -244,8 +270,7 @@ public class RegexpManager
             try
             {
                 t_isStream =
-                    getResourceAsStream(
-                        t_ContextClassLoader, SERVICE_ID);
+                    getResourceAsStream(classLoader, SERVICE_ID);
 
                 if  (t_isStream != null)
                 {
@@ -272,6 +297,7 @@ public class RegexpManager
                     }
 
                     String engineClassName = t_brReader.readLine();
+
                     t_brReader.close();
 
                     if  (   (engineClassName != null)
@@ -279,7 +305,7 @@ public class RegexpManager
                     {
                         result =
                             createEngine(
-                                engineClassName, t_ContextClassLoader);
+                                engineClassName, classLoader);
                     }
                 }
             }
@@ -308,12 +334,12 @@ public class RegexpManager
             {
                 t_isStream =
                     getResourceAsStream(
-                        t_ContextClassLoader, CONFIGURATION_SETTINGS);
+                        classLoader, CONFIGURATION_SETTINGS);
             }
             catch  (final SecurityException securityException)
             {
                 LogFactory.getLog(getClass()).info(
-                    "Could not load " + CONFIGURATION_SETTINGS
+                      "Could not load " + CONFIGURATION_SETTINGS
                     + ". Trying /" + CONFIGURATION_SETTINGS,
                     securityException);
             }
@@ -322,7 +348,7 @@ public class RegexpManager
             {
                 t_isStream =
                     getResourceAsStream(
-                        t_ContextClassLoader, "/" + CONFIGURATION_SETTINGS);
+                        classLoader, "/" + CONFIGURATION_SETTINGS);
             }
             catch  (final SecurityException securityException)
             {
@@ -362,17 +388,16 @@ public class RegexpManager
 
             if  (engineClass != null)
             {
-                result = createEngine(engineClass, t_ContextClassLoader);
+                result = createEngine(engineClass, classLoader);
             }
         }
-
 
         // Fourth, try the fallback implementation class
         if  (result == null)
         {
             result =
                 createEngine(
-                    DEFAULT_ENGINE, RegexpEngine.class.getClassLoader());
+                    DEFAULT_ENGINE, classLoader); //RegexpEngine.class.getClassLoader());
         }
 
         if  (result != null)
@@ -380,7 +405,7 @@ public class RegexpManager
             /**
              * Always cache using context class loader.
              */
-            cacheEngine(t_ContextClassLoader, result);
+            cacheEngine(classLoader, result);
         }
 
         return result;

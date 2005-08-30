@@ -79,6 +79,11 @@ public abstract class CommonsBundleRepository
     protected static final String CONSTANTS_BUNDLE = "commons-constants";
 
     /**
+     * The grammar bundle.
+     */
+    protected static final String GRAMMAR_BUNDLE = "commons-grammar";
+
+    /**
      * Singleton implemented as a weak reference.
      */
     private static WeakReference m__Singleton;
@@ -149,5 +154,14 @@ public abstract class CommonsBundleRepository
     public String getConstantsBundleName()
     {
         return CONSTANTS_BUNDLE;
+    }
+
+    /**
+     * Retrieves the grammar bundle name.
+     * @return such name.
+     */
+    public String getGrammarBundleName()
+    {
+        return GRAMMAR_BUNDLE;
     }
 }
