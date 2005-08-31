@@ -163,12 +163,26 @@ public abstract class GrammarUtils
      */
     public String getSingular(final String word)
     {
+        return getSingular(word, retrieveGrammarBundleName());
+
+    }
+    
+    /**
+     * Converts given word to plural.
+     * @param word the word to convert.
+     * @param bundleName the bundle name.
+     * @return the converted word.
+     * @precondition word != null
+     * @precondition bundleName != null
+     */
+    public String getSingular(final String word, final String bundleName)
+    {
         String result =
             getWord(
                 new _BundleI14able(
                     word + ".singular",
                     retrieveGrammarBundleProperty(),
-                    retrieveGrammarBundleName()),
+                    bundleName),
                 getLocale());
 
         if  (result == null)
@@ -187,12 +201,25 @@ public abstract class GrammarUtils
      */
     public String getPlural(final String word)
     {
+        return getPlural(word, retrieveGrammarBundleName());
+    }
+    
+    /**
+     * Converts given word to plural.
+     * @param word the word to convert.
+     * @param bundleName the bundle name.
+     * @return the converted word.
+     * @precondition word != null
+     * @precondition bundleName != null
+     */
+    public String getPlural(final String word, final String bundleName)
+    {
         String result =
             getWord(
                 new _BundleI14able(
                     word + ".plural",
                     retrieveGrammarBundleProperty(),
-                    retrieveGrammarBundleName()),
+                    bundleName),
                 getLocale());
 
         if  (result == null)
@@ -210,7 +237,8 @@ public abstract class GrammarUtils
      * @return the converted word.
      * @precondition bundleI14able != null
      */
-    public String getWord(final BundleI14able bundleI14able, final Locale locale)
+    protected String getWord(
+        final BundleI14able bundleI14able, final Locale locale)
     {
         String result = null;
 
