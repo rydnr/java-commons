@@ -1,5 +1,5 @@
 /*
-                        QueryJ
+                        ACM-SL Commons
 
     Copyright (C) 2002-2005  Jose San Leandro Armendariz
                         chous@acm-sl.org
@@ -44,7 +44,7 @@
  * interface. License details are copied verbatim below.
  *
  */
-package org.acmsl.queryj.tools.logging;
+package org.acmsl.commons.logging;
 
 /*
  * Importing Commons-Logging classes.
@@ -106,7 +106,7 @@ public class UniqueLogFactory
      * @param singleton such instance.
      * @precondition singleton != null
      */
-    protected static final LogFactory immutableSetSingleton(
+    protected static final void immutableSetSingleton(
         final LogFactory singleton)
     {
         m__Singleton = singleton;
@@ -324,7 +324,6 @@ public class UniqueLogFactory
     public void setAttribute(final String name, final Object value)
     {
     }
-
 }
 /*
  * Copyright 2001-2004 The Apache Software Foundation.
