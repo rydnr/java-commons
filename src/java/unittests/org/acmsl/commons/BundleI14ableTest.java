@@ -1,7 +1,7 @@
 /*
                       Project tests
 
-Copyright (C) 2003  Jose San Leandro Armend?riz
+Copyright (C) 2003  Jose San Leandro Armendáriz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Thanks to ACM S.L. for distributing this library under the GPL license.
 Contact info: jsr000@terra.es
 Postal Address: c/Playa de Lagoa, 1
-Urb. Valdecaba?as
+Urb. Valdecabañas
 Boadilla del monte
 28660 Madrid
 Spain
@@ -31,7 +31,7 @@ Spain
 *
 * Filename: $RCSfile$
 *
-* Author: Jose San Leandro Armend?riz
+* Author: Jose San Leandro Armendáriz
 *
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.
@@ -185,6 +185,18 @@ extends TestCase
   }
   
   /**
+  * Tests BundleI14ableTestgetSystemProperty()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.BundleI14able#getSystemProperty()
+  */
+  public void testGetSystemProperty()
+  throws Exception
+  {
+    // JUnitDoclet begin method getSystemProperty
+    // JUnitDoclet end method getSystemProperty
+  }
+  
+  /**
   * Tests BundleI14ableTestgetBundleName()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#getBundleName()
@@ -195,6 +207,26 @@ extends TestCase
     // JUnitDoclet begin method getBundleName
       assertEquals("bundle", bundlei14able.getBundleName());
     // JUnitDoclet end method getBundleName
+  }
+  
+  /**
+  * Tests BundleI14ableTest accessor methods.
+  * @throws Exception if an unexpected situation occurs.
+  */
+  public void testSetIsUsingClassLoader()
+  throws Exception
+  {
+    // JUnitDoclet begin method setUsingClassLoader isUsingClassLoader
+    boolean[] t_aTests = {true, false};
+    
+    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
+    {
+      bundlei14able.setUsingClassLoader(t_aTests[t_iTestIndex]);
+      assertEquals(
+      t_aTests[t_iTestIndex],
+      bundlei14able.isUsingClassLoader());
+    }
+    // JUnitDoclet end method setUsingClassLoader isUsingClassLoader
   }
   
   /**

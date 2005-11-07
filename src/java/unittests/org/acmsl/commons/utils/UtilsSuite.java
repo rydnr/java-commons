@@ -1,7 +1,7 @@
 /*
                       Project tests
 
-Copyright (C) 2003  Jose San Leandro Armend?riz
+Copyright (C) 2003  Jose San Leandro Armendáriz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Thanks to ACM S.L. for distributing this library under the GPL license.
 Contact info: jsr000@terra.es
 Postal Address: c/Playa de Lagoa, 1
-Urb. Valdecaba?as
+Urb. Valdecabañas
 Boadilla del monte
 28660 Madrid
 Spain
@@ -31,7 +31,7 @@ Spain
 *
 * Filename: $RCSfile$
 *
-* Author: Jose San Leandro Armend?riz
+* Author: Jose San Leandro Armendáriz
 *
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.utils.
@@ -110,8 +110,11 @@ public class UtilsSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons.utils");
     
+    suite.addTestSuite(unittests.org.acmsl.commons.utils.ReflectionUtilsTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.utils.CharUtilsTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.utils.ConversionUtilsTest.class);
     suite.addTestSuite(unittests.org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.utils.EqualityComparatorTest.class);
     
     suite.addTest(unittests.org.acmsl.commons.utils.http.HttpSuite.suite());
     suite.addTest(unittests.org.acmsl.commons.utils.io.IoSuite.suite());

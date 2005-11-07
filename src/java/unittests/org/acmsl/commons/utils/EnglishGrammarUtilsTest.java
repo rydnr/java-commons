@@ -1,7 +1,7 @@
 /*
                       Project tests
 
-Copyright (C) 2003  Jose San Leandro Armend?riz
+Copyright (C) 2003  Jose San Leandro Armendáriz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Thanks to ACM S.L. for distributing this library under the GPL license.
 Contact info: jsr000@terra.es
 Postal Address: c/Playa de Lagoa, 1
-Urb. Valdecaba?as
+Urb. Valdecabañas
 Boadilla del monte
 28660 Madrid
 Spain
@@ -31,7 +31,7 @@ Spain
 *
 * Filename: $RCSfile$
 *
-* Author: Jose San Leandro Armend?riz
+* Author: Jose San Leandro Armendáriz
 *
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.utils.
@@ -160,82 +160,6 @@ extends TestCase
 
         assertNotNull(t_EnglishGrammarUtils);
     // JUnitDoclet end method getInstance
-  }
-  
-  /**
-  * Tests EnglishGrammarUtilsTestgetPlural()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.utils.EnglishGrammarUtils#getPlural(java.lang.String)
-  */
-  public void testGetPlural()
-  throws Exception
-  {
-    // JUnitDoclet begin method getPlural
-        EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
-
-        assertNotNull(t_EnglishGrammarUtils);
-
-        assertEquals(t_EnglishGrammarUtils.getPlural("car"), "cars");
-        assertEquals(t_EnglishGrammarUtils.getPlural("CAR"), "CARS");
-        assertEquals(t_EnglishGrammarUtils.getPlural("man"), "men");
-        assertEquals(t_EnglishGrammarUtils.getPlural("MAN"), "MEN");
-        assertEquals(t_EnglishGrammarUtils.getPlural("men"), "men");
-        assertEquals(t_EnglishGrammarUtils.getPlural("MEN"), "MEN");
-        assertEquals(t_EnglishGrammarUtils.getPlural("woman"), "women");
-        assertEquals(t_EnglishGrammarUtils.getPlural("WOMAN"), "WOMEN");
-        assertEquals(t_EnglishGrammarUtils.getPlural("women"), "women");
-        assertEquals(t_EnglishGrammarUtils.getPlural("WOMEN"), "WOMEN");
-        assertEquals(t_EnglishGrammarUtils.getPlural("bus"), "buses");
-        assertEquals(t_EnglishGrammarUtils.getPlural("BUS"), "BUSES");
-        assertEquals(t_EnglishGrammarUtils.getPlural("peach"), "peaches");
-        assertEquals(t_EnglishGrammarUtils.getPlural("PEACH"), "PEACHES");
-        assertEquals(t_EnglishGrammarUtils.getPlural("dish"), "dishes");
-        assertEquals(t_EnglishGrammarUtils.getPlural("DISH"), "DISHES");
-        assertEquals(t_EnglishGrammarUtils.getPlural("customer"), "customers");
-        assertEquals(t_EnglishGrammarUtils.getPlural("CUSTOMER"), "CUSTOMERS");
-        assertEquals(t_EnglishGrammarUtils.getPlural("role"), "roles");
-        assertEquals(t_EnglishGrammarUtils.getPlural("ROLE"), "ROLES");
-        assertEquals(t_EnglishGrammarUtils.getPlural("attribute"), "attributes");
-        assertEquals(t_EnglishGrammarUtils.getPlural("ATTRIBUTE"), "ATTRIBUTES");
-    // JUnitDoclet end method getPlural
-  }
-  
-  /**
-  * Tests EnglishGrammarUtilsTestgetSingular()
-  * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.utils.EnglishGrammarUtils#getSingular(java.lang.String)
-  */
-  public void testGetSingular()
-  throws Exception
-  {
-    // JUnitDoclet begin method getSingular
-        EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
-
-        assertNotNull(t_EnglishGrammarUtils);
-
-        assertEquals(t_EnglishGrammarUtils.getSingular("cars"), "car");
-        assertEquals(t_EnglishGrammarUtils.getSingular("CARS"), "CAR");
-        assertEquals(t_EnglishGrammarUtils.getSingular("men"), "man");
-        assertEquals(t_EnglishGrammarUtils.getSingular("MEN"), "MAN");
-        assertEquals(t_EnglishGrammarUtils.getSingular("man"), "man");
-        assertEquals(t_EnglishGrammarUtils.getSingular("MAN"), "MAN");
-        assertEquals(t_EnglishGrammarUtils.getSingular("women"), "woman");
-        assertEquals(t_EnglishGrammarUtils.getSingular("WOMEN"), "WOMAN");
-        assertEquals(t_EnglishGrammarUtils.getSingular("woman"), "woman");
-        assertEquals(t_EnglishGrammarUtils.getSingular("WOMAN"), "WOMAN");
-        assertEquals(t_EnglishGrammarUtils.getSingular("buses"), "bus");
-        assertEquals(t_EnglishGrammarUtils.getSingular("BUSES"), "BUS");
-        assertEquals(t_EnglishGrammarUtils.getSingular("peaches"), "peach");
-        assertEquals(t_EnglishGrammarUtils.getSingular("PEACHES"), "PEACH");
-        assertEquals(t_EnglishGrammarUtils.getSingular("dishes"), "dish");
-        assertEquals(t_EnglishGrammarUtils.getSingular("DISHES"), "DISH");
-        assertEquals(t_EnglishGrammarUtils.getSingular("customers"), "customer");
-        assertEquals(t_EnglishGrammarUtils.getSingular("CUSTOMERS"), "CUSTOMER");
-        assertEquals(t_EnglishGrammarUtils.getSingular("roles"), "role");
-        assertEquals(t_EnglishGrammarUtils.getSingular("ROLES"), "ROLE");
-        assertEquals(t_EnglishGrammarUtils.getSingular("attributes"), "attribute");
-        assertEquals(t_EnglishGrammarUtils.getSingular("ATTRIBUTES"), "ATTRIBUTE");
-    // JUnitDoclet end method getSingular
   }
   
   

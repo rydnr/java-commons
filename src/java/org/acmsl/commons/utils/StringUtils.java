@@ -767,6 +767,47 @@ public abstract class StringUtils
      * @param separator the word separator.
      * @return the capitalized string.
      */
+    public String capitalize(final String text)
+    {
+        String result = text;
+
+        if  (result != null) 
+        {
+            try
+            {
+                Helper t_Helper = createHelper(RegexpManager.getInstance());
+
+                result = t_Helper.replaceAll(result, "\\W+", "_");
+
+                result = t_Helper.replaceAll(result, "_+", "_");
+
+                result = capitalize(result, '_');
+            }
+            catch (final MalformedPatternException exception)
+            {
+                LogFactory.getLog(getClass()).fatal(
+                    "Malformed pattern",
+                    exception);
+            }
+            catch (final RegexpEngineNotFoundException exception)
+            {
+                LogFactory.getLog(getClass()).fatal(
+                    "Cannot find any regexp engine.",
+                    exception);
+            }
+        }
+
+        return result;
+    }
+    
+    /**
+     * Capitalizes the words contained in given string, using a concrete char
+     * separator. For instance,
+     * <code>capitalize("asd-efg", '-').equals("AsdEfg")</code>.
+     * @param text the text to process.
+     * @param separator the word separator.
+     * @return the capitalized string.
+     */
     public String capitalize(final String text, final char separator)
     {
         StringBuffer t_sbResult = null;

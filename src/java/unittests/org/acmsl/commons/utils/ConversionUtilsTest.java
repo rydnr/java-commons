@@ -1,7 +1,7 @@
 /*
                       Project tests
 
-Copyright (C) 2003  Jose San Leandro Armend?riz
+Copyright (C) 2003  Jose San Leandro Armendáriz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Thanks to ACM S.L. for distributing this library under the GPL license.
 Contact info: jsr000@terra.es
 Postal Address: c/Playa de Lagoa, 1
-Urb. Valdecaba?as
+Urb. Valdecabañas
 Boadilla del monte
 28660 Madrid
 Spain
@@ -31,7 +31,7 @@ Spain
 *
 * Filename: $RCSfile$
 *
-* Author: Jose San Leandro Armend?riz
+* Author: Jose San Leandro Armendáriz
 *
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.utils.
@@ -187,6 +187,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoStringIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toStringIfNotNull(java.lang.String)
+  */
+  public void testToStringIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toStringIfNotNull
+    // JUnitDoclet end method toStringIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoBoolean()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toBoolean(java.lang.String)
@@ -206,6 +218,18 @@ extends TestCase
         assertTrue(!t_ConversionUtils.toBoolean(Boolean.FALSE.toString()));
         assertTrue(!t_ConversionUtils.toBoolean("something else"));
     // JUnitDoclet end method toBoolean
+  }
+  
+  /**
+  * Tests ConversionUtilsTesttoBooleanIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toBooleanIfNotNull(java.lang.String)
+  */
+  public void testToBooleanIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toBooleanIfNotNull
+    // JUnitDoclet end method toBooleanIfNotNull
   }
   
   /**
@@ -230,6 +254,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoIntIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toIntIfNotNull(java.lang.String)
+  */
+  public void testToIntIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toIntIfNotNull
+    // JUnitDoclet end method toIntIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoLong()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toLong(java.lang.String)
@@ -248,6 +284,18 @@ extends TestCase
         assertTrue(t_ConversionUtils.toLong("1232323") == 1232323);
         assertTrue(t_ConversionUtils.toLong("something else") == 0);
     // JUnitDoclet end method toLong
+  }
+  
+  /**
+  * Tests ConversionUtilsTesttoLongIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toLongIfNotNull(java.lang.String)
+  */
+  public void testToLongIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toLongIfNotNull
+    // JUnitDoclet end method toLongIfNotNull
   }
   
   /**
@@ -272,6 +320,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoFloatIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toFloatIfNotNull(java.lang.String)
+  */
+  public void testToFloatIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toFloatIfNotNull
+    // JUnitDoclet end method toFloatIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoDouble()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toDouble(java.lang.String)
@@ -290,6 +350,18 @@ extends TestCase
         assertTrue(t_ConversionUtils.toDouble("1232323.0") == 1232323.0);
         assertTrue(t_ConversionUtils.toDouble("something else") == 0.0);
     // JUnitDoclet end method toDouble
+  }
+  
+  /**
+  * Tests ConversionUtilsTesttoDoubleIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toDoubleIfNotNull(java.lang.String)
+  */
+  public void testToDoubleIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toDoubleIfNotNull
+    // JUnitDoclet end method toDoubleIfNotNull
   }
   
   /**
@@ -313,6 +385,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoCharIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toCharIfNotNull(java.lang.String)
+  */
+  public void testToCharIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toCharIfNotNull
+    // JUnitDoclet end method toCharIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoShort()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toShort(java.lang.String)
@@ -333,6 +417,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoShortIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toShortIfNotNull(java.lang.String)
+  */
+  public void testToShortIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toShortIfNotNull
+    // JUnitDoclet end method toShortIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoByte()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toByte(java.lang.String)
@@ -350,6 +446,18 @@ extends TestCase
         assertTrue(t_ConversionUtils.toByte("-2") == -2);
         assertTrue(t_ConversionUtils.toByte("something else") == 0);
     // JUnitDoclet end method toByte
+  }
+  
+  /**
+  * Tests ConversionUtilsTesttoByteIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toByteIfNotNull(java.lang.String)
+  */
+  public void testToByteIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toByteIfNotNull
+    // JUnitDoclet end method toByteIfNotNull
   }
   
   /**
@@ -378,6 +486,18 @@ extends TestCase
   }
   
   /**
+  * Tests ConversionUtilsTesttoBigDecimalIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toBigDecimalIfNotNull(java.lang.String)
+  */
+  public void testToBigDecimalIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toBigDecimalIfNotNull
+    // JUnitDoclet end method toBigDecimalIfNotNull
+  }
+  
+  /**
   * Tests ConversionUtilsTesttoDate()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.utils.ConversionUtils#toDate(java.lang.String)
@@ -387,6 +507,18 @@ extends TestCase
   {
     // JUnitDoclet begin method toDate
     // JUnitDoclet end method toDate
+  }
+  
+  /**
+  * Tests ConversionUtilsTesttoDateIfNotNull()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.utils.ConversionUtils#toDateIfNotNull(java.lang.String)
+  */
+  public void testToDateIfNotNull()
+  throws Exception
+  {
+    // JUnitDoclet begin method toDateIfNotNull
+    // JUnitDoclet end method toDateIfNotNull
   }
   
   

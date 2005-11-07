@@ -368,4 +368,21 @@ public class StringUtilsTest
 
         assertEquals(t_strInput, t_strOutput);
     }
+
+    /**
+     * Tests the <code>StringUtils.capitalize(String)</code> method.
+     * @see org.acmsl.commons.utils.StringUtils#capitalize(String)
+     */
+    public void testCapitalize()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = "ab-cd_ef  gh+ijk;;_|l~~@m  2n=o4p";
+
+        String t_strOutput = t_StringUtils.capitalize(t_strInput);
+
+        assertEquals("AbCdEfGhIjkLM2nO4p", t_strOutput);
+    }
 }

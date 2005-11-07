@@ -116,7 +116,7 @@ public class EnglishGrammarUtils
 
         if  (result == null) 
         {
-            result = new EnglishGrammarUtils() {};
+            result = new EnglishGrammarUtils();
         }
         
         return result;
