@@ -385,4 +385,21 @@ public class StringUtilsTest
 
         assertEquals("AbCdEfGhIjkLM2nO4p", t_strOutput);
     }
+
+    /**
+     * Tests the <code>StringUtils.escape(String, char)</code> method.
+     * @see org.acmsl.commons.utils.StringUtils#escape(String, char)
+     */
+    public void testEscape()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = "ab ()\" .cde  \" f g ^\\\"";
+
+        String t_strOutput = t_StringUtils.capitalize(t_strInput);
+
+        assertEquals("ab ()\\\" .cde  \\\" f g ^\\\\\"", t_strOutput);
+    }
 }
