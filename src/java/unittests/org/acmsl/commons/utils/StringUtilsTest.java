@@ -398,7 +398,7 @@ public class StringUtilsTest
 
         String t_strInput = "ab ()\" .cde  \" f g ^\\\"";
 
-        String t_strOutput = t_StringUtils.escape(t_strInput, "\"");
+        String t_strOutput = t_StringUtils.escape(t_strInput, '\"');
 
         assertEquals("ab ()\\\" .cde  \\\" f g ^\\\\\"", t_strOutput);
     }
