@@ -400,6 +400,9 @@ public class StringUtilsTest
 
         String t_strOutput = t_StringUtils.escape(t_strInput, '\"');
 
-        assertEquals("ab ()\\\" .cde  \\\" f g ^\\\\\"", t_strOutput);
+        assertEquals(
+            "Escape failed for " + t_strInput,
+            "ab ()\\\" .cde  \\\" f g ^\\\\\"",
+            t_strOutput);
     }
 }

@@ -527,16 +527,6 @@ public abstract class StringUtils
      * @param character the character to escape.
      * @return the escaped version.
      */
-    protected String escapeRegexpChar(final char character)
-    {
-        return "\\" + character;
-    }
-
-    /**
-     * Builds the escaped version of given character.
-     * @param character the character to escape.
-     * @return the escaped version.
-     */
     protected String escapeRegexpChar(final String character)
     {
         return "\\" + character;
@@ -547,7 +537,17 @@ public abstract class StringUtils
      * @param character the character to escape.
      * @return the escaped version.
      */
-    protected String escapeChar(final char character)
+    protected String escapeRegexpChar(final char character)
+    {
+        return escapeRegexpChar("" + character);
+    }
+
+    /**
+     * Builds the escaped version of given character.
+     * @param character the character to escape.
+     * @return the escaped version.
+     */
+    protected String escapeChar(final String character)
     {
         // The escaping mechanism is the same as for regexps.
         return escapeRegexpChar(character);
@@ -558,7 +558,7 @@ public abstract class StringUtils
      * @param character the character to escape.
      * @return the escaped version.
      */
-    protected String escapeChar(final String character)
+    protected String escapeChar(final char character)
     {
         // The escaping mechanism is the same as for regexps.
         return escapeRegexpChar(character);
@@ -1881,10 +1881,10 @@ public abstract class StringUtils
         if  (result != null) 
         {
             String t_strEscapedChar = escapeChar(charToEscape);
-            
+
             result =
                 replace(
-                    result, t_strEscapedChar, escapeChar(t_strEscapedChar));
+                    result, t_strEscapedChar, t_strEscapedChar);
         }
 
         return result;
