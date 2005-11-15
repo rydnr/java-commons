@@ -86,9 +86,9 @@ public class VersionUtils
      * The version regexp.
      */
     public static final String VERSION_REGEXP =
-        "(.*?)([0-9]+)(\\.[0-9]+|{0})?(\\.[0-9]+|{0})?(\\..*)?(.*)";
+        "(.*?)([0-9]+)\\.?([0-9]+|{0})?\\.?([0-9]+|{0})?\\.?(.*)?";
     //     ^      ^        ^      ^        ^      ^       ^    ^
-    //  prefix  major  minor wildcard subminor wildcard rest  suffix
+    //  prefix  major   minor wildcard subminor wildcard rest  suffix
 
     /**
      * The default wildcard.
@@ -368,6 +368,7 @@ public class VersionUtils
             matches(
                 version,
                 family,
+                wildcard,
                 getVersionPattern(wildcard),
                 createMatcher(RegexpManager.getInstance()),
                 StringValidator.getInstance(),
@@ -378,6 +379,7 @@ public class VersionUtils
      * Checks whether given version value matches a concrete version family.
      * @param version the version.
      * @param family the family.
+     * @param wildcard the identifier used to identify "anything goes".
      * @param pattern the version pattern.
      * @param matcher the matcher.
      * @param stringValidator the <code>StringValidator</code> instance.
@@ -385,14 +387,16 @@ public class VersionUtils
      * @return <code>true</code> if the version is compatible.
      * @precondition version != null
      * @precondition family != null
+     * @precondition wildcard != null
      * @precondition pattern != null
      * @precondition matcher != null
      * @precondition stringValidator != null
      * @precondition conversionUtils != null
      */
-    public boolean matches(
+    protected boolean matches(
         final String version,
         final String family,
+        final String wildcard,
         final Pattern pattern,
         final Matcher matcher,
         final StringValidator stringValidator,
@@ -442,7 +446,8 @@ public class VersionUtils
                     t_strVersionSubminor,
                     t_strFamilyMajor,
                     t_strFamilyMinor,
-                    t_strFamilySubminor);
+                    t_strFamilySubminor,
+                    wildcard);
         }
         
         return result;
@@ -456,7 +461,6 @@ public class VersionUtils
      * @param stringValidator the <code>StringValidator</code> instance.
      * @return <code>true</code> if the version is compatible.
      * @precondition version != null
-     * @precondition family != null
      * @precondition versionPattern != null
      * @precondition matcher != null
      * @precondition stringValidator != null
@@ -598,7 +602,8 @@ public class VersionUtils
     {
         boolean result = false;
 
-        if  (versionNumbersMatch(major, minor, wildcard, conversionUtils))
+        if  (versionNumbersMatch(
+                 major, familyMajor, wildcard, conversionUtils))
         {
             result = true;
 

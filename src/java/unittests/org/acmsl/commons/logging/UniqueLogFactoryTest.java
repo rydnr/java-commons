@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.regexpplugin.jdk14regexp.
+*              unittests.org.acmsl.commons.logging.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,13 +44,13 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.jdk14regexp;
+package unittests.org.acmsl.commons.logging;
 
 /*
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter;
+import org.acmsl.commons.logging.UniqueLogFactory;
 // JUnitDoclet end import
 
 /*
@@ -84,28 +84,28 @@ Boston, MA  02111-1307  USA
 
 
 /**
-* Tests CompilerJDKAdapterTest class.
+* Tests UniqueLogFactoryTest class.
 * @version $Revision$
-* @see org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter
+* @see org.acmsl.commons.logging.UniqueLogFactory
 */
-public class CompilerJDKAdapterTest
+public class UniqueLogFactoryTest
 // JUnitDoclet begin extends_implements
 extends TestCase
 // JUnitDoclet end extends_implements
 {
   // JUnitDoclet begin class
-  org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter compilerjdkadapter = null;
+  org.acmsl.commons.logging.UniqueLogFactory uniquelogfactory = null;
   // JUnitDoclet end class
   
   /**
-  * Creates a CompilerJDKAdapterTest with given name.
+  * Creates a UniqueLogFactoryTest with given name.
   * @param name such name.
   */
-  public CompilerJDKAdapterTest(String name)
+  public UniqueLogFactoryTest(String name)
   {
-    // JUnitDoclet begin method CompilerJDKAdapterTest
+    // JUnitDoclet begin method UniqueLogFactoryTest
     super(name);
-    // JUnitDoclet end method CompilerJDKAdapterTest
+    // JUnitDoclet end method UniqueLogFactoryTest
   }
   
   /**
@@ -113,11 +113,11 @@ extends TestCase
   * @return such instance.
   
   */
-  public org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter createInstance()
+  public org.acmsl.commons.logging.UniqueLogFactory createInstance()
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter();
+      return (UniqueLogFactory) UniqueLogFactory.getInstance();
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -130,7 +130,7 @@ extends TestCase
   {
     // JUnitDoclet begin method testcase.setUp
     super.setUp();
-    compilerjdkadapter = createInstance();
+    uniquelogfactory = createInstance();
     // JUnitDoclet end method testcase.setUp
   }
   
@@ -142,61 +142,105 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method testcase.tearDown
-    compilerjdkadapter = null;
+    uniquelogfactory = null;
     super.tearDown();
     // JUnitDoclet end method testcase.tearDown
   }
   
   /**
-  * Tests CompilerJDKAdapterTestcompile()
+  * Tests UniqueLogFactoryTestgetLog()
   * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter#compile(java.lang.String)
+  * @see org.acmsl.commons.logging.UniqueLogFactory#getLog()
   */
-  public void testCompile()
+  public void testGetLog()
   throws Exception
   {
-    // JUnitDoclet begin method compile
-    // JUnitDoclet end method compile
+    // JUnitDoclet begin method getLog
+    // JUnitDoclet end method getLog
   }
   
   /**
-  * Tests CompilerJDKAdapterTest accessor methods.
+  * Tests UniqueLogFactoryTestgetInstance()
   * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#getInstance()
   */
-  public void testSetIsCaseSensitive()
+  public void testGetInstance()
   throws Exception
   {
-    // JUnitDoclet begin method setCaseSensitive isCaseSensitive
-    boolean[] t_aTests = {true, false};
-    
-    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
-    {
-      compilerjdkadapter.setCaseSensitive(t_aTests[t_iTestIndex]);
-      assertEquals(
-      t_aTests[t_iTestIndex],
-      compilerjdkadapter.isCaseSensitive());
-    }
-    // JUnitDoclet end method setCaseSensitive isCaseSensitive
+    // JUnitDoclet begin method getInstance
+    // JUnitDoclet end method getInstance
   }
   
   /**
-  * Tests CompilerJDKAdapterTest accessor methods.
+  * Tests UniqueLogFactoryTestinitializeInstance()
   * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#initializeInstance(org.apache.commons.logging.Log)
   */
-  public void testSetIsMultiline()
+  public void testInitializeInstance()
   throws Exception
   {
-    // JUnitDoclet begin method setMultiline isMultiline
-    boolean[] t_aTests = {true, false};
-    
-    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
-    {
-      compilerjdkadapter.setMultiline(t_aTests[t_iTestIndex]);
-      assertEquals(
-      t_aTests[t_iTestIndex],
-      compilerjdkadapter.isMultiline());
-    }
-    // JUnitDoclet end method setMultiline isMultiline
+    // JUnitDoclet begin method initializeInstance
+    // JUnitDoclet end method initializeInstance
+  }
+  
+  /**
+  * Tests UniqueLogFactoryTestgetAttribute()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#getAttribute(java.lang.String)
+  */
+  public void testGetAttribute()
+  throws Exception
+  {
+    // JUnitDoclet begin method getAttribute
+    // JUnitDoclet end method getAttribute
+  }
+  
+  /**
+  * Tests UniqueLogFactoryTestgetAttributeNames()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#getAttributeNames()
+  */
+  public void testGetAttributeNames()
+  throws Exception
+  {
+    // JUnitDoclet begin method getAttributeNames
+    // JUnitDoclet end method getAttributeNames
+  }
+  
+  /**
+  * Tests UniqueLogFactoryTestrelease()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#release()
+  */
+  public void testRelease()
+  throws Exception
+  {
+    // JUnitDoclet begin method release
+    // JUnitDoclet end method release
+  }
+  
+  /**
+  * Tests UniqueLogFactoryTestremoveAttribute()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#removeAttribute(java.lang.String)
+  */
+  public void testRemoveAttribute()
+  throws Exception
+  {
+    // JUnitDoclet begin method removeAttribute
+    // JUnitDoclet end method removeAttribute
+  }
+  
+  /**
+  * Tests UniqueLogFactoryTestsetAttribute()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.logging.UniqueLogFactory#setAttribute(java.lang.String, java.lang.Object)
+  */
+  public void testSetAttribute()
+  throws Exception
+  {
+    // JUnitDoclet begin method setAttribute
+    // JUnitDoclet end method setAttribute
   }
   
   
@@ -218,7 +262,7 @@ extends TestCase
   public static void main(String[] args)
   {
     // JUnitDoclet begin method testcase.main
-    junit.textui.TestRunner.run(CompilerJDKAdapterTest.class);
+    junit.textui.TestRunner.run(UniqueLogFactoryTest.class);
     // JUnitDoclet end method testcase.main
   }
 }

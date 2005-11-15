@@ -1,7 +1,7 @@
 /*
                       Project tests
 
-Copyright (C) 2003  Jose San Leandro Armendáriz
+Copyright (C) 2003  Jose San Leandro Armend?riz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Thanks to ACM S.L. for distributing this library under the GPL license.
 Contact info: jsr000@terra.es
 Postal Address: c/Playa de Lagoa, 1
-Urb. Valdecabañas
+Urb. Valdecaba?as
 Boadilla del monte
 28660 Madrid
 Spain
@@ -31,7 +31,7 @@ Spain
 *
 * Filename: $RCSfile$
 *
-* Author: Jose San Leandro Armendáriz
+* Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.version.
@@ -156,6 +156,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method getInstance
+      assertNotNull("getInstance() is null", VersionUtils.getInstance());
     // JUnitDoclet end method getInstance
   }
   
@@ -180,6 +181,17 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method matches
+      VersionUtils t_VersionUtils = VersionUtils.getInstance();
+      assertNotNull("getInstance() is null", t_VersionUtils);
+      assertTrue(
+          "'4.x' should match '4.3.2'",
+          t_VersionUtils.matches("4.3.2", "4.x"));
+      assertFalse(
+          "'5.x' should not match '2.1'",
+          t_VersionUtils.matches("2.1", "5.x"));
+      assertTrue(
+          "'6.1.x' should match '6.1.3-pre'",
+          t_VersionUtils.matches("6.1.3-pre", "6.1.x"));
     // JUnitDoclet end method matches
   }
   
@@ -192,6 +204,14 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method versionNumbersMatch
+      VersionUtils t_VersionUtils = VersionUtils.getInstance();
+      assertNotNull("getInstance() is null", t_VersionUtils);
+      assertTrue(
+          "'x' should match '4'",
+          t_VersionUtils.versionNumbersMatch("4", "x"));
+      assertTrue(
+          "'5' should match '5'",
+          t_VersionUtils.versionNumbersMatch("5", "5"));
     // JUnitDoclet end method versionNumbersMatch
   }
   

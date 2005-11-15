@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.utils.
+*              unittests.org.acmsl.commons.logging.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,17 +44,13 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.utils;
+package unittests.org.acmsl.commons.logging;
 
 
 /*
 * Importing project classes.
 */
 
-import unittests.org.acmsl.commons.utils.http.HttpSuite;
-import unittests.org.acmsl.commons.utils.io.IoSuite;
-import unittests.org.acmsl.commons.utils.net.NetSuite;
-import unittests.org.acmsl.commons.utils.regexp.RegexpSuite;
 
 
 /*
@@ -92,11 +88,11 @@ Boston, MA  02111-1307  USA
 
 /**
 * Executes all tests defined for package
-* org.acmsl.commons.utils
+* org.acmsl.commons.logging
 * @version $Revision$
-* @see org.acmsl.commons.utils
+* @see org.acmsl.commons.logging
 */
-public class UtilsSuite
+public class LoggingSuite
 // JUnitDoclet begin extends_implements
 // JUnitDoclet end extends_implements
 {
@@ -108,22 +104,13 @@ public class UtilsSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.utils");
+    new TestSuite("unittests.org.acmsl.commons.logging");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.ReflectionUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.CharUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.ConversionUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.EqualityComparatorTest.class);
+    suite.addTestSuite(unittests.org.acmsl.commons.logging.UniqueLogFactoryTest.class);
     
-    suite.addTest(unittests.org.acmsl.commons.utils.http.HttpSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.io.IoSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.net.NetSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.regexp.RegexpSuite.suite());
     
     
     // JUnitDoclet begin method suite
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.StringUtilsTest.class);
     // JUnitDoclet end method suite
     
     return suite;

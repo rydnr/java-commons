@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.regexpplugin.jdk14regexp.
+*              unittests.org.acmsl.commons.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,13 +44,13 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.jdk14regexp;
+package unittests.org.acmsl.commons;
 
 /*
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter;
+import org.acmsl.commons.CommonsBundleRepository;
 // JUnitDoclet end import
 
 /*
@@ -84,28 +84,28 @@ Boston, MA  02111-1307  USA
 
 
 /**
-* Tests CompilerJDKAdapterTest class.
+* Tests CommonsBundleRepositoryTest class.
 * @version $Revision$
-* @see org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter
+* @see org.acmsl.commons.CommonsBundleRepository
 */
-public class CompilerJDKAdapterTest
+public class CommonsBundleRepositoryTest
 // JUnitDoclet begin extends_implements
 extends TestCase
 // JUnitDoclet end extends_implements
 {
   // JUnitDoclet begin class
-  org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter compilerjdkadapter = null;
+  org.acmsl.commons.CommonsBundleRepository commonsbundlerepository = null;
   // JUnitDoclet end class
   
   /**
-  * Creates a CompilerJDKAdapterTest with given name.
+  * Creates a CommonsBundleRepositoryTest with given name.
   * @param name such name.
   */
-  public CompilerJDKAdapterTest(String name)
+  public CommonsBundleRepositoryTest(String name)
   {
-    // JUnitDoclet begin method CompilerJDKAdapterTest
+    // JUnitDoclet begin method CommonsBundleRepositoryTest
     super(name);
-    // JUnitDoclet end method CompilerJDKAdapterTest
+    // JUnitDoclet end method CommonsBundleRepositoryTest
   }
   
   /**
@@ -113,11 +113,11 @@ extends TestCase
   * @return such instance.
   
   */
-  public org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter createInstance()
+  public org.acmsl.commons.CommonsBundleRepository createInstance()
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter();
+    return org.acmsl.commons.CommonsBundleRepository.getInstance();
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -130,7 +130,7 @@ extends TestCase
   {
     // JUnitDoclet begin method testcase.setUp
     super.setUp();
-    compilerjdkadapter = createInstance();
+    commonsbundlerepository = createInstance();
     // JUnitDoclet end method testcase.setUp
   }
   
@@ -142,61 +142,81 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method testcase.tearDown
-    compilerjdkadapter = null;
+    commonsbundlerepository = null;
     super.tearDown();
     // JUnitDoclet end method testcase.tearDown
   }
   
   /**
-  * Tests CompilerJDKAdapterTestcompile()
+  * Tests CommonsBundleRepositoryTestgetInstance()
   * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter#compile(java.lang.String)
+  * @see org.acmsl.commons.CommonsBundleRepository#getInstance()
   */
-  public void testCompile()
+  public void testGetInstance()
   throws Exception
   {
-    // JUnitDoclet begin method compile
-    // JUnitDoclet end method compile
+    // JUnitDoclet begin method getInstance
+    // JUnitDoclet end method getInstance
   }
   
   /**
-  * Tests CompilerJDKAdapterTest accessor methods.
+  * Tests CommonsBundleRepositoryTestgetExceptionsBundleProperty()
   * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.CommonsBundleRepository#getExceptionsBundleProperty()
   */
-  public void testSetIsCaseSensitive()
+  public void testGetExceptionsBundleProperty()
   throws Exception
   {
-    // JUnitDoclet begin method setCaseSensitive isCaseSensitive
-    boolean[] t_aTests = {true, false};
-    
-    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
-    {
-      compilerjdkadapter.setCaseSensitive(t_aTests[t_iTestIndex]);
-      assertEquals(
-      t_aTests[t_iTestIndex],
-      compilerjdkadapter.isCaseSensitive());
-    }
-    // JUnitDoclet end method setCaseSensitive isCaseSensitive
+    // JUnitDoclet begin method getExceptionsBundleProperty
+    // JUnitDoclet end method getExceptionsBundleProperty
   }
   
   /**
-  * Tests CompilerJDKAdapterTest accessor methods.
+  * Tests CommonsBundleRepositoryTestgetExceptionsBundleName()
   * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.CommonsBundleRepository#getExceptionsBundleName()
   */
-  public void testSetIsMultiline()
+  public void testGetExceptionsBundleName()
   throws Exception
   {
-    // JUnitDoclet begin method setMultiline isMultiline
-    boolean[] t_aTests = {true, false};
-    
-    for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
-    {
-      compilerjdkadapter.setMultiline(t_aTests[t_iTestIndex]);
-      assertEquals(
-      t_aTests[t_iTestIndex],
-      compilerjdkadapter.isMultiline());
-    }
-    // JUnitDoclet end method setMultiline isMultiline
+    // JUnitDoclet begin method getExceptionsBundleName
+    // JUnitDoclet end method getExceptionsBundleName
+  }
+  
+  /**
+  * Tests CommonsBundleRepositoryTestgetConstantsBundleName()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.CommonsBundleRepository#getConstantsBundleName()
+  */
+  public void testGetConstantsBundleName()
+  throws Exception
+  {
+    // JUnitDoclet begin method getConstantsBundleName
+    // JUnitDoclet end method getConstantsBundleName
+  }
+  
+  /**
+  * Tests CommonsBundleRepositoryTestgetGrammarBundleProperty()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.CommonsBundleRepository#getGrammarBundleProperty()
+  */
+  public void testGetGrammarBundleProperty()
+  throws Exception
+  {
+    // JUnitDoclet begin method getGrammarBundleProperty
+    // JUnitDoclet end method getGrammarBundleProperty
+  }
+  
+  /**
+  * Tests CommonsBundleRepositoryTestgetGrammarBundleName()
+  * @throws Exception if an unexpected situation occurs.
+  * @see org.acmsl.commons.CommonsBundleRepository#getGrammarBundleName()
+  */
+  public void testGetGrammarBundleName()
+  throws Exception
+  {
+    // JUnitDoclet begin method getGrammarBundleName
+    // JUnitDoclet end method getGrammarBundleName
   }
   
   
@@ -218,7 +238,7 @@ extends TestCase
   public static void main(String[] args)
   {
     // JUnitDoclet begin method testcase.main
-    junit.textui.TestRunner.run(CompilerJDKAdapterTest.class);
+    junit.textui.TestRunner.run(CommonsBundleRepositoryTest.class);
     // JUnitDoclet end method testcase.main
   }
 }
