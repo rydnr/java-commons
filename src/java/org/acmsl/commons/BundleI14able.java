@@ -111,7 +111,7 @@ public class BundleI14able
     /**
      * Configures whether to use class loaders or not.
      */
-    private boolean m__bUseClassLoader = true;
+    private boolean m__bUseClassLoader;
 
     /**
      * Creates a <code>BundleI14able</code> with given message.
@@ -156,7 +156,7 @@ public class BundleI14able
         final String systemProperty,
         final String bundleName)
     {
-        this(messageKey, params, systemProperty, bundleName, true);
+        this(messageKey, params, systemProperty, bundleName, false);
     }
 
     /**
@@ -479,13 +479,22 @@ public class BundleI14able
             {
                 try
                 {
-                    LogFactory.getLog(getClass()).debug(
-                        "Could not retrieve bundle " + bundleName,
-                        missingResourceException);
+                    result =
+                        ResourceBundle.getBundle(
+                            "/" + bundleName, locale, classLoader);
                 }
-                catch  (final Throwable throwable)
+                catch  (final MissingResourceException mrException)
                 {
-                    // Class-loading problem.
+                    try
+                    {
+                        LogFactory.getLog(getClass()).debug(
+                            "Could not retrieve bundle " + bundleName,
+                            mrException);
+                    }
+                    catch  (final Throwable throwable)
+                    {
+                        // Class-loading problem.
+                    }
                 }
             }
         }
