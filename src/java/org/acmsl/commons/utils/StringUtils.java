@@ -2,8 +2,7 @@
                         ACM-SL Commons
 
     Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,7 +19,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
+    Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
                     Urb. Valdecabañas
                     Boadilla del monte
@@ -69,6 +68,7 @@ import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /*
@@ -1888,6 +1888,39 @@ public abstract class StringUtils
         }
 
         return result;
+    }
+
+    /**
+     * Concatenates all elements of given collection using a separator.
+     * @param items the collection.
+     * @param separator the separator.
+     * @return such concatenation.
+     */
+    public String concatenate(
+        final Collection items, final String separator)
+    {
+        StringBuffer t_sbResult = new StringBuffer();
+
+        if  (items != null) 
+        {
+            Iterator t_itItems = items.iterator();
+
+            if  (t_itItems != null)
+            {
+                if  (t_itItems.hasNext()) 
+                {
+                    t_sbResult.append(t_itItems.next());
+                }
+            
+                while  (t_itItems.hasNext())
+                {
+                    t_sbResult.append(separator);
+                    t_sbResult.append(t_itItems.next());
+                }
+            }
+        }
+
+        return t_sbResult.toString();
     }
 
     /**
