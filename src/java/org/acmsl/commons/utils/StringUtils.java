@@ -1,7 +1,7 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
+    Copyright (C) 2002-2006  Jose San Leandro Armendáriz
                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
@@ -91,6 +91,13 @@ public abstract class StringUtils
      * A cached empty string array.
      */
     protected final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    /**
+     * A token used to maintain underscores.
+     */
+    public static final String UNDERSCORE_TOKEN =
+        "q1w3e2ewq" + StringUtils.class.getName() + "bvcxzmnf3ddsf";
+
 
     /**
      * Singleton implemented as a weak reference.
@@ -757,11 +764,19 @@ public abstract class StringUtils
         {
             try
             {
-                String t_strValue = capitalize(value, separator);
+                String t_strValue = value; //capitalize(value, separator);
 
                 Helper t_Helper = createHelper(RegexpManager.getInstance());
 
+                result =
+                    t_Helper.replaceAll(
+                        t_strValue, "_", UNDERSCORE_TOKEN);
+
                 result = t_Helper.replaceAll(t_strValue, "\\W", "");
+
+                result =
+                    t_Helper.replaceAll(
+                        t_strValue, UNDERSCORE_TOKEN, "_");
             }
             catch (final MalformedPatternException exception)
             {
