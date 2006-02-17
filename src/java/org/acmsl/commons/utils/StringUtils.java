@@ -95,8 +95,8 @@ public abstract class StringUtils
     /**
      * A token used to maintain underscores.
      */
-    public static final String UNDERSCORE_TOKEN =
-        "q1w3e2ewq" + StringUtils.class.getName() + "bvcxzmnf3ddsf";
+    public static final String SEPARATOR_TOKEN =
+        "q1w3e2ewqorgacmslcommonsutilsStringUtilsbvcxzmnf3ddsf";
 
 
     /**
@@ -748,15 +748,31 @@ public abstract class StringUtils
     }
 
     /**
-     * Normalizes given value, whose words are defined by a concrete char
-     * separator. In this situation, <i>normalization</i> means
-     * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
-     * characters.
+     * Normalizes given value, meaning the <i>removal</i> of all
+     * non-alphanumeric characters but given separator.
+     * Note: the separator will be passed directly to the regexp engine,
+     * so it's your task to ensure its value doesn't conflict with a
+     * regexp and produce unexpected results.
      * @param value the value to normalize.
-     * @param separator the word separator.
      * @return the normalized version.
      */
-    public String normalize(final String value, final char separator)
+    public String softNormalize(final String value)
+    {
+        return softNormalize(value, "_");
+    }
+
+    /**
+     * Normalizes given value, meaning the <i>removal</i> of all
+     * non-alphanumeric characters but given separator.
+     * Note: the separator will be passed directly to the regexp engine,
+     * so it's your task to ensure its value doesn't conflict with a
+     * regexp and produce unexpected results.
+     * @param value the value to normalize.
+     * @param separator the separator.
+     * @return the normalized version.
+     * @precondition separator != null
+     */
+    public String softNormalize(final String value, final String separator)
     {
         String result = value;
 
@@ -764,19 +780,17 @@ public abstract class StringUtils
         {
             try
             {
-                String t_strValue = value; //capitalize(value, separator);
-
                 Helper t_Helper = createHelper(RegexpManager.getInstance());
 
                 result =
                     t_Helper.replaceAll(
-                        t_strValue, "_", UNDERSCORE_TOKEN);
+                        result, separator, SEPARATOR_TOKEN);
 
-                result = t_Helper.replaceAll(t_strValue, "\\W", "");
+                result = t_Helper.replaceAll(result, "\\W", "");
 
                 result =
                     t_Helper.replaceAll(
-                        t_strValue, UNDERSCORE_TOKEN, "_");
+                        result, SEPARATOR_TOKEN, separator);
             }
             catch (final MalformedPatternException exception)
             {
@@ -793,6 +807,20 @@ public abstract class StringUtils
         }
         
         return result;
+    }
+
+    /**
+     * Normalizes given value, whose words are defined by a concrete char
+     * separator. In this situation, <i>normalization</i> means
+     * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
+     * characters.
+     * @param value the value to normalize.
+     * @param separator the word separator.
+     * @return the normalized version.
+     */
+    public String normalize(final String value, final char separator)
+    {
+        return softNormalize(capitalize(value, separator), "" + separator);
     }
 
     /**
