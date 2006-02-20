@@ -99,6 +99,11 @@ public abstract class StringUtils
         "q1w3e2ewqorgacmslcommonsutilsStringUtilsbvcxzmnf3ddsf";
 
     /**
+     * The default separator.
+     */
+    public static final char DEFAULT_SEPARATOR = '_';
+
+    /**
      * The default extra separators.
      */
     public static final String[] DEFAULT_EXTRA_SEPARATORS =
@@ -784,6 +789,22 @@ public abstract class StringUtils
      * @return the normalized version.
      * @precondition separator != null
      */
+    public String softNormalize(final String value, final char separator)
+    {
+        return softNormalize(value, "" + separator);
+    }
+
+    /**
+     * Normalizes given value, meaning the <i>removal</i> of all
+     * non-alphanumeric characters but given separator.
+     * Note: the separator will be passed directly to the regexp engine,
+     * so it's your task to ensure its value doesn't conflict with a
+     * regexp and produce unexpected results.
+     * @param value the value to normalize.
+     * @param separator the separator.
+     * @return the normalized version.
+     * @precondition separator != null
+     */
     public String softNormalize(final String value, final String separator)
     {
         return softNormalize(value, separator, DEFAULT_EXTRA_SEPARATORS);
@@ -867,6 +888,21 @@ public abstract class StringUtils
      * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
      * characters.
      * @param value the value to normalize.
+     * @return the normalized version.
+     */
+    public String normalize(final String value)
+    {
+        return
+            softNormalize(
+                capitalize(value, DEFAULT_SEPARATOR), DEFAULT_SEPARATOR);
+    }
+
+    /**
+     * Normalizes given value, whose words are defined by a concrete char
+     * separator. In this situation, <i>normalization</i> means
+     * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
+     * characters.
+     * @param value the value to normalize.
      * @param separator the word separator.
      * @return the normalized version.
      */
@@ -874,7 +910,7 @@ public abstract class StringUtils
     {
         return
             softNormalize(
-                capitalize(value, separator), escapeChar(separator));
+                capitalize(value, separator), "" + separator);
     }
 
     /**
@@ -899,7 +935,7 @@ public abstract class StringUtils
 
                 result = t_Helper.replaceAll(result, "_+", "_");
 
-                result = capitalize(result, '_');
+                result = capitalize(result, DEFAULT_SEPARATOR);
             }
             catch (final MalformedPatternException exception)
             {
@@ -1154,7 +1190,7 @@ public abstract class StringUtils
      */
     public String extractPackageName(final String text)
     {
-        return capitalize(extractPackageGroup(text, 2), '_');
+        return capitalize(extractPackageGroup(text, 2), DEFAULT_SEPARATOR);
     }
 
     /**

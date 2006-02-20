@@ -407,7 +407,7 @@ public class StringUtilsTest
     }
 
     /**
-     * Tests the <code>StringUtils.softNormalizeUppercase()</code>
+     * Tests the <code>StringUtils.softNormalize()</code>
      * method.
      * @see org.acmsl.commons.utils.StringUtils#softNormalize(String, String)
      */
@@ -451,6 +451,27 @@ public class StringUtilsTest
         assertEquals(
             "SoftNormalize failed for " + t_strInput,
             "n_1",
+            t_strOutput);
+    }
+
+    /**
+     * Tests the <code>StringUtils.normalize()</code>
+     * method.
+     * @see org.acmsl.commons.utils.StringUtils#normalize(String, String)
+     */
+    public void testNormalize()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = "multiple.bet.result";
+
+        String t_strOutput = t_StringUtils.normalize(t_strInput);
+
+        assertEquals(
+            "Normalize failed for " + t_strInput,
+            "Multiple_bet_result",
             t_strOutput);
     }
 }
