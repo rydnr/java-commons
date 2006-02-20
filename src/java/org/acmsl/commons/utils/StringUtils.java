@@ -784,6 +784,10 @@ public abstract class StringUtils
 
                 result =
                     t_Helper.replaceAll(
+                        result, "\\s+", separator);
+
+                result =
+                    t_Helper.replaceAll(
                         result, separator, SEPARATOR_TOKEN);
 
                 result = t_Helper.replaceAll(result, "\\W", "");
@@ -820,7 +824,9 @@ public abstract class StringUtils
      */
     public String normalize(final String value, final char separator)
     {
-        return softNormalize(capitalize(value, separator), "" + separator);
+        return
+            softNormalize(
+                capitalize(value, separator), escapeChar(separator));
     }
 
     /**

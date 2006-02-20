@@ -405,4 +405,34 @@ public class StringUtilsTest
             "ab ()\\\" .cde  \\\" f g ^\\\\\"",
             t_strOutput);
     }
+
+    /**
+     * Tests the <code>StringUtils.softNormalizeUppercase()</code>
+     * method.
+     * @see org.acmsl.commons.utils.StringUtils#softNormalize(String, String)
+     */
+    public void testSoftNormalize()
+    {
+        StringUtils t_StringUtils = StringUtils.getInstance();
+
+        assertNotNull(t_StringUtils);
+
+        String t_strInput = "number of    \nbets";
+
+        String t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
+
+        assertEquals(
+            "SoftNormalize failed for " + t_strInput,
+            "number_of_bets",
+            t_strOutput);
+
+        t_strInput = "number_of_bets";
+
+        t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
+
+        assertEquals(
+            "SoftNormalize failed for " + t_strInput,
+            t_strInput,
+            t_strOutput);
+    }
 }
