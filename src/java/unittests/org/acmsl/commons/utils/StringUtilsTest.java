@@ -434,5 +434,23 @@ public class StringUtilsTest
             "SoftNormalize failed for " + t_strInput,
             t_strInput,
             t_strOutput);
+
+        t_strInput = "allocate in different clubs";
+
+        t_strOutput = t_StringUtils.softNormalize(t_strInput);
+
+        assertEquals(
+            "SoftNormalize failed for " + t_strInput,
+            "allocate_in_different_clubs",
+            t_strOutput);
+
+        t_strInput = "n-1";
+
+        t_strOutput = t_StringUtils.softNormalize(t_strInput);
+
+        assertEquals(
+            "SoftNormalize failed for " + t_strInput,
+            "n_1",
+            t_strOutput);
     }
 }

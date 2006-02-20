@@ -98,6 +98,18 @@ public abstract class StringUtils
     public static final String SEPARATOR_TOKEN =
         "q1w3e2ewqorgacmslcommonsutilsStringUtilsbvcxzmnf3ddsf";
 
+    /**
+     * The default extra separators.
+     */
+    public static final String[] DEFAULT_EXTRA_SEPARATORS =
+        new String[]
+        {
+            "-",
+            "\\.",
+            ",",
+            ";",
+            ":"
+        };
 
     /**
      * Singleton implemented as a weak reference.
@@ -774,6 +786,30 @@ public abstract class StringUtils
      */
     public String softNormalize(final String value, final String separator)
     {
+        return softNormalize(value, separator, DEFAULT_EXTRA_SEPARATORS);
+    }
+
+    /**
+     * Normalizes given value, meaning the <i>removal</i> of all
+     * non-alphanumeric characters but given separator.
+     * Note: the separator will be passed directly to the regexp engine,
+     * so it's your task to ensure its value doesn't conflict with a
+     * regexp and produce unexpected results.
+     * @param value the value to normalize.
+     * @param separator the separator.
+     * @param extraSeparators the additional tokens used to split words.
+     * These are different from the separator only because the result
+     * will use <i>separator</i> as delimiter even for tokens previously
+     * separated by any of the <i>extraSeparators</i>.
+     * @return the normalized version.
+     * @precondition separator != null
+     * @precondition extraSeparators != null
+     */
+    public String softNormalize(
+        final String value,
+        final String separator,
+        final String[] extraSeparators)
+    {
         String result = value;
 
         if  (result != null) 
@@ -790,6 +826,18 @@ public abstract class StringUtils
                     t_Helper.replaceAll(
                         result, separator, SEPARATOR_TOKEN);
 
+                int t_iLength =
+                    (extraSeparators != null) ? extraSeparators.length : 0;
+
+                for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++) 
+                {
+                    result =
+                        t_Helper.replaceAll(
+                            result,
+                            extraSeparators[t_iIndex],
+                            SEPARATOR_TOKEN);
+                }
+                
                 result = t_Helper.replaceAll(result, "\\W", "");
 
                 result =
