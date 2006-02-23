@@ -156,7 +156,7 @@ public abstract class GrammarUtils
     }
 
     /**
-     * Converts given word to plural.
+     * Converts given word to singular.
      * @param word the word to convert.
      * @return the converted word.
      * @precondition word != null
@@ -168,7 +168,7 @@ public abstract class GrammarUtils
     }
     
     /**
-     * Converts given word to plural.
+     * Converts given word to singular.
      * @param word the word to convert.
      * @param bundleName the bundle name.
      * @return the converted word.
@@ -177,21 +177,15 @@ public abstract class GrammarUtils
      */
     public String getSingular(final String word, final String bundleName)
     {
-        String result =
+        return
             getWord(
-                new _BundleI14able(
-                    word + ".singular",
-                    retrieveGrammarBundleProperty(),
-                    bundleName),
-                getLocale());
-
-        if  (result == null)
-        {
-            result = getRegularSingularForm(word);
-        }
-
-        return result;
+                word,
+                bundleName,
+                retrieveGrammarBundleProperty(),
+                getLocale(),
+                ".singular");
     }
+
 
     /**
      * Converts given word to plural.
@@ -214,22 +208,97 @@ public abstract class GrammarUtils
      */
     public String getPlural(final String word, final String bundleName)
     {
+        return
+            getWord(
+                word,
+                bundleName,
+                retrieveGrammarBundleProperty(),
+                getLocale(),
+                ".plural");
+    }
+
+    /**
+     * Converts given word to an alternate form.
+     * @param word the word to convert.
+     * @param bundleName the bundle name.
+     * @param bundleProperty the bundle property.
+     * @param locale the locale.
+     * @param suffix the suffix.
+     * @return the converted word.
+     * @precondition word != null
+     * @precondition bundleName != null
+     * @precondition bundleProperty != null
+     * @precondition locale != null
+     * @precondition suffix != null
+     */
+    protected String getWord(
+        final String word,
+        final String bundleName,
+        final String bundleProperty,
+        final Locale locale,
+        final String suffix)
+    {
         String result =
             getWord(
                 new _BundleI14able(
-                    word + ".plural",
-                    retrieveGrammarBundleProperty(),
+                    word + suffix,
+                    bundleProperty,
                     bundleName),
-                getLocale());
+                locale);
 
         if  (result == null)
         {
-            result = getRegularPluralForm(word);
+            if  (word.toLowerCase().equals(word))
+            {
+                result =
+                    getWord(
+                        new _BundleI14able(
+                            word.toLowerCase() + suffix,
+                            bundleProperty,
+                            bundleName),
+                        locale);
+
+                if  (result == null)
+                {
+                    result =
+                        getWord(
+                            new _BundleI14able(
+                                word.toUpperCase() + suffix,
+                                bundleProperty,
+                                bundleName),
+                            locale);
+                }
+            }
+            else if  (word.toUpperCase().equals(word))
+            {
+                result =
+                    getWord(
+                        new _BundleI14able(
+                            word.toUpperCase() + suffix,
+                            bundleProperty,
+                            bundleName),
+                        locale);
+
+                if  (result == null)
+                {
+                    result =
+                        getWord(
+                            new _BundleI14able(
+                                word.toLowerCase() + suffix,
+                                bundleProperty,
+                                bundleName),
+                            locale);
+                }
+            }
+        }
+
+        if  (result == null)
+        {
+            result = getRegularSingularForm(word);
         }
 
         return result;
     }
-
     /**
      * Converts given word to plural.
      * @param bundleI14able the bundleI14able instance.
