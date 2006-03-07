@@ -502,17 +502,90 @@ public class HttpServletUtils
      * @param key the key.
      * @param request the request.
      * @param session the session.
-     * @param context the context.
      * @return <code>true</code> if the object has been stored successfully.
      * @precondition object != null
      * @precondition key != null
      * @precondition ((request != null) || (session != null))
      */
     public boolean store(
-        final Object         object,
-        final String         key,
+        final Object object,
+        final String key,
         final ServletRequest request,
-        final HttpSession    session)
+        final HttpSession session)
+    {
+        return
+            store(
+                object,
+                key,
+                request,
+                session,
+                null);
+    }
+        
+    /**
+     * Stores an object in the repository.
+     * @param object the object to store.
+     * @param key the key.
+     * @param request the request.
+     * @return <code>true</code> if the object has been stored successfully.
+     * @precondition object != null
+     * @precondition key != null
+     * @precondition request != null
+     */
+    public boolean store(
+        final Object object,
+        final String key,
+        final ServletRequest request)
+    {
+        return
+            store(
+                object,
+                key,
+                request,
+                null);
+    }
+        
+    /**
+     * Stores an object in the repository.
+     * @param object the object to store.
+     * @param key the key.
+     * @param session the session.
+     * @return <code>true</code> if the object has been stored successfully.
+     * @precondition object != null
+     * @precondition key != null
+     * @precondition session != null
+     */
+    public boolean store(
+        final Object object,
+        final String key,
+        final HttpSession session)
+    {
+        return
+            store(
+                object,
+                key,
+                null,
+                session);
+    }
+        
+    /**
+     * Stores an object in the repository.
+     * @param object the object to store.
+     * @param key the key.
+     * @param request the request.
+     * @param session the session.
+     * @param context the context.
+     * @return <code>true</code> if the object has been stored successfully.
+     * @precondition object != null
+     * @precondition key != null
+     * @precondition ((request != null) || (session != null) || (servletContext != null))
+     */
+    public boolean store(
+        final Object object,
+        final String key,
+        final ServletRequest request,
+        final HttpSession session,
+        final ServletContext servletContext)
     {
         boolean result = false;
 
@@ -530,7 +603,26 @@ public class HttpServletUtils
             result = true;
         }
 
+        if  (servletContext != null)
+        {
+            servletContext.setAttribute(key, object);
+            result = true;
+        }
+
         return result;
+    }
+
+    /**
+     * Removes an object from the repository.
+     * @param key the key.
+     * @param request the request.
+     * @return <code>true</code> if the object has been removed successfully.
+     * @precondition key != null
+     * @precondition (request != null)
+     */
+    public boolean remove(final String key, final HttpSession session)
+    {
+        return remove(key, null, session, null);
     }
 
     /**
@@ -543,9 +635,26 @@ public class HttpServletUtils
      * @precondition ((request != null) || (session != null))
      */
     public boolean remove(
-        final String         key,
+        final String key,
         final ServletRequest request,
-        final HttpSession    session,
+        final HttpSession session)
+    {
+        return remove(key, request, session, null);
+    }
+
+    /**
+     * Removes an object from the repository.
+     * @param key the key.
+     * @param request the request.
+     * @param session the session.
+     * @return <code>true</code> if the object has been removed successfully.
+     * @precondition key != null
+     * @precondition ((request != null) || (session != null))
+     */
+    public boolean remove(
+        final String key,
+        final ServletRequest request,
+        final HttpSession session,
         final ServletContext context)
     {
         boolean result = false;
@@ -561,6 +670,12 @@ public class HttpServletUtils
         if  (session != null) 
         {
             session.removeAttribute(key);
+            result = true;
+        }
+
+        if  (context != null) 
+        {
+            context.removeAttribute(key);
             result = true;
         }
 

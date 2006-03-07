@@ -1,7 +1,8 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
+    Copyright (C) 2002-2006  Jose San Leandro Armendáriz
                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
