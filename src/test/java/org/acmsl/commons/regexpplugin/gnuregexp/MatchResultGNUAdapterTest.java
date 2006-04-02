@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.gnuregexp;
+package org.acmsl.commons.regexpplugin.gnuregexp;
 
 /*
 * Importing project classes.

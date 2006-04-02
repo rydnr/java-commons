@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.version.
+*              org.acmsl.commons.version.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.version;
+package org.acmsl.commons.version;
 
 /*
 * Importing project classes.

@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.patterns.dao;
+package org.acmsl.commons.patterns.dao;
 
 
 /*

@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.jakartaregexp;
+package org.acmsl.commons.regexpplugin.jakartaregexp;
 
 /*
 * Importing project classes.

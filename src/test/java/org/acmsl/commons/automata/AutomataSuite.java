@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.automata;
+package org.acmsl.commons.automata;
 
 
 /*

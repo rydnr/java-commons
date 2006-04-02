@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.patterns.mvc;
+package org.acmsl.commons.patterns.mvc;
 
 
 /*

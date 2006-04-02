@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.utils.regexp.
+*              org.acmsl.commons.utils.regexp.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.utils.regexp;
+package org.acmsl.commons.utils.regexp;
 
 
 /*
@@ -104,7 +104,7 @@ public class RegexpSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.utils.regexp");
+    new TestSuite("org.acmsl.commons.utils.regexp");
     
     
     

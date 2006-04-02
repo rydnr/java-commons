@@ -46,7 +46,7 @@
  * $Id$
  *
  */
-package unittests.org.acmsl.commons.regexpplugin;
+package org.acmsl.commons.regexpplugin;
 
 /*
  * Importing some ACM-SL classes.

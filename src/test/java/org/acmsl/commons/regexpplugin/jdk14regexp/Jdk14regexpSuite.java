@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.regexpplugin.jdk14regexp.
+*              org.acmsl.commons.regexpplugin.jdk14regexp.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.jdk14regexp;
+package org.acmsl.commons.regexpplugin.jdk14regexp;
 
 
 /*
@@ -104,14 +104,14 @@ public class Jdk14regexpSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.regexpplugin.jdk14regexp");
+    new TestSuite("org.acmsl.commons.regexpplugin.jdk14regexp");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatchResultJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngineTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.MatchResultJDKAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngineTest.class);
     
     
     

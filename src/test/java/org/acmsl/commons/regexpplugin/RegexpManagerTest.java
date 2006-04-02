@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.regexpplugin.
+*              org.acmsl.commons.regexpplugin.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin;
+package org.acmsl.commons.regexpplugin;
 
 /*
 * Importing project classes.

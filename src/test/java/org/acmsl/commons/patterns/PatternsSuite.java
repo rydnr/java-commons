@@ -44,15 +44,15 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.patterns;
+package org.acmsl.commons.patterns;
 
 
 /*
 * Importing project classes.
 */
 
-import unittests.org.acmsl.commons.patterns.dao.DaoSuite;
-import unittests.org.acmsl.commons.patterns.mvc.MvcSuite;
+import org.acmsl.commons.patterns.dao.DaoSuite;
+import org.acmsl.commons.patterns.mvc.MvcSuite;
 
 
 /*

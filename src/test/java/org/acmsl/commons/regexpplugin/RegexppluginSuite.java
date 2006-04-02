@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.regexpplugin.
+*              org.acmsl.commons.regexpplugin.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,17 +44,17 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin;
+package org.acmsl.commons.regexpplugin;
 
 
 /*
 * Importing project classes.
 */
 
-import unittests.org.acmsl.commons.regexpplugin.gnuregexp.GnuregexpSuite;
-import unittests.org.acmsl.commons.regexpplugin.jakartaoro.JakartaoroSuite;
-import unittests.org.acmsl.commons.regexpplugin.jakartaregexp.JakartaregexpSuite;
-import unittests.org.acmsl.commons.regexpplugin.jdk14regexp.Jdk14regexpSuite;
+import org.acmsl.commons.regexpplugin.gnuregexp.GnuregexpSuite;
+import org.acmsl.commons.regexpplugin.jakartaoro.JakartaoroSuite;
+import org.acmsl.commons.regexpplugin.jakartaregexp.JakartaregexpSuite;
+import org.acmsl.commons.regexpplugin.jdk14regexp.Jdk14regexpSuite;
 
 
 /*
@@ -108,14 +108,14 @@ public class RegexppluginSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.regexpplugin");
+    new TestSuite("org.acmsl.commons.regexpplugin");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.RegexpManagerTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.RegexpManagerTest.class);
     
-    suite.addTest(unittests.org.acmsl.commons.regexpplugin.gnuregexp.GnuregexpSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.regexpplugin.jakartaoro.JakartaoroSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.JakartaregexpSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.regexpplugin.jdk14regexp.Jdk14regexpSuite.suite());
+    suite.addTest(org.acmsl.commons.regexpplugin.gnuregexp.GnuregexpSuite.suite());
+    suite.addTest(org.acmsl.commons.regexpplugin.jakartaoro.JakartaoroSuite.suite());
+    suite.addTest(org.acmsl.commons.regexpplugin.jakartaregexp.JakartaregexpSuite.suite());
+    suite.addTest(org.acmsl.commons.regexpplugin.jdk14regexp.Jdk14regexpSuite.suite());
     
     
     // JUnitDoclet begin method suite

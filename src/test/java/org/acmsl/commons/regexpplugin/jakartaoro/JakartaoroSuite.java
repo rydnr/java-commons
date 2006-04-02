@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.regexpplugin.jakartaoro;
+package org.acmsl.commons.regexpplugin.jakartaoro;
 
 
 /*

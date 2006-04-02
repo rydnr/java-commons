@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.utils.version.
+*              org.acmsl.commons.utils.version.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.utils.version;
+package org.acmsl.commons.utils.version;
 
 
 /*
@@ -104,7 +104,7 @@ public class VersionSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.utils.version");
+    new TestSuite("org.acmsl.commons.utils.version");
     
     
     

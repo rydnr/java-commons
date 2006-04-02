@@ -44,19 +44,19 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons;
+package org.acmsl.commons;
 
 
 /*
 * Importing project classes.
 */
 
-import unittests.org.acmsl.commons.automata.AutomataSuite;
-import unittests.org.acmsl.commons.logging.LoggingSuite;
-import unittests.org.acmsl.commons.patterns.PatternsSuite;
-import unittests.org.acmsl.commons.regexpplugin.RegexppluginSuite;
-import unittests.org.acmsl.commons.utils.UtilsSuite;
-import unittests.org.acmsl.commons.version.VersionSuite;
+import org.acmsl.commons.automata.AutomataSuite;
+import org.acmsl.commons.logging.LoggingSuite;
+import org.acmsl.commons.patterns.PatternsSuite;
+import org.acmsl.commons.regexpplugin.RegexppluginSuite;
+import org.acmsl.commons.utils.UtilsSuite;
+import org.acmsl.commons.version.VersionSuite;
 
 
 /*

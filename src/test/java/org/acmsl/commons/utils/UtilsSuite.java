@@ -34,7 +34,7 @@ Spain
 * Author: Jose San Leandro Armend?riz
 *
 * Description: Executes all tests defined for package
-*              unittests.org.acmsl.commons.utils.
+*              org.acmsl.commons.utils.
 *
 * Last modified by: $Author$ at $Date$
 *
@@ -44,17 +44,17 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.utils;
+package org.acmsl.commons.utils;
 
 
 /*
 * Importing project classes.
 */
 
-import unittests.org.acmsl.commons.utils.http.HttpSuite;
-import unittests.org.acmsl.commons.utils.io.IoSuite;
-import unittests.org.acmsl.commons.utils.net.NetSuite;
-import unittests.org.acmsl.commons.utils.regexp.RegexpSuite;
+import org.acmsl.commons.utils.http.HttpSuite;
+import org.acmsl.commons.utils.io.IoSuite;
+import org.acmsl.commons.utils.net.NetSuite;
+import org.acmsl.commons.utils.regexp.RegexpSuite;
 
 
 /*
@@ -108,22 +108,22 @@ public class UtilsSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.utils");
+    new TestSuite("org.acmsl.commons.utils");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.ReflectionUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.CharUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.ConversionUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.EqualityComparatorTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.ReflectionUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.CharUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.ConversionUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.EqualityComparatorTest.class);
     
-    suite.addTest(unittests.org.acmsl.commons.utils.http.HttpSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.io.IoSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.net.NetSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.regexp.RegexpSuite.suite());
+    suite.addTest(org.acmsl.commons.utils.http.HttpSuite.suite());
+    suite.addTest(org.acmsl.commons.utils.io.IoSuite.suite());
+    suite.addTest(org.acmsl.commons.utils.net.NetSuite.suite());
+    suite.addTest(org.acmsl.commons.utils.regexp.RegexpSuite.suite());
     
     
     // JUnitDoclet begin method suite
-    suite.addTestSuite(unittests.org.acmsl.commons.utils.StringUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.StringUtilsTest.class);
     // JUnitDoclet end method suite
     
     return suite;

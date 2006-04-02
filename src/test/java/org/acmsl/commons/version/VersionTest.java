@@ -46,7 +46,7 @@
  * $Id$
  *
  */
-package unittests.org.acmsl.commons.version;
+package org.acmsl.commons.version;
 
 /*
  * Importing some ACM-SL classes.

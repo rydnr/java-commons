@@ -44,7 +44,7 @@ Spain
 *
 * $Id$
 */
-package unittests.org.acmsl.commons.logging;
+package org.acmsl.commons.logging;
 
 /*
 * Importing project classes.
