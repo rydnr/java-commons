@@ -588,7 +588,7 @@
         <!--
            Java source folder.
         -->
-        <property name="java.src.dir" value="${src.dir}/java"/>
+        <property name="java.src.dir" value="${src.dir}/main/java"/>
 
         <!--
            JDK version-specific Java source folder.
@@ -3108,17 +3108,17 @@
         <!--
              Creates the Java source folder.
         -->
-        <mkdir dir="${new.project.base.folder}/src/java"/>
+        <mkdir dir="${new.project.base.folder}/src/main/java"/>
 
         <!--
                Creates the Java unit tests source folder.
         -->
-        <mkdir dir="${new.project.base.folder}/src/java/unittests"/>
+        <mkdir dir="${new.project.base.folder}/src/test/java"/>
 
         <!--
                Creates the Java functional tests source folder.
         -->
-        <mkdir dir="${new.project.base.folder}/src/java/functionaltests"/>
+        <mkdir dir="${new.project.base.folder}/src/functionaltest/java"/>
 
         <!--
              Creates the JSP source folder.
