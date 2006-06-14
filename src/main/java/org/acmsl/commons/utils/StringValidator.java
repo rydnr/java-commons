@@ -49,12 +49,8 @@ package org.acmsl.commons.utils;
 /*
  * Importing some ACM-SL classes
  */
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Validator;
-
-/*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
 
 /**
  * Responsible of checking the validness of strings.
@@ -63,13 +59,20 @@ import java.lang.ref.WeakReference;
  * @stereotype validator
  * @version $Revision$
  */
-public abstract class StringValidator
-    implements  Validator
+public class StringValidator
+    implements  Validator,
+                Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class StringValidatorSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final StringValidator SINGLETON = new StringValidator();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -77,46 +80,12 @@ public abstract class StringValidator
     protected StringValidator() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param validator the validator instance to use.
-     */
-    protected static void setReference(StringValidator validator)
-    {
-        singleton = new WeakReference(validator);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a StringValidator instance.
      * @return such instance.
      */
     public static StringValidator getInstance()
     {
-        StringValidator result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (StringValidator) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new StringValidator() {};
-
-            setReference(result);
-        }
-
-        return result;
+        return StringValidatorSingletonContainer.SINGLETON;
     }
 
     /**

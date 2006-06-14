@@ -48,6 +48,7 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Utils;
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
@@ -64,7 +65,6 @@ import org.acmsl.commons.utils.StringValidator;
  * Importing some JDK classes.
  */
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -84,8 +84,9 @@ import org.apache.commons.logging.LogFactory;
  * @testcase unittests.org.acmsl.commons.utils.TestStringUtils
  * @version $Revision$
  */
-public abstract class StringUtils
-    implements  Utils
+public class StringUtils
+    implements  Utils,
+                Singleton
 {
     /**
      * A cached empty string array.
@@ -117,9 +118,15 @@ public abstract class StringUtils
         };
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class StringUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final StringUtils SINGLETON = new StringUtils();
+    }
 
     /**
      * Compiler instance.
@@ -147,166 +154,136 @@ public abstract class StringUtils
     private static Pattern m__UnCapitalizePattern;
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final StringUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a StringUtils instance.
      * @return such instance.
      */
     public static StringUtils getInstance()
     {
-        StringUtils result = null;
+        StringUtils result = StringUtilsSingletonContainer.SINGLETON;
 
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
+        synchronized  (result)
         {
-            result = (StringUtils) reference.get();
-        }
+            Compiler t_Compiler = result.getCompiler();
 
-        if  (result == null) 
-        {
-            result = new StringUtils() {};
-        }
-
-        Compiler t_Compiler = result.getCompiler();
-
-        if  (t_Compiler == null)
-        {
-            try 
+            if  (t_Compiler == null)
             {
-                t_Compiler = createCompiler(RegexpManager.getInstance());
-
-                if  (t_Compiler != null)
+                try 
                 {
-                    result.immutableSetCompiler(t_Compiler);
+                    t_Compiler = createCompiler(RegexpManager.getInstance());
 
-                    try 
+                    if  (t_Compiler != null)
                     {
-                        result.immutableSetSubPackagePattern(
-                            t_Compiler.compile("(.*)\\.(.*)"));
+                        result.immutableSetCompiler(t_Compiler);
+
+                        try 
+                        {
+                            result.immutableSetSubPackagePattern(
+                                t_Compiler.compile("(.*)\\.(.*)"));
+                        }
+                        catch  (final MalformedPatternException exception)
+                        {
+                            /*
+                             * This should never happen. It's a compile-time
+                             * error not detected by the compiler, but it's
+                             * nothing dynamic. So, if it fails, fix it once
+                             * and forget.
+                             */
+                            LogFactory.getLog(StringUtils.class).error(
+                                "Invalid sub-package pattern", exception);
+
+                            result = null;
+                        }
+
+                        if  (result != null)
+                        {
+                            try
+                            {
+                                result.immutableSetPackagePattern(
+                                    t_Compiler.compile("(.*?)\\.(.*)"));
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid package pattern", exception);
+
+                                result = null;
+                            }
+                        }
+
+                        if  (result != null)
+                        {
+                            try
+                            {
+                                result.immutableSetJustifyPattern(
+                                    t_Compiler.compile("(.*?)\\s+(.*)"));
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid justify pattern", exception);
+
+                                result = null;
+                            }
+                        }
+
+                        if  (result != null)
+                        {
+                            try
+                            {
+                                boolean t_bCaseSensitive = t_Compiler.isCaseSensitive();
+                                t_Compiler.setCaseSensitive(true);
+                                result.immutableSetUnCapitalizePattern(
+                                    t_Compiler.compile("\\s*([^A-Z\\s]*)\\s*([A-Z]?)?(.*)"));
+                                t_Compiler.setCaseSensitive(t_bCaseSensitive);
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid un-capitalize pattern", exception);
+
+                                result = null;
+                            }
+                        }
+
                     }
-                    catch  (final MalformedPatternException exception)
+                    else 
                     {
-                        /*
-                         * This should never happen. It's a compile-time
-                         * error not detected by the compiler, but it's
-                         * nothing dynamic. So, if it fails, fix it once
-                         * and forget.
-                         */
                         LogFactory.getLog(StringUtils.class).error(
-                            "Invalid sub-package pattern", exception);
+                            "compiler unavailable");
 
                         result = null;
                     }
-
-                    if  (result != null)
-                    {
-                        try
-                        {
-                            result.immutableSetPackagePattern(
-                                t_Compiler.compile("(.*?)\\.(.*)"));
-                        }
-                        catch  (final MalformedPatternException exception)
-                        {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
-                            LogFactory.getLog(StringUtils.class).error(
-                                "Invalid package pattern", exception);
-
-                            result = null;
-                        }
-                    }
-
-                    if  (result != null)
-                    {
-                        try
-                        {
-                            result.immutableSetJustifyPattern(
-                                t_Compiler.compile("(.*?)\\s+(.*)"));
-                        }
-                        catch  (final MalformedPatternException exception)
-                        {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
-                            LogFactory.getLog(StringUtils.class).error(
-                                "Invalid justify pattern", exception);
-
-                            result = null;
-                        }
-                    }
-
-                    if  (result != null)
-                    {
-                        try
-                        {
-                            boolean t_bCaseSensitive = t_Compiler.isCaseSensitive();
-                            t_Compiler.setCaseSensitive(true);
-                            result.immutableSetUnCapitalizePattern(
-                                t_Compiler.compile("\\s*([^A-Z\\s]*)\\s*([A-Z]?)?(.*)"));
-                            t_Compiler.setCaseSensitive(t_bCaseSensitive);
-                        }
-                        catch  (final MalformedPatternException exception)
-                        {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
-                            LogFactory.getLog(StringUtils.class).error(
-                                "Invalid un-capitalize pattern", exception);
-
-                            result = null;
-                        }
-                    }
-
                 }
-                else 
+                catch  (final RegexpEngineNotFoundException exception)
                 {
                     LogFactory.getLog(StringUtils.class).error(
-                        "compiler unavailable");
-                }
+                        "no regexp engine found", exception);
 
-                if  (result != null)
+                    result = null;
+                }
+                catch  (final Throwable throwable)
                 {
-                    setReference(result);
+                    LogFactory.getLog(StringUtils.class).fatal(
+                        "Unknown error", throwable);
                 }
-            }
-            catch  (final RegexpEngineNotFoundException exception)
-            {
-                LogFactory.getLog(StringUtils.class).error(
-                    "no regexp engine found", exception);
-
-                result = null;
-            }
-            catch  (final Throwable throwable)
-            {
-                LogFactory.getLog(StringUtils.class).fatal(
-                    "Unknown error", throwable);
             }
         }
         

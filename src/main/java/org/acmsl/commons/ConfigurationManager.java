@@ -57,7 +57,6 @@ import org.acmsl.commons.patterns.Manager;
  */
 import java.io.InputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

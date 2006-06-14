@@ -61,11 +61,6 @@ import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.regexp.RegexpUtils;
 
 /*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
-
-/*
  * Importing Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
@@ -77,48 +72,35 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$
  * @testcase unittests.org.acmsl.utils.net.URLUtilsTest
  */
-public abstract class URLUtils
+public class URLUtils
     implements  Utils,
                 Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class URLUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final URLUtils SINGLETON = new URLUtils();
+    }
 
     /**
      * Question mark pattern.
      */
-    private static Pattern m__QuestionMarkPattern;
+    private volatile static Pattern m__QuestionMarkPattern;
 
     /**
      * Block pattern.
      */
-    private static Pattern m__BlockPattern;
+    private volatile static Pattern m__BlockPattern;
 
     /**
      * Parameter pattern.
      */
-    private static Pattern m__ParameterPattern;
-
-    /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     * @precondition utils != null
-     */
-    protected static void setReference(final URLUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
+    private volatile static Pattern m__ParameterPattern;
 
     /**
      * Retrieves an URLUtils instance.
@@ -126,27 +108,13 @@ public abstract class URLUtils
      */
     public static URLUtils getInstance()
     {
-        URLUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (URLUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new URLUtils() {};
-        }
+        URLUtils result =  URLUtilsSingletonContainer.SINGLETON;
 
         synchronized (result)
         {
             Compiler t_Compiler = retrieveCompiler();
 
             result.initialize(t_Compiler);
-
-            setReference(result);
         }
         
         return result;

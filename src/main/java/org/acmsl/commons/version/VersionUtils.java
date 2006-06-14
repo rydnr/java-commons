@@ -47,6 +47,7 @@ package org.acmsl.commons.version;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Helper;
@@ -65,7 +66,6 @@ import org.acmsl.commons.utils.StringUtils;
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
 
 /*
@@ -80,7 +80,8 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$
  */
 public class VersionUtils
-    implements  Utils
+    implements  Utils,
+                Singleton
 {
     /**
      * The version regexp.
@@ -101,37 +102,25 @@ public class VersionUtils
     protected static final String[] EMPTY_STRING_ARRAY = new String[0];
     
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class VersionUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final VersionUtils SINGLETON = new VersionUtils();
+    }
 
     /**
      * Compiler instance.
      */
-    private static Compiler m__Compiler;
+    private volatile static Compiler m__Compiler;
 
     /**
      * The version pattern.
      */
-    private static Pattern m__VersionPattern;
-
-    /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final VersionUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
+    private volatile static Pattern m__VersionPattern;
 
     /**
      * Retrieves a <code>VersionUtils</code> instance.
@@ -139,76 +128,65 @@ public class VersionUtils
      */
     public static VersionUtils getInstance()
     {
-        VersionUtils result = null;
+        VersionUtils result =
+            VersionUtilsSingletonContainer.SINGLETON;
 
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
+        synchronized  (result)
         {
-            result = (VersionUtils) reference.get();
-        }
+            Compiler t_Compiler = result.getCompiler();
 
-        if  (result == null) 
-        {
-            result = new VersionUtils();
-        }
-
-        Compiler t_Compiler = result.getCompiler();
-
-        if  (t_Compiler == null)
-        {
-            try 
+            if  (t_Compiler == null)
             {
-                t_Compiler = createCompiler(RegexpManager.getInstance());
-
-                if  (t_Compiler != null)
+                try 
                 {
-                    result.immutableSetCompiler(t_Compiler);
+                    t_Compiler = createCompiler(RegexpManager.getInstance());
 
-                    try 
+                    if  (t_Compiler != null)
                     {
-                        result.immutableSetVersionPattern(
-                            immutableCompileVersionPattern(
-                                DEFAULT_WILDCARD,
-                                t_Compiler,
-                                StringUtils.getInstance()));
+                        result.immutableSetCompiler(t_Compiler);
+
+                        try 
+                        {
+                            result.immutableSetVersionPattern(
+                                immutableCompileVersionPattern(
+                                    DEFAULT_WILDCARD,
+                                    t_Compiler,
+                                    StringUtils.getInstance()));
+                        }
+                        catch  (final MalformedPatternException exception)
+                        {
+                            /*
+                             * This should never happen. It's a compile-time
+                             * error not detected by the compiler, but it's
+                             * nothing dynamic. So, if it fails, fix it once
+                             * and forget.
+                             */
+                            LogFactory.getLog(VersionUtils.class).error(
+                                "Invalid version pattern", exception);
+
+                            result = null;
+                        }
                     }
-                    catch  (final MalformedPatternException exception)
+                    else 
                     {
-                        /*
-                         * This should never happen. It's a compile-time
-                         * error not detected by the compiler, but it's
-                         * nothing dynamic. So, if it fails, fix it once
-                         * and forget.
-                         */
                         LogFactory.getLog(VersionUtils.class).error(
-                            "Invalid version pattern", exception);
+                            "compiler unavailable");
 
                         result = null;
                     }
                 }
-                else 
+                catch  (final RegexpEngineNotFoundException exception)
                 {
                     LogFactory.getLog(VersionUtils.class).error(
-                        "compiler unavailable");
-                }
+                        "no regexp engine found", exception);
 
-                if  (result != null)
+                    result = null;
+                }
+                catch  (final Throwable throwable)
                 {
-                    setReference(result);
+                    LogFactory.getLog(VersionUtils.class).fatal(
+                        "Unknown error", throwable);
                 }
-            }
-            catch  (final RegexpEngineNotFoundException exception)
-            {
-                LogFactory.getLog(VersionUtils.class).error(
-                    "no regexp engine found", exception);
-
-                result = null;
-            }
-            catch  (final Throwable throwable)
-            {
-                LogFactory.getLog(VersionUtils.class).fatal(
-                    "Unknown error", throwable);
             }
         }
         

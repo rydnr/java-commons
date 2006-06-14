@@ -48,6 +48,7 @@ package org.acmsl.commons.utils;
 /*
  * Importing project classes.
  */
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
 /*
@@ -58,7 +59,6 @@ import org.apache.commons.logging.LogFactory;
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -73,7 +73,8 @@ import java.util.List;
  * @version $Revision$ at $Date$
  */
 public class ReflectionUtils
-    implements  Utils
+    implements  Utils,
+                Singleton
 {
     /**
      * A cached empty class array.
@@ -86,9 +87,16 @@ public class ReflectionUtils
     public static final Field[] EMPTY_FIELD_ARRAY = new Field[0];
     
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class ReflectionUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final ReflectionUtils SINGLETON =
+            new ReflectionUtils();
+    }
 
     /**
      * Default protected constructor to avoid accidental instantiation.
@@ -96,47 +104,12 @@ public class ReflectionUtils
     protected ReflectionUtils() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     * @precondition utils != null
-     */
-    protected static void setReference(final ReflectionUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a ReflectionUtils instance.
      * @return such instance.
      */
     public static ReflectionUtils getInstance()
     {
-        ReflectionUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (ReflectionUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new ReflectionUtils();
-
-            setReference(result);
-        }
-
-        return result;
+        return ReflectionUtilsSingletonContainer.SINGLETON;
     }
 
     /**
@@ -271,7 +244,7 @@ public class ReflectionUtils
         {
             try
             {
-                LogFactory.getLog(getClass()).warn(
+                LogFactory.getLog(ReflectionUtils.class).warn(
                     "Cannot retrieve " + classInstance + " members",
                     throwable);
             }
@@ -335,7 +308,7 @@ public class ReflectionUtils
         {
             try
             {
-                LogFactory.getLog(getClass()).info(
+                LogFactory.getLog(ReflectionUtils.class).info(
                       "Cannot retrieve the value of "
                     + "the field " + field
                     + " on instance " + instance,

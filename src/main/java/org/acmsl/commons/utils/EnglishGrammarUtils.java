@@ -50,11 +50,11 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Utils;
+import org.acmsl.commons.patterns.Singleton;
 
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -67,11 +67,19 @@ import java.util.Map;
  */
 public class EnglishGrammarUtils
     extends  GrammarUtils
+    implements  Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class EnglishGrammarUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final EnglishGrammarUtils SINGLETON =
+            new EnglishGrammarUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -82,44 +90,12 @@ public class EnglishGrammarUtils
     }
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final EnglishGrammarUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a EnglishGrammarUtils instance.
      * @return such instance.
      */
     public static EnglishGrammarUtils getInstance()
     {
-        EnglishGrammarUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (EnglishGrammarUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new EnglishGrammarUtils();
-        }
-        
-        return result;
+        return EnglishGrammarUtilsSingletonContainer.SINGLETON;
     }
 
     /**

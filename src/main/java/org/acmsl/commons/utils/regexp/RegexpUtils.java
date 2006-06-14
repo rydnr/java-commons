@@ -62,54 +62,36 @@ import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.acmsl.commons.utils.StringValidator;
 
-/*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
-
 /**
  * Provides some stateless helper regexp-related services.
  * @author <a href="mailto:jsanleandro@yahoo.es"
  *         >Jose San Leandro Armend&aacute;riz</a>
  * @version $Revision$
  */
-public abstract class RegexpUtils
+public class RegexpUtils
     implements  Utils,
                 Singleton
 {
     /**
      * Compiler used.
      */
-    private static Compiler m__Compiler;
+    private volatile static Compiler m__Compiler;
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference m__Singleton;
+    private static class RegexpUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final RegexpUtils SINGLETON = new RegexpUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
     protected RegexpUtils() {};
-
-    /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     * @precondition utils != null
-     */
-    protected static void setReference(final RegexpUtils utils)
-    {
-        m__Singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return m__Singleton;
-    }
 
     /**
      * Retrieves a RegexpUtils instance.
@@ -120,25 +102,13 @@ public abstract class RegexpUtils
     public static RegexpUtils getInstance()
         throws  RegexpEngineNotFoundException
     {
-        RegexpUtils result = null;
+        RegexpUtils result = RegexpUtilsSingletonContainer.SINGLETON;
 
-        WeakReference t_Reference = getReference();
-
-        if  (t_Reference != null) 
+        synchronized  (result)
         {
-            result = (RegexpUtils) t_Reference.get();
-        }
+            Compiler t_Compiler = result.getRegexpCompiler();
 
-        if  (result == null) 
-        {
-            result = new RegexpUtils() {};
-        }
-
-        Compiler t_Compiler = result.getRegexpCompiler();
-
-        if  (t_Compiler == null)
-        {
-            synchronized (result)
+            if  (t_Compiler == null)
             {
                 t_Compiler = createCompiler(RegexpManager.getInstance());
 
@@ -146,8 +116,6 @@ public abstract class RegexpUtils
                 t_Compiler.setCaseSensitive(false);
 
                 result.immutableSetRegexpCompiler(t_Compiler);
-
-                setReference(result);
             }
         }
         

@@ -51,6 +51,7 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Utils;
+import org.acmsl.commons.patterns.Singleton;
 
 /*
  * Importing JDK1.3 classes.
@@ -58,7 +59,6 @@ import org.acmsl.commons.patterns.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.ref.WeakReference;
 import java.lang.Throwable;
 
 /*
@@ -73,13 +73,20 @@ import org.apache.commons.logging.LogFactory;
  * @stereotype Utils
  * @version $Revision$
  */
-public abstract class ThrowableUtils
-    implements  Utils
+public class ThrowableUtils
+    implements  Utils,
+                Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class ThrowableUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final ThrowableUtils SINGLETON = new ThrowableUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -87,46 +94,12 @@ public abstract class ThrowableUtils
     protected ThrowableUtils() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final ThrowableUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a ThrowableUtils instance.
      * @return such instance.
      */
     public static ThrowableUtils getInstance()
     {
-        ThrowableUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (ThrowableUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new ThrowableUtils() {};
-
-            setReference(result);
-        }
-
-        return result;
+        return ThrowableUtilsSingletonContainer.SINGLETON;
     }
 
     /**
@@ -156,7 +129,7 @@ public abstract class ThrowableUtils
             }
             catch  (final IOException ioException)
             {
-                LogFactory.getLog(getClass()).fatal(
+                LogFactory.getLog(ThrowableUtils.class).fatal(
                     "Strange and exceptional error",
                     ioException);
             }

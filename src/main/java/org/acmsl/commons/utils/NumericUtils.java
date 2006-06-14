@@ -49,12 +49,12 @@ package org.acmsl.commons.utils;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.util.StringTokenizer;
 
 /**
@@ -65,13 +65,20 @@ import java.util.StringTokenizer;
  * @testcase unittests.org.acmsl.commons.utils.TestNumericUtils
  * @version $Revision$
  */
-public abstract class NumericUtils
-    implements  Utils
+public class NumericUtils
+    implements  Utils,
+                Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class NumericUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final NumericUtils SINGLETON = new NumericUtils();
+    }
 
     /**
      * Private constructor to avoid accidental instantiation.
@@ -79,44 +86,12 @@ public abstract class NumericUtils
     private NumericUtils()  {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(CharUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a NumericUtils instance.
      * @return such instance.
      */
     public static NumericUtils getInstance()
     {
-        NumericUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (NumericUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new NumericUtils() {};
-        }
-        
-        return result;
+        return NumericUtilsSingletonContainer.SINGLETON;
     }
 
     /**
@@ -124,7 +99,7 @@ public abstract class NumericUtils
      * @param object the object to check if it represents a number.
      * @return true if such object actually is a number.
      */
-    public boolean isNumeric(Object object)
+    public boolean isNumeric(final Object object)
     {
         boolean result = false;
 
@@ -146,16 +121,15 @@ public abstract class NumericUtils
      * @param numbers the collection of all numbers.
      * @result the maximum number,
      */
-    public int getMax(int[] numbers)
+    public int getMax(final int[] numbers)
     {
         int result = 0;
 
-        if  (numbers != null)
+        int t_iCount = (numbers != null) ? numbers.length : 0;
+
+        for (int t_iIndex = 0; t_iIndex < t_iCount; t_iIndex++)
         {
-            for (int t_iIndex = 0; t_iIndex < numbers.length; t_iIndex++)
-            {
-                result = Math.max(result, numbers[t_iIndex]);
-            }
+            result = Math.max(result, numbers[t_iIndex]);
         }
 
         return result;
@@ -166,16 +140,15 @@ public abstract class NumericUtils
      * @param numbers the collection of all numbers.
      * @result the maximum number,
      */
-    public double getMax(double[] numbers)
+    public double getMax(final double[] numbers)
     {
         double result = 0.0;
 
-        if  (numbers != null)
+        int t_iCount = (numbers != null) ? numbers.length : 0;
+
+        for (int t_iIndex = 0; t_iIndex < t_iCount; t_iIndex++)
         {
-            for (int t_iIndex = 0; t_iIndex < numbers.length; t_iIndex++)
-            {
-                result = Math.max(result, numbers[t_iIndex]);
-            }
+            result = Math.max(result, numbers[t_iIndex]);
         }
 
         return result;

@@ -50,6 +50,7 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes
  */
 import org.acmsl.commons.patterns.Utils;
+import org.acmsl.commons.patterns.Singleton;
 
 /*
  * Importing Commons-BeanUtils classes.
@@ -60,7 +61,6 @@ import org.apache.commons.beanutils.ConvertUtils;
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.math.BigDecimal;
 
@@ -72,12 +72,19 @@ import java.math.BigDecimal;
  * @version $Revision$
  */
 public class ConversionUtils
-    implements  Utils
+    implements  Utils,
+                Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class ConversionUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final ConversionUtils SINGLETON = new ConversionUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -85,46 +92,12 @@ public class ConversionUtils
     protected ConversionUtils() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final ConversionUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a ConversionUtils instance.
      * @return such instance.
      */
     public static ConversionUtils getInstance()
     {
-        ConversionUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (ConversionUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new ConversionUtils();
-
-            setReference(result);
-        }
-
-        return result;
+        return ConversionUtilsSingletonContainer.SINGLETON;
     }
 
     /**

@@ -55,7 +55,6 @@ import org.acmsl.commons.patterns.Utils;
 /*
  * Importing some JDK classes.
  */
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

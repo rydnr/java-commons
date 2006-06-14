@@ -50,12 +50,8 @@ package org.acmsl.commons.utils;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
-
-/*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
 
 /**
  * Provides some useful methods when working with characters and buffers.
@@ -64,7 +60,8 @@ import java.lang.ref.WeakReference;
  * @version $Revision$ at $Date$
  */
 public class CharUtils
-    implements  Utils
+    implements  Utils,
+                Singleton
 {
     /**
      * An empty char array for building invalid method invocations.
@@ -72,9 +69,15 @@ public class CharUtils
     protected static final char[] EMPTY_CHAR_ARRAY = new char[0];
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class CharUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final CharUtils SINGLETON = new CharUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -82,44 +85,12 @@ public class CharUtils
     protected CharUtils()  {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(CharUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a CharUtils instance.
      * @return such instance.
      */
     public static CharUtils getInstance()
     {
-        CharUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (CharUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new CharUtils();
-        }
-        
-        return result;
+        return CharUtilsSingletonContainer.SINGLETON;
     }
 
     /**

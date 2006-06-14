@@ -61,7 +61,6 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.ref.WeakReference;
 import java.lang.StringBuffer;
 
 /*
@@ -75,7 +74,7 @@ import org.apache.commons.logging.LogFactory;
            >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
-public abstract class IOUtils
+public class IOUtils
     implements  Utils,
                 Singleton
 {
@@ -85,9 +84,15 @@ public abstract class IOUtils
     private static final int BLOCK_SIZE = 1024;
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class IOUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final IOUtils SINGLETON = new IOUtils();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -95,47 +100,12 @@ public abstract class IOUtils
     protected IOUtils() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     * @precondition utils != null
-     */
-    protected static void setReference(final IOUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves an IOUtils instance.
      * @return such instance.
      */
     public static IOUtils getInstance()
     {
-        IOUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (IOUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new IOUtils() {};
-
-            setReference(result);
-        }
-
-        return result;
+        return IOUtilsSingletonContainer.SINGLETON;
     }
 
     /**

@@ -50,11 +50,7 @@ package org.acmsl.commons.utils;
  * Importing some ACM-SL classes
  */
 import org.acmsl.commons.patterns.Comparator;
-
-/*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
+import org.acmsl.commons.patterns.Singleton;
 
 /**
  * Responsible of checking the equality of values or objects.
@@ -64,12 +60,20 @@ import java.lang.ref.WeakReference;
  * @version $Revision$
  */
 public class EqualityComparator
-    implements  Comparator
+    implements  Comparator,
+                Singleton
 {
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class EqualityComparatorSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final EqualityComparator SINGLETON =
+            new EqualityComparator();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -77,46 +81,12 @@ public class EqualityComparator
     protected EqualityComparator() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param comparator the comparator instance to use.
-     */
-    protected static void setReference(final EqualityComparator comparator)
-    {
-        singleton = new WeakReference(comparator);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
-     * Retrieves a EqualityComparator instance.
+     * Retrieves an <code>EqualityComparator</code> instance.
      * @return such instance.
      */
     public static EqualityComparator getInstance()
     {
-        EqualityComparator result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (EqualityComparator) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new EqualityComparator();
-
-            setReference(result);
-        }
-
-        return result;
+        return EqualityComparatorSingletonContainer.SINGLETON;
     }
 
     /**

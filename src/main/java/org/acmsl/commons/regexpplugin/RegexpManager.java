@@ -51,6 +51,7 @@ package org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.patterns.Manager;
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
@@ -70,7 +71,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
@@ -87,7 +87,8 @@ import java.util.Properties;
  * @version $Revision$ at $Date$ by $Author$
  */
 public class RegexpManager
-    implements  Manager
+    implements  Manager,
+                Singleton
 {
     /**
      * Configures whether to use class loaders or not.
@@ -126,9 +127,15 @@ public class RegexpManager
     private static final Hashtable m__htCachedEngines = new Hashtable();
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference m__Singleton;
+    private static class RegexpManagerSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final RegexpManager SINGLETON = new RegexpManager();
+    }
 
     /**
      * Creates a <code>RegexpManager</code> instance to use or not
@@ -149,38 +156,14 @@ public class RegexpManager
     }
 
     /**
-     * Specifies a new weak reference.
-     * @param manager the manager instance to use.
-     */
-    protected static void setReference(final RegexpManager manager)
-    {
-        m__Singleton = new WeakReference(manager);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return m__Singleton;
-    }
-
-    /**
      * Retrieves a <code>RegexpManager</code> instance.
      * @param useClassLoader whether to use class loader or not.
      * @return such instance.
      */
     public static RegexpManager getInstance(final boolean useClassLoader)
     {
-        RegexpManager result = getInstance();
-        
-        if  (result.isUsingClassLoader() != useClassLoader)
-        {
-            result = new RegexpManager(useClassLoader);
-        }
-
-        return result;
+        return
+            (useClassLoader) ? new RegexpManager(useClassLoader) : getInstance();
     }
     
     /**
@@ -189,24 +172,7 @@ public class RegexpManager
      */
     public static RegexpManager getInstance()
     {
-        RegexpManager result = null;
-
-        WeakReference t_Reference = getReference();
-
-        if  (t_Reference != null) 
-        {
-            result =
-                (RegexpManager) t_Reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new RegexpManager();
-
-            setReference(result);
-        }
-
-        return result;
+        return RegexpManagerSingletonContainer.SINGLETON;
     }
 
     /**

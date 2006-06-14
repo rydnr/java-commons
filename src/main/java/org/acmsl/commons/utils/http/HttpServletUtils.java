@@ -50,6 +50,7 @@ package org.acmsl.commons.utils.http;
  * Importing project classes.
  */
 import org.acmsl.commons.patterns.Utils;
+import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
@@ -71,7 +72,6 @@ import javax.servlet.ServletRequest;
  * Importing some JDK classes.
  */
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -87,7 +87,8 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$ at $Date$
  */
 public class HttpServletUtils
-    implements  Utils
+    implements  Utils,
+                Singleton
 {
     /**
      * The locale parameter.
@@ -105,9 +106,15 @@ public class HttpServletUtils
     private static Pattern m__NameValuePairRegexp;
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
+    private static class HttpServletUtilsSingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final HttpServletUtils SINGLETON = new HttpServletUtils();
+    }
 
     /**
      * Default protected constructor to avoid accidental instantiation.
@@ -115,47 +122,12 @@ public class HttpServletUtils
     protected HttpServletUtils() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     * @precondition utils != null
-     */
-    protected static void setReference(final HttpServletUtils utils)
-    {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
-    }
-
-    /**
      * Retrieves a HttpServletUtils instance.
      * @return such instance.
      */
     public static HttpServletUtils getInstance()
     {
-        HttpServletUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (HttpServletUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new HttpServletUtils();
-
-            setReference(result);
-        }
-
-        return result;
+        return HttpServletUtilsSingletonContainer.SINGLETON;
     }
 
     /**

@@ -53,11 +53,6 @@ package org.acmsl.commons;
 import org.acmsl.commons.patterns.Repository;
 import org.acmsl.commons.patterns.Singleton;
 
-/*
- * Importing some JDK classes.
- */
-import java.lang.ref.WeakReference;
-
 /**
  * Provides the bundles used by ACM-SL Commons.
  * @author <a href="mailto:jsanleandro@yahoo.es"
@@ -94,9 +89,16 @@ public class CommonsBundleRepository
     protected static final String GRAMMAR_BUNDLE = "commons-grammar";
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference m__Singleton;
+    private static class CommonsBundleRepositorySingletonContainer
+    {
+        /**
+         * The actual singleton.
+         */
+        public static final CommonsBundleRepository SINGLETON =
+            new CommonsBundleRepository();
+    }
 
     /**
      * Protected constructor to avoid accidental instantiation.
@@ -104,48 +106,12 @@ public class CommonsBundleRepository
     protected CommonsBundleRepository() {};
 
     /**
-     * Specifies a new weak reference.
-     * @param repository the repository instance to use.
-     * @precondition repository != null
-     */
-    protected static void setReference(
-        final CommonsBundleRepository repository)
-    {
-        m__Singleton = new WeakReference(repository);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return m__Singleton;
-    }
-
-    /**
      * Retrieves a (the) repository instance.
      * @return such instance.
      */
     public static CommonsBundleRepository getInstance()
     {
-        CommonsBundleRepository result = null;
-
-        WeakReference t_Reference = getReference();
-
-        if  (t_Reference != null) 
-        {
-            result = (CommonsBundleRepository) t_Reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new CommonsBundleRepository();
-
-            setReference(result);
-        }
-        
-        return result;
+        return CommonsBundleRepositorySingletonContainer.SINGLETON;
     }
 
     /**

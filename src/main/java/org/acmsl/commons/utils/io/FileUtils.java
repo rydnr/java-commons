@@ -69,7 +69,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.ref.WeakReference;
 
 /*
  * Importing commons-logging classes.
@@ -83,7 +82,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$ $Date$
  * @stereotype Utils
  */
-public abstract class FileUtils
+public class FileUtils
     implements  Utils,
                 Singleton
 {
@@ -93,26 +92,14 @@ public abstract class FileUtils
     public static final char[] EMPTY_CHAR_ARRAY = new char[0];
 
     /**
-     * Singleton implemented as a weak reference.
+     * Singleton implemented to avoid the double-checked locking.
      */
-    private static WeakReference singleton;
-
-    /**
-     * Specifies a new weak reference.
-     * @param utils the utils instance to use.
-     */
-    protected static void setReference(final FileUtils utils)
+    private static class FileUtilsSingletonContainer
     {
-        singleton = new WeakReference(utils);
-    }
-
-    /**
-     * Retrieves the weak reference.
-     * @return such reference.
-     */
-    protected static WeakReference getReference()
-    {
-        return singleton;
+        /**
+         * The actual singleton.
+         */
+        public static final FileUtils SINGLETON = new FileUtils();
     }
 
     /**
@@ -121,23 +108,7 @@ public abstract class FileUtils
      */
     public static FileUtils getInstance()
     {
-        FileUtils result = null;
-
-        WeakReference reference = getReference();
-
-        if  (reference != null) 
-        {
-            result = (FileUtils) reference.get();
-        }
-
-        if  (result == null) 
-        {
-            result = new FileUtils() {};
-
-            setReference(result);
-        }
-
-        return result;
+        return FileUtilsSingletonContainer.SINGLETON;
     }
 
     /**
