@@ -104,14 +104,14 @@ public class JakartaregexpSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.regexpplugin.jakartaregexp");
+    new TestSuite("org.acmsl.commons.regexpplugin.jakartaregexp");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.PatternRegexpAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngineTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaregexp.MatchResultRegexpAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.PatternRegexpAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngineTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaregexp.MatchResultRegexpAdapterTest.class);
     
     
     

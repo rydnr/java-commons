@@ -133,7 +133,7 @@ public class VersionUtils
 
         synchronized  (result)
         {
-            Compiler t_Compiler = result.getCompiler();
+            Compiler t_Compiler = getCompiler();
 
             if  (t_Compiler == null)
             {
@@ -143,11 +143,11 @@ public class VersionUtils
 
                     if  (t_Compiler != null)
                     {
-                        result.immutableSetCompiler(t_Compiler);
+                        immutableSetCompiler(t_Compiler);
 
                         try 
                         {
-                            result.immutableSetVersionPattern(
+                            immutableSetVersionPattern(
                                 immutableCompileVersionPattern(
                                     DEFAULT_WILDCARD,
                                     t_Compiler,

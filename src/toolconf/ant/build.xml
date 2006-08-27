@@ -591,6 +591,11 @@
         <property name="java.src.dir" value="${src.dir}/main/java"/>
 
         <!--
+           Java test source folder.
+        -->
+        <property name="java.test.src.dir" value="${src.dir}/test/java"/>
+
+        <!--
            JDK version-specific Java source folder.
         -->
         <property
@@ -1139,6 +1144,18 @@
          Source files.
         -->
         <pathelement location="${jdk.X.Y.src.dir}"/>
+
+      </path>
+
+      <!--
+       Java-only test source path.
+      -->
+      <path id="java.test.source.path">
+
+        <!--
+         Source files.
+        -->
+        <pathelement location="${java.test.src.dir}"/>
 
       </path>
 
@@ -2670,28 +2687,55 @@
      @return the execution of the defined JUnit tests.
     -->
     <target
-        name="unit.tests"
-        depends="junitdoclet,compile"
-        description="Executes all defined unit tests.">
+      name="unit.tests"
+      depends="compile"
+      description="Executes all defined unit tests.">
 
-        <!--
-         Actual JUnit invokation.
-        -->
-        <java
-            fork="true"
-            classname="${junit.runner.classname}"
-            taskname="JUnit"
-            failonerror="true"
-            classpathref="unit.test.class.path">
+      <!--
+       Compile the java code from ${java.source.path} into ${classes.dir}.
+      -->
+      <javac
+        debug="on"
+        destdir="${classes.dir}"
+        encoding="ISO-8859-1"
+        deprecation="false">
 
-            <arg value="${project.base.suite}"/>
+        <src refid="java.test.source.path"/>
 
-        </java>
+        <classpath refid="java.unit.test.class.path"/>
 
-        <!--
-         If success, increase the test count.
-        -->
-        <antcall target="update.unittest.number"/>
+      </javac>
+
+      <!--
+       Actual JUnit invokation.
+      -->
+      <junit
+        printsummary="withOutAndErr"
+        fork="no"
+        haltonfailure="yes">
+
+        <classpath refid="unit.test.class.path"/>
+
+        <formatter type="plain" usefile="false"/>
+        <test name="${project.base.suite}"/>
+
+      </junit>
+
+      <!--java
+        fork="true"
+        classname="${junit.runner.classname}"
+        taskname="JUnit"
+        failonerror="true"
+        classpathref="unit.test.class.path">
+
+        <arg value="${project.base.suite}"/>
+
+      </java-->
+
+      <!--
+       If success, increase the test count.
+      -->
+      <antcall target="update.unittest.number"/>
 
     </target>
 
@@ -2761,7 +2805,7 @@
     -->
     <target
         name="debug.unit.tests"
-        depends="junitdoclet"
+        depends="init"
         description="DEbugs defined unit tests.">
 
         <property name="unit-test-path" refid="unit.test.class.path"/>

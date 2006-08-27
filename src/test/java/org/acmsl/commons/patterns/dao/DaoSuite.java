@@ -104,13 +104,13 @@ public class DaoSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.patterns.dao");
+    new TestSuite("org.acmsl.commons.patterns.dao");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.dao.StringFormatterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.dao.IntFormatterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.dao.ValueObjectFieldTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.dao.LongFormatterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.patterns.dao.ValueObjectPrimaryKeyTest.class);
+    suite.addTestSuite(org.acmsl.commons.patterns.dao.StringFormatterTest.class);
+    suite.addTestSuite(org.acmsl.commons.patterns.dao.IntFormatterTest.class);
+    suite.addTestSuite(org.acmsl.commons.patterns.dao.ValueObjectFieldTest.class);
+    suite.addTestSuite(org.acmsl.commons.patterns.dao.LongFormatterTest.class);
+    suite.addTestSuite(org.acmsl.commons.patterns.dao.ValueObjectPrimaryKeyTest.class);
     
     
     

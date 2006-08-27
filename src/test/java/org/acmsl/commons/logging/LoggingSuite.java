@@ -104,9 +104,9 @@ public class LoggingSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.logging");
+    new TestSuite("org.acmsl.commons.logging");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.logging.UniqueLogFactoryTest.class);
+    suite.addTestSuite(org.acmsl.commons.logging.UniqueLogFactoryTest.class);
     
     
     

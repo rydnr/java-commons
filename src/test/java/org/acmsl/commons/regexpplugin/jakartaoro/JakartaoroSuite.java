@@ -104,16 +104,16 @@ public class JakartaoroSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.regexpplugin.jakartaoro");
+    new TestSuite("org.acmsl.commons.regexpplugin.jakartaoro");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngineTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.AwkMatcherOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.jakartaoro.MatchResultOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.ORORegexpEngineTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.AwkMatcherOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.AwkCompilerOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.jakartaoro.MatchResultOROAdapterTest.class);
     
     
     

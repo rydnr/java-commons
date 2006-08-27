@@ -111,6 +111,7 @@ public class UtilsSuite
     new TestSuite("org.acmsl.commons.utils");
     
     suite.addTestSuite(org.acmsl.commons.utils.ReflectionUtilsTest.class);
+    suite.addTestSuite(org.acmsl.commons.utils.ClassLoaderUtilsTest.class);
     suite.addTestSuite(org.acmsl.commons.utils.CharUtilsTest.class);
     suite.addTestSuite(org.acmsl.commons.utils.ConversionUtilsTest.class);
     suite.addTestSuite(org.acmsl.commons.utils.EnglishGrammarUtilsTest.class);

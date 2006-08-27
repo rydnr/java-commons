@@ -47,11 +47,11 @@
  */
 package org.acmsl.commons.regexpplugin.jakartaoro;
 
-
 /*
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Helper;
+import org.acmsl.commons.utils.ClassLoaderUtils;
 
 /*
  * Importing ORO classes.
@@ -60,10 +60,15 @@ import org.apache.oro.text.perl.Perl5Util;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Perl5Compiler;
 
+/*
+ * Importing some Apache Commons Logging classes.
+ */
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Jakarta ORO-specific regexp helper adapter.
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendáriz</a>
  * @version $Revision$
  */
 public class HelperOROAdapter
@@ -91,16 +96,30 @@ public class HelperOROAdapter
 
             StringBuffer t_sbSafePattern = new StringBuffer();
 
-            t_Perl5Util.substitute(
-                t_sbSafePattern,
-                "s/\\//\\\\\\//g",
-                pattern);
+            try
+            {
+                t_Perl5Util.substitute(
+                    t_sbSafePattern,
+                    "s/\\//\\\\\\//g",
+                    pattern);
 
-            t_Perl5Util.substitute(
-                result,
-                "s/" + t_sbSafePattern + "/"
-                + Perl5Compiler.quotemeta(replacement) + "/g",
-                input);
+                t_Perl5Util.substitute(
+                    result,
+                    "s/" + t_sbSafePattern + "/"
+                    + Perl5Compiler.quotemeta(replacement) + "/g",
+                    input);
+            }
+            catch  (final NoSuchMethodError incompatibleVersionError)
+            {
+                String location = findLocation(Perl5Util.class);
+
+                // This happens on Oro 2.0.8 if another Oro version
+                // is loaded first.
+                LogFactory.getLog(HelperOROAdapter.class).fatal(
+                      "Incompatible Oro version, loaded from: "
+                    + ((location != null) ? "[" + location + "]" : ""),
+                    incompatibleVersionError);
+            }
         }
 
         if  (result == null) 
@@ -114,5 +133,29 @@ public class HelperOROAdapter
         }
         
         return result.toString();
+    }
+
+    /**
+     * Finds the location of given instance.
+     * @param classInstance the class to locate.
+     * @return such information.
+     * @precondition classInstance != null
+     */
+    protected String findLocation(final Class classInstance)
+    {
+        return findLocation(classInstance, ClassLoaderUtils.getInstance());
+    }
+
+    /**
+     * Finds the location of given instance.
+     * @param classInstance the class to locate.
+     * @return such information.
+     * @precondition classInstance != null
+     * @precondition classLoaderUtils != null
+     */
+    protected String findLocation(
+        final Class classInstance, final ClassLoaderUtils classLoaderUtils)
+    {
+        return classLoaderUtils.findLocation(classInstance);
     }
 }

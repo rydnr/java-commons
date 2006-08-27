@@ -112,15 +112,15 @@ public class CommonsSuite
     suite =
     new TestSuite("unittests.org.acmsl.commons");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.CommonsBundleRepositoryTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.BundleI14ableTest.class);
+    suite.addTestSuite(org.acmsl.commons.CommonsBundleRepositoryTest.class);
+    suite.addTestSuite(org.acmsl.commons.BundleI14ableTest.class);
     
-    suite.addTest(unittests.org.acmsl.commons.automata.AutomataSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.logging.LoggingSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.patterns.PatternsSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.regexpplugin.RegexppluginSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.utils.UtilsSuite.suite());
-    suite.addTest(unittests.org.acmsl.commons.version.VersionSuite.suite());
+    suite.addTest(org.acmsl.commons.automata.AutomataSuite.suite());
+    suite.addTest(org.acmsl.commons.logging.LoggingSuite.suite());
+    suite.addTest(org.acmsl.commons.patterns.PatternsSuite.suite());
+    suite.addTest(org.acmsl.commons.regexpplugin.RegexppluginSuite.suite());
+    suite.addTest(org.acmsl.commons.utils.UtilsSuite.suite());
+    suite.addTest(org.acmsl.commons.version.VersionSuite.suite());
     
     
     // JUnitDoclet begin method suite

@@ -104,14 +104,14 @@ public class GnuregexpSuite
     TestSuite suite;
     
     suite =
-    new TestSuite("unittests.org.acmsl.commons.regexpplugin.gnuregexp");
+    new TestSuite("org.acmsl.commons.regexpplugin.gnuregexp");
     
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngineTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.MatchResultGNUAdapterTest.class);
-    suite.addTestSuite(unittests.org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngineTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.MatchResultGNUAdapterTest.class);
+    suite.addTestSuite(org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapterTest.class);
     
     
     
