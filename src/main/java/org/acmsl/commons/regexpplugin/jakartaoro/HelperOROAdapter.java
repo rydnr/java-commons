@@ -156,6 +156,6 @@ public class HelperOROAdapter
     protected String findLocation(
         final Class classInstance, final ClassLoaderUtils classLoaderUtils)
     {
-        return classLoaderUtils.findLocation(classInstance);
+        return classLoaderUtils.findLocation(classInstance, true);
     }
 }

@@ -125,6 +125,20 @@ public class ClassLoaderUtils
      */
     public String findLocation(final Class classInstance)
     {
+        return findLocation(classInstance, false);
+    }
+
+    /**
+     * Tries to find the location where given class was loaded.
+     * @param classInstance the class to check.
+     * @param fullSearch whether to perform a full search or get
+     * the first match.
+     * @return the location.
+     * @precondition classInstance != null
+     */
+    public String findLocation(
+        final Class classInstance, final boolean fullSearch)
+    {
         String result = null;
 
         String className = classInstance.getName();
@@ -152,7 +166,10 @@ public class ClassLoaderUtils
             else
             {
                 result =
-                    findLocation(classInstance, printClassPath(classLoader));
+                    findLocation(
+                        classInstance,
+                        printClassPath(classLoader),
+                        fullSearch);
             }
         }
 
@@ -163,14 +180,18 @@ public class ClassLoaderUtils
      * Finds the location in given classpath.
      * @param classInstance the class.
      * @param classPath the classpath.
+     * @param fullSearch whether to perform a full search or get
+     * the first match.
      * @return such location.
      * @precondition classInstance != null
      * @precondition classPath != null
      */
     protected String findLocation(
-        final Class classInstance, final String classPath)
+        final Class classInstance,
+        final String classPath,
+        final boolean fullSearch)
     {
-        String result = null;
+        StringBuffer result = new StringBuffer();
 
         String actualClassPath = trimBrackets(classPath);
 
@@ -179,6 +200,8 @@ public class ClassLoaderUtils
         
         String element;
 
+        boolean nonFirstItem = false;
+
         while  (t_Tokenizer.hasMoreTokens())
         {
             element = t_Tokenizer.nextToken();
@@ -186,12 +209,26 @@ public class ClassLoaderUtils
             if  (   (element != null)
                  && (pathContainsClass(element, classInstance.getName())))
             {
-                result = element;
-                break;
+                if  (fullSearch)
+                {
+                    if  (nonFirstItem)
+                    {
+                        result.append(",");
+                    }
+
+                    nonFirstItem = true;
+                }
+
+                result.append(element);
+
+                if  (!fullSearch)
+                {
+                    break;
+                }
             }
         }
 
-        return result;
+        return result.toString();
     }
 
     /**
