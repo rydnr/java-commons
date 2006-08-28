@@ -60,14 +60,17 @@ import org.apache.commons.logging.LogFactory;
  * Importing some JDK classes.
  */
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 /**
  * Provides some useful methods when working with ClassLoaders.
@@ -128,21 +131,29 @@ public class ClassLoaderUtils
 
         ClassLoader classLoader = classInstance.getClassLoader();
 
-        URL url = classLoader.getResource(className);
-
-        if  (url == null)
+        if  (classLoader == null)
         {
-            url = ClassLoader.getSystemResource(className);
+            classLoader = ClassLoader.getSystemClassLoader();
         }
 
-        if  (url != null)
+        if  (classLoader != null)
         {
-            result = url.toString();
-        }
-        else
-        {
-            result =
-                findLocation(classInstance, printClassPath(classLoader));
+            URL url = classLoader.getResource(className);
+
+            if  (url == null)
+            {
+                url = ClassLoader.getSystemResource(className);
+            }
+
+            if  (url != null)
+            {
+                result = url.toString();
+            }
+            else
+            {
+                result =
+                    findLocation(classInstance, printClassPath(classLoader));
+            }
         }
 
         return result;
@@ -164,7 +175,7 @@ public class ClassLoaderUtils
         String actualClassPath = trimBrackets(classPath);
 
         StringTokenizer t_Tokenizer =
-            new StringTokenizer(actualClassPath, ",", false);
+            new StringTokenizer(actualClassPath, ",[]", false);
         
         String element;
 
@@ -196,6 +207,8 @@ public class ClassLoaderUtils
         result.append(printAntClassPath(classLoader));
 
         result.append(printURLClassPath(classLoader));
+
+        result.append(printSunClassPath(classLoader));
 
         ClassLoader parent = classLoader.getParent();
 
@@ -264,42 +277,26 @@ public class ClassLoaderUtils
     /**
      * Prints the classpath defined by given class loader,
      * assuming it's a URLClassLoader instance.
-     * @param classLoader the class loader to print.
+     * @param instance the instance to print.
      * @return such information.
-     * @precondition classLoader != null
+     * @precondition instance != null
      */
-    protected String printURLClassPath(final ClassLoader classLoader)
+    protected String printURLClassPath(final Object instance)
     {
         StringBuffer result = new StringBuffer();
 
         try
         {
-            Class classLoaderClass = classLoader.getClass();
+            Class instanceClass = instance.getClass();
 
             Method method =
-                    classLoaderClass.getMethod("getURLs", EMPTY_CLASS_ARRAY);
+                instanceClass.getMethod("getURLs", EMPTY_CLASS_ARRAY);
 
             if  (method != null)
             {
-                result.append("[");
-
-                URL[] urls =
-                    (URL[])
-                        method.invoke(classLoader, EMPTY_OBJECT_ARRAY);
-
-                int count = (urls != null) ? urls.length : 0;
-
-                for  (int index = 0; index < count; index++)
-                {
-                    if  (index > 0)
-                    {
-                        result.append(",");
-                    }
-
-                    result.append(urls[index]);
-                }
-
-                result.append("]");
+                result.append(
+                    printURLs(
+                        (URL[]) method.invoke(instance, EMPTY_OBJECT_ARRAY)));
             }
         }
         catch  (final SecurityException securityException)
@@ -318,6 +315,113 @@ public class ClassLoaderUtils
             // returned an error.
         }
         catch  (final IllegalArgumentException illegalArgumentException)
+        {
+            // Left blank on purpose, since the getClasspath method
+            // returned an error.
+        }
+        catch  (final IllegalAccessException illegalAccessException)
+        {
+            // Left blank on purpose. Nothing to do if we cannot invoke
+            // the method on the classloader using reflection.
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Prints given array of URLs.
+     * @param urls the URLs to print.
+     * @return the formatted text containing the URL locations.
+     * @precondition urls != null
+     */
+    protected String printURLs(final URL[] urls)
+    {
+        StringBuffer result = new StringBuffer();
+
+        result.append("[");
+
+        int count = (urls != null) ? urls.length : 0;
+
+        for  (int index = 0; index < count; index++)
+        {
+            if  (index > 0)
+            {
+                result.append(",");
+            }
+
+            result.append(urls[index]);
+        }
+
+        result.append("]");
+
+        return result.toString();
+    }
+
+    /**
+     * Prints the classpath defined by given class loader,
+     * assuming it's a Sun (sun.*) instance.
+     * @param classLoader the class loader to print.
+     * @return such information.
+     * @precondition classLoader != null
+     */
+    protected String printSunClassPath(final ClassLoader classLoader)
+    {
+        StringBuffer result = new StringBuffer();
+
+        try
+        {
+            Class classInstance = classLoader.getClass();
+
+            while  (classInstance != null)
+            {
+                Method method = null;
+
+                try
+                {
+                    method =
+                        classInstance.getMethod(
+                            "getBootstrapClassPath", EMPTY_CLASS_ARRAY);
+                }
+                catch  (final NoSuchMethodException firstNoSuchMethodException)
+                {
+                    try
+                    {
+                        method =
+                            classInstance.getDeclaredMethod(
+                                "getBootstrapClassPath", EMPTY_CLASS_ARRAY);
+                    }
+                    catch  (final NoSuchMethodException otherNoSuchMethodException)
+                    {
+                        // Left blank on purpose, since we don't know which
+                        // ClassLoader implementation we have.
+                    }
+                }
+
+                if  (method != null)
+                {
+                    method.setAccessible(true);
+
+                    result.append(
+                        printURLClassPath(
+                            method.invoke(classLoader, EMPTY_OBJECT_ARRAY)));
+
+                    break;
+                }
+
+                classInstance = classInstance.getSuperclass();
+            }
+        }
+        catch  (final SecurityException securityException)
+        {
+            // Left blank on purpose. Nothing to do if we cannot access
+            // the classloader using reflection.
+        }
+        catch  (final IllegalArgumentException illegalArgumentException)
+        {
+            // Left blank on purpose, since the getClasspath method
+            // returned an error.
+        }
+        catch  (final InvocationTargetException invocationTargetException)
         {
             // Left blank on purpose, since the getClasspath method
             // returned an error.
@@ -402,7 +506,7 @@ public class ClassLoaderUtils
             {
                 file =
                     new File(
-                          file.getAbsolutePath()
+                          removeTrailingSlash(file.getAbsolutePath())
                         + "/" + replace(resource, "\\.", "/")
                         + auxSuffix);
 
@@ -414,14 +518,31 @@ public class ClassLoaderUtils
             {
                 try
                 {
-                    ZipFile zip = new ZipFile(file, ZipFile.OPEN_READ);
+                    InputStream inputStream = new FileInputStream(file);
+
+                    ZipInputStream zipInputStream =
+                        new ZipInputStream(inputStream);
 
                     String entryName =
-                        "/" + replace(resource, "\\.", "/") + auxSuffix;
+                        replace(resource, "\\.", "/") + auxSuffix;
 
-                    ZipEntry entry = zip.getEntry(entryName);
+                    ZipEntry entry;
 
-                    result = (entry != null);
+                    while  (zipInputStream.available() > 0)
+                    {
+                        entry = zipInputStream.getNextEntry();
+
+                        if  (   (entry != null)
+                             && (entryName.equals(entry.getName())))
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+
+                    zipInputStream.close();
+
+                    inputStream.close();
                 }
                 catch  (final ZipException zipException)
                 {
@@ -471,15 +592,40 @@ public class ClassLoaderUtils
     {
         String result = text;
 
-        while  (result.startsWith("["))
-        {
-            result = result.substring(1);
-        }
+        int length = (result != null) ? result.length() : 0;
 
-        int length = result.length();
+        if  (length > 0)
+        {
+            while  (result.startsWith("["))
+            {
+                result = result.substring(1);
+            }
+        }
 
         while  (   (result.endsWith("]"))
                 && (length > 1))
+        {
+            result = result.substring(0, length - 1);
+            length = result.length();
+        }
+
+        return result;
+    }
+
+    /**
+     * Removes any trailing slash.
+     * @param text the text.
+     * @return the trimmed text.
+     * @precondition text != null
+     */
+    protected String removeTrailingSlash(final String text)
+    {
+        String result = text;
+
+        int length = (result != null) ? result.length() : 0;
+
+        while  (   (length > 1)
+                && (result.endsWith("/")))
         {
             result = result.substring(0, length - 1);
             length = result.length();

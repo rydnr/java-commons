@@ -99,19 +99,11 @@ public class ClassLoaderUtilsTest
         assertNotNull(classLoaderUtils);
 
         String location =
-            classLoaderUtils.findLocation(ClassLoaderUtilsTest.class);
+            classLoaderUtils.findLocation(String.class);
 
         assertNotNull(location);
 
-        System.out.println(location);
-
-        assertTrue(
-            (   (location.endsWith(".jar"))
-             || (location.endsWith("/"))));
-
-        assertTrue(
-            (   (location.indexOf("acmsl-commons") > -1)
-             || (location.indexOf("classes") > -1)));
+        assertTrue(location.endsWith("rt.jar"));
     }
 
     /**
@@ -136,7 +128,7 @@ public class ClassLoaderUtilsTest
             ZipOutputStream zipOutputStream =
                 new ZipOutputStream(fileOutputStream);
 
-            ZipEntry zipEntry = new ZipEntry("/test/package/my.class");
+            ZipEntry zipEntry = new ZipEntry("test/package/my.class");
 
             zipOutputStream.putNextEntry(zipEntry);
 
