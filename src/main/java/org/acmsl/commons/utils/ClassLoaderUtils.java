@@ -270,27 +270,55 @@ public class ClassLoaderUtils
 
         try
         {
-            Class classLoaderClass = classLoader.getClass();
+            Class classInstance = classLoader.getClass();
 
-            Method method =
-                classLoaderClass.getMethod("getClasspath", EMPTY_CLASS_ARRAY);
+            Method method;
 
-            if  (method != null)
+            while  (classInstance != null)
             {
-                result.append("[");
-                result.append(method.invoke(classLoader, EMPTY_OBJECT_ARRAY));
-                result.append("]");
+                method = null;
+
+                try
+                {
+                    method =
+                        classInstance.getMethod(
+                            "getClasspath", EMPTY_CLASS_ARRAY);
+
+                }
+                catch  (final NoSuchMethodException firstNoSuchMethodException)
+                {
+                    try
+                    {
+                        method =
+                            classInstance.getDeclaredMethod(
+                                "getClasspath", EMPTY_CLASS_ARRAY);
+                    }
+                    catch  (final NoSuchMethodException otherException)
+                    {
+                        // Left blank on purpose, since we don't know which
+                        // ClassLoader implementation we have.
+                    }
+                }
+
+                if  (method != null)
+                {
+                    //method.setAccessible(true);
+
+                    result.append("[");
+                    result.append(
+                        method.invoke(classLoader, EMPTY_OBJECT_ARRAY));
+                    result.append("]");
+
+                    break;
+                }
+
+                classInstance = classInstance.getSuperclass();
             }
         }
         catch  (final SecurityException securityException)
         {
             // Left blank on purpose. Nothing to do if we cannot access
             // the classloader using reflection.
-        }
-        catch  (final NoSuchMethodException noSuchMethodException)
-        {
-            // Left blank on purpose, since we don't know which ClassLoader
-            // implementation we have.
         }
         catch  (final InvocationTargetException invocationTargetException)
         {
@@ -324,27 +352,54 @@ public class ClassLoaderUtils
 
         try
         {
-            Class instanceClass = instance.getClass();
+            Class classInstance = instance.getClass();
 
-            Method method =
-                instanceClass.getMethod("getURLs", EMPTY_CLASS_ARRAY);
+            Method method;
 
-            if  (method != null)
+            while  (classInstance != null)
             {
-                result.append(
-                    printURLs(
-                        (URL[]) method.invoke(instance, EMPTY_OBJECT_ARRAY)));
+                method = null;
+
+                try
+                {
+                    method =
+                        classInstance.getMethod("getURLs", EMPTY_CLASS_ARRAY);
+
+                }
+                catch  (final NoSuchMethodException firstNoSuchMethodException)
+                {
+                    try
+                    {
+                        method =
+                            classInstance.getDeclaredMethod(
+                                "getURLs", EMPTY_CLASS_ARRAY);
+                    }
+                    catch  (final NoSuchMethodException otherException)
+                    {
+                        // Left blank on purpose, since we don't know which
+                        // ClassLoader implementation we have.
+                    }
+                }
+
+                if  (method != null)
+                {
+                    //method.setAccessible(true);
+
+                    result.append(
+                        printURLs(
+                            (URL[])
+                                method.invoke(instance, EMPTY_OBJECT_ARRAY)));
+
+                    break;
+                }
+
+                classInstance = classInstance.getSuperclass();
             }
         }
         catch  (final SecurityException securityException)
         {
             // Left blank on purpose. Nothing to do if we cannot access
             // the classloader using reflection.
-        }
-        catch  (final NoSuchMethodException noSuchMethodException)
-        {
-            // Left blank on purpose, since we don't know which ClassLoader
-            // implementation we have.
         }
         catch  (final InvocationTargetException invocationTargetException)
         {
@@ -409,9 +464,11 @@ public class ClassLoaderUtils
         {
             Class classInstance = classLoader.getClass();
 
+            Method method;
+
             while  (classInstance != null)
             {
-                Method method = null;
+                method = null;
 
                 try
                 {
@@ -436,7 +493,7 @@ public class ClassLoaderUtils
 
                 if  (method != null)
                 {
-                    method.setAccessible(true);
+                    //method.setAccessible(true);
 
                     result.append(
                         printURLClassPath(

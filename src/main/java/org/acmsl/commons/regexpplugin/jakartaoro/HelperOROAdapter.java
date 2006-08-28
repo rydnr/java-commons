@@ -56,9 +56,11 @@ import org.acmsl.commons.utils.ClassLoaderUtils;
 /*
  * Importing ORO classes.
  */
-import org.apache.oro.text.perl.Perl5Util;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
+import org.apache.oro.text.regex.StringSubstitution;
+import org.apache.oro.text.regex.Util;
 
 /*
  * Importing some Apache Commons Logging classes.
@@ -83,35 +85,51 @@ public class HelperOROAdapter
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
      */
-    public String replaceAll(String input, String pattern, String replacement)
-        throws  org.acmsl.commons.regexpplugin.MalformedPatternException
+    public String replaceAll(
+        final String input, final String pattern, final String replacement)
+      throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
-        StringBuffer result = new StringBuffer();
+        String result = null;
 
         if  (   (input       != null)
              && (pattern     != null)
              && (replacement != null))
         {
-            Perl5Util t_Perl5Util = new Perl5Util();
-
-            StringBuffer t_sbSafePattern = new StringBuffer();
+            String t_strSafePattern = null;
 
             try
             {
-                t_Perl5Util.substitute(
-                    t_sbSafePattern,
-                    "s/\\//\\\\\\//g",
-                    pattern);
+                Perl5Compiler t_Compiler = new Perl5Compiler();
 
-                t_Perl5Util.substitute(
-                    result,
-                    "s/" + t_sbSafePattern + "/"
-                    + Perl5Compiler.quotemeta(replacement) + "/g",
-                    input);
+                t_strSafePattern =
+                    Util.substitute(
+                        new Perl5Matcher(),
+                        t_Compiler.compile("\\/"),
+                        new StringSubstitution("\\\\\\/"),
+                        pattern,
+                        Util.SUBSTITUTE_ALL);
+
+                result =
+                    Util.substitute(
+                        new Perl5Matcher(),
+                        t_Compiler.compile(t_strSafePattern),
+                        new StringSubstitution(
+                            Perl5Compiler.quotemeta(replacement)),
+                        input,
+                        Util.SUBSTITUTE_ALL);
+            }
+            catch  (final MalformedPatternException malformedPatternException)
+            {
+                LogFactory.getLog(HelperOROAdapter.class).fatal(
+                      "Bug found. Please contact bugs@acm-sl.org, "
+                    + "indicating acmsl-commons library tried to compile "
+                    + "the following invalid regexp: "
+                    + t_strSafePattern,
+                    malformedPatternException);
             }
             catch  (final NoSuchMethodError incompatibleVersionError)
             {
-                String location = findLocation(Perl5Util.class);
+                String location = findLocation(Util.class);
 
                 // This happens on Oro 2.0.8 if another Oro version
                 // is loaded first.
@@ -124,15 +142,15 @@ public class HelperOROAdapter
 
         if  (result == null) 
         {
-            result = new StringBuffer();
+            result = "";
         }
 
         if  (result.length() == 0) 
         {
-            result.append(input);
+            result = input;
         }
         
-        return result.toString();
+        return result;
     }
 
     /**
