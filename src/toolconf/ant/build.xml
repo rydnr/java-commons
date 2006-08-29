@@ -2712,7 +2712,7 @@
       <junit
         printsummary="withOutAndErr"
         fork="no"
-        haltonfailure="yes">
+        haltonfailure="no">
 
         <classpath refid="unit.test.class.path"/>
 
@@ -3507,7 +3507,7 @@ project.base.suite=
         <!--
          Actual JUnit invokation.
         -->
-        <junit printsummary="withOutAndErr" fork="no" haltonfailure="yes">
+        <junit printsummary="withOutAndErr" fork="no" haltonfailure="no">
 
             <classpath>
 

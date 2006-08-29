@@ -96,10 +96,12 @@ public class StringUtilsTest
         assertNotNull(t_StringUtils);
 
         assertEquals(
+            "replace(\"com.foo.bar\", \".\", \"-\") failed.",
             "com-foo-bar",
             t_StringUtils.replace("com.foo.bar", ".", "-"));
 
         assertEquals(
+            "replace(\"com.foo.bar\", \"f\", \"-\") failed.",
             "com.-oo.bar",
             t_StringUtils.replace("com.foo.bar", "f", "-"));
     }
@@ -115,9 +117,12 @@ public class StringUtilsTest
 
         assertNotNull(t_StringUtils);
 
+        String t_strInput = "c$om.(foo)*.bar^";
+
         assertEquals(
+            "escapeRegexp(\"" + t_strInput + "\") failed.",
             "c\\$om\\.\\(foo\\)\\*\\.bar\\^", // c\$om\.\(foo\)\*\.bar\^
-        t_StringUtils.escapeRegexp("c$om.(foo)*.bar^"));
+            t_StringUtils.escapeRegexp(t_strInput));
     }
 
     /**
@@ -131,28 +136,34 @@ public class StringUtilsTest
         assertNotNull(t_StringUtils);
 
         assertEquals(
-            t_StringUtils.packageToFilePath("com.foo.bar"),
-            "com" + File.separator + "foo" + File.separator + "bar");
+            "packageToFilePath(\"com.foo.bar\") failed.",
+            "com" + File.separator + "foo" + File.separator + "bar",
+            t_StringUtils.packageToFilePath("com.foo.bar"));
 
         assertEquals(
-            t_StringUtils.packageToFilePath("com"),
-            "com");
+            "packageToFilePath(\"com\") failed.",
+            "com",
+            t_StringUtils.packageToFilePath("com"));
 
         assertEquals(
-            t_StringUtils.packageToFilePath("com."),
-            "com");
+            "packageToFilePath(\"com.\") failed.",
+            "com",
+            t_StringUtils.packageToFilePath("com."));
 
         assertEquals(
-            t_StringUtils.packageToFilePath("com.."),
-            "com");
+            "packageToFilePath(\"com..\") failed.",
+            "com",
+            t_StringUtils.packageToFilePath("com.."));
 
         assertEquals(
-            t_StringUtils.packageToFilePath("..com..."),
-            "com");
+            "packageToFilePath(\"..com...\") failed.",
+            "com",
+            t_StringUtils.packageToFilePath("..com..."));
 
         assertEquals(
-            t_StringUtils.packageToFilePath("..com...foo..bar...."),
-            "com" + File.separator + "foo" + File.separator + "bar");
+            "packageToFilePath(\"..com...foo..bar....\") failed.",
+            "com" + File.separator + "foo" + File.separator + "bar",
+            t_StringUtils.packageToFilePath("..com...foo..bar...."));
     }
 
     /**
@@ -165,36 +176,42 @@ public class StringUtilsTest
 
         assertNotNull(t_StringUtils);
 
+        String t_strInput1 = "To be justified just after the \"just\"";
+
+        int t_iInput2 = "To be justified just ".length();
+
         String t_strJustified =
-            t_StringUtils.justify(
-                "To be justified just after the \"just\"",
-                "To be justified just ".length());
+            t_StringUtils.justify(t_strInput1, t_iInput2);
 
         assertNotNull(t_strJustified);
 
         assertEquals(
+            "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just\nafter the \"just\"",
             t_strJustified);
 
-        t_strJustified =
-            t_StringUtils.justify(
-                "To be justified just after the \"just\"",
-                "To be justified just".length());
+        t_iInput2 = "To be justified just".length();
+
+        t_strJustified = t_StringUtils.justify(t_strInput1, t_iInput2);
 
         assertNotNull(t_strJustified);
 
         assertEquals(
+            "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just\nafter the \"just\"",
             t_strJustified);
 
+        t_strInput1 = "To be justified just  after the \"after\"";
+
+        t_iInput2 = "To be justified just  after".length();
+
         t_strJustified =
-            t_StringUtils.justify(
-                "To be justified just  after the \"after\"",
-                "To be justified just  after".length());
+            t_StringUtils.justify(t_strInput1, t_iInput2);
 
         assertNotNull(t_strJustified);
 
         assertEquals(
+            "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just after\nthe \"after\"",
             t_strJustified);
     }
@@ -215,7 +232,9 @@ public class StringUtilsTest
             t_StringUtils.unCapitalize(t_strInput, "-");
 
         assertEquals(
-            "this-is-a-test", t_strUnCapitalized);
+            "unCapitalize(" + t_strInput + ", \"-\") failed.",
+            "this-is-a-test",
+            t_strUnCapitalized);
 
         t_strInput = "thisIsAnotherTest";
 
@@ -223,7 +242,9 @@ public class StringUtilsTest
             t_StringUtils.unCapitalize(t_strInput, "-");
 
         assertEquals(
-            "this-is-another-test", t_strUnCapitalized);
+            "unCapitalize(" + t_strInput + ", \"-\") failed.",
+            "this-is-another-test",
+            t_strUnCapitalized);
 
         t_strInput = "this Is yetAnotherTest";
 
@@ -231,7 +252,9 @@ public class StringUtilsTest
             t_StringUtils.unCapitalize(t_strInput, "-");
 
         assertEquals(
-            "this-is-yet-another-test", t_strUnCapitalized);
+            "unCapitalize(" + t_strInput + ", \"-\") failed.",
+            "this-is-yet-another-test",
+            t_strUnCapitalized);
     }
 
     /**
@@ -250,7 +273,9 @@ public class StringUtilsTest
             t_StringUtils.unCapitalizeStart(t_strInput);
 
         assertEquals(
-            "thisIsATest", t_strUnCapitalized);
+            "unCapitalizeStart(" + t_strInput + ", \"-\") failed.",
+            "thisIsATest",
+            t_strUnCapitalized);
 
         t_strInput = "ThisIsAnotherTest";
 
@@ -258,7 +283,9 @@ public class StringUtilsTest
             t_StringUtils.unCapitalizeStart(t_strInput);
 
         assertEquals(
-            "thisIsAnotherTest", t_strUnCapitalized);
+            "unCapitalizeStart(" + t_strInput + ", \"-\") failed.",
+            "thisIsAnotherTest",
+            t_strUnCapitalized);
     }
 
     /**
@@ -277,7 +304,10 @@ public class StringUtilsTest
             t_StringUtils.applyToEachLine(
                 t_strInput, "||{0}{1}//");
 
-        assertEquals("||line 1//\n||   and line 2//\n", t_strOutput);
+        assertEquals(
+            "applyToEachLine(\"" + t_strInput + "\"||{0}{1}//\") failed.",
+            "||line 1//\n||   and line 2//\n",
+            t_strOutput);
 
         t_strInput = "    line 1   \n .   and line 2";
 
@@ -285,30 +315,36 @@ public class StringUtilsTest
             t_StringUtils.applyToEachLine(
                 t_strInput, "||{0}{1}//");
 
-        assertEquals("||line 1//\n||.   and line 2//\n", t_strOutput);
+        assertEquals(
+            "applyToEachLine(\"" + t_strInput + "\"||{0}{1}//\") failed.",
+            "||line 1//\n||.   and line 2//\n",
+            t_strOutput);
+
+        t_strInput =
+              "      update customers\n" 
+            + "      set name = ?\n" 
+            + "      where customer_id in\n" 
+            + "      (\n" 
+            + "        select person_id\n" 
+            + "        from people\n" 
+            + "        where last_name like '?%'\n" 
+            + "      )\n";
 
         t_strOutput =
             t_StringUtils.applyToEachLine( 
-                  "      update customers\n" 
-                + "      set name = ?\n" 
-                + "      where customer_id in\n" 
-                + "      (\n" 
-                + "        select person_id\n" 
-                + "        from people\n" 
-                + "        where last_name like '?%'\n" 
-                + "      )\n", 
-                "{0}|{1}");
+                t_strInput, "{0}|{1}");
 
         assertEquals(
-                  "|update customers\n" 
-                + "|set name = ?\n" 
-                + "|where customer_id in\n" 
-                + "|(\n" 
-                + "  |select person_id\n" 
-                + "  |from people\n" 
-                + "  |where last_name like '?%'\n" 
-                + "|)\n",
-                t_strOutput);
+            "applyToEachLine(\"" + t_strInput + "\", \"{0}{1}\") failed.",
+              "|update customers\n" 
+            + "|set name = ?\n" 
+            + "|where customer_id in\n" 
+            + "|(\n" 
+            + "  |select person_id\n" 
+            + "  |from people\n" 
+            + "  |where last_name like '?%'\n" 
+            + "|)\n",
+            t_strOutput);
     }
 
     /**
@@ -326,14 +362,20 @@ public class StringUtilsTest
         int t_iOutput =
             t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
 
-        assertEquals(1, t_iOutput);
+        assertEquals(
+            "retrieveMinimumIndentInAllLines(\"" + t_strInput + "\") failed.",
+            1,
+            t_iOutput);
 
         t_strInput = "    line 1   \n .   and line 2";
 
         t_iOutput =
             t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
 
-        assertEquals(1, t_iOutput);
+        assertEquals(
+            "retrieveMinimumIndentInAllLines(\"" + t_strInput + "\") failed.",
+            1,
+            t_iOutput);
     }
 
     /**
@@ -351,14 +393,20 @@ public class StringUtilsTest
         String t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals(t_strInput, t_strOutput);
+        assertEquals(
+            "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
+            t_strInput,
+            t_strOutput);
 
         t_strInput = " \nline 1   \n    and line 2\n     ";
 
         t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals("line 1   \n    and line 2\n", t_strOutput);
+        assertEquals(
+            "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
+            "line 1   \n    and line 2\n",
+            t_strOutput);
 
         t_strInput =
             "insert into customers (customer_id, name) values (?, \"test\")";
@@ -366,7 +414,10 @@ public class StringUtilsTest
         t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals(t_strInput, t_strOutput);
+        assertEquals(
+            "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
+            t_strInput,
+            t_strOutput);
     }
 
     /**
@@ -383,7 +434,10 @@ public class StringUtilsTest
 
         String t_strOutput = t_StringUtils.capitalize(t_strInput);
 
-        assertEquals("AbCdEfGhIjkLM2nO4p", t_strOutput);
+        assertEquals(
+            "capitalize(\"" + t_strInput + "\") failed.",
+            "AbCdEfGhIjkLM2nO4p",
+            t_strOutput);
     }
 
     /**
@@ -401,7 +455,7 @@ public class StringUtilsTest
         String t_strOutput = t_StringUtils.escape(t_strInput, '\"');
 
         assertEquals(
-            "Escape failed for " + t_strInput,
+            "escape(\"" + t_strInput + "\") failed.",
             "ab ()\\\" .cde  \\\" f g ^\\\\\"",
             t_strOutput);
     }
@@ -422,7 +476,7 @@ public class StringUtilsTest
         String t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
 
         assertEquals(
-            "SoftNormalize failed for " + t_strInput,
+            "softNormalize(\"" + t_strInput + "\") failed.",
             "number_of_bets",
             t_strOutput);
 
@@ -431,7 +485,7 @@ public class StringUtilsTest
         t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
 
         assertEquals(
-            "SoftNormalize failed for " + t_strInput,
+            "softNormalize(\"" + t_strInput + "\") failed.",
             t_strInput,
             t_strOutput);
 
@@ -440,7 +494,7 @@ public class StringUtilsTest
         t_strOutput = t_StringUtils.softNormalize(t_strInput);
 
         assertEquals(
-            "SoftNormalize failed for " + t_strInput,
+            "softNormalize(\"" + t_strInput + "\") failed.",
             "allocate_in_different_clubs",
             t_strOutput);
 
@@ -449,7 +503,7 @@ public class StringUtilsTest
         t_strOutput = t_StringUtils.softNormalize(t_strInput);
 
         assertEquals(
-            "SoftNormalize failed for " + t_strInput,
+            "softNormalize(\"" + t_strInput + "\") failed.",
             "n_1",
             t_strOutput);
     }
@@ -470,7 +524,7 @@ public class StringUtilsTest
         String t_strOutput = t_StringUtils.normalize(t_strInput);
 
         assertEquals(
-            "Normalize failed for " + t_strInput,
+            "normalize(\"" + t_strInput + "\") failed.",
             "Multiple_bet_result",
             t_strOutput);
     }

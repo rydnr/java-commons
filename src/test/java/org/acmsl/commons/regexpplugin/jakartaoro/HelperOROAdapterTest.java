@@ -156,6 +156,25 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method replaceAll
+      assertNotNull(helperoroadapter);
+      assertEquals(
+          "replaceAll(\"tex\", \"x\", \"sst\") failed.",
+          "tesst",
+          helperoroadapter.replaceAll("tex", "x", "sst"));
+      assertEquals(
+          "replaceAll(\"text\", \"e\", \".\") failed.",
+          "t.xt",
+          helperoroadapter.replaceAll("text", "e", "."));
+      assertEquals(
+          "replaceAll(\"text.\", \"\\.\", \"\") failed.",
+          "text",
+          helperoroadapter.replaceAll("text.", "\\.", ""));
+      assertEquals(
+            "replaceAll(\""
+          + "simple.text\", \"simple\\.text\", \"textual\") failed.",
+          "textual",
+          helperoroadapter.replaceAll(
+              "simple.text", "simple\\.text", "textual"));
     // JUnitDoclet end method replaceAll
   }
   

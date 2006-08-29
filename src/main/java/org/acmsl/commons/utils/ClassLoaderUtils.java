@@ -493,7 +493,7 @@ public class ClassLoaderUtils
 
                 if  (method != null)
                 {
-                    //method.setAccessible(true);
+                    method.setAccessible(true);
 
                     result.append(
                         printURLClassPath(

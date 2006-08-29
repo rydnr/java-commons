@@ -99,33 +99,24 @@ public class HelperOROAdapter
 
             try
             {
-                Perl5Compiler t_Compiler = new Perl5Compiler();
-
-                t_strSafePattern =
-                    Util.substitute(
-                        new Perl5Matcher(),
-                        t_Compiler.compile("\\/"),
-                        new StringSubstitution("\\\\\\/"),
-                        pattern,
-                        Util.SUBSTITUTE_ALL);
-
                 result =
                     Util.substitute(
                         new Perl5Matcher(),
-                        t_Compiler.compile(t_strSafePattern),
+                        new Perl5Compiler().compile(pattern),
                         new StringSubstitution(
-                            Perl5Compiler.quotemeta(replacement)),
+//                            Perl5Compiler.quotemeta(replacement)),
+                            replacement),
                         input,
                         Util.SUBSTITUTE_ALL);
             }
             catch  (final MalformedPatternException malformedPatternException)
             {
-                LogFactory.getLog(HelperOROAdapter.class).fatal(
-                      "Bug found. Please contact bugs@acm-sl.org, "
-                    + "indicating acmsl-commons library tried to compile "
-                    + "the following invalid regexp: "
-                    + t_strSafePattern,
-                    malformedPatternException);
+                throw
+                    new
+                        org.acmsl.commons.regexpplugin
+                            .MalformedPatternException(
+                                "Invalid pattern: " + pattern,
+                                malformedPatternException);
             }
             catch  (final NoSuchMethodError incompatibleVersionError)
             {

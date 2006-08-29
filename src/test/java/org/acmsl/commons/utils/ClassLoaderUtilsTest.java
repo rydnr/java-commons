@@ -96,14 +96,18 @@ public class ClassLoaderUtilsTest
     {
         ClassLoaderUtils classLoaderUtils = ClassLoaderUtils.getInstance();
         
-        assertNotNull(classLoaderUtils);
+        assertNotNull("getInstance() failed.", classLoaderUtils);
 
         String location =
             classLoaderUtils.findLocation(String.class);
 
-        assertNotNull(location);
+        assertNotNull(
+            "findLocation(String.class) failed.",
+            location);
 
-        assertTrue(location.endsWith("rt.jar"));
+        assertTrue(
+            "findLocation(String.class) failed.",
+            location.endsWith("rt.jar"));
     }
 
     /**
@@ -137,6 +141,9 @@ public class ClassLoaderUtilsTest
             fileOutputStream.close();
 
             assertTrue(
+                  "pathContainsClass(\""
+                + tempFile.getAbsolutePath()
+                + "\", \"test.package.my\") failed.",
                 classLoaderUtils.pathContainsClass(
                     tempFile.getAbsolutePath(), "test.package.my"));
 

@@ -78,4 +78,16 @@ public class MalformedPatternException
     {
         super(message);
     }
+
+    /**
+     * Constructs the exception with given message.
+     * @param message the error message.
+     * @param cause the cause.
+     * @precondition message != null
+     */
+    public MalformedPatternException(
+        final String message, final Throwable cause)
+    {
+        super(message, cause);
+    }
 }
