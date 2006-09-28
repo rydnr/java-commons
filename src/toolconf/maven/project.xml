@@ -206,7 +206,7 @@
       </properties>
     </dependency>
 
-    <dependency>
+    <!--dependency>
       <groupId>junitdoclet</groupId>
       <artifactId>junitdoclet-acmsl</artifactId>
       <version>1.0.2</version>
@@ -217,7 +217,7 @@
         <required.to.test>false</required.to.test>
         <required.to.build>true</required.to.build>
       </properties>
-    </dependency>
+    </dependency-->
 
   </dependencies>
 
