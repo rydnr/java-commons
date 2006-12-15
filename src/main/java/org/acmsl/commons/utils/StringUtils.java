@@ -262,7 +262,6 @@ public class StringUtils
                                 result = null;
                             }
                         }
-
                     }
                     else 
                     {
