@@ -57,7 +57,9 @@ import org.acmsl.commons.utils.StringValidator;
 /*
  * Importing some JDK classes.
  */
-import java.io.Serializable;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Throwable;
 import java.security.AccessController;
@@ -67,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /*
@@ -113,6 +116,21 @@ public class BundleI14able
      */
     private boolean m__bUseClassLoader;
 
+    /**
+     * The first bundle to consider.
+     */
+    private ResourceBundle m__FirstBundle;
+    
+    /**
+     * The second bundle to consider.
+     */
+    private ResourceBundle m__SecondBundle;
+
+    /**
+     * Whether to retry bundles.
+     */
+    private boolean m__bRetryBundles = true;
+    
     /**
      * Creates a <code>BundleI14able</code> with given message.
      * @param messageKey the key to build the exception message.
@@ -317,6 +335,87 @@ public class BundleI14able
     {
         return m__bUseClassLoader;
     }
+
+    /**
+     * Specifies the first bundle to consider.
+     * @param bundle such bundle.
+     */
+    protected final void immutableSetFirstBundle(final ResourceBundle bundle)
+    {
+        m__FirstBundle = bundle;
+    }
+    
+    /**
+     * Specifies the first bundle to consider.
+     * @param bundle such bundle.
+     */
+    protected void setFirstBundle(final ResourceBundle bundle)
+    {
+        immutableSetFirstBundle(bundle);
+    }
+    
+    /**
+     * Retrieves the first bundle to consider.
+     * @return such bundle.
+     */
+    protected ResourceBundle getFirstBundle()
+    {
+        return m__FirstBundle;
+    }
+    
+    /**
+     * Specifies the second bundle to consider.
+     * @param bundle such bundle.
+     */
+    protected final void immutableSetSecondBundle(final ResourceBundle bundle)
+    {
+        m__SecondBundle = bundle;
+    }
+    
+    /**
+     * Specifies the second bundle to consider.
+     * @param bundle such bundle.
+     */
+    protected void setSecondBundle(final ResourceBundle bundle)
+    {
+        immutableSetSecondBundle(bundle);
+    }
+    
+    /**
+     * Retrieves the second bundle to consider.
+     * @return such bundle.
+     */
+    protected ResourceBundle getSecondBundle()
+    {
+        return m__SecondBundle;
+    }
+
+    /**
+     * Specifies whether to retry the bundle retrieval.
+     * @param flag such condition.
+     */
+    protected final void immutableSetRetryBundles(final boolean flag)
+    {
+        m__bRetryBundles = flag;
+    }
+     
+    /**
+     * Specifies whether to retry the bundle retrieval.
+     * @param flag such condition.
+     */
+    public void setRetryBundles(final boolean flag)
+    {
+        immutableSetRetryBundles(flag);
+    }
+    
+    /**
+     * Retrieves whether to retry the bundle retrieval.
+     * @return such condition.
+     */
+    public boolean getRetryBundles()
+    {
+        return m__bRetryBundles;
+    }
     
     /**
      * Retrieves the internationalized message.
@@ -342,7 +441,10 @@ public class BundleI14able
                 locale,
                 getBundleName(),
                 getSystemProperty(),
-                isUsingClassLoader());
+                isUsingClassLoader(),
+                getFirstBundle(),
+                getSecondBundle(),
+                getRetryBundles());
     }
 
     /**
@@ -354,6 +456,9 @@ public class BundleI14able
      * @param bundleName the bundle name.
      * @param systemProperty the name of the bundle.
      * @param useClassLoader whether to use class loader or not.
+     * @param firstBundle the first bundle.
+     * @param secondBundle the second bundle.
+     * @param retryBundles whether to retry bundle retrieval or not.
      * @return the customized message.
      * @precondition key != null
      * @precondition params != null
@@ -366,15 +471,23 @@ public class BundleI14able
         final Locale locale,
         final String bundleName,
         final String systemProperty,
-        final boolean useClassLoader)
+        final boolean useClassLoader,
+        final ResourceBundle firstBundle,
+        final ResourceBundle secondBundle,
+        final boolean retryBundles)
     {
-        ClassLoader t_ClassLoader = getClass().getClassLoader();
-
-        if  (useClassLoader)
+        ResourceBundle t_FirstBundle = firstBundle;
+        ResourceBundle t_SecondBundle = secondBundle;
+        
+        if  (retryBundles)
         {
-            // Identify the class loader we will be using
-            ClassLoader t_AnotherClassLoader = 
-                (ClassLoader)
+            ClassLoader t_ClassLoader = getClass().getClassLoader();
+
+            if  (useClassLoader)
+            {
+                // Identify the class loader we will be using
+                ClassLoader t_AnotherClassLoader = 
+                    (ClassLoader)
                     AccessController.doPrivileged(
                         new PrivilegedAction()
                         {
@@ -399,24 +512,43 @@ public class BundleI14able
                             }
                         });
 
-            if  (t_AnotherClassLoader != null)
-            {
-                t_ClassLoader = t_AnotherClassLoader;
+                if  (t_AnotherClassLoader != null)
+                {
+                    t_ClassLoader = t_AnotherClassLoader;
+                }
             }
-        }
 
+            if  (t_FirstBundle == null)
+            {
+                t_FirstBundle = 
+                    retrieveSystemPropertyBundle(
+                        systemProperty,
+                        locale,
+                        t_ClassLoader);
+        
+                setFirstBundle(t_FirstBundle);
+            }
+            
+            if  (t_SecondBundle == null)
+            {
+                t_SecondBundle =
+                    retrieveBundle(
+                        bundleName,
+                        locale,
+                        t_ClassLoader);
+
+                setSecondBundle(t_SecondBundle);
+            }
+            
+            setRetryBundles(false);
+        }
+        
         return
             buildMessage(
                 key,
                 params,
-                retrieveSystemPropertyBundle(
-                    systemProperty,
-                    locale,
-                    t_ClassLoader),
-                retrieveBundle(
-                    bundleName,
-                    locale,
-                    t_ClassLoader));
+                t_FirstBundle,
+                t_SecondBundle);
     }
 
     /**
@@ -470,12 +602,14 @@ public class BundleI14able
         
         if  (bundleName != null)
         {
+            Throwable exceptionThrown = null;
+
             try
             {
                 result =
                     ResourceBundle.getBundle(bundleName, locale, classLoader);
             }
-            catch  (final MissingResourceException missingResourceException)
+            catch  (final MissingResourceException firstMissingResourceException)
             {
                 try
                 {
@@ -483,17 +617,97 @@ public class BundleI14able
                         ResourceBundle.getBundle(
                             "/" + bundleName, locale, classLoader);
                 }
-                catch  (final MissingResourceException mrException)
+                catch  (final MissingResourceException secondMissingResourceException)
                 {
                     try
                     {
-                        LogFactory.getLog(getClass()).debug(
-                            "Could not retrieve bundle " + bundleName,
-                            mrException);
+                        // treating bundle name as the first part of the file.
+                        result =
+                            new PropertyResourceBundle(
+                                new FileInputStream(
+                                      bundleName + "_"
+                                    + locale.getLanguage() + "_"
+                                    + locale.getCountry() + "_"
+                                    + locale.getVariant()
+                                    + ".properties"));
                     }
-                    catch  (final Throwable throwable)
+                    catch  (final FileNotFoundException firstFileNotFoundException)
                     {
-                        // Class-loading problem.
+                        exceptionThrown = firstFileNotFoundException;
+                    }
+                    catch  (final IOException firstIOException)
+                    {
+                        exceptionThrown = firstIOException;
+                    }
+                    finally
+                    {
+                        if  (exceptionThrown != null)
+                        {
+                            exceptionThrown = null;
+                                
+                            try
+                            {
+                                result =
+                                    new PropertyResourceBundle(
+                                        new FileInputStream(
+                                              bundleName + "_"
+                                            + locale.getLanguage() + "_ "
+                                            + locale.getCountry()
+                                            + ".properties"));
+                            }
+                            catch  (final FileNotFoundException secondFileNotFoundException)
+                            {
+                                exceptionThrown = secondFileNotFoundException;
+                            }
+                            catch  (final IOException secondIOException)
+                            {
+                                exceptionThrown = secondIOException;
+                            }
+                            finally
+                            {
+                                if  (exceptionThrown != null)
+                                {
+                                    exceptionThrown = null;
+                                
+                                    try
+                                    {
+                                        // last attempt.
+                                        result =
+                                            new PropertyResourceBundle(
+                                                new FileInputStream(
+                                                      bundleName + "_"
+                                                    + locale.getLanguage()
+                                                    + ".properties"));
+                                    }
+                                    catch  (final FileNotFoundException thirdFileNotFoundException)
+                                    {
+                                        exceptionThrown = thirdFileNotFoundException;
+                                    }
+                                    catch  (final IOException thirdIOException)
+                                    {
+                                        exceptionThrown = thirdIOException;
+                                    }
+                                    finally
+                                    {
+                                        if  (exceptionThrown != null)
+                                        {
+                                            try
+                                            {
+                                                LogFactory.getLog(BundleI14able.class)
+                                                    .debug(
+                                                          "Could not retrieve bundle "
+                                                        + bundleName,
+                                                        firstMissingResourceException);
+                                            }
+                                            catch  (final Throwable throwable)
+                                            {
+                                                // Class-loading problem.
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
