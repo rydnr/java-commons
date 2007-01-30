@@ -217,6 +217,28 @@ public abstract class GrammarUtils
     }
 
     /**
+     * Creates a <code>BundleI14able</code> with given information.
+     * @param messageKey the message key.
+     * @param bundleProperty the bundle property.
+     * @param bundleName the bundle name.
+     * @return the <code>BundleI14able</code> instance.
+     * @precondition messageKey != null
+     * @precondition bundleProperty != null
+     * @precondition bundleName != null
+     */
+    protected BundleI14able createBundleI14able(
+        final String messageKey,
+        final String bundleProperty,
+        final String bundleName)
+    {
+        return
+            new _BundleI14able(
+                messageKey,
+                bundleProperty,
+                bundleName);
+    }
+    
+    /**
      * Converts given word to an alternate form.
      * @param word the word to convert.
      * @param bundleName the bundle name.
@@ -239,7 +261,7 @@ public abstract class GrammarUtils
     {
         String result =
             getWord(
-                new _BundleI14able(
+                createBundleI14able(
                     word + suffix,
                     bundleProperty,
                     bundleName),
@@ -251,7 +273,7 @@ public abstract class GrammarUtils
             {
                 result =
                     getWord(
-                        new _BundleI14able(
+                        createBundleI14able(
                             word.toLowerCase() + suffix,
                             bundleProperty,
                             bundleName),
@@ -261,7 +283,7 @@ public abstract class GrammarUtils
                 {
                     result =
                         getWord(
-                            new _BundleI14able(
+                            createBundleI14able(
                                 word.toUpperCase() + suffix,
                                 bundleProperty,
                                 bundleName),
@@ -272,7 +294,7 @@ public abstract class GrammarUtils
             {
                 result =
                     getWord(
-                        new _BundleI14able(
+                        createBundleI14able(
                             word.toUpperCase() + suffix,
                             bundleProperty,
                             bundleName),
@@ -282,7 +304,7 @@ public abstract class GrammarUtils
                 {
                     result =
                         getWord(
-                            new _BundleI14able(
+                            createBundleI14able(
                                 word.toLowerCase() + suffix,
                                 bundleProperty,
                                 bundleName),

@@ -104,7 +104,7 @@ public class CachingBundleI14able
      * @precondition params != null
      * @precondition (systemProperty != null) || (bundleName != null)
      */
-    protected CachingBundleI14able(
+    public CachingBundleI14able(
         final String messageKey,
         final Object[] params,
         final String systemProperty,
@@ -128,7 +128,7 @@ public class CachingBundleI14able
      * @precondition params != null
      * @precondition (systemProperty != null) || (bundleName != null)
      */
-    protected CachingBundleI14able(
+    public CachingBundleI14able(
         final String messageKey,
         final Object[] params,
         final String systemProperty,
@@ -147,7 +147,7 @@ public class CachingBundleI14able
      * @precondition messageKey != null
      * @precondition (systemProperty != null) || (bundleName != null)
      */
-    protected CachingBundleI14able(
+    public CachingBundleI14able(
         final String messageKey,
         final String systemProperty,
         final String bundleName,
@@ -218,22 +218,24 @@ public class CachingBundleI14able
      */
     protected void cacheBundle(final ResourceBundle resourceBundle)
     {
-        cacheBundle(resourceBundle, getMessageKey(), RESOURCE_BUNDLE_CACHE);
+        cacheBundle(resourceBundle, getBundleName(), RESOURCE_BUNDLE_CACHE);
     }
     
     /**
      * Annotates given bundle in the cache.
      * @param bundle the bundle to annotate.
-     * @param messageKey the message key.
+     * @param bundleName the bundle name.
      * @param map the caching mechanism.
      * @precondition bundle != null
-     * @precondition messageKey != null
      * @precondition map != null
      */
     protected void cacheBundle(
-        final ResourceBundle resourceBundle, final String messageKey, final Map map)
+        final ResourceBundle resourceBundle, final String bundleName, final Map map)
     {
-        map.put(messageKey, wrapTimestamp(resourceBundle));
+        if  (bundleName != null)
+        {
+            map.put(bundleName, wrapTimestamp(resourceBundle));
+        }
     }
 
     /**
@@ -244,26 +246,30 @@ public class CachingBundleI14able
     {
         return
             getCachedBundle(
-                getMessageKey(), RESOURCE_BUNDLE_CACHE, getResetCache(), getCacheTtl());
+                getBundleName(), RESOURCE_BUNDLE_CACHE, getResetCache(), getCacheTtl());
     }
     
     /**
      * Retrieves the cached <code>ResourceBundle</code>.
-     * @param messageKey the message key.
+     * @param bundleName the bundle name.
      * @param map the caching mechanism.
      * @param resetCache whether the cache should be reset.
      * @param cacheTtl the cache TTL.
      * @return such bundle, or <code>null</code> if any.
-     * @precondition messageKey != null
      * @precondition map != null
      */
     protected ResourceBundle getCachedBundle(
-        final String messageKey,
+        final String bundleName,
         final Map map,
         final boolean resetCache,
         final long cacheTtl)
     {
-        TimestampResourceBundle result = (TimestampResourceBundle) map.get(messageKey);
+        TimestampResourceBundle result = null;
+
+        if  (bundleName != null)
+        {
+            result = (TimestampResourceBundle) map.get(bundleName);
+        }
 
         if  (resetCache)
         {
@@ -273,7 +279,7 @@ public class CachingBundleI14able
         else if  (   (result != null)
                   && (hasExpiredFromCache(result, cacheTtl)))
         {
-            map.remove(messageKey);
+            map.remove(bundleName);
             result = null;
         }
         
@@ -556,11 +562,11 @@ public class CachingBundleI14able
             result =
                 super.retrieveSystemPropertyBundle(
                     systemProperty, locale, classLoader);
-        }
         
-        if  (result != null)
-        {
-            cacheBundle(result);
+            if  (result != null)
+            {
+                cacheBundle(result);
+            }
         }
         
         return result;
@@ -587,11 +593,11 @@ public class CachingBundleI14able
             result =
                 super.retrieveBundle(
                     bundleName, locale, classLoader);
-        }
         
-        if  (result != null)
-        {
-            cacheBundle(result);
+            if  (result != null)
+            {
+                cacheBundle(result);
+            }
         }
         
         return result;
