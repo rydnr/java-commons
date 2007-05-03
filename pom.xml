@@ -3,10 +3,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.acmsl</groupId>
-  <artifactId>commons</artifactId>
+  <groupId>org.acmsl.commons</groupId>
+  <artifactId>acmsl-commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.4-SNAPSHOT</version>
+  <version>0.5.7b16-SNAPSHOT</version>
   <name>ACM-SL Commons</name>
   <url>http://maven.acm-sl.org/commons</url>
   <organization>
@@ -15,21 +15,29 @@
   </organization>
 
   <scm>
-    <developerConnection>scm:svn://svn.acm-sl.org/var/svn/commons/trunk</developerConnection>
+    <developerConnection>scm:svn://svn.acm-sl.org/commons/trunk</developerConnection>
   </scm>
 
   <build>
     <finalName>acmsl-commons</finalName>
-    <testSourceDirectory>src/java/text</testSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <plugins>
       <plugin>
+        <groupId>org.acmsl.antdep</groupId>
+        <artifactId>maven-antdep-plugin</artifactId>
+        <version>0.1-SNAPSHOT</version>
+	<!--configuration>
+	  <maven1Repository>xxx</maven1Repository>
+	</configuration-->
+      </plugin>
+      <!--plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>
             svn://svn.acm-sl.org/var/svn/commons/tags
           </tagBase>
         </configuration>
-      </plugin>
+      </plugin-->
       <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -98,13 +106,6 @@
       <id>acmsl-repository</id>
       <name>ACM-SL Maven2 Repository</name>
       <url>scp://maven.acm-sl.org/lib2</url>
-    </repository>
-    <repository>
-      <!--snapshots><enabled>true</enabled></snapshots-->
-      <id>acmsl-repository-legacy</id>
-      <name>ACM-SL Maven1 Repository</name>
-      <url>scp://maven.acm-sl.org/lib</url>
-      <layout>legacy</layout>
     </repository>
     <site>
       <id>maven.ventura24.es.local</id>
