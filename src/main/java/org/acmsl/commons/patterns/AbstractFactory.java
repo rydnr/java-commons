@@ -38,11 +38,11 @@
  *              a  marker interface due to different return types of the
  *              creation methods of these objects.
  *
- * Last modified by: $Author$
+ * Last modified by: $Author: chous $
  *
- * Version: $Revision$
+ * Version: $Revision: 397 $
  *
- * $Id$
+ * $Id: AbstractFactory.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.patterns;
@@ -53,7 +53,7 @@ package org.acmsl.commons.patterns;
  * methods of these objects.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$ $Date$
+ * @version $Revision: 397 $ $Date: 2004-09-06 09:05:48 +0200 (Mon, 06 Sep 2004) $
  */
 public interface AbstractFactory
 {

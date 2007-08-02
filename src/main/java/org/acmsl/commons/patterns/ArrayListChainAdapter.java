@@ -37,14 +37,14 @@
  * Description: Adapts ArrayList objects to implement the Chain
  *              interface.
  *
- * Last modified by: $Author$
+ * Last modified by: $Author: chous $
  *
- * File version: $Revision$
+ * File version: $Revision: 397 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ArrayListChainAdapter.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.patterns;
@@ -65,7 +65,7 @@ import java.util.List;
  * Adapts ArrayList objects to implement the Chain interface.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 397 $
  */
 public class ArrayListChainAdapter
     implements  Chain

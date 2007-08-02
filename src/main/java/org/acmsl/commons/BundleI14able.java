@@ -35,14 +35,14 @@
  * Description: Represents Throwable instances with support for messages
  *              in different languages.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2007-01-30 14:22:43 +0100 (Tue, 30 Jan 2007) $
  *
- * File version: $Revision$
+ * File version: $Revision: 1660 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: BundleI14able.java 1660 2007-01-30 13:22:43Z chous $
  *
  */
 package org.acmsl.commons;
@@ -81,7 +81,7 @@ import org.apache.commons.logging.LogFactory;
  * Represents instances able to display messages in different languages.
  * @author <a href="mailto:chous@acm-sl.org"
  *         >Jose San Leandro Armendariz</a>
- * @version $Revision$ at $Date$ by $Author$
+ * @version $Revision: 1660 $ at $Date: 2007-01-30 14:22:43 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
  */
 public class BundleI14able
     implements  I14able

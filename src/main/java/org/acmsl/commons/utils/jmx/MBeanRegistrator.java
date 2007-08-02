@@ -34,14 +34,14 @@
  *
  * Description: Is able to register MBeans.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-03-07 10:16:10 +0100 (Tue, 07 Mar 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 542 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: MBeanRegistrator.java 542 2006-03-07 09:16:10Z chous $
  *
  */
 package org.acmsl.commons.utils.jmx;
@@ -70,7 +70,7 @@ import org.apache.commons.logging.LogFactory;
  * Is able to register MBeans.
  * @author <a href="mailto:chous@acm-sl.org"
  *         >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 542 $
  */
 public class MBeanRegistrator
 {

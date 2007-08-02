@@ -36,9 +36,9 @@
  * Description: *LogFactory* implementation that uses a
  * cached *Log* instance if pre-cached.
  *
- * Version: $Revision$ ($Author$ at $Date$)
+ * Version: $Revision: 506 $ ($Author: chous $ at $Date: 2005-09-05 10:46:31 +0200 (Mon, 05 Sep 2005) $)
  *
- * $Id$
+ * $Id: UniqueLogFactory.java 506 2005-09-05 08:46:31Z chous $
  *
  * Important Note: This class implements Apache Commons-Logging's Log
  * interface. License details are copied verbatim below.
@@ -58,7 +58,7 @@ import org.apache.commons.logging.LogFactory;
  * cached <code>Log</code> instance.
  * @author <a href="mailto:chous@acm-sl.org"
  *         >Jose San Leandro</a>
- * @version $Revision$ ($Author$ at $Date$)
+ * @version $Revision: 506 $ ($Author: chous $ at $Date: 2005-09-05 10:46:31 +0200 (Mon, 05 Sep 2005) $)
  */
 public class UniqueLogFactory
     extends  LogFactory

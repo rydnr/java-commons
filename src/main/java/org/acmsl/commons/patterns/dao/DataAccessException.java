@@ -35,13 +35,13 @@
  *
  * Description: Represents abnormal situations regarding data accessing.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-10-16 11:17:28 +0200 (Sat, 16 Oct 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 437 $
  *
  * Project version: $Name$
  *
- * $Id$
+ * $Id: DataAccessException.java 437 2004-10-16 09:17:28Z chous $
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -55,7 +55,7 @@ import org.acmsl.commons.patterns.dao.DAO;
  * Represents abnormal situations regarding data accessing.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro</a>
- * @version $Revision$
+ * @version $Revision: 437 $
  */
 public class DataAccessException
     extends  RuntimeException

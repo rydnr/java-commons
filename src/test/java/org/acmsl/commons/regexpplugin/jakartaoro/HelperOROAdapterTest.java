@@ -36,13 +36,13 @@ Spain
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.regexpplugin.jakartaoro.
 *
-* Last modified by: $Author$ at $Date$
+* Last modified by: $Author: chous $ at $Date: 2006-08-29 08:35:52 +0200 (Tue, 29 Aug 2006) $
 *
-* File version: $Revision$
+* File version: $Revision: 1493 $
 *
 * Project version: $Name$
 *
-* $Id$
+* $Id: HelperOROAdapterTest.java 1493 2006-08-29 06:35:52Z chous $
 */
 package org.acmsl.commons.regexpplugin.jakartaoro;
 
@@ -85,7 +85,7 @@ Boston, MA  02111-1307  USA
 
 /**
 * Tests HelperOROAdapterTest class.
-* @version $Revision$
+* @version $Revision: 1493 $
 * @see org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter
 */
 public class HelperOROAdapterTest

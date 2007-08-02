@@ -35,14 +35,14 @@
  *
  * Description: Models runtime-malformed regular expressions.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-08-29 08:35:52 +0200 (Tue, 29 Aug 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 1493 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: MalformedPatternException.java 1493 2006-08-29 06:35:52Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -57,7 +57,7 @@ import java.lang.RuntimeException;
  * Models runtime-malformed regular expressions.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 1493 $
  */
 public class MalformedPatternException
     extends     RuntimeException

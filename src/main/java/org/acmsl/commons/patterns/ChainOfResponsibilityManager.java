@@ -37,14 +37,14 @@
  * Description: Keeps tracks of the order in which objects are invoked to make
  *              them participate in the chain of responsibility pattern.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2005-05-06 19:18:36 +0200 (Fri, 06 May 2005) $
  *
- * File version: $Revision$
+ * File version: $Revision: 491 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ChainOfResponsibilityManager.java 491 2005-05-06 17:18:36Z chous $
  *
  */
 package org.acmsl.commons.patterns;
@@ -63,7 +63,7 @@ import org.acmsl.commons.patterns.Manager;
  * make them participate in the chain of responsibility pattern.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$ $Date$
+ * @version $Revision: 491 $ $Date: 2005-05-06 19:18:36 +0200 (Fri, 06 May 2005) $
  */
 public abstract class ChainOfResponsibilityManager
     implements  ChainOfResponsibility,

@@ -36,14 +36,14 @@
  *
  * Description: Performs some unit tests on RegexpManager class.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-04-02 12:15:23 +0200 (Sun, 02 Apr 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 548 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: CompilerTest.java 548 2006-04-02 10:15:23Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -83,7 +83,7 @@ import junit.framework.TestCase;
  * @see org.acmsl.commons.regexpplugin.RegexpManager
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 548 $
  */
 public class CompilerTest
     extends     TestCase

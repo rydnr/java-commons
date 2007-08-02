@@ -36,13 +36,13 @@ Spain
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.regexpplugin.gnuregexp.
 *
-* Last modified by: $Author$ at $Date$
+* Last modified by: $Author: chous $ at $Date: 2006-08-27 23:10:15 +0200 (Sun, 27 Aug 2006) $
 *
-* File version: $Revision$
+* File version: $Revision: 1489 $
 *
 * Project version: $Name$
 *
-* $Id$
+* $Id: GnuregexpSuite.java 1489 2006-08-27 21:10:15Z chous $
 */
 package org.acmsl.commons.regexpplugin.gnuregexp;
 
@@ -89,7 +89,7 @@ Boston, MA  02111-1307  USA
 /**
 * Executes all tests defined for package
 * org.acmsl.commons.regexpplugin.gnuregexp
-* @version $Revision$
+* @version $Revision: 1489 $
 * @see org.acmsl.commons.regexpplugin.gnuregexp
 */
 public class GnuregexpSuite

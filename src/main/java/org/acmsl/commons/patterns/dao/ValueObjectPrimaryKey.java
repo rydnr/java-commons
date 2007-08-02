@@ -37,14 +37,14 @@
  * Description: Represents primary keys that uniquely identifies each
  *              value object.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-10-06 08:00:18 +0200 (Wed, 06 Oct 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 419 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ValueObjectPrimaryKey.java 419 2004-10-06 06:00:18Z chous $
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -65,7 +65,7 @@ import java.util.Iterator;
  * Represents primary keys that uniquely identifies each value object.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 419 $
  */
 public class ValueObjectPrimaryKey
 {
@@ -96,7 +96,7 @@ public class ValueObjectPrimaryKey
      * Generic ValueObjectFieldIterator implementation.
      * @author <a href="mailto:jsanleandro@yahoo.es"
                >Jose San Leandro Armendáriz</a>
-     * @version $Revision$
+     * @version $Revision: 419 $
      */
     private static class _FieldIterator
         implements  ValueObjectFieldIterator

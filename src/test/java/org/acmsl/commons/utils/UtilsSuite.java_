@@ -36,14 +36,14 @@
  *
  * Description: Is a collection of Utils-related JUnit tests.
  *
- * File version: $Revision$
+ * File version: $Revision: 397 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * Version: $Revision$
+ * Version: $Revision: 397 $
  *
- * $Id$
+ * $Id: UtilsSuite.java_ 397 2004-09-06 07:05:48Z chous $
  *
  */
 package unittests.org.acmsl.commons.utils;
@@ -73,7 +73,7 @@ import junit.textui.TestRunner;
  * @testpackage org.acmsl.commons.utils
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 397 $
  */
 public abstract class UtilsSuite
     extends     TestSuite
@@ -117,7 +117,7 @@ public abstract class UtilsSuite
      * repository.
      */
     public static final Version VERSION =
-        VersionFactory.createVersion("$Revision$");
+        VersionFactory.createVersion("$Revision: 397 $");
 
     /**
      * Retrieves the current version of this object.

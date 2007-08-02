@@ -35,14 +35,14 @@
  *
  * Description: Represents any exception which requires to be catched.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2005-08-30 08:57:14 +0200 (Tue, 30 Aug 2005) $
  *
- * File version: $Revision$
+ * File version: $Revision: 501 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: CheckedException.java 501 2005-08-30 06:57:14Z chous $
  *
  */
 package org.acmsl.commons;
@@ -64,7 +64,7 @@ import java.util.Locale;
  * Represents any exception which requires to be catched.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendariz</a>
- * @version $Revision$
+ * @version $Revision: 501 $
  */
 public abstract class CheckedException
     extends     Exception
@@ -297,7 +297,7 @@ public abstract class CheckedException
      * BundleI14able suited for CheckedException class.
      * @author <a href="mailto:chous@acm-sl.org"
      * >Jose San Leandro Armendariz</a>
-     * @version $Revision$ at $Date$
+     * @version $Revision: 501 $ at $Date: 2005-08-30 08:57:14 +0200 (Tue, 30 Aug 2005) $
      */
     protected class _BundleI14able
         extends  BundleI14able

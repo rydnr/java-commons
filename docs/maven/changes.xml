@@ -7,9 +7,9 @@
   <body>
     <release
       version="0.5.7b4"
-      date="$Date$"
+      date="$Date: 2005-05-22 19:08:33 +0200 (Sun, 22 May 2005) $"
       description="enhancement">
-      <action dev="$Author$" type="update">
+      <action dev="$Author: chous $" type="update">
         Minor issues fixed or refactored.
       </action>
     </release>

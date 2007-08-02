@@ -37,14 +37,14 @@
  * Description: Is included in all classes in which version
  *              information is susceptible of being requested.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-12-03 07:57:15 +0100 (Fri, 03 Dec 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 476 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: Version.java 476 2004-12-03 06:57:15Z chous $
  *
  */
 package org.acmsl.commons.version;
@@ -54,7 +54,7 @@ package org.acmsl.commons.version;
  * susceptible of being requested.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 476 $
  */
 public class Version
 {

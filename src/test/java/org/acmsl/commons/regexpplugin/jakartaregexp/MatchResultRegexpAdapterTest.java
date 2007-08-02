@@ -36,13 +36,13 @@ Spain
 * Description: Executes all tests defined for package
 *              unittests.org.acmsl.commons.regexpplugin.jakartaregexp.
 *
-* Last modified by: $Author$ at $Date$
+* Last modified by: $Author: chous $ at $Date: 2006-04-02 12:15:23 +0200 (Sun, 02 Apr 2006) $
 *
-* File version: $Revision$
+* File version: $Revision: 548 $
 *
 * Project version: $Name$
 *
-* $Id$
+* $Id: MatchResultRegexpAdapterTest.java 548 2006-04-02 10:15:23Z chous $
 */
 package org.acmsl.commons.regexpplugin.jakartaregexp;
 
@@ -88,7 +88,7 @@ Boston, MA  02111-1307  USA
 
 /**
 * Tests MatchResultRegexpAdapterTest class.
-* @version $Revision$
+* @version $Revision: 548 $
 * @see org.acmsl.commons.regexpplugin.jakartaregexp.MatchResultRegexpAdapter
 */
 public class MatchResultRegexpAdapterTest

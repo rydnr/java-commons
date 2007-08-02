@@ -36,13 +36,13 @@ Spain
 * Description: Executes all tests defined for package
 *              org.acmsl.commons.regexpplugin.jdk14regexp.
 *
-* Last modified by: $Author$ at $Date$
+* Last modified by: $Author: chous $ at $Date: 2006-04-02 12:15:23 +0200 (Sun, 02 Apr 2006) $
 *
-* File version: $Revision$
+* File version: $Revision: 548 $
 *
 * Project version: $Name$
 *
-* $Id$
+* $Id: Jdk14regexpSuite.java 548 2006-04-02 10:15:23Z chous $
 */
 package org.acmsl.commons.regexpplugin.jdk14regexp;
 
@@ -89,7 +89,7 @@ Boston, MA  02111-1307  USA
 /**
 * Executes all tests defined for package
 * org.acmsl.commons.regexpplugin.jdk14regexp
-* @version $Revision$
+* @version $Revision: 548 $
 * @see org.acmsl.commons.regexpplugin.jdk14regexp
 */
 public class Jdk14regexpSuite

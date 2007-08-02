@@ -36,12 +36,12 @@
  *
  * Description: Performs some unit tests on EqualityComparator class.
  *
- * File version: $Revision$
+ * File version: $Revision: 548 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: EqualityComparatorTest.java 548 2006-04-02 10:15:23Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -65,7 +65,7 @@ import junit.framework.TestCase;
  * Performs some unit tests on EqualityComparator class.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 548 $
  * @testfamily JUnit
  * @testkind testcase
  * @testsetup Default TestCase

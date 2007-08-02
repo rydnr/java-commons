@@ -33,14 +33,14 @@
  *
  * Description: Provides some grammar rules for language.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $
  *
- * File version: $Revision$
+ * File version: $Revision: 1661 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: GrammarUtils.java 1661 2007-01-30 14:23:13Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -63,7 +63,7 @@ import java.util.MissingResourceException;
 /**
  * Provides some grammar rules for language.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @version $Revision$ at $Date$ by $Author$
+ * @version $Revision: 1661 $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
  */
 public abstract class GrammarUtils
     implements  Utils
@@ -363,7 +363,7 @@ public abstract class GrammarUtils
     /**
      * BundleI14able suited for <code>GrammarUtils</code> class.
      * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
-     * @version $Revision$ at $Date$ by $Author$
+     * @version $Revision: 1661 $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
      */
     protected class _BundleI14able
         extends  BundleI14able

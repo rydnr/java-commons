@@ -37,15 +37,15 @@
  * Description: Represents chain objects, as they are modelled by GoF's Chain
  *              Of Responsibility design pattern.
  *
- * Last modified by: $Author$
+ * Last modified by: $Author: chous $
  *
- * File version: $Revision$
+ * File version: $Revision: 397 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
  *
- * $Id$
+ * $Id: Chain.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.patterns;
@@ -60,7 +60,7 @@ import org.acmsl.commons.patterns.CommandHandler;
  * Responsibility design pattern.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 397 $
  */
 public interface Chain
 {

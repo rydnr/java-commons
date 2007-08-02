@@ -35,14 +35,14 @@
  * Description: Manages which regexp engine to use, acting as a facade
  *              hiding all details of building or retrieving implementations.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 550 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: RegexpManager.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -84,7 +84,7 @@ import java.util.Properties;
  * Manages which regexp engine to use, acting as a facade hiding all
  * details of building or retrieving implementations.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @version $Revision$ at $Date$ by $Author$
+ * @version $Revision: 550 $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $ by $Author: chous $
  */
 public class RegexpManager
     implements  Manager,

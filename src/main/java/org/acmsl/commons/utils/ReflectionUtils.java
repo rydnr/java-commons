@@ -34,13 +34,13 @@
  *
  * Description: Provides some useful methods when working with reflection.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 550 $
  *
  * Project version: $Name$
  *
- * $Id$
+ * $Id: ReflectionUtils.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -70,7 +70,7 @@ import java.util.List;
 /**
  * Provides some useful methods when working with reflection.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro</a>
- * @version $Revision$ at $Date$
+ * @version $Revision: 550 $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  */
 public class ReflectionUtils
     implements  Utils,

@@ -37,14 +37,14 @@
  *              Different implementations vary but they all must respect this
  *              set of methods.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-09-06 09:05:48 +0200 (Mon, 06 Sep 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 397 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: MatchResult.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -54,7 +54,7 @@ package org.acmsl.commons.regexpplugin;
  * implementations vary but they all must respect this set of methods.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 397 $
  */
 public interface MatchResult
 {

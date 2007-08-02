@@ -35,14 +35,14 @@
  *
  * Description: Jakarta Helper-specific regexp helper adapter.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-12-01 09:50:27 +0100 (Wed, 01 Dec 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 473 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: HelperJDKAdapter.java 473 2004-12-01 08:50:27Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin.jdk14regexp;
@@ -62,7 +62,7 @@ import java.util.regex.PatternSyntaxException;
  * Jakarta ORO-specific regexp helper adapter.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 473 $
  */
 public class HelperJDKAdapter
     implements  Helper

@@ -36,14 +36,14 @@
  * Description: Represents objects suitable to be queried for
  *              version information.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-12-03 07:57:15 +0100 (Fri, 03 Dec 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 476 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: Versionable.java 476 2004-12-03 06:57:15Z chous $
  *
  */
 package org.acmsl.commons.version;
@@ -58,7 +58,7 @@ import org.acmsl.commons.version.Version;
  * information.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 476 $
  * @see org.acmsl.commons.version.Version
  */
 public interface Versionable

@@ -35,14 +35,14 @@
  * Description: Provides some useful methods when working with throwable
  *              instances.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 550 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ThrowableUtils.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -71,7 +71,7 @@ import org.apache.commons.logging.LogFactory;
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
  * @stereotype Utils
- * @version $Revision$
+ * @version $Revision: 550 $
  */
 public class ThrowableUtils
     implements  Utils,

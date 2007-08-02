@@ -3251,14 +3251,14 @@
 # Description:	Spefifies some properties needed to build the project using
 #               Ant, in each concrete environment.
 #
-# Last modified by: $$Author$$
+# Last modified by: $$Author: chous $$
 #
-# File version: $$Revision$$
+# File version: $$Revision: 1493 $$
 #
 # Project version: $$Name$$
 #                  ("Name" means no concrete version has been checked out)
 #
-# $$Id$$
+# $$Id: build.xml 1493 2006-08-29 06:35:52Z chous $$
 #
 
 # Project name

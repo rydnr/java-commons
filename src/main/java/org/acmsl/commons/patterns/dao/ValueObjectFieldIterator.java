@@ -36,14 +36,14 @@
  *
  * Description: Knows how to iterate over ValueObjectField elements.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-10-06 08:00:18 +0200 (Wed, 06 Oct 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 419 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ValueObjectFieldIterator.java 419 2004-10-06 06:00:18Z chous $
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -58,7 +58,7 @@ import org.acmsl.commons.patterns.dao.ValueObjectField;
  * @stereotype Iterator
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 419 $
  */
 public interface ValueObjectFieldIterator
 {

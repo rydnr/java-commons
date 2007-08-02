@@ -36,12 +36,12 @@
  *
  * Description: Performs some unit tests on URLUtils class.
  *
- * File version: $Revision$
+ * File version: $Revision: 548 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: URLUtilsTest.java 548 2006-04-02 10:15:23Z chous $
  *
  */
 package org.acmsl.commons.utils.net;
@@ -65,7 +65,7 @@ import junit.framework.TestCase;
  * @see org.acmsl.commons.utils.net.URLUtils
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 548 $
  */
 public class URLUtilsTest
     extends     TestCase

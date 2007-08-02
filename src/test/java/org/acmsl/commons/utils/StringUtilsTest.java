@@ -35,12 +35,12 @@
  *
  * Description: Performs some unit tests on StringUtils class.
  *
- * File version: $Revision$
+ * File version: $Revision: 1493 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: StringUtilsTest.java 1493 2006-08-29 06:35:52Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -64,7 +64,7 @@ import junit.framework.TestCase;
  * Performs some unit tests on StringUtils class.
  * @author <a href="mailto:chous@acm-sl.org"
  *         >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 1493 $
  * @testfamily JUnit
  * @testkind testcase
  * @testsetup Default TestCase

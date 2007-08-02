@@ -35,14 +35,14 @@
  * Description: Provides basic methods to allow specialized classes to
  *              manage the configuration of applications.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 550 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: ConfigurationManager.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons;
@@ -72,7 +72,7 @@ import org.apache.commons.logging.LogFactory;
  * configuration of applications.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$ $Date$
+ * @version $Revision: 550 $ $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
  */
 public abstract class ConfigurationManager
     implements  Manager

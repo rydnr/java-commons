@@ -37,14 +37,14 @@
  * Description: Marks all entities able to access and retrieve
  *              <i>value objects</i>.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-10-06 08:21:45 +0200 (Wed, 06 Oct 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 420 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: DAO.java 420 2004-10-06 06:21:45Z chous $
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -53,7 +53,7 @@ package org.acmsl.commons.patterns.dao;
  * Marks all entities able to access and retrieve <i>value objects</i>.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 420 $
  */
 public interface DAO
 {

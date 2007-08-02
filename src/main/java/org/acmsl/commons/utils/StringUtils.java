@@ -32,14 +32,14 @@
  *
  * Description: Provides some useful methods when working with Strings.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2006-12-15 19:29:39 +0100 (Fri, 15 Dec 2006) $
  *
- * File version: $Revision$
+ * File version: $Revision: 1624 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: StringUtils.java 1624 2006-12-15 18:29:39Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -82,7 +82,7 @@ import org.apache.commons.logging.LogFactory;
  *         >Jose San Leandro Armendáriz</a>
  * @stereotype tested
  * @testcase unittests.org.acmsl.commons.utils.TestStringUtils
- * @version $Revision$
+ * @version $Revision: 1624 $
  */
 public class StringUtils
     implements  Utils,

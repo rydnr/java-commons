@@ -37,14 +37,14 @@
  * Description: A marker interface to represent all utility classes
  *              used to clone different objects.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-09-06 09:05:48 +0200 (Mon, 06 Sep 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 397 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: Cloner.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.patterns;
@@ -54,7 +54,7 @@ package org.acmsl.commons.patterns;
  * objects.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$ $Date$
+ * @version $Revision: 397 $ $Date: 2004-09-06 09:05:48 +0200 (Mon, 06 Sep 2004) $
  */
 public interface Cloner
 {

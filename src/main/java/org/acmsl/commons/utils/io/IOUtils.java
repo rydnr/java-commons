@@ -35,12 +35,12 @@
  * Description: Provides some commonly used static methods related to
  *              java.io classes.
  *
- * File version: $Revision$
+ * File version: $Revision: 550 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: IOUtils.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.utils.io;
@@ -72,7 +72,7 @@ import org.apache.commons.logging.LogFactory;
  * Provides some commonly used static methods related to java.io classes.
  * @author <a href="mailto:jsanleandro@yahoo.es"
            >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 550 $
  */
 public class IOUtils
     implements  Utils,

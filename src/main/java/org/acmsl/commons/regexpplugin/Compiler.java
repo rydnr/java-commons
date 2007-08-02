@@ -36,14 +36,14 @@
  * Description: Represents a regexp compiler. Different implementations vary
  *              but they all must respect this set of methods.
  *
- * Last modified by: $Author$ at $Date$
+ * Last modified by: $Author: chous $ at $Date: 2004-12-01 08:23:23 +0100 (Wed, 01 Dec 2004) $
  *
- * File version: $Revision$
+ * File version: $Revision: 461 $
  *
  * Project version: $Name$
  *                  ("Name" means no concrete version has been checked out)
  *
- * $Id$
+ * $Id: Compiler.java 461 2004-12-01 07:23:23Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -60,7 +60,7 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
  * must respect this set of methods.
  * @author <a href="mailto:jsanleandro@yahoo.es"
  *         >Jose San Leandro Armendáriz</a>
- * @version $Revision$
+ * @version $Revision: 461 $
  */
 public interface Compiler
 {
