@@ -25,7 +25,7 @@
       <plugin>
         <groupId>org.acmsl.antdep</groupId>
         <artifactId>maven-antdep-plugin</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.6-SNAPSHOT</version>
 	<!--configuration>
 	  <maven1Repository>xxx</maven1Repository>
 	</configuration-->

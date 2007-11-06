@@ -196,7 +196,7 @@ public class ClassLoaderUtils
         String actualClassPath = trimBrackets(classPath);
 
         StringTokenizer t_Tokenizer =
-            new StringTokenizer(actualClassPath, ",[]", false);
+            new StringTokenizer(actualClassPath, ":;,[]", false);
         
         String element;
 
