@@ -139,24 +139,67 @@ public class ClassLoaderUtils
     public String findLocation(
         final Class classInstance, final boolean fullSearch)
     {
+        return
+            findLocation(
+                classInstance.getName() + ".class",
+                classInstance.getClassLoader(),
+                fullSearch);
+    }
+
+    /**
+     * Tries to find the location where given class was loaded.
+     * @param classInstance the class to check.
+     * @param fullSearch whether to perform a full search or get
+     * the first match.
+     * @return the location.
+     * @precondition classInstance != null
+     */
+    public String findLocation(
+        final String resource, final ClassLoader classLoader)
+    {
+        return findLocation(resource, classLoader, false);
+    }
+
+    /**
+     * Tries to find the location where given resource was loaded.
+     * @param resource the resource to check.
+     * @param classLoader the class loader.
+     * @param fullSearch whether to perform a full search or get
+     * the first match.
+     * @return the location.
+     * @precondition resource != null
+     */
+    public String findLocation(
+        final String resource,
+        final ClassLoader classLoader,
+        final boolean fullSearch)
+    {
         String result = null;
 
-        String className = classInstance.getName();
+        ClassLoader loader = classLoader;
 
-        ClassLoader classLoader = classInstance.getClassLoader();
-
-        if  (classLoader == null)
+        if  (loader == null)
         {
-            classLoader = ClassLoader.getSystemClassLoader();
+            loader = ClassLoader.getSystemClassLoader();
         }
 
-        if  (classLoader != null)
+        if  (loader != null)
         {
-            URL url = classLoader.getResource(className);
+            String resourceName = resource;
+
+            if  (   (resourceName != null)
+                 && (resourceName.endsWith(".class")))
+            {
+                resourceName =
+                    resource.substring(
+                        0, resource.lastIndexOf(".class"));
+            }
+
+            URL url = loader.getResource(resourceName);
 
             if  (url == null)
             {
-                url = ClassLoader.getSystemResource(className);
+                url = loader.getSystemResource(resourceName);
             }
 
             if  (url != null)
@@ -167,7 +210,7 @@ public class ClassLoaderUtils
             {
                 result =
                     findLocation(
-                        classInstance,
+                        resource,
                         printClassPath(classLoader),
                         fullSearch);
             }
@@ -178,7 +221,7 @@ public class ClassLoaderUtils
 
     /**
      * Finds the location in given classpath.
-     * @param classInstance the class.
+     * @param resourceName the resource.
      * @param classPath the classpath.
      * @param fullSearch whether to perform a full search or get
      * the first match.
@@ -187,7 +230,7 @@ public class ClassLoaderUtils
      * @precondition classPath != null
      */
     protected String findLocation(
-        final Class classInstance,
+        final String resource,
         final String classPath,
         final boolean fullSearch)
     {
@@ -202,12 +245,15 @@ public class ClassLoaderUtils
 
         boolean nonFirstItem = false;
 
+        String resourceName = resource;
+
         while  (t_Tokenizer.hasMoreTokens())
         {
             element = t_Tokenizer.nextToken();
 
             if  (   (element != null)
-                 && (pathContainsClass(element, classInstance.getName())))
+                 && (pathContainsResource(
+                         element, resourceName)))
             {
                 if  (fullSearch)
                 {
@@ -530,16 +576,42 @@ public class ClassLoaderUtils
     }
 
     /**
-     * Checks whether given path contains a concrete class.
+     * Checks whether given path contains a concrete resource.
      * @param path the path.
      * @param className the name of the class.
      * @return <code>true</code> in such case.
      * @precondition path != null
      * @precondition className != null
      */
-    public boolean pathContainsClass(final String path, final String className)
+    public boolean pathContainsResource(
+        final String path, final String resource)
     {
-        return pathContainsResource(path, className, ".class");
+        return
+            pathContainsResource(
+                path, resource, retrieveSuffix(resource));
+    }
+
+    /**
+     * Retrieves the suffix of given resource.
+     * @param resource the resource.
+     * @return such suffix.
+     * @precondition resource != null
+     */
+    protected String retrieveSuffix(final String resource)
+    {
+        String result = resource;
+
+        if  (result != null)
+        {
+            int dotIndex = result.lastIndexOf(".");
+
+            if  (dotIndex >= 0)
+            {
+                result = result.substring(dotIndex + 1);
+            }
+        }
+
+        return result;
     }
 
     /**
