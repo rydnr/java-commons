@@ -6,7 +6,7 @@
   <groupId>org.acmsl</groupId>
   <artifactId>commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.5.7b19-SNAPSHOT</version>
+  <version>0.6</version>
   <name>ACM-SL Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
