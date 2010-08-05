@@ -211,7 +211,7 @@ public class ClassLoaderUtils
                 result =
                     findLocation(
                         resource,
-                        printClassPath(classLoader),
+                        printClassPath(loader),
                         fullSearch);
             }
         }

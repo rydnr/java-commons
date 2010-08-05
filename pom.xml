@@ -3,69 +3,33 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.acmsl.commons</groupId>
-  <artifactId>acmsl-commons</artifactId>
+  <groupId>org.acmsl</groupId>
+  <artifactId>commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.5.7b16-SNAPSHOT</version>
+  <version>0.5.7b19-SNAPSHOT</version>
   <name>ACM-SL Commons</name>
-  <url>http://maven.acm-sl.org/commons</url>
+  <url>http://www.acm-sl.org</url>
+  <inceptionYear>2002</inceptionYear>
+  <licenses>
+    <license>
+      <name>GPL</name>
+      <url>http://www.fsf.org/licensing/licenses/gpl.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
   <organization>
-    <name>Automated Comuting Machinery S.L.</name>
-    <url>http://www.acm-sl.com</url>
+    <name>ACM-SL</name>
+    <url>http://www.acm-sl.org</url>
   </organization>
-
-  <scm>
-    <developerConnection>scm:svn://svn.acm-sl.org/commons/trunk</developerConnection>
-  </scm>
-
-  <build>
-    <finalName>acmsl-commons</finalName>
-    <testSourceDirectory>src/test/java</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.acmsl.antdep</groupId>
-        <artifactId>maven-antdep-plugin</artifactId>
-        <version>0.6-SNAPSHOT</version>
-	<!--configuration>
-	  <maven1Repository>xxx</maven1Repository>
-	</configuration-->
-      </plugin>
-      <!--plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <tagBase>
-            svn://svn.acm-sl.org/var/svn/commons/tags
-          </tagBase>
-        </configuration>
-      </plugin-->
-      <!--plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include implementation="java.lang.String">**/*.java</include>
-          </includes>
-          <excludes>
-            <include implementation="java.lang.String">Nothing</include>
-          </excludes>
-        </configuration>
-      </plugin-->
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
-      <groupId>commons-logging</groupId>
+      <groupId>org.apache.commons</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.3</version>
     </dependency>
     <dependency>
-      <groupId>commons-oro</groupId>
-      <artifactId>oro</artifactId>
-      <version>2.0.8</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
+      <groupId>org.apache.commons</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.7.0</version>
     </dependency>
@@ -73,51 +37,34 @@
       <groupId>gnu-regexp</groupId>
       <artifactId>gnu-regexp</artifactId>
       <version>1.1.4</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta-regexp</groupId>
-      <artifactId>jakarta-regexp</artifactId>
-      <version>1.4</version>
-      <scope>provided</scope>
+      <groupId>regexp</groupId>
+      <artifactId>regexp</artifactId>
+      <version>1.2</version>
     </dependency>
     <dependency>
-      <groupId>servletapi</groupId>
+      <groupId>org.apache</groupId>
+      <artifactId>oro</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
       <artifactId>servletapi</artifactId>
       <version>2.3</version>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>mx4j</groupId>
       <artifactId>mx4j</artifactId>
       <version>2.1.1</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
+      <groupId>org.junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
-
-  <distributionManagement>
-    <repository>
-      <!--snapshots><enabled>true</enabled></snapshots-->
-      <id>acmsl-repository</id>
-      <name>ACM-SL Maven2 Repository</name>
-      <url>scp://maven.acm-sl.org/lib2</url>
-    </repository>
-    <site>
-      <id>maven.ventura24.es.local</id>
-      <url>scp://maven.ventura24.es.local/</url>
-    </site>
-  </distributionManagement>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>
