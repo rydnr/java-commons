@@ -4,9 +4,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.acmsl</groupId>
-  <artifactId>commons</artifactId>
+  <artifactId>acmsl-commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.6</version>
+  <version>0.7-SNAPSHOT</version>
   <name>ACM-SL Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
@@ -24,7 +24,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
+      <groupId>org1.apache.commons</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.3</version>
     </dependency>
@@ -67,4 +67,11 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+        <id>acmsl</id>
+        <name>libs-releases</name>
+        <url>http://maven.acm-sl.org/artifactory/libs-releases-local</url>
+    </repository>
+  </distributionManagement>
 </project>
