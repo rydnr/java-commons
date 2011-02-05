@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendariz
-                        chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -18,27 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabanas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: UniqueLogFactory.java
  *
  * Author: Jose San Leandro Armendariz
  *
  * Description: *LogFactory* implementation that uses a
  * cached *Log* instance if pre-cached.
- *
- * Version: $Revision: 506 $ ($Author: chous $ at $Date: 2005-09-05 10:46:31 +0200 (Mon, 05 Sep 2005) $)
- *
- * $Id: UniqueLogFactory.java 506 2005-09-05 08:46:31Z chous $
  *
  * Important Note: This class implements Apache Commons-Logging's Log
  * interface. License details are copied verbatim below.
@@ -54,17 +45,15 @@ import org.apache.commons.logging.LogConfigurationException;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * <code>LogFactory</code> implementation that uses a
- * cached <code>Log</code> instance.
- * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro</a>
- * @version $Revision: 506 $ ($Author: chous $ at $Date: 2005-09-05 10:46:31 +0200 (Mon, 05 Sep 2005) $)
+ * {@link LogFactory} implementation that uses a
+ * cached {@link Log} instance.
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class UniqueLogFactory
     extends  LogFactory
 {
     /**
-     * The <code>Log</code> instance.
+     * The {@link Log} instance.
      */
     private static Log m__Log;
 
@@ -74,7 +63,7 @@ public class UniqueLogFactory
     private static LogFactory m__Singleton;
     
     /**
-     * Specifies the <code>Log</code> instance.
+     * Specifies the {@link Log} instance.
      * @param log the log instance.
      */
     protected static final void immutableSetLog(
@@ -93,7 +82,7 @@ public class UniqueLogFactory
     }
 
     /**
-     * Retrieves the <code>Log</code> instance.
+     * Retrieves the {@link Log} instance.
      * @return the long instance.
      */
     public static Log getLog()
@@ -133,7 +122,7 @@ public class UniqueLogFactory
     }
     
     /**
-     * Creates a <code>UniqueLogFactory</code> instance with
+     * Creates a {@link UniqueLogFactory} instance with
      * given log instance.
      * @param log the log instance.
      * @precondition log != null

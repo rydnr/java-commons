@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,29 +21,15 @@
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: BundleI14able.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Represents Throwable instances with support for messages
  *              in different languages.
- *
- * Last modified by: $Author: chous $ at $Date: 2007-01-30 14:22:43 +0100 (Tue, 30 Jan 2007) $
- *
- * File version: $Revision: 1660 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: BundleI14able.java 1660 2007-01-30 13:22:43Z chous $
  *
  */
 package org.acmsl.commons;
@@ -79,9 +66,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents instances able to display messages in different languages.
- * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro Armendariz</a>
- * @version $Revision: 1660 $ at $Date: 2007-01-30 14:22:43 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class BundleI14able
     implements  I14able

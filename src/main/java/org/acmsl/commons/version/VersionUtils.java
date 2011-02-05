@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -18,28 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-307  USA
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: VersionUtils.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
- * Description: Provides some useful methods when working with Strings.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-08-27 23:10:15 +0200 (Sun, 27 Aug 2006) $
- *
- * File version: $Revision: 1489 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: VersionUtils.java 1489 2006-08-27 21:10:15Z chous $
+ * Description: Provides some useful methods when working with Version
+ *              information.
  *
  */
 package org.acmsl.commons.version;
@@ -74,10 +64,9 @@ import java.text.MessageFormat;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Provides some useful methods when working with Strings.
- * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro Armendáriz</a>
- * @version $Revision: 1489 $
+ * Provides some useful methods when working with {@link Version}
+ * information.
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class VersionUtils
     implements  Utils,

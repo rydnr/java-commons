@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2004  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,29 +20,15 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Contact info: jose.sanleandro@acm-sl.org
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: CheckedException.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
- * Description: Represents any exception which requires to be catched.
- *
- * Last modified by: $Author: chous $ at $Date: 2005-08-30 08:57:14 +0200 (Tue, 30 Aug 2005) $
- *
- * File version: $Revision: 501 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: CheckedException.java 501 2005-08-30 06:57:14Z chous $
+ * Description: Represents any exception which requires to be caught.
  *
  */
 package org.acmsl.commons;
@@ -61,10 +47,8 @@ import java.lang.Exception;
 import java.util.Locale;
 
 /**
- * Represents any exception which requires to be catched.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendariz</a>
- * @version $Revision: 501 $
+ * Represents any exception which requires to be caught.
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public abstract class CheckedException
     extends     Exception

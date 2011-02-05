@@ -2,8 +2,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2006  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -22,26 +22,14 @@
 
     Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: MBeanRegistrator.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Is able to register MBeans.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-03-07 10:16:10 +0100 (Tue, 07 Mar 2006) $
- *
- * File version: $Revision: 542 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: MBeanRegistrator.java 542 2006-03-07 09:16:10Z chous $
  *
  */
 package org.acmsl.commons.utils.jmx;
@@ -68,9 +56,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Is able to register MBeans.
- * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro Armendáriz</a>
- * @version $Revision: 542 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class MBeanRegistrator
 {

@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,31 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: MatchResultJDKAdapter.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Represents the result of match in a regexp parsing
  *              process using JDK1.4 regexp package.
- *
- * Last modified by: $Author: chous $ at $Date: 2004-09-06 09:05:48 +0200 (Mon, 06 Sep 2004) $
- *
- * File version: $Revision: 397 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: MatchResultJDKAdapter.java 397 2004-09-06 07:05:48Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin.jdk14regexp;
@@ -67,9 +53,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Represents the result of match in a regexp parsing process using
  * JDK1.4 regexp package.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 397 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class MatchResultJDKAdapter
     implements  MatchResult
@@ -84,16 +68,16 @@ public class MatchResultJDKAdapter
      * Regexp-specific instance.
      * @param matcher JDK1.4 matcher object to adapt.
      */
-    public MatchResultJDKAdapter(Matcher matcher)
+    public MatchResultJDKAdapter(final Matcher matcher)
     {
-        inmutableSetMatcher(matcher);
+        immutableSetMatcher(matcher);
     }
 
     /**
      * Specifies the instance to adapt.
      * @param matcher the adaptee.
      */
-    private void inmutableSetMatcher(Matcher matcher)
+    private void immutableSetMatcher(final Matcher matcher)
     {
         m__Adaptee = matcher;
     }
@@ -102,9 +86,9 @@ public class MatchResultJDKAdapter
      * Specifies the instance to adapt.
      * @param matcher the adaptee.
      */
-    protected void setMatcher(Matcher matcher)
+    protected void setMatcher(final Matcher matcher)
     {
-        inmutableSetMatcher(matcher);
+        immutableSetMatcher(matcher);
     }
 
     /**

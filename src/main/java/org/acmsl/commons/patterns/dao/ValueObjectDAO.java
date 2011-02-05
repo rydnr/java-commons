@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,32 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: ValueObjectDAO.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Data Access Object able to access and retrieve ValueObject
- *              elements.
- *
- * Last modified by: $Author: chous $ at $Date: 2004-10-06 08:21:45 +0200 (Wed, 06 Oct 2004) $
- *
- * File version: $Revision: 420 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: ValueObjectDAO.java 420 2004-10-06 06:21:45Z chous $
+ *              instances.
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -56,10 +41,8 @@ import org.acmsl.commons.patterns.dao.DAO;
 import org.acmsl.commons.patterns.dao.ValueObjectPrimaryKey;
 
 /**
- * Data Access Object able to access and retrieve ValueObject elements.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 420 $
+ * Data Access Object able to access and retrieve {@link ValueObject} instances.
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public interface ValueObjectDAO
     extends DAO

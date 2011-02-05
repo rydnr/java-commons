@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,32 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: Version.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Is included in all classes in which version
  *              information is susceptible of being requested.
- *
- * Last modified by: $Author: chous $ at $Date: 2004-12-03 07:57:15 +0100 (Fri, 03 Dec 2004) $
- *
- * File version: $Revision: 476 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: Version.java 476 2004-12-03 06:57:15Z chous $
  *
  */
 package org.acmsl.commons.version;
@@ -52,9 +37,7 @@ package org.acmsl.commons.version;
 /**
  * Is included in all classes in which version information is
  * susceptible of being requested.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 476 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class Version
 {

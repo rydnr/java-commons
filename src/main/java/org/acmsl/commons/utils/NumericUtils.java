@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -21,28 +21,15 @@
 
 
     Thanks to ACM S.L. for distributing this library under the LGPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: NumericUtils.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides some useful methods when working with numbers.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
- *
- * File version: $Revision: 550 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: NumericUtils.java 550 2006-06-14 19:01:54Z chous $
- *
  */
 package org.acmsl.commons.utils;
 
@@ -59,11 +46,7 @@ import java.util.StringTokenizer;
 
 /**
  * Provides some useful methods when working with numbers.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @stereotype tested
- * @testcase unittests.org.acmsl.commons.utils.TestNumericUtils
- * @version $Revision: 550 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class NumericUtils
     implements  Utils,

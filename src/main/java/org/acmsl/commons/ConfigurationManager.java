@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2004  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,30 +21,15 @@
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: ConfigurationManager.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides basic methods to allow specialized classes to
  *              manage the configuration of applications.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
- *
- * File version: $Revision: 550 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: ConfigurationManager.java 550 2006-06-14 19:01:54Z chous $
- *
  */
 package org.acmsl.commons;
 
@@ -70,9 +56,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Provides basic methods to allow specialized classes to manage th
  * configuration of applications.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 550 $ $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public abstract class ConfigurationManager
     implements  Manager

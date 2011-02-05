@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -18,31 +19,17 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: RegexpManager.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Manages which regexp engine to use, acting as a facade
  *              hiding all details of building or retrieving implementations.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
- *
- * File version: $Revision: 550 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: RegexpManager.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
@@ -56,7 +43,6 @@ import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.utils.ReflectionUtils;
-
 
 /*
  * Importing some commons-logging classes.
@@ -84,7 +70,6 @@ import java.util.Properties;
  * Manages which regexp engine to use, acting as a facade hiding all
  * details of building or retrieving implementations.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @version $Revision: 550 $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $ by $Author: chous $
  */
 public class RegexpManager
     implements  Manager,

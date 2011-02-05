@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armend&aacute;riz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armend&aacute;riz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,29 +20,15 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jose.sanleandro@acm-sl.org
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecaba&ntilde;as
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: ReflectionUtils.java
  *
- * Author: Jose San Leandro Armend&aacute;riz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides some useful methods when working with reflection.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
- *
- * File version: $Revision: 550 $
- *
- * Project version: $Name$
- *
- * $Id: ReflectionUtils.java 550 2006-06-14 19:01:54Z chous $
- *
  */
 package org.acmsl.commons.utils;
 
@@ -69,8 +56,8 @@ import java.util.List;
 
 /**
  * Provides some useful methods when working with reflection.
- * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro</a>
- * @version $Revision: 550 $ at $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
+ * @stereotype Utils
  */
 public class ReflectionUtils
     implements  Utils,

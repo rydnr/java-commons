@@ -2,8 +2,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2006  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -22,26 +22,14 @@
 
     Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: Chronometer.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Simple way to annotate timestamps.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-04-02 12:07:24 +0200 (Sun, 02 Apr 2006) $
- *
- * File version: $Revision: 151 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: CharUtils.java 151 2006-04-02 10:07:24Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -53,7 +41,8 @@ import java.lang.System;
 
 /**
  * Provides a simple way to annotate timestamps.
- * @author <a href="mailto:jose.sanleandro@ventura24.es">Jose San Leandro</a>
+ * @author <a href="mailto:chous@acm-sl.org"
+  >Jose San Leandro Armendariz</a>
  */
 public class Chronometer
 {
@@ -94,7 +83,7 @@ public class Chronometer
     /**
      * The starting point.
      */
-    private long start;
+    private long m__lStart;
 
     /**
      * Creates a new <code>Chronometer</code>.
@@ -110,7 +99,7 @@ public class Chronometer
      */
     private void immutableSetStart(final long start)
     {
-        this.start = start;
+        m__lStart = start;
     }
 
     /**
@@ -128,7 +117,7 @@ public class Chronometer
      */
     public long getStart()
     {
-        return start;
+        return m__lStart;
     }
 
     /**

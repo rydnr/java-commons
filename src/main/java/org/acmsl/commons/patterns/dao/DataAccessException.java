@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
-                        QueryJ
+                        ACM-SL Commons
 
-    Copyright (C) 2002  Jose San Leandro Armendariz
-                        jsanleandro@yahoo.es
-                        chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,29 +19,16 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-    Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsanleandro@yahoo.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabanas
-                    Boadilla del monte
-                    28660 Madrid
-                    Spain
+    Thanks to ACM S.L. for distributing this library under the LGPL license.
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: DataAccessException.java
  *
  * Author: Jose San Leandro Armendariz
  *
  * Description: Represents abnormal situations regarding data accessing.
- *
- * Last modified by: $Author: chous $ at $Date: 2004-10-16 11:17:28 +0200 (Sat, 16 Oct 2004) $
- *
- * File version: $Revision: 437 $
- *
- * Project version: $Name$
- *
- * $Id: DataAccessException.java 437 2004-10-16 09:17:28Z chous $
  *
  */
 package org.acmsl.commons.patterns.dao;
@@ -53,9 +40,7 @@ import org.acmsl.commons.patterns.dao.DAO;
 
 /**
  * Represents abnormal situations regarding data accessing.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro</a>
- * @version $Revision: 437 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class DataAccessException
     extends  RuntimeException

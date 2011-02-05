@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -21,26 +22,14 @@
 
     Thanks to ACM S.L. for distributing this library under the LGPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: GrammarUtils.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides some grammar rules for language.
- *
- * Last modified by: $Author: chous $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $
- *
- * File version: $Revision: 1661 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: GrammarUtils.java 1661 2007-01-30 14:23:13Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -63,7 +52,6 @@ import java.util.MissingResourceException;
 /**
  * Provides some grammar rules for language.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @version $Revision: 1661 $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
  */
 public abstract class GrammarUtils
     implements  Utils

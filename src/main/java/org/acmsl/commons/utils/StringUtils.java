@@ -1,8 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2006  Jose San Leandro Armendáriz
-                             chous@acm-sl.org
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -20,26 +21,14 @@
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jose.sanleandro@acm-sl.com
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: StringUtils.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides some useful methods when working with Strings.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-12-15 19:29:39 +0100 (Fri, 15 Dec 2006) $
- *
- * File version: $Revision: 1624 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: StringUtils.java 1624 2006-12-15 18:29:39Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -78,11 +67,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Provides some useful methods when working with Strings.
- * @author <a href="mailto:jsanleandro@yahoo.es"
- *         >Jose San Leandro Armendáriz</a>
- * @stereotype tested
- * @testcase unittests.org.acmsl.commons.utils.TestStringUtils
- * @version $Revision: 1624 $
+ * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class StringUtils
     implements  Utils,

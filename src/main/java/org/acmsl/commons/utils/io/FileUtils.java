@@ -1,9 +1,9 @@
+//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
+                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -19,27 +19,16 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-307  USA
 
-
     Thanks to ACM S.L. for distributing this library under the LGPL license.
-    Contact info: jsr000@terra.es
-    Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
-                    Boadilla del monte
+    Contact info: jose.sanleandro@acm-sl.com
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: FileUtils.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Provides some useful methods when working with files.
- *
- * File version: $Revision: 550 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: FileUtils.java 550 2006-06-14 19:01:54Z chous $
  *
  */
 package org.acmsl.commons.utils.io;
@@ -62,25 +51,26 @@ import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 
 /*
- * Importing commons-logging classes.
+ * Importing Apache Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
 
 /**
  * Provides some useful methods when working with files.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 550 $ $Date: 2006-06-14 21:01:54 +0200 (Wed, 14 Jun 2006) $
- * @stereotype Utils
+ * @author <a href="mailto:chous@acm-sl.org"
+           >Jose San Leandro Armendariz</a>
  */
 public class FileUtils
     implements  Utils,
@@ -371,6 +361,7 @@ public class FileUtils
      * @return <code>true</code> if the process is successfully accomplished.
      * @precondition filePath != null
      * @precondition contents != null
+     * @deprecated Specify the charset instead.
      */
     public boolean writeFileIfPossible(
         final String filePath, final String contents)
@@ -380,11 +371,27 @@ public class FileUtils
 
     /**
      * Saves the contents to a file.
+     * @param filePath the path of the file.
+     * @param contents the text to save.
+     * @param charset the file charset to use.
+     * @return <code>true</code> if the process is successfully accomplished.
+     * @precondition filePath != null
+     * @precondition contents != null
+     */
+    public boolean writeFileIfPossible(
+        final String filePath, final String contents, final Charset charset)
+    {
+        return writeFileIfPossible(new File(filePath), contents, charset);
+    }
+
+    /**
+     * Saves the contents to a file.
      * @param file the file to be overwritten.
      * @param contents the text to save.
      * @return <code>true</code> if the process is successfully accomplished.
      * @precondition file != null
      * @precondition contents != null
+     * @deprecated Specify the charset instead.
      */
     public boolean writeFileIfPossible(final File file, final String contents)
     {
@@ -393,6 +400,58 @@ public class FileUtils
         try
         {
             writeFile(file, contents);
+        }
+        catch  (final FileNotFoundException fileNotFoundException)
+        {
+            /*
+             * We have chosen not to notify of exceptions, so this
+             * block of code is only descriptive.
+             */
+            LogFactory.getLog(FileUtils.class).info(
+                "Cannot write file " + file,
+                fileNotFoundException);
+        }
+        catch  (final SecurityException securityException)
+        {
+            /*
+             * We have chosen not to notify of exceptions, so this
+             * block of code is only descriptive.
+             */
+            LogFactory.getLog(FileUtils.class).info(
+                "Cannot write file " + file,
+                securityException);
+        }
+        catch  (final IOException ioException)
+        {
+            /*
+             * We have chosen not to notify of exceptions, so this
+             * block of code is only descriptive.
+             */
+            LogFactory.getLog(FileUtils.class).info(
+                "Cannot write file " + file,
+                ioException);
+        }
+
+        return result;
+    }
+
+    /**
+     * Saves the contents to a file.
+     * @param file the file to be overwritten.
+     * @param contents the text to save.
+     * @param charset the file charset to use.
+     * @return <code>true</code> if the process is successfully accomplished.
+     * @precondition file != null
+     * @precondition contents != null
+     */
+    public boolean writeFileIfPossible(
+        final File file, final String contents, final Charset charset)
+    {
+        boolean result = false;
+
+        try
+        {
+            writeFile(file, contents, charset);
         }
         catch  (final FileNotFoundException fileNotFoundException)
         {
@@ -438,6 +497,7 @@ public class FileUtils
      * @throws IOException if any other I/O error occurs.
      * @precondition filePath != null
      * @precondition contents != null
+     * @deprecated Specify the charset instead.
      */
     public void writeFile(final String filePath, final String contents)
         throws  FileNotFoundException,
@@ -445,6 +505,27 @@ public class FileUtils
                 IOException
     {
         writeFile(new File(filePath), contents);
+    }
+
+    /**
+     * Writes a file referred by given path, with given contents.
+     * @param filePath the path of the file.
+     * @param contents the text to write.
+     * @param charset the file charset to use.
+     * @throws FileNotFoundException if the file is not found.
+     * @throws SecurityException if the security manager forbids this
+     * operation.
+     * @throws IOException if any other I/O error occurs.
+     * @precondition filePath != null
+     * @precondition contents != null
+     */
+    public void writeFile(
+        final String filePath, final String contents, final Charset charset)
+        throws  FileNotFoundException,
+                SecurityException,
+                IOException
+    {
+        writeFile(new File(filePath), contents, charset);
     }
 
     /**
@@ -457,6 +538,7 @@ public class FileUtils
      * @throws IOException if any other I/O error occurs.
      * @precondition file != null
      * @precondition contents != null
+     * @deprecated Specify the charset instead.
      */
     public void writeFile(final File file, final String contents)
         throws  FileNotFoundException,
@@ -475,6 +557,45 @@ public class FileUtils
             t_pwWriter.close();
 
             t_fwWriter.close();
+        }
+    }
+
+    /**
+     * Writes a file with given contents.
+     * @param file the file to write.
+     * @param contents the text to write.
+     * @param charset the charset to use.
+     * @throws FileNotFoundException if the file is not found.
+     * @throws SecurityException if the security manager forbids this
+     * operation.
+     * @throws IOException if any other I/O error occurs.
+     * @precondition file != null
+     * @precondition contents != null
+     * @precondition charset != null
+     */
+    public void writeFile(
+        final File file, final String contents, final Charset charset)
+        throws  FileNotFoundException,
+                SecurityException,
+                IOException
+    {
+        if  (   (file     != null)
+             && (contents != null)
+             && (charset != null))
+        {
+            FileOutputStream t_fosFileStream = new FileOutputStream(file);
+
+            OutputStreamWriter t_osFileWriter = new OutputStreamWriter(t_fosFileStream, charset);
+
+            PrintWriter t_pwWriter = new PrintWriter(t_osFileWriter);
+
+            t_pwWriter.println(contents);
+
+            t_pwWriter.close();
+
+            t_osFileWriter.close();
+
+            t_fosFileStream.close();
         }
     }
 
