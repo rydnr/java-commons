@@ -6,7 +6,7 @@
   <groupId>org.acmsl</groupId>
   <artifactId>acmsl-commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.7.1-SNAPSHOT</version>
+  <version>0.7.1</version>
   <name>ACM-SL Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
@@ -28,12 +28,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
+      <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.1</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
+      <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.7.0</version>
     </dependency>
@@ -65,7 +65,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit</groupId>
+      <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>compile</scope>
