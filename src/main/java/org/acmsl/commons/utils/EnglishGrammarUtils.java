@@ -94,10 +94,15 @@ public class EnglishGrammarUtils
     {
         String result = word.trim().toLowerCase();
 
-        if  (   (result.endsWith("s"))
-             || (result.endsWith("x"))
-             || (result.endsWith("sh"))
-             || (result.endsWith("ch")))
+        if (result.endsWith("y"))
+        {
+            result = result.substring(0, result.length() - 1);
+            result += "ie";
+        }
+        else if  (   (result.endsWith("s"))
+                  || (result.endsWith("x"))
+                  || (result.endsWith("sh"))
+                  || (result.endsWith("ch")))
         {
             result += "e";
         }
@@ -122,7 +127,11 @@ public class EnglishGrammarUtils
     {
         String result = word.trim().toLowerCase();
 
-        if  (result.endsWith("s"))
+        if  (result.endsWith("ies"))
+        {
+            result = result.substring(0, result.length() - 3) + "y";
+        }
+        else if  (result.endsWith("s"))
         {
 //            if  (   (result.endsWith("es"))
             if  (   (result.endsWith("xes"))
