@@ -133,6 +133,27 @@ public class EnglishGrammarUtils
             }
 
             result = result.substring(0, result.length() - 1);
+
+            if (result.endsWith("ie"))
+            {
+                if (result.length() == 2)
+                {
+                    result = "";
+                }
+                else
+                {
+                    result = result.substring(0, result.length() - 2);
+                }
+
+                if  (word.trim().toUpperCase().equals(word))
+                {
+                    result = result + "Y";
+                }
+                else
+                {
+                    result = result + "y";
+                }
+            }
         }
 
         if  (word.trim().toUpperCase().equals(word))
