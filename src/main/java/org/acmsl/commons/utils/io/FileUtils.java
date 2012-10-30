@@ -139,7 +139,7 @@ public class FileUtils
                 SecurityException,
                 IOException
     {
-        char[] result = EMPTY_CHAR_ARRAY;;
+        char[] result = EMPTY_CHAR_ARRAY;
 
         /*
          * Instantiate a FileReader object to read file's contents.
@@ -209,7 +209,7 @@ public class FileUtils
      */
     public String readFileIfPossible(final String filePath)
     {
-        String result = new String();
+        String result = null;
 
         try
         {
@@ -221,7 +221,7 @@ public class FileUtils
             * We have chosen not to notify of exceptions, so this
             * block of code is only descriptive.
             */
-            LogFactory.getLog(FileUtils.class).info(
+            LogFactory.getLog(FileUtils.class).trace(
                 "Cannot read file " + filePath,
                 fileNotFoundException);
         }
@@ -244,6 +244,11 @@ public class FileUtils
             LogFactory.getLog(FileUtils.class).info(
                 "Cannot read file " + filePath,
                 ioException);
+        }
+
+        if (result == null)
+        {
+            result = "";
         }
 
         return result;
@@ -829,7 +834,7 @@ public class FileUtils
 
         try
         {
-            Helper t_Helper = createHelper(RegexpManager.getInstance());
+            final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
             result =
                 t_Helper.replaceAll(packageName, "\\.", File.separator);
