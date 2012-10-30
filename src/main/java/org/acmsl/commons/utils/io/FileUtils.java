@@ -277,7 +277,7 @@ public class FileUtils
              * We have chosen not to notify of exceptions, so this
              * block of code is only descriptive.
              */
-            LogFactory.getLog(FileUtils.class).info(
+            LogFactory.getLog(FileUtils.class).trace(
                 "Cannot read file " + file,
                 fileNotFoundException);
         }
