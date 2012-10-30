@@ -393,7 +393,7 @@ public class BundleI14able
         immutableSetRetryBundles(flag);
     }
     
-    /**
+    /*
      * Retrieves whether to retry the bundle retrieval.
      * @return such condition.
      */
@@ -656,7 +656,6 @@ public class BundleI14able
                                 
                                     try
                                     {
-                                        // last attempt.
                                         result =
                                             new PropertyResourceBundle(
                                                 new FileInputStream(
@@ -674,19 +673,62 @@ public class BundleI14able
                                     }
                                     finally
                                     {
-                                        if  (exceptionThrown != null)
+                                        try
                                         {
-                                            try
+                                            // last attempt.
+                                            result =
+                                                new PropertyResourceBundle(
+                                                    new FileInputStream(
+                                                          bundleName
+                                                        + ".properties"));
+                                        }
+                                        catch  (final FileNotFoundException thirdFileNotFoundException)
+                                        {
+                                            exceptionThrown = thirdFileNotFoundException;
+                                        }
+                                        catch  (final IOException thirdIOException)
+                                        {
+                                            exceptionThrown = thirdIOException;
+                                        }
+                                        finally
+                                        {
+                                            if  (exceptionThrown != null)
                                             {
-                                                LogFactory.getLog(BundleI14able.class)
-                                                    .debug(
-                                                          "Could not retrieve bundle "
-                                                        + bundleName,
-                                                        firstMissingResourceException);
-                                            }
-                                            catch  (final Throwable throwable)
-                                            {
-                                                // Class-loading problem.
+                                                exceptionThrown = null;
+                                                try
+                                                {
+                                                    // last attempt.
+                                                    result =
+                                                        new PropertyResourceBundle(
+                                                            new FileInputStream(
+                                                                bundleName));
+                                                }
+                                                catch  (final FileNotFoundException thirdFileNotFoundException)
+                                                {
+                                                    exceptionThrown = thirdFileNotFoundException;
+                                                }
+                                                catch  (final IOException thirdIOException)
+                                                {
+                                                    exceptionThrown = thirdIOException;
+                                                }
+                                                finally
+                                                {
+                                                    if  (exceptionThrown != null)
+                                                    {
+                                                        try
+                                                        {
+                                                            LogFactory.getLog(BundleI14able.class)
+                                                                .debug(
+                                                                      "Could not retrieve bundle "
+                                                                    + bundleName,
+                                                                    firstMissingResourceException);
+                                                        }
+                                                        catch  (final Throwable throwable)
+                                                        {
+                                                            // Class-loading problem.
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
