@@ -44,9 +44,7 @@ import org.acmsl.commons.patterns.Utils;
 /*
  * Importing some JDK classes.
  */
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.MissingResourceException;
 
 /**
@@ -303,7 +301,14 @@ public abstract class GrammarUtils
 
         if  (result == null)
         {
-            result = getRegularSingularForm(word);
+            if (".plural".equals(suffix))
+            {
+                result = getRegularPluralForm(word);
+            }
+            else
+            {
+                result = getRegularSingularForm(word);
+            }
         }
 
         return result;

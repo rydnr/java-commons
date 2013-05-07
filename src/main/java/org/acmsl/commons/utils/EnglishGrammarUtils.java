@@ -90,11 +90,13 @@ public class EnglishGrammarUtils
      * @return the regular plural form.
      * @precondition word != null
      */
+    @Override
     protected String getRegularPluralForm(final String word)
     {
         String result = word.trim().toLowerCase();
 
-        if (result.endsWith("y"))
+        if (   (result.endsWith("y"))
+            && (!result.endsWith("ey")))
         {
             result = result.substring(0, result.length() - 1);
             result += "ie";
@@ -134,7 +136,8 @@ public class EnglishGrammarUtils
         else if  (result.endsWith("s"))
         {
 //            if  (   (result.endsWith("es"))
-            if  (   (result.endsWith("xes"))
+            if  (   (result.endsWith("sses"))
+                 || (result.endsWith("xes"))
                  || (result.endsWith("shes"))
                  || (result.endsWith("ches")))
             {
