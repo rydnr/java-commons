@@ -63,11 +63,12 @@ public class HelperJDKAdapter
      * @precondition pattern != null
      * @precondition replacement != null
      */
+    @Override
     public String replaceAll(
         final String input, final String pattern, final String replacement)
       throws  MalformedPatternException
     {
-        String result = input;
+        String result;
 
         try 
         {

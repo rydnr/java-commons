@@ -40,18 +40,12 @@ import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
 /*
- * Importing Commons-Logging classes.
- */
-import org.apache.commons.logging.LogFactory;
-
-/*
  * Importing some JDK classes.
  */
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -135,9 +129,8 @@ public class ClassLoaderUtils
 
     /**
      * Tries to find the location where given class was loaded.
-     * @param classInstance the class to check.
-     * @param fullSearch whether to perform a full search or get
-     * the first match.
+     * @param resource the resource.
+     * @param classLoader the class loader.
      * @return the location.
      * @precondition classInstance != null
      */
@@ -186,7 +179,7 @@ public class ClassLoaderUtils
 
             if  (url == null)
             {
-                url = loader.getSystemResource(resourceName);
+                url = ClassLoader.getSystemResource(resourceName);
             }
 
             if  (url != null)
@@ -208,7 +201,7 @@ public class ClassLoaderUtils
 
     /**
      * Finds the location in given classpath.
-     * @param resourceName the resource.
+     * @param resource the resource.
      * @param classPath the classpath.
      * @param fullSearch whether to perform a full search or get
      * the first match.
@@ -297,6 +290,7 @@ public class ClassLoaderUtils
      * @return such information.
      * @precondition classLoader != null
      */
+    @SuppressWarnings("unchecked")
     protected String printAntClassPath(final ClassLoader classLoader)
     {
         StringBuffer result = new StringBuffer();
@@ -379,6 +373,7 @@ public class ClassLoaderUtils
      * @return such information.
      * @precondition instance != null
      */
+    @SuppressWarnings("unchecked")
     protected String printURLClassPath(final Object instance)
     {
         StringBuffer result = new StringBuffer();
@@ -489,6 +484,7 @@ public class ClassLoaderUtils
      * @return such information.
      * @precondition classLoader != null
      */
+    @SuppressWarnings("unchecked")
     protected String printSunClassPath(final ClassLoader classLoader)
     {
         StringBuffer result = new StringBuffer();
@@ -565,7 +561,7 @@ public class ClassLoaderUtils
     /**
      * Checks whether given path contains a concrete resource.
      * @param path the path.
-     * @param className the name of the class.
+     * @param resource the name of the class.
      * @return <code>true</code> in such case.
      * @precondition path != null
      * @precondition className != null
@@ -726,8 +722,8 @@ public class ClassLoaderUtils
      * @param replacement the replacement.
      * @return the modified text.
      * @precondition text != null
-     * @preocndition original != null
-     * @preocndition replacement != null
+     * @precondition original != null
+     * @precondition replacement != null
      */
     protected String replace(
         final String text, final String original, final String replacement)
@@ -753,13 +749,13 @@ public class ClassLoaderUtils
             {
                 result = result.substring(1);
             }
-        }
 
-        while  (   (result.endsWith("]"))
-                && (length > 1))
-        {
-            result = result.substring(0, length - 1);
-            length = result.length();
+            while  (   (result.endsWith("]"))
+                    && (length > 1))
+            {
+                result = result.substring(0, length - 1);
+                length = result.length();
+            }
         }
 
         return result;
@@ -775,13 +771,16 @@ public class ClassLoaderUtils
     {
         String result = text;
 
-        int length = (result != null) ? result.length() : 0;
-
-        while  (   (length > 1)
-                && (result.endsWith("/")))
+        if (result != null)
         {
-            result = result.substring(0, length - 1);
-            length = result.length();
+            int length = result.length();
+
+            while  (   (length > 1)
+                    && (result.endsWith("/")))
+            {
+                result = result.substring(0, length - 1);
+                length = result.length();
+            }
         }
 
         return result;

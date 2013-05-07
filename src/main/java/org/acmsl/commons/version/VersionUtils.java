@@ -40,7 +40,6 @@ package org.acmsl.commons.version;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
@@ -338,8 +337,7 @@ public class VersionUtils
                 wildcard,
                 getVersionPattern(wildcard),
                 createMatcher(RegexpManager.getInstance()),
-                StringValidator.getInstance(),
-                ConversionUtils.getInstance());
+                StringValidator.getInstance());
     }
 
     /**
@@ -350,7 +348,6 @@ public class VersionUtils
      * @param pattern the version pattern.
      * @param matcher the matcher.
      * @param stringValidator the <code>StringValidator</code> instance.
-     * @param conversionUtils the <code>ConversionUtils</code> instance.
      * @return <code>true</code> if the version is compatible.
      * @precondition version != null
      * @precondition family != null
@@ -366,8 +363,7 @@ public class VersionUtils
         final String wildcard,
         final Pattern pattern,
         final Matcher matcher,
-        final StringValidator stringValidator,
-        final ConversionUtils conversionUtils)
+        final StringValidator stringValidator)
     {
         boolean result = false;
         
@@ -442,7 +438,7 @@ public class VersionUtils
 
         try
         {
-            MatchResult t_MatchResult = null;
+            MatchResult t_MatchResult;
 
             if  (   (!stringValidator.isEmpty(version))
                  && (matcher.contains(version, pattern)))
@@ -460,7 +456,7 @@ public class VersionUtils
         }
         catch  (final MalformedPatternException exception)
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(VersionUtils.class).error(
                 "Malformed pattern (possibly due to quote symbol conflict)",
                 exception);
         }

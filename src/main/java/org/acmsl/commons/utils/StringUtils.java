@@ -48,7 +48,6 @@ import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
-import org.acmsl.commons.utils.StringValidator;
 
 /*
  * Importing some JDK classes.
@@ -58,6 +57,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /*
@@ -416,7 +416,7 @@ public class StringUtils
 
     /**
      * Removes all duplicates of specified char in given text.
-     * @param text the text to parse.
+     * @param original the text to parse.
      * @param lookfor the char to remove duplicates.
      * @return the updated text.
      */
@@ -429,7 +429,7 @@ public class StringUtils
 
     /**
      * Removes all duplicates of specified char in given text.
-     * @param text the text to parse.
+     * @param original the text to parse.
      * @param lookfor the char to remove duplicates.
      * @param stringValidator the StringValidator instance.
      * @return the updated text.
@@ -828,13 +828,13 @@ public class StringUtils
             }
             catch (final MalformedPatternException exception)
             {
-                LogFactory.getLog(getClass()).fatal(
+                LogFactory.getLog(StringUtils.class).fatal(
                     "Malformed pattern",
                     exception);
             }
             catch (final RegexpEngineNotFoundException exception)
             {
-                LogFactory.getLog(getClass()).fatal(
+                LogFactory.getLog(StringUtils.class).fatal(
                     "Cannot find any regexp engine.",
                     exception);
             }
@@ -879,7 +879,6 @@ public class StringUtils
      * separator. For instance,
      * <code>capitalize("asd-efg", '-').equals("AsdEfg")</code>.
      * @param text the text to process.
-     * @param separator the word separator.
      * @return the capitalized string.
      */
     public String capitalize(final String text)
@@ -900,13 +899,13 @@ public class StringUtils
             }
             catch (final MalformedPatternException exception)
             {
-                LogFactory.getLog(getClass()).fatal(
+                LogFactory.getLog(StringUtils.class).fatal(
                     "Malformed pattern",
                     exception);
             }
             catch (final RegexpEngineNotFoundException exception)
             {
-                LogFactory.getLog(getClass()).fatal(
+                LogFactory.getLog(StringUtils.class).fatal(
                     "Cannot find any regexp engine.",
                     exception);
             }
@@ -1074,13 +1073,13 @@ public class StringUtils
      * @precondition stringValidator != null
      * @precondition compiler != null
      */
-    protected Collection tokenize(
+    protected Collection<String> tokenize(
         final String text,
         final String separator,
         final StringValidator stringValidator,
         final Compiler compiler)
     {
-        ArrayList result = new ArrayList();
+        List<String> result = new ArrayList<String>();
 
         String t_strText = text;
 
@@ -1091,7 +1090,7 @@ public class StringUtils
             {
                 Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-                MatchResult t_MatchResult = null;
+                MatchResult t_MatchResult;
 
                 if  (   (compiler != null)
                      && (t_Matcher  != null))
@@ -1113,7 +1112,7 @@ public class StringUtils
                 }
                 else 
                 {
-                    LogFactory.getLog(getClass()).error(
+                    LogFactory.getLog(StringUtils.class).error(
                           "regexp compiler (" + compiler + ") "
                         + "or matcher (" + t_Matcher + ")  unavailable");
                 }
@@ -1126,7 +1125,7 @@ public class StringUtils
         }
         catch  (final MalformedPatternException exception)
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(StringUtils.class).error(
                 "Malformed pattern (possibly due to quote symbol conflict)",
                 exception);
         }
@@ -1137,7 +1136,7 @@ public class StringUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(StringUtils.class).error(
                 "Cannot find any regexp engine.", exception);
         }
         
@@ -1169,7 +1168,6 @@ public class StringUtils
      * @param text the text.
      * @param group the group.
      * @return the selected group.
-     * @precondition ((group == 1) || (group == 2))
      */
     protected String extractPackageGroup(
         final String text, final int group)
@@ -1182,12 +1180,11 @@ public class StringUtils
             {
                 Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-                MatchResult t_MatchResult = null;
+                MatchResult t_MatchResult;
 
                 Pattern t_SubPackagePattern = getSubPackagePattern();
 
-                if  (   (result != null)
-                     && (result.trim().length() > 0)
+                if  (   (result.trim().length() > 0)
                      && (t_SubPackagePattern != null)
                      && (t_Matcher.contains(
                              result, t_SubPackagePattern)))
@@ -1206,7 +1203,7 @@ public class StringUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(StringUtils.class).fatal(
                 "Cannot find any regexp engine.",
                 exception);
         }
@@ -1244,7 +1241,7 @@ public class StringUtils
 
                 Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-                MatchResult t_MatchResult = null;
+                MatchResult t_MatchResult;
 
                 boolean t_bMatched = false;
 
@@ -1295,7 +1292,7 @@ public class StringUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(StringUtils.class).fatal(
                 "Cannot find any regexp engine.", exception);
         }
 
@@ -1306,7 +1303,6 @@ public class StringUtils
      * Justifies given text to avoid exceeding specified margin,
      * if possible.
      * @param text the text to justify.
-     * @param linePrefix the prefix to add to all justified lines.
      * @param margin the margin.
      * @return the justified text.
      */
@@ -1352,9 +1348,6 @@ public class StringUtils
 
         try
         {
-            StringValidator t_StringValidator =
-                StringValidator.getInstance();
-
             String t_strLinePrefix = linePrefix;
 
             if  (t_strText != null)
@@ -1366,13 +1359,13 @@ public class StringUtils
 
                 Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-                MatchResult t_MatchResult = null;
+                MatchResult t_MatchResult;
 
                 Pattern t_JustifyPattern = getJustifyPattern();
 
                 String t_strCurrentLine = "";
 
-                String t_strCurrentWord = "";
+                String t_strCurrentWord;
 
                 while  (   (!stringValidator.isEmpty(text))
                         && (t_JustifyPattern != null)
@@ -1455,7 +1448,7 @@ public class StringUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(StringUtils.class).fatal(
                 "Cannot find any regexp engine.", exception);
         }
 
@@ -1463,7 +1456,7 @@ public class StringUtils
     }
 
     /**
-     * Uncapitalizes the begining of given text.
+     * Uncapitalizes the beginning of given text.
      * @param input such input.
      * @return the processed input.
      * @precondition input != null
@@ -1522,9 +1515,9 @@ public class StringUtils
         {
             String t_strTextToProcess = input;
 
-            String t_strCurrentWord = "";
+            String t_strCurrentWord;
 
-            MatchResult t_MatchResult = null;
+            MatchResult t_MatchResult;
 
             while  (   (!stringValidator.isEmpty(t_strTextToProcess))
                     && (matcher.contains(t_strTextToProcess, pattern)))
@@ -1569,7 +1562,7 @@ public class StringUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(StringUtils.class).fatal(
                 "Cannot find any regexp engine.", exception);
         }
 
@@ -1611,8 +1604,8 @@ public class StringUtils
 
         boolean t_bFirstLine = true;
 
-        String t_strCurrentLine = null;
-        String t_strTrimmedCurrentLine = null;
+        String t_strCurrentLine;
+        String t_strTrimmedCurrentLine;
 
         MessageFormat t_Formatter = new MessageFormat(format);
 
@@ -1679,10 +1672,10 @@ public class StringUtils
         StringTokenizer t_StringTokenizer =
             new StringTokenizer(text, "\n", false);
 
-        int t_iInitialIndent = -1;
+        int t_iInitialIndent;
 
-        String t_strCurrentLine = null;
-        String t_strTrimmedCurrentLine = null;
+        String t_strCurrentLine;
+        String t_strTrimmedCurrentLine;
 
         while  (t_StringTokenizer.hasMoreTokens())
         {
@@ -1800,7 +1793,7 @@ public class StringUtils
     {
         String result = phrase;
 
-        Collection t_cTokens = null;
+        Collection t_cTokens;
 
         String[] t_astrTokens = null;
 
@@ -1852,7 +1845,7 @@ public class StringUtils
      */
     public String[] split(final String value, final String[] separators)
     {
-        Collection t_cResult = new ArrayList();
+        Collection<String> t_cResult = new ArrayList<String>();
 
         int t_iLength = (separators != null) ? separators.length : 0;
         
@@ -1879,7 +1872,7 @@ public class StringUtils
             }
         }
         
-        return (String[]) t_cResult.toArray(EMPTY_STRING_ARRAY);
+        return t_cResult.toArray(new String[t_cResult.size()]);
     }
 
     /**
@@ -1909,7 +1902,7 @@ public class StringUtils
         final String leftSeparator,
         final String rightSeparator)
     {
-        String[] result = EMPTY_STRING_ARRAY;
+        String[] result;
         
         int t_iLength = (values != null) ? values.length : 0;
         
@@ -1937,11 +1930,11 @@ public class StringUtils
      */
     public String[] trim(final String[] values)
     {
-        Collection t_cResult = new ArrayList();
+        Collection<String> t_cResult = new ArrayList<String>();
         
         int t_iLength = (values != null) ? values.length : 0;
 
-        String t_strCurrentLine = null;
+        String t_strCurrentLine;
         
         for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
         {
@@ -1950,15 +1943,15 @@ public class StringUtils
             if  (t_strCurrentLine != null)
             {
                 t_strCurrentLine = t_strCurrentLine.trim();
-            }
-            
-            if  (t_strCurrentLine.length() > 0)
-            {
-                t_cResult.add(t_strCurrentLine);
+
+                if  (t_strCurrentLine.length() > 0)
+                {
+                    t_cResult.add(t_strCurrentLine);
+                }
             }
         }
         
-        return (String[]) t_cResult.toArray(EMPTY_STRING_ARRAY);
+        return t_cResult.toArray(new String[t_cResult.size()]);
     }
 
     /**
@@ -1999,18 +1992,15 @@ public class StringUtils
         {
             Iterator t_itItems = items.iterator();
 
-            if  (t_itItems != null)
+            if  (t_itItems.hasNext())
             {
-                if  (t_itItems.hasNext()) 
-                {
-                    t_sbResult.append(t_itItems.next());
-                }
-            
-                while  (t_itItems.hasNext())
-                {
-                    t_sbResult.append(separator);
-                    t_sbResult.append(t_itItems.next());
-                }
+                t_sbResult.append(t_itItems.next());
+            }
+
+            while  (t_itItems.hasNext())
+            {
+                t_sbResult.append(separator);
+                t_sbResult.append(t_itItems.next());
             }
         }
 

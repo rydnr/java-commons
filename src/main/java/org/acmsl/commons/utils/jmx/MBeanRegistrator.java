@@ -39,7 +39,6 @@ package org.acmsl.commons.utils.jmx;
  */
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
-import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 /*
@@ -47,7 +46,6 @@ import javax.management.ObjectName;
  */
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 /*
  * Importing some Commons Logging classes.
@@ -118,10 +116,10 @@ public class MBeanRegistrator
 
     /**
      * Registers a MBean from given its class name and an object name.
-     * @param mbeanClassName the class name.
+     * @param mbean the class name.
      * @param objectName the object name.
      * @return <code>true</code> if the MBean is registered successfully.
-     * @precondition mbeanClassName != null
+     * @precondition mbean != null
      * @precondition objectName != null
      */
     public boolean register(final Object mbean, final ObjectName objectName)
@@ -131,19 +129,17 @@ public class MBeanRegistrator
 
     /**
      * Registers a MBean from given its class name and an object name.
-     * @param mbeanClassName the class name.
+     * @param mbean the class name.
      * @param objectName the object name.
      * @param server the server.
      * @return <code>true</code> if the MBean is registered successfully.
-     * @precondition mbeanClassName != null
+     * @precondition mbean != null
      * @precondition objectName != null
      */
     protected boolean register(
         final Object mbean, final ObjectName objectName, final MBeanServer server)
     {
         boolean result = false;
-
-        ObjectName objName = null;
 
         try
         {
@@ -218,8 +214,6 @@ public class MBeanRegistrator
         final ObjectName objectName, final MBeanServer server)
     {
         boolean result = false;
-
-        ObjectName objName = null;
 
         try
         {
@@ -306,15 +300,7 @@ public class MBeanRegistrator
             {
                 MBeanServer mbeanServer = (MBeanServer) serverIterator.next();
 
-                Set mbeans = mbeanServer.queryMBeans(null, null);
-
-                Iterator mbeanIterator = mbeans.iterator();
-
-                while  (mbeanIterator.hasNext())
-                {
-                    ObjectInstance objectInstance =
-                        (ObjectInstance) mbeanIterator.next();
-                }
+                mbeanServer.queryMBeans(null, null);
             }
 
             result =

@@ -39,7 +39,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
  * Importing some ACM classes.
  */
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.jdk14regexp.MalformedPatternExceptionJDKAdapter;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
@@ -47,11 +46,6 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
  */
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-/*
- * Importing Commons-Logging classes.
- */
-import org.apache.commons.logging.LogFactory;
 
 /**
  * JDK1.4-specific regexp compiler adapter. This class makes
@@ -78,6 +72,7 @@ public class CompilerJDKAdapter
      * @return the Pattern associated to such regular expression.
      * @throws MalformedPatternException if the regexp is not valid.
      */
+    @Override
     public org.acmsl.commons.regexpplugin.Pattern compile(final String regexp)
         throws  MalformedPatternException
     {
@@ -154,9 +149,9 @@ public class CompilerJDKAdapter
      * Resets the compiler options.
      * @return true if the options actually changed.
      */
-    private boolean resetOptions()
+    protected boolean resetOptions()
     {
-        boolean result = false;
+        boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -184,6 +179,7 @@ public class CompilerJDKAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
+    @Override
     public void setCaseSensitive(final boolean caseSensitive)
     {
         immutableSetCaseSensitive(caseSensitive);
@@ -194,6 +190,7 @@ public class CompilerJDKAdapter
      * or not.
      * @return true if upper from lower cases are processed differently.
      */
+    @Override
     public boolean isCaseSensitive()
     {
         return m__bCaseSensitive;
@@ -214,6 +211,7 @@ public class CompilerJDKAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
+    @Override
     public void setMultiline(final boolean multiline)
     {
         immutableSetMultiline(multiline);
@@ -224,6 +222,7 @@ public class CompilerJDKAdapter
      * or not.
      * @return false if the engine parses each line one at a time.
      */
+    @Override
     public boolean isMultiline()
     {
         return m__bMultiline;

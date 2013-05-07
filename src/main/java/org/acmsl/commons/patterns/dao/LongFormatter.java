@@ -33,23 +33,23 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.patterns.dao.ValueObjectFieldFormatter;
-
 /**
  * Is able to format {@link ValueObjectField.Long} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class LongFormatter
-    implements  ValueObjectFieldFormatter
+    implements  ValueObjectFieldFormatter<ValueObjectField.Long>
 {
     /**
-     * Singleton instance.
+     * Singleton instance implemented to avoid double-check locking.
      */
-    private static LongFormatter m__Singleton;
+    private static class LongFormatterSingletonContainer
+    {
+        /**
+         * The singleton instance.
+         */
+        public static final LongFormatter SINGLETON = new LongFormatter();
+    }
 
     /**
      * Retrieves a LongFormatter instance.
@@ -57,16 +57,7 @@ public class LongFormatter
      */
     public static LongFormatter getInstance()
     {
-        LongFormatter result = m__Singleton;
-
-        if  (m__Singleton == null)
-        {
-            m__Singleton = new LongFormatter();
-
-            result = m__Singleton;
-        }
-
-        return result;
+        return LongFormatterSingletonContainer.SINGLETON;
     }
 
     /**
@@ -74,24 +65,8 @@ public class LongFormatter
      * @param longField the field to format.
      * @return the String format.
      */
-    public String format(ValueObjectField valueObjectField)
-    {
-        String result = "";
-
-        if  (valueObjectField instanceof ValueObjectField.Long)
-        {
-            result = format((ValueObjectField.Long) valueObjectField);
-        }
-
-        return result;
-    }
-
-    /**
-     * Formats the long field in a correct way.
-     * @param longField the field to format.
-     * @return the String format.
-     */
-    public String format(ValueObjectField.Long longField)
+    @Override
+    public String format(final ValueObjectField.Long longField)
     {
         return longField.getValue() + "";
     }

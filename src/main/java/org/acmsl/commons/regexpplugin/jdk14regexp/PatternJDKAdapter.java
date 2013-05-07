@@ -66,7 +66,7 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @param adaptee the adaptee.
      */
-    private void immutableSetPattern(final Pattern adaptee)
+    protected final void immutableSetPattern(final Pattern adaptee)
     {
         m__Instance = adaptee;
     }

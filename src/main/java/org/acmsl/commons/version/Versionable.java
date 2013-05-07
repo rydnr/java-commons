@@ -33,11 +33,6 @@
  */
 package org.acmsl.commons.version;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.version.Version;
-
 /**
  * Represents objects suitable to be queried for version
  * information.

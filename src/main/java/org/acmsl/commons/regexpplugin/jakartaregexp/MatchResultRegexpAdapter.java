@@ -63,14 +63,14 @@ public class MatchResultRegexpAdapter
      */
     public MatchResultRegexpAdapter(final RE matchResult)
     {
-        inmutableSetRE(matchResult);
+        immutableSetRE(matchResult);
     }
 
     /**
      * Specifies the instance to adapt.
      * @param matchResult the adaptee.
      */
-    private void inmutableSetRE(final RE matchResult)
+    protected final void immutableSetRE(final RE matchResult)
     {
         m__Adaptee = matchResult;
     }
@@ -81,7 +81,7 @@ public class MatchResultRegexpAdapter
      */
     protected void setRE(final RE matchResult)
     {
-        inmutableSetRE(matchResult);
+        immutableSetRE(matchResult);
     }
 
     /**

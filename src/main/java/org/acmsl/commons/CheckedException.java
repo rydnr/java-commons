@@ -36,7 +36,6 @@ package org.acmsl.commons;
 /*
  * Importing project classes.
  */
-import org.acmsl.commons.BundleI14able;
 import org.acmsl.commons.patterns.Decorator;
 import org.acmsl.commons.patterns.I14able;
 
@@ -52,7 +51,7 @@ import java.util.Locale;
  */
 public abstract class CheckedException
     extends     Exception
-    implements  Decorator,
+    implements Decorator,
                 I14able
 {
     /**

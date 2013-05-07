@@ -33,23 +33,25 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.patterns.dao.ValueObjectFieldFormatter;
+import org.acmsl.commons.patterns.dao.ValueObjectField.Int;
 
 /**
  * Is able to format {@link ValueObjectField.Int} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class IntFormatter
-    implements  ValueObjectFieldFormatter
+    implements  ValueObjectFieldFormatter<Int>
 {
     /**
-     * Singleton instance.
+     * Singleton implemented to avoid double-check locking.
      */
-    private static IntFormatter m__Singleton;
+    private static class IntFormatterSingletonContainer
+    {
+        /**
+         * The singleton instance.
+         */
+        public static final IntFormatter SINGLETON = new IntFormatter();
+    }
 
     /**
      * Retrieves an IntFormatter instance.
@@ -57,33 +59,7 @@ public class IntFormatter
      */
     public static IntFormatter getInstance()
     {
-        IntFormatter result = m__Singleton;
-
-        if  (m__Singleton == null)
-        {
-            m__Singleton = new IntFormatter();
-
-            result = m__Singleton;
-        }
-
-        return result;
-    }
-
-    /**
-     * Formats the field in a correct way.
-     * @param valueObjectField the field to format.
-     * @return the String format.
-     */
-    public String format(ValueObjectField valueObjectField)
-    {
-        String result = "";
-
-        if  (valueObjectField instanceof ValueObjectField.Int)
-        {
-            result = format((ValueObjectField.Int) valueObjectField);
-        }
-
-        return result;
+        return IntFormatterSingletonContainer.SINGLETON;
     }
 
     /**
@@ -91,6 +67,7 @@ public class IntFormatter
      * @param intField the field to format.
      * @return the String format.
      */
+    @Override
     public String format(ValueObjectField.Int intField)
     {
         return intField.getValue() + "";

@@ -69,6 +69,7 @@ public class HelperOROAdapter
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
      */
+    @Override
     public String replaceAll(
         final String input, final String pattern, final String replacement)
       throws  org.acmsl.commons.regexpplugin.MalformedPatternException
@@ -79,8 +80,6 @@ public class HelperOROAdapter
              && (pattern     != null)
              && (replacement != null))
         {
-            String t_strSafePattern = null;
-
             try
             {
                 result =

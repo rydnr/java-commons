@@ -35,7 +35,7 @@
 package org.acmsl.commons.patterns;
 
 /**
- * Denotes objects that safisty Prototype design pattern to build
+ * Denotes objects that satisfy Prototype design pattern to build
  * Prototype objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */

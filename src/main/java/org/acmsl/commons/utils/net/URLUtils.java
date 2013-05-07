@@ -390,11 +390,6 @@ public class URLUtils
                                       name,
                                       value,
                                       valuePresent));
-
-                if (t_bFirstBlock)
-                {
-                    t_bFirstBlock = false;
-                }
             }
             else
             {
@@ -653,8 +648,8 @@ public class URLUtils
      */
     public boolean valuePresent(
         final String query,
-        final String name,
-        final String value,
+        @SuppressWarnings("unused") final String name,
+        @SuppressWarnings("unused") final String value,
         final Pattern pattern,
         final Matcher matcher)
     {

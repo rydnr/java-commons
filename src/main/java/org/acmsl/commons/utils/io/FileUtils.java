@@ -117,8 +117,7 @@ public class FileUtils
      * @precondition filePath != null
      */
     public String readFile(final String filePath)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         return readFile(new File(filePath));
@@ -135,11 +134,10 @@ public class FileUtils
      * @precondition file != null
      */
     public char[] readFileContents(final File file)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
-        char[] result = EMPTY_CHAR_ARRAY;
+        char[] result;
 
         /*
          * Instantiate a FileReader object to read file's contents.
@@ -187,8 +185,7 @@ public class FileUtils
      * @precondition file != null
      */
     public String readFile(final File file)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         /*
@@ -307,7 +304,7 @@ public class FileUtils
 
     /**
      * Tries to read from given stream.
-     * @param stream the stream to read from.
+     * @param inputStream the stream to read from.
      * @return the contents read.
      * @throws IOException if the input stream could not be read or closed.
      * @precondition inputStream != null
@@ -315,7 +312,7 @@ public class FileUtils
     public String read(final InputStream inputStream)
         throws  IOException
     {
-        BufferedInputStream bufferedInputStream = null;
+        BufferedInputStream bufferedInputStream;
 
         if  (inputStream instanceof BufferedInputStream)
         {
@@ -331,7 +328,7 @@ public class FileUtils
 
     /**
      * Tries to read from given stream.
-     * @param stream the stream to read from.
+     * @param bufferedInputStream the stream to read from.
      * @return the contents read.
      * @throws IOException if the input stream could not be read or closed.
      * @precondition bufferedInputStream != null
@@ -505,8 +502,7 @@ public class FileUtils
      * @deprecated Specify the charset instead.
      */
     public void writeFile(final String filePath, final String contents)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         writeFile(new File(filePath), contents);
@@ -526,8 +522,7 @@ public class FileUtils
      */
     public void writeFile(
         final String filePath, final String contents, final Charset charset)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         writeFile(new File(filePath), contents, charset);
@@ -546,8 +541,7 @@ public class FileUtils
      * @deprecated Specify the charset instead.
      */
     public void writeFile(final File file, final String contents)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         if  (   (file     != null)
@@ -725,8 +719,7 @@ public class FileUtils
      * @precondition destinationFile != null
      */
     public void move(final File originalFile, final File destinationFile)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         copy(originalFile, destinationFile);
@@ -746,8 +739,7 @@ public class FileUtils
      * @precondition destinationPath != null
      */
     public void move(final String filePath, final String destinationPath)
-        throws  FileNotFoundException,
-                SecurityException,
+        throws  SecurityException,
                 IOException
     {
         move(new File(filePath), new File(destinationPath));
@@ -758,7 +750,7 @@ public class FileUtils
      * @param originalFile the file to move.
      * @param destinationFile the new file.
      * @return <code>true</code> if the operation ends up successfully.
-     * @preocondition originalFile != null
+     * @precondition originalFile != null
      * @precondition destinationFile != null
      */
     public boolean moveIfPossible(

@@ -33,11 +33,6 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL Commons classes.
- */
-import org.acmsl.commons.patterns.dao.DAO;
-
 /**
  * Represents abnormal situations regarding data accessing.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>

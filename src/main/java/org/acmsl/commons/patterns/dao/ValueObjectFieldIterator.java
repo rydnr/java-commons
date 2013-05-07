@@ -33,11 +33,6 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-
 /**
  * Knows how to iterate over {@link ValueObjectField} elements.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>

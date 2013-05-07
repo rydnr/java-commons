@@ -33,13 +33,6 @@
  */
 package org.acmsl.commons.regexpplugin;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.Matcher;
-import org.acmsl.commons.regexpplugin.Helper;
-
 /**
  * Represents a regexp engine.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>

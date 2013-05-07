@@ -35,11 +35,6 @@
 package org.acmsl.commons;
 
 /*
- * Importing project classes.
- */
-import org.acmsl.commons.BundleI14able;
-
-/*
  * Importing some JDK classes.
  */
 import java.util.Date;
@@ -48,11 +43,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-/*
- * Importing Commons Logging classes.
- */
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents instances able to display messages in different languages.
@@ -74,7 +64,8 @@ public class CachingBundleI14able
     /**
      * The resource bundle cache.
      */
-    private static final Map RESOURCE_BUNDLE_CACHE = new HashMap();
+    private static final Map<String, TimestampResourceBundle> RESOURCE_BUNDLE_CACHE =
+        new HashMap<String, TimestampResourceBundle>();
     
     /**
      * Creates a <code>CachingBundleI14able</code> with given message.
@@ -87,7 +78,6 @@ public class CachingBundleI14able
      * @param ttl the caching TTL.
      * @precondition messageKey != null
      * @precondition params != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     public CachingBundleI14able(
         final String messageKey,
@@ -111,7 +101,6 @@ public class CachingBundleI14able
      * @param ttl the caching TTL.
      * @precondition messageKey != null
      * @precondition params != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     public CachingBundleI14able(
         final String messageKey,
@@ -130,7 +119,6 @@ public class CachingBundleI14able
      * @param systemProperty the name of the bundle.
      * @param bundleName the bundle name.
      * @precondition messageKey != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     public CachingBundleI14able(
         final String messageKey,
@@ -198,7 +186,7 @@ public class CachingBundleI14able
 
     /**
      * Annotates given bundle in the cache.
-     * @param bundle the bundle to annotate.
+     * @param resourceBundle the bundle to annotate.
      * @precondition bundle != null
      */
     protected void cacheBundle(final ResourceBundle resourceBundle)
@@ -208,14 +196,14 @@ public class CachingBundleI14able
     
     /**
      * Annotates given bundle in the cache.
-     * @param bundle the bundle to annotate.
+     * @param resourceBundle the bundle to annotate.
      * @param bundleName the bundle name.
      * @param map the caching mechanism.
      * @precondition bundle != null
      * @precondition map != null
      */
     protected void cacheBundle(
-        final ResourceBundle resourceBundle, final String bundleName, final Map map)
+        final ResourceBundle resourceBundle, final String bundleName, final Map<String, TimestampResourceBundle> map)
     {
         if  (bundleName != null)
         {
@@ -425,7 +413,7 @@ public class CachingBundleI14able
          * Retrieves the bundle keys.
          * @return such keys.
          */
-        public Enumeration getKeys()
+        public Enumeration<String> getKeys()
         {
             return getKeys(getWrappedBundle());
         }
@@ -436,7 +424,7 @@ public class CachingBundleI14able
          * @return such keys.
          * @precondition bundle != null
          */
-        protected Enumeration getKeys(final ResourceBundle bundle)
+        protected Enumeration<String> getKeys(final ResourceBundle bundle)
         {
             return bundle.getKeys();
         }

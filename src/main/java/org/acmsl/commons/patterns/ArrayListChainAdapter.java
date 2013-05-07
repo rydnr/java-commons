@@ -36,13 +36,7 @@
 package org.acmsl.commons.patterns;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.Chain;
-import org.acmsl.commons.patterns.CommandHandler;
-
-/*
- * Importing some JDK1.3 classes
+ * Importing some JDK classes
  */
 import java.util.ArrayList;
 import java.util.List;
@@ -52,19 +46,19 @@ import java.util.List;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class ArrayListChainAdapter
-    implements  Chain
+    implements  Chain<CommandHandler>
 {
     /**
      * Actual storing object.
      */
-    private List m__lCore;
+    private List<CommandHandler> m__lCore;
 
     /**
      * Constructs an ArrayListChainAdapter.
      */
     public ArrayListChainAdapter()
     {
-        immutableSetCore(new ArrayList());
+        immutableSetCore(new ArrayList<CommandHandler>());
     }
 
     /**
@@ -72,7 +66,7 @@ public class ArrayListChainAdapter
      * @param list the new list.
      * @precondition list != null
      */
-    private void immutableSetCore(final List list)
+    private void immutableSetCore(final List<CommandHandler> list)
     {
         m__lCore = list;
     }
@@ -82,7 +76,7 @@ public class ArrayListChainAdapter
      * @param list the new list.
      * @precondition list != null
      */
-    protected void setCore(final List list)
+    protected void setCore(final List<CommandHandler> list)
     {
         immutableSetCore(list);
     }
@@ -91,7 +85,7 @@ public class ArrayListChainAdapter
      * Retrieves the core of this chain.
      * @return such collection.
      */
-    protected List getCore()
+    protected List<CommandHandler> getCore()
     {
         return m__lCore;
     }
@@ -101,9 +95,10 @@ public class ArrayListChainAdapter
      * @param commandHandler the commandHandler to be added.
      * @precondition commandHandler != null
      */
+    @Override
     public void add(final CommandHandler commandHandler)
     {
-        List t_lCore = getCore();
+        List<CommandHandler> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -116,9 +111,10 @@ public class ArrayListChainAdapter
      * @param commandHandler the commandHandler to be added.
      * @precondition commandHandler != null
      */
+    @Override
     public void addFirst(final CommandHandler commandHandler)
     {
-        List t_lCore = getCore();
+        List<CommandHandler> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -133,6 +129,7 @@ public class ArrayListChainAdapter
      * this chain.
      * @precondition commandHandler != null
      */
+    @Override
     public boolean contains(final CommandHandler commandHandler)
     {
         boolean result = false;
@@ -154,11 +151,12 @@ public class ArrayListChainAdapter
      * or -1 if doesn't participate in this chain.
      * @precondition commandHandler != null
      */
+    @Override
     public int indexOf(final CommandHandler commandHandler)
     {
         int result = -1;
 
-        List t_lCore = getCore();
+        List<CommandHandler> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -173,17 +171,18 @@ public class ArrayListChainAdapter
      * @param commandHandlerIndex the position of the chain.
      * @return the command handler referred at such position.
      */
+    @Override
     public CommandHandler get(final int commandHandlerIndex)
     {
         CommandHandler result = null;
 
         if  (commandHandlerIndex >= 0)
         {
-            List t_lCore = getCore();
+            List<CommandHandler> t_lCore = getCore();
 
             if  (t_lCore != null)
             {
-                result = (CommandHandler) t_lCore.get(commandHandlerIndex);
+                result = t_lCore.get(commandHandlerIndex);
             }
         }
 
@@ -191,14 +190,15 @@ public class ArrayListChainAdapter
     }
 
     /**
-     * Checks the emptyness of this chain.
+     * Checks whether this chain is empty.
      * @return true if this chain is empty.
      */
+    @Override
     public boolean isEmpty()
     {
         boolean result = false;
 
-        List t_lCore = getCore();
+        List<CommandHandler> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -212,11 +212,12 @@ public class ArrayListChainAdapter
      * Retrieves the size of the chain.
      * @return current number of command handlers referred by this chain.
      */
+    @Override
     public int size()
     {
         int result = 0;
 
-        List t_lCore = getCore();
+        List<CommandHandler> t_lCore = getCore();
 
         if  (t_lCore != null)
         {

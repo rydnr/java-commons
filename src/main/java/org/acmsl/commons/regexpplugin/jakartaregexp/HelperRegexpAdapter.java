@@ -65,15 +65,16 @@ public class HelperRegexpAdapter
      * @precondition pattern != null
      * @precondition replacement != null
      */
+    @Override
     public String replaceAll(
         final String input, final String pattern, final String replacement)
       throws  MalformedPatternException
     {
-        String result = input;
+        String result;
 
         try 
         {
-            RE t_RE = new RE(pattern);
+            final RE t_RE = new RE(pattern);
 
             result = t_RE.subst(input, replacement);
         }

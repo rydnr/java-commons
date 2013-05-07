@@ -77,7 +77,7 @@ public class MatchResultJDKAdapter
      * Specifies the instance to adapt.
      * @param matcher the adaptee.
      */
-    private void immutableSetMatcher(final Matcher matcher)
+    protected final void immutableSetMatcher(final Matcher matcher)
     {
         m__Adaptee = matcher;
     }
@@ -110,6 +110,7 @@ public class MatchResultJDKAdapter
      * during the previous match, or null if the group failed to match
      * part of the input.
      */
+    @Override
     public String group(final int group)
     {
         return group(group, getMatcher());
@@ -140,7 +141,7 @@ public class MatchResultJDKAdapter
         }
         catch  (final IllegalStateException illegalStateException)
         {
-            LogFactory.getLog(matcher.getClass()).error(
+            LogFactory.getLog(MatchResultJDKAdapter.class).error(
                 "group not found",
                 illegalStateException);
         }
@@ -154,6 +155,7 @@ public class MatchResultJDKAdapter
      * pattern.</i>.
      * @return such value.
      */
+    @Override
     public int groups()
     {
         return groups(getMatcher());

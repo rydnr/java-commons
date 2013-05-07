@@ -38,9 +38,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
  */
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Helper;
-import org.acmsl.commons.regexpplugin.jdk14regexp.CompilerJDKAdapter;
-import org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapter;
-import org.acmsl.commons.regexpplugin.jdk14regexp.MatcherJDKAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 
@@ -55,6 +52,7 @@ public class JDKRegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
+    @Override
     public Compiler createCompiler()
     {
         return new CompilerJDKAdapter();
@@ -64,6 +62,7 @@ public class JDKRegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @Override
     public Matcher createMatcher()
     {
         return new MatcherJDKAdapter();
@@ -73,6 +72,7 @@ public class JDKRegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @Override
     public Helper createHelper()
     {
         return new HelperJDKAdapter();

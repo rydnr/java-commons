@@ -39,9 +39,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
  */
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Helper;
-import org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter;
-import org.acmsl.commons.regexpplugin.jakartaoro.Perl5CompilerOROAdapter;
-import org.acmsl.commons.regexpplugin.jakartaoro.Perl5MatcherOROAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 
@@ -56,6 +53,7 @@ public class ORORegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
+    @Override
     public Compiler createCompiler()
     {
         return new Perl5CompilerOROAdapter();
@@ -65,6 +63,7 @@ public class ORORegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @Override
     public Matcher createMatcher()
     {
         return new Perl5MatcherOROAdapter();
@@ -74,6 +73,7 @@ public class ORORegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @Override
     public Helper createHelper()
     {
         return new HelperOROAdapter();

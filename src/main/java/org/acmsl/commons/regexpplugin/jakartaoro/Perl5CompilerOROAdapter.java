@@ -46,11 +46,6 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Perl5Compiler;
 
-/*
- * Importing some commons-logging classes.
- */
-import org.apache.commons.logging.LogFactory;
-
 /**
  * Jakarta ORO-specific regexp compiler adapter. This class makes possible the
  * use of ORO compilers inside this API. A delegation is used because
@@ -121,6 +116,7 @@ public class Perl5CompilerOROAdapter
      * given regexp is malformed.
      * @precondition regexp != null
      */
+    @Override
     public Pattern compile(final String regexp)
         throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
@@ -189,9 +185,9 @@ public class Perl5CompilerOROAdapter
      * Resets the compiler options.
      * @return true if the options actually changed.
      */
-    private boolean resetOptions()
+    protected boolean resetOptions()
     {
-        boolean result = false;
+        boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -219,6 +215,7 @@ public class Perl5CompilerOROAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
+    @Override
     public void setCaseSensitive(final boolean caseSensitive)
     {
         immutableSetCaseSensitive(caseSensitive);
@@ -249,6 +246,7 @@ public class Perl5CompilerOROAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
+    @Override
     public void setMultiline(final boolean multiline)
     {
         immutableSetMultiline(multiline);
@@ -259,6 +257,7 @@ public class Perl5CompilerOROAdapter
      * or not.
      * @return false if the engine parses each line one at a time.
      */
+    @Override
     public boolean isMultiline()
     {
         return m__bMultiline;

@@ -36,7 +36,6 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.regexpplugin.gnuregexp.MalformedPatternExceptionGNUAdapter;
 import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
@@ -62,7 +61,8 @@ public class HelperGNUAdapter
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
      */
-    public String replaceAll(String input, String pattern, String replacement)
+    @Override
+    public String replaceAll(final String input, final String pattern, final String replacement)
         throws  MalformedPatternException
     {
         String result = input;
@@ -73,11 +73,11 @@ public class HelperGNUAdapter
         {
             try 
             {
-                RE t_RE = new RE(pattern);
+                final RE t_RE = new RE(pattern);
 
                 result = t_RE.substituteAll(input, replacement);
             }
-            catch  (REException reException)
+            catch  (final REException reException)
             {
                 throw
                     new MalformedPatternExceptionGNUAdapter(

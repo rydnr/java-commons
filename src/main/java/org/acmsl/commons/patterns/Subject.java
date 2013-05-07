@@ -34,18 +34,10 @@
 package org.acmsl.commons.patterns;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.Observable;
-import org.acmsl.commons.patterns.Observer;
-
-/*
  * Importing some JDK classes.
  */
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * Generic implementation of the Observable pattern.
@@ -58,13 +50,13 @@ public class Subject
      * Concrete reference to the observers' collection.
      * @associates <{Observer}>
      */
-    private Collection m__cObservers;
+    private Collection<Observer> m__cObservers;
 
     /**
      * Specifies the observer collection.
      * @param observers the observers.
      */
-    protected void setObservers(final Collection observers)
+    protected void setObservers(final Collection<Observer> observers)
     {
         m__cObservers = observers;
     }
@@ -73,9 +65,18 @@ public class Subject
      * Retrieves the observer collection.
      * @return the observers.
      */
-    protected Collection getObservers()
+    protected final Collection<Observer> immutableGetObservers()
     {
         return m__cObservers;
+    }
+
+    /**
+     * Retrieves the observer collection.
+     * @return the observers.
+     */
+    protected Collection<Observer> getObservers()
+    {
+        return new ArrayList<Observer>(immutableGetObservers());
     }
 
     /**
@@ -83,13 +84,13 @@ public class Subject
      * time, so this method never returns a <code>null</code> value.
      * @return a not <code>null</code> collection.
      */
-    private Collection getObserverCollection()
+    protected final Collection<Observer> getObserverCollection()
     {
-        Collection result = getObservers();
+        Collection<Observer> result = immutableGetObservers();
 
         if  (result == null)
         {
-            result = new ArrayList();
+            result = new ArrayList<Observer>();
             setObservers(result);
         }
 
@@ -100,6 +101,7 @@ public class Subject
      * Attaches given observer in order to be notified of state changes.
      * @param observer the new observer to attach.
      */
+    @Override
     public void attach(final Observer observer)
     {
         if  (observer != null)
@@ -116,7 +118,7 @@ public class Subject
      * @precondition observerCollection != null
      */
     protected void attach(
-        final Observer observer, final Collection observerCollection)
+        final Observer observer, final Collection<Observer> observerCollection)
     {
         observerCollection.add(observer);
     }
@@ -126,6 +128,7 @@ public class Subject
      * changes.
      * @param observer the new observer to attach.
      */
+    @Override
     public void detach(final Observer observer)
     {
         if  (observer != null)
@@ -143,7 +146,7 @@ public class Subject
      * @precondition observerCollection != null
      */
     protected void detach(
-        final Observer observer, final Collection observerCollection)
+        final Observer observer, final Collection<Observer> observerCollection)
     {
         observerCollection.remove(observer);
     }
@@ -153,34 +156,12 @@ public class Subject
      */
     public void inform()
     {
-        Iterator t_itObservers = observers();
-
-        while  (   (t_itObservers != null)
-                && (t_itObservers.hasNext()))
+        for (Observer t_Observer : getObserverCollection())
         {
-            ((Observer) t_itObservers.next()).update();
+            if (t_Observer != null)
+            {
+                t_Observer.update();
+            }
         }
-    }
-
-    /**
-     * Retrieves all observers attached to this subject.
-     * @return the iterator to browse all observers.
-     */
-    public Iterator observers()
-    {
-        Collection t_cResult = getObservers();
-
-        if  (t_cResult != null)
-        {
-            Vector t_vClone = new Vector(t_cResult);
-
-            t_cResult = t_vClone.subList(0, t_vClone.size());
-        }
-        else 
-        {
-            t_cResult = new ArrayList();
-        }
-        
-        return t_cResult.iterator();
     }
 }

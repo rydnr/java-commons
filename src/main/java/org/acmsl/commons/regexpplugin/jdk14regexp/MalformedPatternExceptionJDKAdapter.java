@@ -81,7 +81,7 @@ public class MalformedPatternExceptionJDKAdapter
      * Specifies the adapted exception.
      * @param exception the PatternSyntaxException to adapt.
      */
-    private void immutableSetPatternSyntaxException(
+    protected final void immutableSetPatternSyntaxException(
         final PatternSyntaxException exception)
     {
         m__Adaptee = exception;

@@ -68,7 +68,7 @@ public class MatcherJDKAdapter
     /**
      * Constructs a MatcherJDKAdapter.
      */
-    public MatcherJDKAdapter()  {};
+    public MatcherJDKAdapter()  {}
 
     /**
      * Checks if given text contains specified pattern.
@@ -79,6 +79,7 @@ public class MatcherJDKAdapter
      * @precondition pattern != null
      * @precondition pattern instanceof PatternJDKAdapter
      */
+    @Override
     public boolean contains(
         final String text,
         final org.acmsl.commons.regexpplugin.Pattern pattern)
@@ -96,7 +97,7 @@ public class MatcherJDKAdapter
         }
         else 
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(MatcherJDKAdapter.class).error(
                 "pattern not accessible");
         }
 
@@ -142,6 +143,7 @@ public class MatcherJDKAdapter
      * <i>contains</i> method.
      * @return such match result.
      */
+    @Override
     public MatchResult getMatch()
     {
         return getMatch(getMatcher());

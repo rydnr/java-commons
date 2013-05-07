@@ -51,7 +51,7 @@ public class MalformedPatternException
      * Just constructs the exception with the default logic defined in its
      * super class.
      */
-    public MalformedPatternException()  {};
+    public MalformedPatternException()  {}
 
     /**
      * Constructs the exception with given message.

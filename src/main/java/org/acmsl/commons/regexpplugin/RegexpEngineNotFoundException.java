@@ -60,7 +60,7 @@ public class RegexpEngineNotFoundException
     /**
      * Builds an exception to indicate the regexp engine was not found.
      * @param engineClass the class name of the Regexp implementation whose
-     * instatiation has failed.
+     * instantiation has failed.
      * @precondition engineClass != null
      */
     public RegexpEngineNotFoundException(final String engineClass)
@@ -72,7 +72,7 @@ public class RegexpEngineNotFoundException
                 engineClass,
             });
 
-        inmutableSetEngineClass(engineClass);
+        immutableSetEngineClass(engineClass);
     }
 
     /**
@@ -80,7 +80,7 @@ public class RegexpEngineNotFoundException
      * @param engineClass the implementation class.
      * @precondition engineClass != null
      */
-    private void inmutableSetEngineClass(final String engineClass)
+    protected final void immutableSetEngineClass(final String engineClass)
     {
         m__strEngineClass = engineClass;
     }
@@ -92,7 +92,7 @@ public class RegexpEngineNotFoundException
      */
     protected void setEngineClass(final String engineClass)
     {
-        inmutableSetEngineClass(engineClass);
+        immutableSetEngineClass(engineClass);
     }
 
     /**

@@ -34,11 +34,6 @@
  */
 package org.acmsl.commons.regexpplugin;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.regexpplugin.Pattern;
-
 /**
  * Represents a regexp pattern matcher. Different implementations vary but they
  * all must respect this set of methods.

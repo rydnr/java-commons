@@ -38,7 +38,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
@@ -69,18 +68,17 @@ public class AwkMatcherOROAdapter
 
     /**
      * Constructs an AwkMatcherOROAdapter for given object.
-     * @param adaptee the instance to be adapted.
      */
     public AwkMatcherOROAdapter()
     {
-        inmutableSetAwkMatcher(new AwkMatcher());
+        immutableSetAwkMatcher(new AwkMatcher());
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetAwkMatcher(AwkMatcher adaptee)
+    protected final void immutableSetAwkMatcher(final AwkMatcher adaptee)
     {
         m__Instance = adaptee;
     }
@@ -89,9 +87,9 @@ public class AwkMatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected void setAwkMatcher(AwkMatcher adaptee)
+    protected void setAwkMatcher(final AwkMatcher adaptee)
     {
-        inmutableSetAwkMatcher(adaptee);
+        immutableSetAwkMatcher(adaptee);
     }
 
     /**
@@ -109,7 +107,8 @@ public class AwkMatcherOROAdapter
      * @param pattern the regular expression to apply.
      * @return true if the pattern is found.
      */
-    public boolean contains(String text, Pattern pattern)
+    @Override
+    public boolean contains(final String text, final Pattern pattern)
     {
         boolean result = false;
 
@@ -127,7 +126,7 @@ public class AwkMatcherOROAdapter
             }
             else 
             {
-                LogFactory.getLog(getClass()).error(
+                LogFactory.getLog(AwkMatcherOROAdapter.class).error(
                     "Awk matcher unavailable.");
             }
         }
@@ -140,6 +139,7 @@ public class AwkMatcherOROAdapter
      * <i>contains</i> method.
      * @return such match result.
      */
+    @Override
     public MatchResult getMatch()
     {
         MatchResult result = null;

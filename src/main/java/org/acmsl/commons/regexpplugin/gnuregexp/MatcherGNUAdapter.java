@@ -38,7 +38,6 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
@@ -70,7 +69,7 @@ public class MatcherGNUAdapter
     /**
      * Constructs a MatcherGNUAdapter.
      */
-    public MatcherGNUAdapter()  {};
+    public MatcherGNUAdapter()  {}
 
     /**
      * Checks if given text contains specified pattern.
@@ -78,7 +77,8 @@ public class MatcherGNUAdapter
      * @param pattern the regular expression to apply.
      * @return true if the pattern is found.
      */
-    public boolean contains(String text, Pattern pattern)
+    @Override
+    public boolean contains(final String text, final Pattern pattern)
     {
         boolean result = false;
 
@@ -106,7 +106,7 @@ public class MatcherGNUAdapter
      * Sets the match enumeration.
      * @param matchEnumeration such instance.
      */
-    protected void setREMatchEnumeration(REMatchEnumeration reMatchEnumeration)
+    protected void setREMatchEnumeration(final REMatchEnumeration reMatchEnumeration)
     {
         m__REMatchEnumeration = reMatchEnumeration;
     }
@@ -124,7 +124,7 @@ public class MatcherGNUAdapter
      * Sets the group count.
      * @param groups the number of groups.
      */
-    protected void setGroups(int groups)
+    protected void setGroups(final int groups)
     {
         m__iGroups = groups;
     }
@@ -143,6 +143,7 @@ public class MatcherGNUAdapter
      * <i>contains</i> method.
      * @return such match result.
      */
+    @Override
     public MatchResult getMatch()
     {
         MatchResult result = null;

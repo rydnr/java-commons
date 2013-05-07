@@ -33,21 +33,16 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-
 /**
  * Represents entities able to format {@link ValueObject} fields.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface ValueObjectFieldFormatter
+public interface ValueObjectFieldFormatter<F extends ValueObjectField>
 {
     /**
      * Formats the field in a correct way.
      * @param valueObjectField the field to format.
      * @return the String format.
      */
-    public String format(final ValueObjectField valueObjectField);
+    public String format(final F valueObjectField);
 }

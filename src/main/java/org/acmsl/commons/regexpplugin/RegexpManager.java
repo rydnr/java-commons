@@ -39,9 +39,6 @@ package org.acmsl.commons.regexpplugin;
  */
 import org.acmsl.commons.patterns.Manager;
 import org.acmsl.commons.patterns.Singleton;
-import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.Matcher;
-import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.utils.ReflectionUtils;
 
 /*
@@ -58,10 +55,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
@@ -109,7 +104,8 @@ public class RegexpManager
     /**
      * The cached engines.
      */
-    private static final Hashtable m__htCachedEngines = new Hashtable();
+    private static final Map<ClassLoader, RegexpEngine> m__htCachedEngines =
+        new Hashtable<ClassLoader, RegexpEngine>();
 
     /**
      * Singleton implemented to avoid the double-checked locking.
@@ -191,7 +187,7 @@ public class RegexpManager
      * Retrieves the cached engines.
      * @return such map.
      */
-    protected Map getCachedEngines()
+    protected Map<ClassLoader, RegexpEngine> getCachedEngines()
     {
         return m__htCachedEngines;
     }
@@ -209,12 +205,12 @@ public class RegexpManager
     /**
      * Retrieves current engine.
      * Note: The lookup mechanism is adapted from Commons-Logging.
-     * @param usingClassLoader whether to use class loader or not.
+     * @param useClassLoader whether to use class loader or not.
      * @return the engine information.
      */
     protected RegexpEngine getEngine(final boolean useClassLoader)
     {
-        RegexpEngine result = null;
+        RegexpEngine result;
 
         ClassLoader t_ClassLoader = getClass().getClassLoader();
 
@@ -222,10 +218,10 @@ public class RegexpManager
         {
             // Identify the class loader we will be using
             t_ClassLoader = 
-                (ClassLoader) AccessController.doPrivileged(
-                    new PrivilegedAction()
+                AccessController.doPrivileged(
+                    new PrivilegedAction<ClassLoader>()
                     {
-                        public Object run()
+                        public ClassLoader run()
                             {
                                 return getContextClassLoader();
                             }
@@ -246,7 +242,7 @@ public class RegexpManager
      */
     protected RegexpEngine getEngineUsingClassLoader(final ClassLoader classLoader)
     {
-        RegexpEngine result = null;
+        RegexpEngine result;
 
         // Return any previously registered engine for this class loader
         result = getCachedEngine(classLoader);
@@ -271,7 +267,7 @@ public class RegexpManager
             }
             catch  (final SecurityException securityException)
             {
-                LogFactory.getLog(getClass()).info(
+                LogFactory.getLog(RegexpManager.class).info(
                     "Could not load environment property " + ENGINE_PROPERTY,
                     securityException);
             }
@@ -305,7 +301,7 @@ public class RegexpManager
                     }
                     catch  (final UnsupportedEncodingException invalidEncoding)
                     {
-                        LogFactory.getLog(getClass()).info(
+                        LogFactory.getLog(RegexpManager.class).info(
                             "System doesn't support UTF-8",
                             invalidEncoding);
 
@@ -329,7 +325,7 @@ public class RegexpManager
             }
             catch  (final Exception exception)
             {
-                LogFactory.getLog(getClass()).info(
+                LogFactory.getLog(RegexpManager.class).info(
                     "Could not find JDK1.3 service provider for RegexpPlugin",
                     exception);
             }
@@ -345,9 +341,6 @@ public class RegexpManager
             // the webapp, even if a default logger is set at JVM level by a
             // system property )
 
-            // Load properties file.
-            Properties t_Properties = null;
-
             try
             {
                 t_isStream =
@@ -356,7 +349,7 @@ public class RegexpManager
             }
             catch  (final SecurityException securityException)
             {
-                LogFactory.getLog(getClass()).info(
+                LogFactory.getLog(RegexpManager.class).info(
                       "Could not load " + CONFIGURATION_SETTINGS
                     + ". Trying /" + CONFIGURATION_SETTINGS,
                     securityException);
@@ -370,7 +363,7 @@ public class RegexpManager
             }
             catch  (final SecurityException securityException)
             {
-                LogFactory.getLog(getClass()).info(
+                LogFactory.getLog(RegexpManager.class).info(
                     "Could not load /" + CONFIGURATION_SETTINGS,
                     securityException);
             }
@@ -385,13 +378,13 @@ public class RegexpManager
                 }
                 catch  (final IOException ioException)
                 {
-                    LogFactory.getLog(getClass()).info(
+                    LogFactory.getLog(RegexpManager.class).info(
                         "Could not load configuration properties.",
                         ioException);
                 }
                 catch  (final SecurityException securityException)
                 {
-                    LogFactory.getLog(getClass()).info(
+                    LogFactory.getLog(RegexpManager.class).info(
                         "Could not load configuration properties.",
                         securityException);
                 }
@@ -459,7 +452,7 @@ public class RegexpManager
         final ReflectionUtils reflectionUtils)
       throws RegexpPluginMisconfiguredException
     {
-        ClassLoader result = null;
+        ClassLoader result;
 
         try
         {
@@ -487,7 +480,6 @@ public class RegexpManager
     /**
      * Retrieves the cached engine associated to given contextClassLoader.
      * @param contextClassLoader the context class loader.
-     * @param engines the engine collection.
      * @return the engine.
      * @precondition engines != null
      */
@@ -505,13 +497,13 @@ public class RegexpManager
      */
     protected RegexpEngine getCachedEngine(
         final ClassLoader contextClassLoader,
-        final Map engines)
+        final Map<ClassLoader, RegexpEngine> engines)
     {
         RegexpEngine result = null;
 
         if  (contextClassLoader != null)
         {
-            result = (RegexpEngine) engines.get(contextClassLoader);
+            result = engines.get(contextClassLoader);
         }
 
         return result;
@@ -538,7 +530,7 @@ public class RegexpManager
     protected void cacheEngine(
         final ClassLoader classLoader,
         final RegexpEngine engine,
-        final Map engines)
+        final Map<ClassLoader, RegexpEngine> engines)
     {
         if  (   (classLoader != null)
              && (engine != null))
@@ -554,7 +546,6 @@ public class RegexpManager
      * RegexpEngine.
      * @param engineClass Fully qualified name of the <code>RegexpEngine</code>
      * implementation class.
-     * @param classLoader ClassLoader from which to load this class.
      * @throws RegexpEngineNotFoundException if a suitable instance
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
@@ -580,22 +571,25 @@ public class RegexpManager
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
      */
+    @SuppressWarnings("unchecked")
     protected RegexpEngine createEngine(
         final String engineClass, final ClassLoader classLoader)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
-        Object result =
+        RegexpEngine result =
             AccessController.doPrivileged(
-                new PrivilegedAction()
+                new PrivilegedAction<RegexpEngine>()
                 {
-                    public Object run()
+                    public RegexpEngine run()
                     {
-                        Object innerResult = null;
+                        RegexpEngine innerResult = null;
+
+                        RegexpPluginMisconfiguredException exception;
 
                         // This will be used to diagnose bad configurations
                         // and allow a useful message to be sent to the user
-                        Class t_RegexpEngineClass = null;
+                        Class<RegexpEngine> t_RegexpEngineClass = null;
 
                         try
                         {
@@ -609,15 +603,12 @@ public class RegexpManager
                                     // exception to be generated/caught &
                                     // recast properly.
                                     t_RegexpEngineClass =
-                                        classLoader.loadClass(engineClass);
+                                        (Class<RegexpEngine>) classLoader.loadClass(engineClass);
 
-                                    innerResult =
-                                        (RegexpEngine)
-                                            t_RegexpEngineClass.newInstance();
+                                    innerResult = t_RegexpEngineClass.newInstance();
 
                                 }
-                                catch  (final ClassNotFoundException
-                                        classNotFoundException)
+                                catch  (final ClassNotFoundException classNotFoundException)
                                 {
                                     if  (   classLoader
                                          == RegexpEngine.class.getClassLoader())
@@ -627,8 +618,7 @@ public class RegexpManager
                                     }
                                     // ignore exception, continue
                                 }
-                                catch  (final NoClassDefFoundError
-                                        noClassDefFoundException)
+                                catch  (final NoClassDefFoundError noClassDefFoundException)
                                 {
                                     if  (   classLoader
                                          == RegexpEngine.class.getClassLoader())
@@ -651,63 +641,61 @@ public class RegexpManager
                                 }
                             }
 
-                            /* At this point, either classLoader == null, OR
-                             * classLoader was unable to load engineClass.
-                             * Try the class loader that loaded this class:
-                             * RegexpEngine.getClassLoader().
-                             *
-                             * Notes:
-                             * a) RegexpEngine.class.getClassLoader() may return
-                             *    'null'if RegexpEngine is loaded by the bootstrap
-                             *    classloader.
-                             * b) The Java endorsed library mechanism is instead
-                             *    Class.forName(engineClass);
-                             */
+                            if (innerResult == null)
+                            {
+                                /* At this point, either classLoader == null, OR
+                                 * classLoader was unable to load engineClass.
+                                 * Try the class loader that loaded this class:
+                                 * RegexpEngine.getClassLoader().
+                                 *
+                                 * Notes:
+                                 * a) RegexpEngine.class.getClassLoader() may return
+                                 *    'null' if RegexpEngine is loaded by the bootstrap
+                                 *    classloader.
+                                 * b) The Java endorsed library mechanism is instead
+                                 *    Class.forName(engineClass);
+                                 */
 
-                            // Warning: must typecast here & allow exception
-                            // to be generated/caught & recast properly.
-                            t_RegexpEngineClass = Class.forName(engineClass);
+                                // Warning: must typecast here & allow exception
+                                // to be generated/caught & recast properly.
+                                t_RegexpEngineClass = (Class<RegexpEngine>) Class.forName(engineClass);
 
-                            innerResult =
-                                (RegexpEngine)
-                                    t_RegexpEngineClass.newInstance();
+                                innerResult = t_RegexpEngineClass.newInstance();
+                            }
                         }
-                        catch  (final Exception exception)
+                        catch  (final Exception otherException)
                         {
                             // Check to see if we've got a bad configuration
                             if  (   (t_RegexpEngineClass != null)
                                  && (!RegexpEngine.class.isAssignableFrom(
                                          t_RegexpEngineClass)))
                             {
-                                innerResult =
+                                exception =
                                     new RegexpPluginMisconfiguredException(
                                           "implementation.does.not."
                                         + "implement.regexpegine",
-                                        exception);
+                                        otherException);
                             }
                             else
                             {
-                                innerResult =
+                                exception =
                                     new RegexpPluginMisconfiguredException(
-                                        "unexpected.problem", exception);
+                                        "unexpected.problem", otherException);
                             }
+
+                            throw exception;
                         }
 
                         return innerResult;
                     }
                 });
 
-        if  (result instanceof RegexpPluginMisconfiguredException)
-        {
-            throw (RegexpPluginMisconfiguredException) result;
-        }
-
         if  (result == null)
         {
             throw new RegexpEngineNotFoundException(engineClass);
         }
 
-        return (RegexpEngine) result;
+        return result;
     }
 
     /**
@@ -722,27 +710,26 @@ public class RegexpManager
         final ClassLoader loader, final String name)
     {
         return
-            (InputStream)
-                AccessController.doPrivileged(
-                    new PrivilegedAction()
+            AccessController.doPrivileged(
+                new PrivilegedAction<InputStream>()
+                {
+                    public InputStream run()
                     {
-                        public Object run()
+                        InputStream result;
+
+                        if  (loader != null)
                         {
-                            Object result = null;
-
-                            if  (loader != null)
-                            {
-                                result = loader.getResourceAsStream(name);
-                            }
-                            else
-                            {
-                                result =
-                                    ClassLoader
-                                        .getSystemResourceAsStream(name);
-                            }
-
-                            return result;
+                            result = loader.getResourceAsStream(name);
                         }
-                    });
+                        else
+                        {
+                            result =
+                                ClassLoader
+                                    .getSystemResourceAsStream(name);
+                        }
+
+                        return result;
+                    }
+                });
     }
 }

@@ -102,7 +102,7 @@ public class NumericUtils
     /**
      * Retrieves the maximum between a list of integers.
      * @param numbers the collection of all numbers.
-     * @result the maximum number,
+     * @return the maximum number,
      */
     public int getMax(final int[] numbers)
     {
@@ -121,7 +121,7 @@ public class NumericUtils
     /**
      * Retrieves the maximum between a list of doubles.
      * @param numbers the collection of all numbers.
-     * @result the maximum number,
+     * @return the maximum number,
      */
     public double getMax(final double[] numbers)
     {

@@ -34,27 +34,18 @@
  */
 package org.acmsl.commons.patterns;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.ArrayListChainAdapter;
-import org.acmsl.commons.patterns.Chain;
-import org.acmsl.commons.patterns.ChainOfResponsibility;
-import org.acmsl.commons.patterns.CommandSender;
-import org.acmsl.commons.patterns.Manager;
-
 /**
  * Keeps track of the order in which objects are invoked to
  * make them participate in the chain of responsibility pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public abstract class ChainOfResponsibilityManager
-    implements  ChainOfResponsibility,
+public abstract class ChainOfResponsibilityManager<C extends CommandHandler>
+    implements  ChainOfResponsibility<C>,
                 CommandSender,
                 Manager
 {
     /**
-     * Flag inidicating whether the chain has been initialized or not.
+     * Flag indicating whether the chain has been initialized or not.
      */
     private boolean m__bChainInitialized;
 
@@ -88,7 +79,7 @@ public abstract class ChainOfResponsibilityManager
      * Retrieves the chain.
      * @return the chain.
      */
-    protected final Chain immutableGetChain()
+    protected final Chain<C> immutableGetChain()
     {
         return immutableGetChain(immutableGetChainInitialized());
     }
@@ -98,9 +89,9 @@ public abstract class ChainOfResponsibilityManager
      * @param chainInitialized whether the chain was initialized already.
      * @return the chain.
      */
-    protected Chain immutableGetChain(final boolean chainInitialized)
+    protected Chain<C> immutableGetChain(final boolean chainInitialized)
     {
-        Chain result = null;
+        Chain<C> result;
 
         if  (!chainInitialized)
         {
@@ -122,14 +113,14 @@ public abstract class ChainOfResponsibilityManager
      * Retrieves the concrete chain.
      * @return the chain itself.
      */
-    protected abstract Chain getChain();
+    protected abstract Chain<C> getChain();
 
     /**
      * Adds given command handler to the chain.
      * @param commandHandler the command handler to add.
      * @precondition commandHandler != null
      */
-    public void add(final CommandHandler commandHandler)
+    public void add(final C commandHandler)
     {
         add(commandHandler, immutableGetChainInitialized());
     }
@@ -140,10 +131,9 @@ public abstract class ChainOfResponsibilityManager
      * @param chainInitialized whether the chain is initialized.
      * @precondition commandHandler != null
      */
-    protected void add(
-        final CommandHandler commandHandler, final boolean chainInitialized)
+    protected void add(final C commandHandler, final boolean chainInitialized)
     {
-        Chain t_Chain = null;
+        Chain<C> t_Chain;
 
         if  (chainInitialized)
         {
@@ -164,9 +154,9 @@ public abstract class ChainOfResponsibilityManager
      * @precondition commandHandler != null
      */
     protected void add(
-        final CommandHandler commandHandler, final Chain chain)
+        final C commandHandler, final Chain<C> chain)
     {
-        Chain t_Chain = chain;
+        Chain<C> t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.contains(commandHandler)))
@@ -180,7 +170,7 @@ public abstract class ChainOfResponsibilityManager
      * @param commandHandler the command handler to add.
      * @precondition commandHandler != null
      */
-    public void addFirst(final CommandHandler commandHandler)
+    public void addFirst(final C commandHandler)
     {
         addFirst(commandHandler, immutableGetChainInitialized());
     }
@@ -192,9 +182,9 @@ public abstract class ChainOfResponsibilityManager
      * @precondition commandHandler != null
      */
     protected void addFirst(
-        final CommandHandler commandHandler, final boolean chainInitialized)
+        final C commandHandler, final boolean chainInitialized)
     {
-        Chain t_Chain = null;
+        Chain<C> t_Chain;
 
         if  (chainInitialized)
         {
@@ -215,9 +205,9 @@ public abstract class ChainOfResponsibilityManager
      * @precondition commandHandler != null
      */
     protected void addFirst(
-        final CommandHandler commandHandler, final Chain chain)
+        final C commandHandler, final Chain<C> chain)
     {
-        Chain t_Chain = chain;
+        Chain<C> t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.contains(commandHandler)))
@@ -233,8 +223,8 @@ public abstract class ChainOfResponsibilityManager
      * @return the next handler in the chain.
      * @precondition commandHandler != null
      */
-    public CommandHandler getNextChainLink(
-        final CommandHandler commandHandler)
+    @Override
+    public C getNextChainLink(final C commandHandler)
     {
         return
             getNextChainLink(
@@ -250,10 +240,10 @@ public abstract class ChainOfResponsibilityManager
      * @return the next handler in the chain.
      * @precondition commandHandler != null
      */
-    protected CommandHandler getNextChainLink(
-        final CommandHandler commandHandler, final boolean chainInitialized)
+    protected C getNextChainLink(
+        final C commandHandler, final boolean chainInitialized)
     {
-        Chain t_Chain = null;
+        Chain<C> t_Chain;
 
         if  (chainInitialized)
         {
@@ -277,13 +267,13 @@ public abstract class ChainOfResponsibilityManager
      * @param chain the chain.
      * @return the next handler in the chain.
      * @precondition commandHandler != null
-p     */
-    protected CommandHandler getNextChainLink(
-        final CommandHandler commandHandler, final Chain chain)
+     */
+    protected C getNextChainLink(
+        final C commandHandler, final Chain<C> chain)
     {
-        CommandHandler result = null;
+        C result = null;
 
-        Chain t_Chain = chain;
+        Chain<C> t_Chain = chain;
 
         if  (   (t_Chain != null)
              && (!t_Chain.isEmpty()))
@@ -300,8 +290,7 @@ p     */
                 if  (   (t_iCurrentIndex >= 0)
                      && (t_iCurrentIndex < t_Chain.size() - 1))
                 {
-                    result =
-                        (CommandHandler) t_Chain.get(t_iCurrentIndex + 1);
+                    result = t_Chain.get(t_iCurrentIndex + 1);
                 }
             }
         }
@@ -315,11 +304,12 @@ p     */
      * @return <code>true</code> if the command is processed by the chain.
      * @precondition command != null
      */
+    @Override
     public boolean send(final Command command)
     {
         boolean result = false;
 
-        CommandHandler t_CurrentCommandHandler = null;
+        C t_CurrentCommandHandler = null;
 
         do
         {

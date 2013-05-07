@@ -34,11 +34,6 @@
 package org.acmsl.commons;
 
 /*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.NonCheckedException;
-
-/*
  * Importing some JDK classes.
  */
 import java.lang.Throwable;

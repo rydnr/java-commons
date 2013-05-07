@@ -50,9 +50,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Provides some useful methods when working with reflection.
@@ -116,6 +114,7 @@ public class ReflectionUtils
      * @return the ordered collection of superclasses.
      * @precondition classInstance != null
      */
+    @SuppressWarnings("unchecked")
     public Class[] retrieveSuperClasses(final Class classInstance)
     {
         Class[] result = EMPTY_CLASS_ARRAY;
@@ -139,7 +138,7 @@ public class ReflectionUtils
      * @precondition collection != null
      */
     protected void retrieveSuperClasses(
-        final Class objectClass, final Collection collection)
+        final Class objectClass, final Collection<Class> collection)
     {
         Class parent = objectClass.getSuperclass();
 
@@ -164,7 +163,7 @@ public class ReflectionUtils
      */
     public Field[] getMember(final Class classInstance, final Class type)
     {
-        Collection t_cResult = new ArrayList();
+        Collection<Field> t_cResult = new ArrayList<Field>();
 
         Class[] t_aClasses = retrieveSuperClasses(classInstance);
         
@@ -176,7 +175,7 @@ public class ReflectionUtils
                 getClassMembersAsCollection(t_aClasses[t_iIndex], type));
         }
         
-        return (Field[]) t_cResult.toArray(EMPTY_FIELD_ARRAY);
+        return t_cResult.toArray(new Field[t_cResult.size()]);
     }
     
     /**
@@ -194,12 +193,12 @@ public class ReflectionUtils
     {
         Field[] result = EMPTY_FIELD_ARRAY;
         
-        Collection t_cMembers =
+        Collection<Field> t_cMembers =
             getClassMembersAsCollection(classInstance, type);
         
         if  (t_cMembers != null)
         {
-            result = (Field[]) t_cMembers.toArray(EMPTY_FIELD_ARRAY);
+            result = t_cMembers.toArray(new Field[t_cMembers.size()]);
         }
         
         return result;
@@ -216,10 +215,11 @@ public class ReflectionUtils
      * @precondition classInstance != null
      * @precondition type != null
      */
-    public Collection getClassMembersAsCollection(
+    @SuppressWarnings("unchecked")
+    public Collection<Field> getClassMembersAsCollection(
         final Class classInstance, final Class type)
     {
-        Collection result = new ArrayList();
+        Collection<Field> result = new ArrayList<Field>();
 
         Field[] t_Aux = null;
         
@@ -245,13 +245,11 @@ public class ReflectionUtils
             }
         }
 
-        List t_lMembers = Arrays.asList(t_Aux);
-
         int t_iLength = (t_Aux != null) ? t_Aux.length : 0;
 
-        Field t_CurrentField = null;
+        Field t_CurrentField;
         
-        Class t_CurrentMemberClass = null;
+        Class t_CurrentMemberClass;
         
         for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
         {

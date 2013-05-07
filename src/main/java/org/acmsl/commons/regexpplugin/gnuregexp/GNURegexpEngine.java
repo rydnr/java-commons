@@ -38,9 +38,6 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.gnuregexp.CompilerGNUAdapter;
-import org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapter;
-import org.acmsl.commons.regexpplugin.gnuregexp.MatcherGNUAdapter;
 import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
@@ -56,6 +53,7 @@ public class GNURegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
+    @Override
     public Compiler createCompiler()
     {
         return new CompilerGNUAdapter();
@@ -65,6 +63,7 @@ public class GNURegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @Override
     public Matcher createMatcher()
     {
         return new MatcherGNUAdapter();
@@ -74,6 +73,7 @@ public class GNURegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @Override
     public Helper createHelper()
     {
         return new HelperGNUAdapter();

@@ -484,7 +484,6 @@ public class Chronometer
      * Retrieves given milliseconds in seconds.
      * @param millis such amount.
      * @param minutes the previously-calculated minutes.
-     * @param minutes the previously-calculated minutes.
      * @param hours the previously-calculated hours.
      * @param days the previously-calculated days.
      * @param years the previously-calculated years.

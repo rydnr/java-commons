@@ -73,7 +73,7 @@ public class CompilerGNUAdapter
      * @return the Pattern associated to such regular expression.
      * @param MalformedPatternException if given regexp is malformed.
      */
-    public Pattern compile(String regexp)
+    public Pattern compile(final String regexp)
         throws  MalformedPatternException
     {
         org.acmsl.commons.regexpplugin.Pattern result = null;
@@ -105,11 +105,11 @@ public class CompilerGNUAdapter
 
             result = new PatternGNUAdapter(t_RE);
         }
-        catch  (REException exception)
+        catch  (final REException exception)
         {
             throw new MalformedPatternExceptionGNUAdapter(exception);
         }
-        catch  (IllegalArgumentException illegalArgumentException)
+        catch  (final IllegalArgumentException illegalArgumentException)
         {
             if  (resetOptions())
             {
@@ -126,7 +126,7 @@ public class CompilerGNUAdapter
      */
     private boolean resetOptions()
     {
-        boolean result = false;
+        boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -147,7 +147,8 @@ public class CompilerGNUAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
-    public void setCaseSensitive(boolean caseSensitive)
+    @Override
+    public void setCaseSensitive(final boolean caseSensitive)
     {
         m__bCaseSensitive = caseSensitive;
     }
@@ -167,7 +168,8 @@ public class CompilerGNUAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
-    public void setMultiline(boolean multiline)
+    @Override
+    public void setMultiline(final boolean multiline)
     {
         m__bMultiline = multiline;
     }
@@ -177,6 +179,7 @@ public class CompilerGNUAdapter
      * or not.
      * @return false if the engine parses each line one at a time.
      */
+    @Override
     public boolean isMultiline()
     {
         return m__bMultiline;

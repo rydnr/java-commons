@@ -36,25 +36,19 @@
  */
 package org.acmsl.commons.patterns;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.CommandHandler;
-
 /**
  * Represents classes that know about the ordering in which {@link Command} instances are
  * handled by {@link CommandHandler} objects, under the model defined in GoF's Chain Of
  * Responsibility design pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface ChainOfResponsibility
+public interface ChainOfResponsibility<C extends CommandHandler>
 {
     /**
      * Retrieves the link of the chain just after the one given commandHandler
      * takes.
      * @param commandHandler the handler just before the desired link.
-     * @return the next hanlder in the chain.
+     * @return the next handler in the chain.
      */
-    public CommandHandler getNextChainLink(
-        final CommandHandler commandHandler);
+    public C getNextChainLink(final C commandHandler);
 }

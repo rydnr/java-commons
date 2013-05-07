@@ -33,14 +33,6 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectFieldFormatter;
-import org.acmsl.commons.patterns.dao.IntFormatter;
-import org.acmsl.commons.patterns.dao.LongFormatter;
-import org.acmsl.commons.patterns.dao.StringFormatter;
-
 /**
  * Represents any information stored inside a {@link ValueObject}.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -199,7 +191,7 @@ public class ValueObjectField
     /**
      * Represents String fields.
      * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armendáriz</a>
+               >Jose San Leandro Armendï¿½riz</a>
      * @version $Revision: 419 $
      */
     public static class String
@@ -254,7 +246,7 @@ public class ValueObjectField
     /**
      * Represents long fields.
      * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armendáriz</a>
+               >Jose San Leandro Armendï¿½riz</a>
      * @version $Revision: 419 $
      */
     public static class Long

@@ -59,14 +59,14 @@ public class MatchResultOROAdapter
      */
     public MatchResultOROAdapter(final MatchResult matchResult)
     {
-        inmutableSetMatchResult(matchResult);
+        immutableSetMatchResult(matchResult);
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetMatchResult(final MatchResult adaptee)
+    protected final void immutableSetMatchResult(final MatchResult adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -77,7 +77,7 @@ public class MatchResultOROAdapter
      */
     protected void setMatchResult(final MatchResult adaptee)
     {
-        inmutableSetMatchResult(adaptee);
+        immutableSetMatchResult(adaptee);
     }
 
     /**
@@ -103,6 +103,7 @@ public class MatchResultOROAdapter
      * returns null. This is not to be confused with a group matching the null
      * string, which will return a String of length 0.
      */
+    @Override
     public String group(final int group)
     {
         String result = "";
@@ -125,6 +126,7 @@ public class MatchResultOROAdapter
      * itself.</i>.
      * @return such value.
      */
+    @Override
     public int groups()
     {
         int result = 0;

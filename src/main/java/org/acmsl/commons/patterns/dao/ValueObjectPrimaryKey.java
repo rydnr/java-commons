@@ -34,17 +34,12 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.patterns.dao.ValueObjectFieldIterator;
-
 /**
  * Importing some JDK classes.
  */
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents primary keys that uniquely identifies each {@link ValueObject}.
@@ -55,7 +50,7 @@ public class ValueObjectPrimaryKey
     /**
      * Field collection.
      */
-    private ArrayList m__alFields = new ArrayList();
+    private List<ValueObjectField> m__alFields= new ArrayList<ValueObjectField>();
 
     /**
      * Adds a field to this primary key.
@@ -78,19 +73,19 @@ public class ValueObjectPrimaryKey
     /**
      * Generic ValueObjectFieldIterator implementation.
      * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armendáriz</a>
+               >Jose San Leandro Armendï¿½riz</a>
      * @version $Revision: 419 $
      */
     private static class _FieldIterator
         implements  ValueObjectFieldIterator
     {
-        Iterator m__Iterator;
+        Iterator<ValueObjectField> m__Iterator;
 
         /**
          * Constructs an iterator using given generic iterator.
          * @param iterator the actual iterator.
          */
-        public _FieldIterator(Iterator iterator)
+        public _FieldIterator(final Iterator<ValueObjectField> iterator)
         {
             m__Iterator = iterator;
         }
@@ -110,7 +105,7 @@ public class ValueObjectPrimaryKey
          */
         public ValueObjectField next()
         {
-            return (ValueObjectField) m__Iterator.next();
+            return m__Iterator.next();
         }
     }
 }

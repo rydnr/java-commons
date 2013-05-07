@@ -215,7 +215,7 @@ public class HttpServletUtils
      */
     public String append(final String url, final String extraInfo)
     {
-        String result = "";
+        String result;
 
         int questionPosition = url.indexOf("?");
 
@@ -404,7 +404,6 @@ public class HttpServletUtils
      * @param session the session.
      * @return the object if it's found.
      * @precondition key != null
-     * @precondition ((request != null) || (session != null))
      */
     public Object retrieve(
         final String key,
@@ -422,7 +421,6 @@ public class HttpServletUtils
      * @param context the context.
      * @return the object if it's found.
      * @precondition key != null
-     * @precondition ((request != null) || (session != null) || (context != null))
      */
     public Object retrieve(
         final String key,
@@ -463,7 +461,6 @@ public class HttpServletUtils
      * @return <code>true</code> if the object has been stored successfully.
      * @precondition object != null
      * @precondition key != null
-     * @precondition ((request != null) || (session != null))
      */
     public boolean store(
         final Object object,
@@ -532,11 +529,10 @@ public class HttpServletUtils
      * @param key the key.
      * @param request the request.
      * @param session the session.
-     * @param context the context.
+     * @param servletContext the context.
      * @return <code>true</code> if the object has been stored successfully.
      * @precondition object != null
      * @precondition key != null
-     * @precondition ((request != null) || (session != null) || (servletContext != null))
      */
     public boolean store(
         final Object object,
@@ -573,10 +569,9 @@ public class HttpServletUtils
     /**
      * Removes an object from the repository.
      * @param key the key.
-     * @param request the request.
+     * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
      * @precondition key != null
-     * @precondition (request != null)
      */
     public boolean remove(final String key, final HttpSession session)
     {
@@ -590,7 +585,6 @@ public class HttpServletUtils
      * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
      * @precondition key != null
-     * @precondition ((request != null) || (session != null))
      */
     public boolean remove(
         final String key,
@@ -607,7 +601,6 @@ public class HttpServletUtils
      * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
      * @precondition key != null
-     * @precondition ((request != null) || (session != null))
      */
     public boolean remove(
         final String key,

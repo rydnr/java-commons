@@ -33,12 +33,6 @@
 package org.acmsl.commons.automata;
 
 /*
- * Importing some project classes.
- */
-import org.acmsl.commons.automata.State;
-import org.acmsl.commons.automata.Transition;
-
-/*
  * Importing some JDK classes.
  */
 import java.io.Serializable;

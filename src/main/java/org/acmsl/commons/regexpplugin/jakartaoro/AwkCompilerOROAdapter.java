@@ -38,7 +38,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.Compiler;
-import org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapter;
 import org.acmsl.commons.regexpplugin.Pattern;
 
 /*
@@ -80,14 +79,15 @@ public class AwkCompilerOROAdapter
      * @param regexp the regular expression to compile.
      * @return the Pattern associated to such regular expression.
      */
-    public Pattern compile(String regexp)
+    @Override
+    public Pattern compile(final String regexp)
         throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
         Pattern result = null;
 
         try
         {
-            AwkCompiler t_Compiler = getDelegatedInstance();
+            final AwkCompiler t_Compiler = getDelegatedInstance();
 
             if  (t_Compiler != null)
             {
@@ -95,15 +95,15 @@ public class AwkCompilerOROAdapter
             }
             else 
             {
-                LogFactory.getLog(getClass()).error(
+                LogFactory.getLog(AwkCompilerOROAdapter.class).error(
                     "Awk Compiler unavailable.");
             }
         }
-        catch  (org.apache.oro.text.regex.MalformedPatternException exception)
+        catch  (final org.apache.oro.text.regex.MalformedPatternException exception)
         {
             throw new MalformedPatternExceptionOROAdapter(exception);
         }
-        catch  (IllegalArgumentException illegalArgumentException)
+        catch  (final IllegalArgumentException illegalArgumentException)
         {
             if  (resetOptions())
             {
@@ -118,9 +118,9 @@ public class AwkCompilerOROAdapter
      * Resets the compiler options.
      * @return true if the options actually changed.
      */
-    private boolean resetOptions()
+    protected boolean resetOptions()
     {
-        boolean result = false;
+        boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -156,7 +156,8 @@ public class AwkCompilerOROAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
-    public void setCaseSensitive(boolean caseSensitive)
+    @Override
+    public void setCaseSensitive(final boolean caseSensitive)
     {
         m__bCaseSensitive = caseSensitive;
     }
@@ -166,6 +167,7 @@ public class AwkCompilerOROAdapter
      * or not.
      * @return true if upper from lower cases are processed differently.
      */
+    @Override
     public boolean isCaseSensitive()
     {
         return m__bCaseSensitive;
@@ -176,7 +178,8 @@ public class AwkCompilerOROAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
-    public void setMultiline(boolean multiline)
+    @Override
+    public void setMultiline(final boolean multiline)
     {
         m__bMultiline = multiline;
     }
@@ -186,6 +189,7 @@ public class AwkCompilerOROAdapter
      * or not.
      * @return false if the engine parses each line one at a time.
      */
+    @Override
     public boolean isMultiline()
     {
         return m__bMultiline;

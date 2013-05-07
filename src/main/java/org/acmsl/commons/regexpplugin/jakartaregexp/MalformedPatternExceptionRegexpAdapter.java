@@ -72,7 +72,7 @@ public class MalformedPatternExceptionRegexpAdapter
      * Specifies the adaptee.
      * @param exception the exception to adapt.
      */
-    private void immutableSetRESyntaxException(
+    protected final void immutableSetRESyntaxException(
         final RESyntaxException exception)
     {
         m__Adaptee = exception;

@@ -32,23 +32,23 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.patterns.dao.ValueObjectFieldFormatter;
-
 /**
  * Is able to format {@link ValueObjectField.String} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class StringFormatter
-    implements  ValueObjectFieldFormatter
+    implements  ValueObjectFieldFormatter<ValueObjectField.String>
 {
     /**
-     * Singleton instance.
+     * Singleton instance to avoid double-check locking.
      */
-    private static StringFormatter m__Singleton;
+    private static class StringFormatterSingletonContainer
+    {
+        /**
+         * The singleton instance.
+         */
+        public static final StringFormatter SINGLETON = new StringFormatter();
+    }
 
     /**
      * Retrieves a StringFormatter instance.
@@ -56,33 +56,7 @@ public class StringFormatter
      */
     public static StringFormatter getInstance()
     {
-        StringFormatter result = m__Singleton;
-
-        if  (m__Singleton == null)
-        {
-            m__Singleton = new StringFormatter();
-
-            result = m__Singleton;
-        }
-
-        return result;
-    }
-
-    /**
-     * Formats the field in a correct way.
-     * @param valueObjectField the field to format.
-     * @return the String format.
-     */
-    public String format(ValueObjectField valueObjectField)
-    {
-        String result = "";
-
-        if  (valueObjectField instanceof ValueObjectField.String)
-        {
-            result = format((ValueObjectField.String) valueObjectField);
-        }
-
-        return result;
+        return StringFormatterSingletonContainer.SINGLETON;
     }
 
     /**
@@ -90,7 +64,8 @@ public class StringFormatter
      * @param stringField the field to format.
      * @return the String format.
      */
-    public String format(ValueObjectField.String stringField)
+    @Override
+    public String format(final ValueObjectField.String stringField)
     {
         return "\"" + stringField.getValue() + "\"";
     }

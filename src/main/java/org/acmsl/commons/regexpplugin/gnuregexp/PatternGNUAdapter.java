@@ -61,16 +61,16 @@ public class PatternGNUAdapter
      * Constructs a PatternGNUAdapter for given object.
      * @param adaptee the instance to be adapted.
      */
-    public PatternGNUAdapter(RE adaptee)
+    public PatternGNUAdapter(final RE adaptee)
     {
-        inmutableSetRE(adaptee);
+        immutableSetRE(adaptee);
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetRE(RE adaptee)
+    protected final void immutableSetRE(final RE adaptee)
     {
         m__Instance = adaptee;
     }
@@ -81,7 +81,7 @@ public class PatternGNUAdapter
      */
     protected void setRE(RE adaptee)
     {
-        inmutableSetRE(adaptee);
+        immutableSetRE(adaptee);
     }
 
     /**

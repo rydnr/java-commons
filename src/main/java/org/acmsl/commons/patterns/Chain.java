@@ -34,36 +34,31 @@
  */
 package org.acmsl.commons.patterns;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.CommandHandler;
-
 /**
  * Represents chain objects, as they are modelled by GoF's Chain Of
  * Responsibility design pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Chain
+public interface Chain<C extends CommandHandler>
 {
     /**
      * Adds a new commandHandler to the chain.
      * @param commandHandler the commandHandler to be added.
      */
-    public void add(final CommandHandler commandHandler);
+    public void add(final C commandHandler);
 
     /**
      * Adds a new commandHandler to the first position of the chain.
      * @param commandHandler the commandHandler to be added.
      */
-    public void addFirst(final CommandHandler commandHandler);
+    public void addFirst(final C commandHandler);
 
     /**
      * Checks whether or not this chain contains given command handler.
      * @param commandHandler the handler to look for inside this chain.
      * @return true if such handler is already included in this chain.
      */
-    public boolean contains(final CommandHandler commandHandler);
+    public boolean contains(final C commandHandler);
 
     /**
      * Retrieves the position given handler occupies in this chain.
@@ -71,17 +66,17 @@ public interface Chain
      * @return the first position in which given handler is found, or
      * -1 if doesn't participate in this chain.
      */
-    public int indexOf(final CommandHandler commandHandler);
+    public int indexOf(final C commandHandler);
 
     /**
      * Retrieves the command handler that is located at given position.
      * @param commandHandlerIndex the position of the chain.
      * @return the command handler referred at such position.
      */
-    public CommandHandler get(final int commandHandlerIndex);
+    public C get(final int commandHandlerIndex);
 
     /**
-     * Checks the emptyness of this chain.
+     * Checks this chain is empty.
      * @return true if this chain is empty.
      */
     public boolean isEmpty();

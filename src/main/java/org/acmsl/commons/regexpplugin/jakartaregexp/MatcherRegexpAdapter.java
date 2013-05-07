@@ -60,7 +60,7 @@ public class MatcherRegexpAdapter
     /**
      * Constructs an empty REMatcherRegexpAdapter.
      */
-    public MatcherRegexpAdapter()  {};
+    public MatcherRegexpAdapter()  {}
 
     /**
      * Sets the instance to adapt.
@@ -97,15 +97,16 @@ public class MatcherRegexpAdapter
      * @precondition pattern != null
      * @precondition pattern instanceof PatternRegexpAdapter
      */
+    @Override
     public boolean contains(
         final String text, final Pattern pattern)
     {
-        boolean result = false;
+        boolean result;
 
         PatternRegexpAdapter t_PatternAdapter =
             (PatternRegexpAdapter) pattern;
 
-        RE t_RE = t_PatternAdapter.getRE();
+        final RE t_RE = t_PatternAdapter.getRE();
 
         setRE(t_RE);
 
@@ -119,6 +120,7 @@ public class MatcherRegexpAdapter
      * <i>contains</i> method.
      * @return such match result.
      */
+    @Override
     public MatchResult getMatch()
     {
         return getMatch(getRE());

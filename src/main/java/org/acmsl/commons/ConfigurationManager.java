@@ -179,17 +179,16 @@ public abstract class ConfigurationManager
      */
     public String[] getStringArray(final String name)
     {
-        return getStringArray(name, getProperty(name));
+        return getStringArrayValue(getProperty(name));
     }
 
     /**
      * Retrieves the array property.
-     * @param name the name.
      * @param value the value.
      * @return the array of values.
      * @precondition name != null
      */
-    protected String[] getStringArray(final String name, final String value)
+    protected String[] getStringArrayValue(final String value)
     {
         String[] result = null;
 
@@ -206,7 +205,7 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      */
-    public void setStringArray(final String name, final String[] value)
+    public void setStringArray(@SuppressWarnings("unused") final String name, final String[] value)
     {
         StringBuffer propertyValue = new StringBuffer();
 
@@ -350,7 +349,7 @@ public abstract class ConfigurationManager
      * @precondition name != null
      * @precondition value != null
      */
-    public void setIntArray(final String name, final int[] value)
+    public void setIntArray(@SuppressWarnings("unused") final String name, final int[] value)
     {
         StringBuffer propertyValue = new StringBuffer();
 
@@ -467,7 +466,7 @@ public abstract class ConfigurationManager
      * @precondition name != null
      * @precondition value != null
      */
-    public void setLongArray(final String name, final long[] value)
+    public void setLongArray(@SuppressWarnings("unused") final String name, final long[] value)
     {
         StringBuffer propertyValue = new StringBuffer();
 
@@ -584,7 +583,7 @@ public abstract class ConfigurationManager
      * @precondition name != null
      * @precondition value != null
      */
-    public void setDoubleArray(final String name, final double[] value)
+    public void setDoubleArray(@SuppressWarnings("unused") final String name, final double[] value)
     {
         StringBuffer propertyValue = new StringBuffer();
 
@@ -607,19 +606,16 @@ public abstract class ConfigurationManager
      */
     public boolean getBooleanProperty(final String name)
     {
-        return getBooleanProperty(name, getProperty(name));
+        return getBooleanPropertyValue(getProperty(name));
     }
 
     /**
      * Retrieves a concrete boolean setting.
-     * @param name the name.
      * @param value the value.
      * @return such parameter.
-     * @precondition name != null
      * @precondition value != null
      */
-    protected boolean getBooleanProperty(
-        final String name, final String value)
+    protected boolean getBooleanPropertyValue(final String value)
     {
         return Boolean.valueOf(value).booleanValue();
     }
@@ -643,17 +639,16 @@ public abstract class ConfigurationManager
      */
     public boolean[] getBooleanArray(final String name)
     {
-        return getBooleanArray(name, getProperty(name));
+        return getBooleanArrayValue(getProperty(name));
     }
 
     /**
      * Retrieves an array of booleans associated to given name.
-     * @param name the name.
      * @param value the property value.
      * @return such parsed value.
      * @precondition name != null
      */
-    protected boolean[] getBooleanArray(final String name, final String value)
+    protected boolean[] getBooleanArrayValue(final String value)
     {
         boolean[] result = null;
 
@@ -679,7 +674,7 @@ public abstract class ConfigurationManager
      * @precondition name != null
      * @precondition value != null
      */
-    public void setBooleanArray(final String name, final boolean[] value)
+    public void setBooleanArray(@SuppressWarnings("unused") String name, final boolean[] value)
     {
         StringBuffer propertyValue = new StringBuffer();
 
@@ -772,7 +767,7 @@ public abstract class ConfigurationManager
      * @param properties where to store the settings.
      * @param propertiesFileName the properties file.
      * @param retry whether to retry to load the properties appending an slash
-     * at the begining of the file name or not.
+     * at the beginning of the file name or not.
      * @precondition properties != null
      * @precondition propertiesFileName != null
      */
@@ -781,11 +776,11 @@ public abstract class ConfigurationManager
         final String propertiesFileName,
         final boolean retry)
     {
-        InputStream propertiesFile = null;
+        InputStream propertiesFile;
 
         boolean startsWithSlash = propertiesFileName.startsWith("/");
 
-        String alternatePropertiesFileName = null;
+        String alternatePropertiesFileName;
 
         if  (startsWithSlash)
         {

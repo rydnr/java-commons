@@ -40,14 +40,11 @@ import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.regexpplugin.Matcher;
-import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
 import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
-import org.acmsl.commons.utils.StringValidator;
 
 /**
  * Provides some stateless helper regexp-related services.

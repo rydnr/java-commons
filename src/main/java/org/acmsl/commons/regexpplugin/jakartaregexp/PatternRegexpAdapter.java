@@ -79,7 +79,7 @@ public class PatternRegexpAdapter
      * Specifies the instance to adapt.
      * @param adaptee the REProgram to be adapted.
      */
-    private void immutableSetREProgram(final REProgram adaptee)
+    protected final void immutableSetREProgram(final REProgram adaptee)
     {
         m__Instance = adaptee;
     }
@@ -106,7 +106,7 @@ public class PatternRegexpAdapter
      * Sets the RE reference.
      * @param re such reference.
      */
-    private void immutableSetRE(final RE re)
+    protected final void immutableSetRE(final RE re)
     {
         m__RE = re;
     }

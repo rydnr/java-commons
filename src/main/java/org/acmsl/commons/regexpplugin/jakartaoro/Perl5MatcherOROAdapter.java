@@ -36,7 +36,6 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.regexpplugin.jakartaoro.PatternOROAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.MatchResult;
 import org.acmsl.commons.regexpplugin.Pattern;
@@ -60,7 +59,6 @@ public class Perl5MatcherOROAdapter
 
     /**
      * Constructs a Perl5MatcherOROAdapter for given object.
-     * @param adaptee the instance to be adapted.
      */
     public Perl5MatcherOROAdapter()
     {
@@ -103,6 +101,7 @@ public class Perl5MatcherOROAdapter
      * @precondition pattern != null
      * @precondition pattern instanceof PatternOROAdapter
      */
+    @Override
     public boolean contains(final String text, final Pattern pattern)
     {
         return contains(text, pattern, getMatcher());
@@ -132,6 +131,7 @@ public class Perl5MatcherOROAdapter
      * <i>contains</i> method.
      * @return such match result.
      */
+    @Override
     public MatchResult getMatch()
     {
         return getMatch(getMatcher());

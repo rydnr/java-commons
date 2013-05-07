@@ -35,11 +35,6 @@
  */
 package org.acmsl.commons.patterns;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.Command;
-
 /**
  * Represents objects responsible of receiving {@link Command} instances, and
  * depending on the command passed, handle it or pass it to the next

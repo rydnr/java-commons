@@ -34,12 +34,6 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.dao.DAO;
-import org.acmsl.commons.patterns.dao.ValueObjectPrimaryKey;
-
 /**
  * Data Access Object able to access and retrieve {@link ValueObject} instances.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>

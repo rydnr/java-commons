@@ -146,7 +146,7 @@ public class UniqueLogFactory
      * @param clazz the class name.
      * @return the log instance.
      */
-    public static Log getLog(final Class clazz)
+    public static Log getLog(@SuppressWarnings("unused") final Class clazz)
     {
         return getLog();
     }
@@ -156,7 +156,7 @@ public class UniqueLogFactory
      * @param className the class name.
      * @return the log instance.
      */
-    public static Log getLog(final String className)
+    public static Log getLog(@SuppressWarnings("unused") final String className)
     {
         return getLog();
     }

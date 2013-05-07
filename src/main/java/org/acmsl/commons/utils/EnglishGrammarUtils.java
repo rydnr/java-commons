@@ -37,15 +37,12 @@ package org.acmsl.commons.utils;
 /*
  * Importing some ACM-SL classes.
  */
-import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.patterns.Singleton;
 
 /*
  * Importing some JDK classes.
  */
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Provides some grammar rules for English language.

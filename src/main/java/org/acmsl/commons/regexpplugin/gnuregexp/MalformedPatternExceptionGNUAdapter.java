@@ -61,18 +61,18 @@ public class MalformedPatternExceptionGNUAdapter
      * Constructs an adapter for given GNU Regexp 1.1.4 exception.
      * @param exception concrete exception instance to adapt.
      */
-    public MalformedPatternExceptionGNUAdapter(REException exception)
+    public MalformedPatternExceptionGNUAdapter(final REException exception)
     {
         super(exception.getMessage());
 
-        inmutableSetREException(exception);
+        immutableSetREException(exception);
     }
 
     /**
      * Specifies the exception to adapt.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetREException(REException adaptee)
+    protected final void immutableSetREException(final REException adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -81,9 +81,9 @@ public class MalformedPatternExceptionGNUAdapter
      * Specifies the exception to adapt.
      * @param adaptee the instance to adapt.
      */
-    protected void setREException(REException adaptee)
+    protected void setREException(final REException adaptee)
     {
-        inmutableSetREException(adaptee);
+        immutableSetREException(adaptee);
     }
 
     /**

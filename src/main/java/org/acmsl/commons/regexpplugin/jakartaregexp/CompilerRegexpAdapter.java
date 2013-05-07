@@ -133,6 +133,7 @@ public class CompilerRegexpAdapter
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
      */
+    @Override
     public void setCaseSensitive(final boolean caseSensitive)
     {
         immutableSetCaseSensitive(caseSensitive);
@@ -143,6 +144,7 @@ public class CompilerRegexpAdapter
      * or not.
      * @return true if upper from lower cases are processed differently.
      */
+    @Override
     public boolean isCaseSensitive()
     {
         return m__bCaseSensitive;
@@ -163,6 +165,7 @@ public class CompilerRegexpAdapter
      * or not.
      * @param multiline false for parsing each line at a time.
      */
+    @Override
     public void setMultiline(final boolean multiline)
     {
         immutableSetMultiline(multiline);
@@ -173,6 +176,7 @@ public class CompilerRegexpAdapter
      * or not.
      * @return false if the engine parses each line one at a time.
      */
+    @Override
     public boolean isMultiline()
     {
         return m__bMultiline;
@@ -186,6 +190,7 @@ public class CompilerRegexpAdapter
      * @throws MalformedPatternException if given regexp is malformed.
      * @precondition regexp != null
      */
+    @Override
     public Pattern compile(final String regexp)
         throws  MalformedPatternException
     {
@@ -217,9 +222,9 @@ public class CompilerRegexpAdapter
 
         try
         {
-            REProgram t_REProgram = compiler.compile(regexp);
+            final REProgram t_REProgram = compiler.compile(regexp);
 
-            RE t_RE = new RE(t_REProgram);
+            final RE t_RE = new RE(t_REProgram);
 
             int t_iOptions = 0;
 
@@ -259,9 +264,9 @@ public class CompilerRegexpAdapter
      * Resets the compiler options.
      * @return true if the options actually changed.
      */
-    private boolean resetOptions()
+    protected boolean resetOptions()
     {
-        boolean result = false;
+        boolean result;
 
         result =
             (   (isCaseSensitive())

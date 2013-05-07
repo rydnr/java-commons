@@ -68,18 +68,18 @@ public class MatchResultGNUAdapter
      * @param adaptee GNU Regexp 1.1.4 REMatch object to adapt.
      * @param groups the group count.
      */
-    public MatchResultGNUAdapter(REMatch adaptee, int groups)
+    public MatchResultGNUAdapter(final REMatch adaptee, final int groups)
     {
-        inmutableSetREMatch(adaptee);
+        immutableSetREMatch(adaptee);
 
-        inmutableSetGroups(groups);
+        immutableSetGroups(groups);
     }
 
     /**
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void inmutableSetREMatch(REMatch adaptee)
+    protected final void immutableSetREMatch(REMatch adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -90,7 +90,7 @@ public class MatchResultGNUAdapter
      */
     protected void setREMatch(REMatch adaptee)
     {
-        inmutableSetREMatch(adaptee);
+        immutableSetREMatch(adaptee);
     }
 
     /**
@@ -106,7 +106,7 @@ public class MatchResultGNUAdapter
      * Specifies the group count.
      * @param groups the number of groups.
      */
-    private void inmutableSetGroups(int groups)
+    protected final void immutableSetGroups(final int groups)
     {
         m__iGroups = groups;
     }
@@ -115,9 +115,9 @@ public class MatchResultGNUAdapter
      * Specifies the group count.
      * @param groups the number of groups.
      */
-    protected void setGroups(int groups)
+    protected void setGroups(final int groups)
     {
-        inmutableSetGroups(groups);
+        immutableSetGroups(groups);
     }
 
     /**
@@ -126,6 +126,7 @@ public class MatchResultGNUAdapter
      * expression</i>.
      * @return such value.
      */
+    @Override
     public int groups()
     {
         return m__iGroups;
@@ -141,11 +142,12 @@ public class MatchResultGNUAdapter
      * @param group Index of the subexpression.
      * @return the group matched at given position.
      */
-    public String group(int group)
+    @Override
+    public String group(final int group)
     {
         String result = "";
 
-        REMatch t_REMatch = getREMatch();
+        final REMatch t_REMatch = getREMatch();
 
         if  (t_REMatch != null)
         {

@@ -65,7 +65,7 @@ public class PatternOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    private void immutableSetPattern(final Pattern adaptee)
+    protected final void immutableSetPattern(final Pattern adaptee)
     {
         m__Instance = adaptee;
     }

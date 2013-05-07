@@ -126,7 +126,6 @@ public class BundleI14able
      * @param useClassLoader whether to use class loaders explicitly.
      * @precondition messageKey != null
      * @precondition params != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     protected BundleI14able(
         final String messageKey,
@@ -151,7 +150,6 @@ public class BundleI14able
      * @param bundleName the name of the bundle.
      * @precondition messageKey != null
      * @precondition params != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     protected BundleI14able(
         final String messageKey,
@@ -168,7 +166,6 @@ public class BundleI14able
      * @param systemProperty the name of the bundle.
      * @param bundleName the bundle name.
      * @precondition messageKey != null
-     * @precondition (systemProperty != null) || (bundleName != null)
      */
     protected BundleI14able(
         final String messageKey,
@@ -448,7 +445,6 @@ public class BundleI14able
      * @precondition key != null
      * @precondition params != null
      * @precondition locale != null
-     * @precondition (bundleName != null) || (systemProperty != null)
      */
     protected String buildMessage(
         final String key,
@@ -472,13 +468,12 @@ public class BundleI14able
             {
                 // Identify the class loader we will be using
                 ClassLoader t_AnotherClassLoader = 
-                    (ClassLoader)
                     AccessController.doPrivileged(
-                        new PrivilegedAction()
+                        new PrivilegedAction<ClassLoader>()
                         {
-                            public Object run()
+                            public ClassLoader run()
                             {
-                                Object result = null;
+                                ClassLoader result = null;
                                     
                                 try
                                 {
@@ -753,7 +748,6 @@ public class BundleI14able
      * @return the customized message.
      * @precondition key != null
      * @precondition params != null
-     * @precondition (firstBundle != null) || (secondBundle != null)
      */
     protected String buildMessage(
         final String key,
@@ -818,7 +812,7 @@ public class BundleI14able
         final ResourceBundle bundle,
         final StringValidator stringValidator)
     {
-        Collection t_cResult = new ArrayList();
+        Collection<Object> t_cResult = new ArrayList<Object>();
 
         for  (int t_iIndex = 0; t_iIndex < params.length; t_iIndex++)
         {

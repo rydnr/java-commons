@@ -39,9 +39,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
  */
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Helper;
-import org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapter;
-import org.acmsl.commons.regexpplugin.jakartaregexp.CompilerRegexpAdapter;
-import org.acmsl.commons.regexpplugin.jakartaregexp.MatcherRegexpAdapter;
 import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 
@@ -56,6 +53,7 @@ public class JakartaRegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
+    @Override
     public Compiler createCompiler()
     {
         return new CompilerRegexpAdapter();
@@ -65,6 +63,7 @@ public class JakartaRegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @Override
     public Matcher createMatcher()
     {
         return new MatcherRegexpAdapter();
@@ -74,6 +73,7 @@ public class JakartaRegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @Override
     public Helper createHelper()
     {
         return new HelperRegexpAdapter();

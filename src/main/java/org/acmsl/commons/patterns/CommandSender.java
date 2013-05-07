@@ -35,11 +35,6 @@
  */
 package org.acmsl.commons.patterns;
 
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.patterns.Command;
-
 /**
  * Defines the behavior of any class capable to send {@link Command} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
