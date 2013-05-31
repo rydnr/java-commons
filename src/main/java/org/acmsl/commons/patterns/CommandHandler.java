@@ -46,7 +46,7 @@ import org.jetbrains.annotations.NotNull;
  * handler in the chain.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface CommandHandler<C extends Command>
+public interface CommandHandler<C extends Command, E extends Exception>
 {
     /**
      * Asks the handler to process the command. The idea is that each
@@ -57,5 +57,6 @@ public interface CommandHandler<C extends Command>
      * @return <code>true</code> if the handler actually process the command,
      * or maybe because it's not desirable to continue the chain.
      */
-    public boolean handle(@NotNull final C command);
+    public boolean handle(@NotNull final C command)
+        throws E;
 }

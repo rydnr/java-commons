@@ -37,6 +37,7 @@ package org.acmsl.commons.patterns;
 /*
  * Importing JetBrains annotations.
  */
+import org.acmsl.commons.CheckedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,9 +47,9 @@ import org.jetbrains.annotations.Nullable;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 @SuppressWarnings("unused")
-public abstract class ChainOfResponsibilityManager<C extends Command, CH extends CommandHandler<C>>
+public abstract class ChainOfResponsibilityManager<C extends Command, CH extends CommandHandler<C, E>, E extends CheckedException>
     implements  ChainOfResponsibility<CH>,
-                CommandSender<C>,
+                CommandSender<C, E>,
                 Manager
 {
     /**
@@ -223,7 +224,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     @Override
     @Nullable
-    public CH getNextChainLink(@NotNull final CH commandHandler)
+    public CH getNextChainLink(@Nullable final CH commandHandler)
     {
         return
             getNextChainLink(
@@ -240,7 +241,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     @Nullable
     protected CH getNextChainLink(
-        @NotNull final CH commandHandler, final boolean chainInitialized)
+        @Nullable final CH commandHandler, final boolean chainInitialized)
     {
         @NotNull final Chain<CH> t_Chain;
 
@@ -265,14 +266,13 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     @Nullable
     protected CH getNextChainLink(
-        @NotNull final CH commandHandler, @NotNull final Chain<CH> chain)
+        @Nullable final CH commandHandler, @NotNull final Chain<CH> chain)
     {
         @Nullable final CH result;
 
-        Chain<CH> t_Chain = chain;
+        @NotNull final Chain<CH> t_Chain = chain;
 
-        if  (   (t_Chain != null)
-             && (!t_Chain.isEmpty()))
+        if  (!t_Chain.isEmpty())
         {
             if  (   (commandHandler == null)
                  || (!t_Chain.contains(commandHandler)))
@@ -281,7 +281,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
             }
             else
             {
-                int t_iCurrentIndex = t_Chain.indexOf(commandHandler);
+                final int t_iCurrentIndex = t_Chain.indexOf(commandHandler);
 
                 if  (   (t_iCurrentIndex >= 0)
                      && (t_iCurrentIndex < t_Chain.size() - 1))
@@ -309,8 +309,9 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     @Override
     public boolean send(@NotNull final C command)
+        throws E
     {
-        boolean result = false;
+        boolean result = true;
 
         @Nullable CH t_CurrentCommandHandler = null;
 
@@ -335,4 +336,10 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * handlers are organized.
      */
     protected abstract void buildChain();
+
+    @Override
+    public String toString()
+    {
+        return "ChainOfResponsibilityManager{ chainInitialized=" + m__bChainInitialized + '}';
+    }
 }

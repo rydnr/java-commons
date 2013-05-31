@@ -47,7 +47,6 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
 import org.acmsl.commons.regexpplugin.RegexpManager;
-import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 
 /*
  * Importing some JDK classes.
@@ -64,6 +63,10 @@ import java.util.StringTokenizer;
  * Importing commons-logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+
+/*
+ * Importing JetBrains annotations.
+ */
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -154,33 +157,14 @@ public class StringUtils
                 {
                     t_Compiler = createCompiler(RegexpManager.getInstance());
 
-                    result.immutableSetCompiler(t_Compiler);
-
-                    try
+                    if (t_Compiler != null)
                     {
-                        result.immutableSetSubPackagePattern(
-                            t_Compiler.compile("(.*)\\.(.*)"));
-                    }
-                    catch  (final MalformedPatternException exception)
-                    {
-                        /*
-                         * This should never happen. It's a compile-time
-                         * error not detected by the compiler, but it's
-                         * nothing dynamic. So, if it fails, fix it once
-                         * and forget.
-                         */
-                        LogFactory.getLog(StringUtils.class).error(
-                            "Invalid sub-package pattern", exception);
+                        result.immutableSetCompiler(t_Compiler);
 
-                        result = null;
-                    }
-
-                    if  (result != null)
-                    {
                         try
                         {
-                            result.immutableSetPackagePattern(
-                                t_Compiler.compile("(.*?)\\.(.*)"));
+                            result.immutableSetSubPackagePattern(
+                                t_Compiler.compile("(.*)\\.(.*)"));
                         }
                         catch  (final MalformedPatternException exception)
                         {
@@ -191,59 +175,88 @@ public class StringUtils
                              * and forget.
                              */
                             LogFactory.getLog(StringUtils.class).error(
-                                "Invalid package pattern", exception);
+                                "Invalid sub-package pattern", exception);
 
                             result = null;
                         }
-                    }
 
-                    if  (result != null)
-                    {
-                        try
+                        if  (result != null)
                         {
-                            result.immutableSetJustifyPattern(
-                                t_Compiler.compile("(.*?)\\s+(.*)"));
+                            try
+                            {
+                                result.immutableSetPackagePattern(
+                                    t_Compiler.compile("(.*?)\\.(.*)"));
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid package pattern", exception);
+
+                                result = null;
+                            }
                         }
-                        catch  (final MalformedPatternException exception)
+
+                        if  (result != null)
                         {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
+                            try
+                            {
+                                result.immutableSetJustifyPattern(
+                                    t_Compiler.compile("(.*?)\\s+(.*)"));
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid justify pattern", exception);
+
+                                result = null;
+                            }
+                        }
+
+                        if  (result != null)
+                        {
+                            try
+                            {
+                                final boolean t_bCaseSensitive = t_Compiler.isCaseSensitive();
+                                t_Compiler.setCaseSensitive(true);
+                                result.immutableSetUnCapitalizePattern(
+                                    t_Compiler.compile("\\s*([^A-Z\\s]*)\\s*([A-Z]?)?(.*)"));
+                                t_Compiler.setCaseSensitive(t_bCaseSensitive);
+                            }
+                            catch  (final MalformedPatternException exception)
+                            {
+                                /*
+                                 * This should never happen. It's a compile-time
+                                 * error not detected by the compiler, but it's
+                                 * nothing dynamic. So, if it fails, fix it once
+                                 * and forget.
+                                 */
+                                LogFactory.getLog(StringUtils.class).error(
+                                    "Invalid un-capitalize pattern", exception);
+
+                                result = null;
+                            }
+                        }
+                        else
+                        {
                             LogFactory.getLog(StringUtils.class).error(
-                                "Invalid justify pattern", exception);
+                                "compiler unavailable");
 
                             result = null;
                         }
                     }
-
-                    if  (result != null)
-                    {
-                        try
-                        {
-                            boolean t_bCaseSensitive = t_Compiler.isCaseSensitive();
-                            t_Compiler.setCaseSensitive(true);
-                            result.immutableSetUnCapitalizePattern(
-                                t_Compiler.compile("\\s*([^A-Z\\s]*)\\s*([A-Z]?)?(.*)"));
-                            t_Compiler.setCaseSensitive(t_bCaseSensitive);
-                        }
-                        catch  (final MalformedPatternException exception)
-                        {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
-                            LogFactory.getLog(StringUtils.class).error(
-                                "Invalid un-capitalize pattern", exception);
-
-                            result = null;
-                        }
-                    }
-                    else 
+                    else
                     {
                         LogFactory.getLog(StringUtils.class).error(
                             "compiler unavailable");
@@ -453,7 +466,7 @@ public class StringUtils
         {
             @NotNull final String t_strLookFor = new String(new char[]{ lookfor });
 
-            StringTokenizer t_strTokenizer =
+            @NotNull final StringTokenizer t_strTokenizer =
                 new StringTokenizer(original, t_strLookFor, false);
 
             if  (t_strTokenizer.hasMoreTokens())
@@ -597,9 +610,20 @@ public class StringUtils
         @NotNull final String content,
         @NotNull final String original,
         @NotNull final String replacement,
-        @NotNull final Helper helper)
+        @Nullable final Helper helper)
     {
-        return helper.replaceAll(content, original, replacement);
+        @NotNull final String result;
+
+        if (helper != null)
+        {
+            result = helper.replaceAll(content, original, replacement);
+        }
+        else
+        {
+            result = content.replace(original, replacement);
+        }
+
+        return result;
     }
 
     /**
@@ -817,32 +841,35 @@ public class StringUtils
 
         try
         {
-            Helper t_Helper = createHelper(RegexpManager.getInstance());
+            @Nullable final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
-            result =
-                t_Helper.replaceAll(
-                    result, "\\s+", separator);
-
-            result =
-                t_Helper.replaceAll(
-                    result, separator, SEPARATOR_TOKEN);
-
-            int t_iLength = extraSeparators.length;
-
-            for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+            if (t_Helper != null)
             {
                 result =
                     t_Helper.replaceAll(
-                        result,
-                        extraSeparators[t_iIndex],
-                        SEPARATOR_TOKEN);
+                        result, "\\s+", separator);
+
+                result =
+                    t_Helper.replaceAll(
+                        result, separator, SEPARATOR_TOKEN);
+
+                final int t_iLength = extraSeparators.length;
+
+                for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+                {
+                    result =
+                        t_Helper.replaceAll(
+                            result,
+                            extraSeparators[t_iIndex],
+                            SEPARATOR_TOKEN);
+                }
+
+                result = t_Helper.replaceAll(result, "\\W", "");
+
+                result =
+                    t_Helper.replaceAll(
+                        result, SEPARATOR_TOKEN, separator);
             }
-
-            result = t_Helper.replaceAll(result, "\\W", "");
-
-            result =
-                t_Helper.replaceAll(
-                    result, SEPARATOR_TOKEN, separator);
         }
         catch (final MalformedPatternException exception)
         {
@@ -907,13 +934,16 @@ public class StringUtils
 
         try
         {
-            Helper t_Helper = createHelper(RegexpManager.getInstance());
+            @Nullable final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
-            result = t_Helper.replaceAll(result, "\\W+", "_");
+            if (t_Helper != null)
+            {
+                result = t_Helper.replaceAll(result, "\\W+", "_");
 
-            result = t_Helper.replaceAll(result, "_+", "_");
+                result = t_Helper.replaceAll(result, "_+", "_");
 
-            result = capitalize(result, DEFAULT_SEPARATOR);
+                result = capitalize(result, DEFAULT_SEPARATOR);
+            }
         }
         catch (final MalformedPatternException exception)
         {
@@ -1015,18 +1045,21 @@ public class StringUtils
 
         try
         {
-            @NotNull Helper t_Helper = createHelper(RegexpManager.getInstance());
+            @Nullable final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
-            for  (int t_iIndex = 0; t_iIndex < words.length; t_iIndex++)
+            if (t_Helper != null)
             {
-                result =
-                    t_Helper.replaceAll(
-                        result,
-                        words[t_iIndex],
-                        capitalize(words[t_iIndex], separator));
-            }
+                for  (int t_iIndex = 0; t_iIndex < words.length; t_iIndex++)
+                {
+                    result =
+                        t_Helper.replaceAll(
+                            result,
+                            words[t_iIndex],
+                            capitalize(words[t_iIndex], separator));
+                }
 
-            result = toJavaMethod(result, separator);
+                result = toJavaMethod(result, separator);
+            }
         }
         catch  (final MalformedPatternException exception)
         {
@@ -1088,31 +1121,40 @@ public class StringUtils
         @NotNull final StringValidator stringValidator,
         @Nullable final Compiler compiler)
     {
-        List<String> result = new ArrayList<String>();
+        @NotNull final List<String> result = new ArrayList<String>();
 
         String t_strText = text;
 
         try
         {
-            @NotNull final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
+            @Nullable final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-            MatchResult t_MatchResult;
+            @Nullable MatchResult t_MatchResult;
 
-            if  (compiler != null)
+            if  (   (compiler != null)
+                 && (t_Matcher != null))
             {
-                Pattern t_Pattern =
+                @NotNull final Pattern t_Pattern =
                     compiler.compile(
                         "(.*?)" + separator + "(.*)");
 
-                while  (   (!stringValidator.isEmpty(t_strText))
+                while  (   (t_strText != null)
+                        && (!stringValidator.isEmpty(t_strText))
                         && (t_Matcher.contains(t_strText, t_Pattern)))
                 {
                     t_MatchResult = t_Matcher.getMatch();
 
-                    result.add(t_MatchResult.group(1));
+                    if (t_MatchResult != null)
+                    {
+                        result.add(t_MatchResult.group(1));
 
-                    // the rest is parsed next.
-                    t_strText = t_MatchResult.group(2);
+                        // the rest is parsed next.
+                        t_strText = t_MatchResult.group(2);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
             else
@@ -1181,25 +1223,27 @@ public class StringUtils
     protected String extractPackageGroup(
         @NotNull final String text, final int group)
     {
-        String result = text;
+        @Nullable String result = text;
 
         try
         {
             @Nullable final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-            MatchResult t_MatchResult;
+            @Nullable final MatchResult t_MatchResult;
 
-            Pattern t_SubPackagePattern = getSubPackagePattern();
+            @NotNull final Pattern t_SubPackagePattern = getSubPackagePattern();
 
             if  (   (result.trim().length() > 0)
-                 && (t_SubPackagePattern != null)
-                 && (t_Matcher.contains(
-                         result, t_SubPackagePattern)))
+                 && (t_Matcher != null)
+                 && (t_Matcher.contains(result, t_SubPackagePattern)))
             {
                 t_MatchResult = t_Matcher.getMatch();
 
-                // the rest is parsed next.
-                result = t_MatchResult.group(group);
+                if (t_MatchResult != null)
+                {
+                    // the rest is parsed next.
+                    result = t_MatchResult.group(group);
+                }
             }
         }
         catch  (final RegexpEngineNotFoundException exception)
@@ -1213,7 +1257,12 @@ public class StringUtils
                 "Cannot find any regexp engine.",
                 exception);
         }
-        
+
+        if (result == null)
+        {
+            result = text;
+        }
+
         return result;
     }
 
@@ -1242,40 +1291,46 @@ public class StringUtils
 
         try
         {
-            String t_strPackageName = packageName;
+            @Nullable String t_strPackageName = packageName;
 
-            Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
+            @Nullable final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-            MatchResult t_MatchResult;
+            @Nullable MatchResult t_MatchResult;
 
             boolean t_bMatched = false;
 
-            Pattern t_PackagePattern = getPackagePattern();
+            @NotNull final Pattern t_PackagePattern = getPackagePattern();
 
-            while  (   (!stringValidator.isEmpty(t_strPackageName))
-                    && (t_PackagePattern != null)
-                    && (t_Matcher.contains(
-                           t_strPackageName, t_PackagePattern)))
+            if (t_Matcher != null)
             {
-                t_MatchResult = t_Matcher.getMatch();
-
-                String t_strSubPattern = t_MatchResult.group(1);
-
-                if  (   (!stringValidator.isEmpty(t_strSubPattern))
-                     && (!".".equals(t_strSubPattern)))
+                while  (   (!stringValidator.isEmpty(t_strPackageName))
+                        && (t_strPackageName != null)
+                        && (t_Matcher.contains(t_strPackageName, t_PackagePattern)))
                 {
-                    if  (t_bMatched)
+                    t_MatchResult = t_Matcher.getMatch();
+
+                    if (t_MatchResult != null)
                     {
-                        t_sbResult.append(File.separator);
+                        @Nullable final String t_strSubPattern = t_MatchResult.group(1);
+
+                        if  (   (!stringValidator.isEmpty(t_strSubPattern))
+                             && (t_strSubPattern != null)
+                             && (!".".equals(t_strSubPattern)))
+                        {
+                            if  (t_bMatched)
+                            {
+                                t_sbResult.append(File.separator);
+                            }
+
+                            t_sbResult.append(t_strSubPattern);
+
+                            t_bMatched = true;
+                        }
+
+                        // the rest is parsed next.
+                        t_strPackageName = t_MatchResult.group(2);
                     }
-
-                    t_sbResult.append(t_strSubPattern);
-
-                    t_bMatched = true;
                 }
-
-                // the rest is parsed next.
-                t_strPackageName = t_MatchResult.group(2);
             }
 
             if  (   (!stringValidator.isEmpty(t_strPackageName))
@@ -1350,66 +1405,75 @@ public class StringUtils
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
-        String t_strText = text;
+        @Nullable String t_strText = text;
 
         try
         {
-            String t_strLinePrefix = linePrefix;
+            @NotNull final String t_strLinePrefix = linePrefix;
 
             @Nullable final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
 
-            MatchResult t_MatchResult;
+            @Nullable MatchResult t_MatchResult;
 
-            Pattern t_JustifyPattern = getJustifyPattern();
+            @NotNull final Pattern t_JustifyPattern = getJustifyPattern();
 
             String t_strCurrentLine = "";
 
-            String t_strCurrentWord;
+            @Nullable String t_strCurrentWord;
 
-            while  (   (!stringValidator.isEmpty(text))
-                    && (t_JustifyPattern != null)
-                    && (t_Matcher.contains(
-                           t_strText, t_JustifyPattern)))
+            if (t_Matcher != null)
             {
-                t_MatchResult = t_Matcher.getMatch();
-
-                if  (t_MatchResult != null)
+                while  (   (!stringValidator.isEmpty(text))
+                        && (t_strText != null)
+                        && (t_Matcher.contains(t_strText, t_JustifyPattern)))
                 {
-                    t_strCurrentWord = t_MatchResult.group(1);
+                    t_MatchResult = t_Matcher.getMatch();
 
-                    if  (t_strCurrentWord != null)
+                    if  (t_MatchResult != null)
                     {
-                        if  (  t_strCurrentLine.length()
-                             + t_strCurrentWord.length()
-                             + 1
-                             > margin)
-                        {
-                            t_sbResult.append(t_strCurrentLine);
+                        t_strCurrentWord = t_MatchResult.group(1);
 
-                            if  (t_strCurrentLine.length() > 0)
+                        if  (t_strCurrentWord != null)
+                        {
+                            if  (  t_strCurrentLine.length()
+                                 + t_strCurrentWord.length()
+                                 + 1
+                                 > margin)
                             {
-                                t_sbResult.append("\n");
+                                t_sbResult.append(t_strCurrentLine);
+
+                                if  (t_strCurrentLine.length() > 0)
+                                {
+                                    t_sbResult.append("\n");
+                                }
+
+                                t_strCurrentLine = t_strLinePrefix;
+                            }
+                            else
+                            {
+                                if  (t_strCurrentLine.length() > 0)
+                                {
+                                    t_strCurrentLine += " ";
+                                }
                             }
 
-                            t_strCurrentLine = t_strLinePrefix;
-                        }
-                        else
-                        {
-                            if  (t_strCurrentLine.length() > 0)
-                            {
-                                t_strCurrentLine += " ";
-                            }
+                            t_strCurrentLine += t_strCurrentWord;
                         }
 
-                        t_strCurrentLine += t_strCurrentWord;
+                        // the rest is parsed next.
+                        t_strText = t_MatchResult.group(2);
                     }
-
-                    // the rest is parsed next.
-                    t_strText = t_MatchResult.group(2);
                 }
             }
 
-            t_strCurrentWord = t_strText;
+            if (t_strText != null)
+            {
+                t_strCurrentWord = t_strText;
+            }
+            else
+            {
+                t_strCurrentWord = "";
+            }
 
             t_sbResult.append(t_strCurrentLine);
 
@@ -1499,45 +1563,49 @@ public class StringUtils
         @NotNull final String separator,
         @NotNull final StringValidator stringValidator,
         @NotNull final Pattern pattern,
-        @NotNull final Matcher matcher)
+        @Nullable final Matcher matcher)
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
         try
         {
-            String t_strTextToProcess = input;
+            @Nullable String t_strTextToProcess = input;
 
-            String t_strCurrentWord;
+            @Nullable String t_strCurrentWord;
 
-            MatchResult t_MatchResult;
+            @Nullable MatchResult t_MatchResult;
 
-            while  (   (!stringValidator.isEmpty(t_strTextToProcess))
-                    && (matcher.contains(t_strTextToProcess, pattern)))
+            if (matcher != null)
             {
-                t_MatchResult = matcher.getMatch();
-
-                if  (t_MatchResult != null)
+                while  (   (!stringValidator.isEmpty(t_strTextToProcess))
+                        && (t_strTextToProcess != null)
+                        && (matcher.contains(t_strTextToProcess, pattern)))
                 {
-                    t_strCurrentWord = t_MatchResult.group(1);
+                    t_MatchResult = matcher.getMatch();
 
-                    if  (!stringValidator.isEmpty(t_strCurrentWord))
+                    if  (t_MatchResult != null)
                     {
-                        t_sbResult.append(t_strCurrentWord);
-                    }
+                        t_strCurrentWord = t_MatchResult.group(1);
 
-                    // the rest is parsed next.
-                    t_strTextToProcess = t_MatchResult.group(3);
+                        if  (!stringValidator.isEmpty(t_strCurrentWord))
+                        {
+                            t_sbResult.append(t_strCurrentWord);
+                        }
 
-                    if  (!stringValidator.isEmpty(t_strTextToProcess))
-                    {
-                        t_sbResult.append(separator);
-                    }
+                        // the rest is parsed next.
+                        t_strTextToProcess = t_MatchResult.group(3);
 
-                    String t_strUpperCaseLetter = t_MatchResult.group(2);
+                        if  (!stringValidator.isEmpty(t_strTextToProcess))
+                        {
+                            t_sbResult.append(separator);
+                        }
 
-                    if  (!stringValidator.isEmpty(t_strUpperCaseLetter))
-                    {
-                        t_sbResult.append(t_strUpperCaseLetter.toLowerCase());
+                        @Nullable final String t_strUpperCaseLetter = t_MatchResult.group(2);
+
+                        if  (t_strUpperCaseLetter != null)
+                        {
+                            t_sbResult.append(t_strUpperCaseLetter.toLowerCase());
+                        }
                     }
                 }
             }
@@ -1584,21 +1652,21 @@ public class StringUtils
 
         int t_iInitialIndent = retrieveMinimumIndentInAllLines(text);
 
-        StringBuffer t_sbInitialIndent = new StringBuffer();
+        @NotNull final StringBuilder t_sbInitialIndent = new StringBuilder();
 
         for (int t_iIndex = 0; t_iIndex < t_iInitialIndent; t_iIndex++)
         {
             t_sbInitialIndent.append(" ");
         }
 
-        String t_strInitialIndent = t_sbInitialIndent.toString();
+        @NotNull final String t_strInitialIndent = t_sbInitialIndent.toString();
 
         boolean t_bFirstLine = true;
 
         String t_strCurrentLine;
         String t_strTrimmedCurrentLine;
 
-        MessageFormat t_Formatter = new MessageFormat(format);
+        @NotNull final MessageFormat t_Formatter = new MessageFormat(format);
 
         String t_strCurrentIndent = "";
 
@@ -1843,7 +1911,7 @@ public class StringUtils
 
         if  (t_strSeparator != null)
         {
-            StringTokenizer t_Tokenizer =
+            @NotNull final StringTokenizer t_Tokenizer =
                 new StringTokenizer(value.trim(), t_strSeparator, false);
 
             while  (t_Tokenizer.hasMoreTokens())
@@ -1883,7 +1951,7 @@ public class StringUtils
     {
         @NotNull final String[] result;
         
-        int t_iLength = values.length;
+        final int t_iLength = values.length;
         
         result = new String[t_iLength];
         
@@ -1912,7 +1980,7 @@ public class StringUtils
     {
         @NotNull final Collection<String> t_cResult = new ArrayList<String>();
         
-        int t_iLength = values.length;
+        final int t_iLength = values.length;
 
         String t_strCurrentLine;
         
@@ -1955,11 +2023,11 @@ public class StringUtils
     @SuppressWarnings("unused")
     @NotNull
     public String concatenate(
-        @NotNull final Collection<String> items, @NotNull final String separator)
+        @NotNull final Collection<?> items, @NotNull final String separator)
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
-        Iterator<String> t_itItems = items.iterator();
+        @NotNull final Iterator<?> t_itItems = items.iterator();
 
         if  (t_itItems.hasNext())
         {
@@ -1979,16 +2047,10 @@ public class StringUtils
      * Creates the compiler.
      * @param regexpManager the <code>RegexpManager</code> instance.
      * @return the regexp compiler.
-     * @throws RegexpEngineNotFoundException if a suitable instance
-     * cannot be created.
-     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
-     * misconfigured.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Compiler createCompiler(
         final RegexpManager regexpManager)
-      throws RegexpEngineNotFoundException,
-             RegexpPluginMisconfiguredException
     {
         return createCompiler(regexpManager.getEngine());
     }
@@ -1998,7 +2060,7 @@ public class StringUtils
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp compiler.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Compiler createCompiler(
         @NotNull final RegexpEngine regexpEngine)
     {
@@ -2009,16 +2071,10 @@ public class StringUtils
      * Creates the matcher.
      * @param regexpManager the RegexpManager instance.
      * @return the regexp matcher.
-     * @throws RegexpEngineNotFoundException if a suitable instance
-     * cannot be created.
-     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
-     * misconfigured.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Matcher createMatcher(
         @NotNull final RegexpManager regexpManager)
-      throws RegexpEngineNotFoundException,
-             RegexpPluginMisconfiguredException
     {
         return createMatcher(regexpManager.getEngine());
     }
@@ -2028,7 +2084,7 @@ public class StringUtils
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp matcher.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Matcher createMatcher(
         @NotNull final RegexpEngine regexpEngine)
     {
@@ -2039,16 +2095,10 @@ public class StringUtils
      * Creates the helper.
      * @param regexpManager the RegexpManager instance.
      * @return the regexp helper.
-     * @throws RegexpEngineNotFoundException if a suitable instance
-     * cannot be created.
-     * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
-     * misconfigured.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Helper createHelper(
         @NotNull final RegexpManager regexpManager)
-      throws RegexpEngineNotFoundException,
-             RegexpPluginMisconfiguredException
     {
         return createHelper(regexpManager.getEngine());
     }
@@ -2058,7 +2108,7 @@ public class StringUtils
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp helper.
      */
-    @NotNull
+    @Nullable
     protected static synchronized Helper createHelper(
         @NotNull final RegexpEngine regexpEngine)
     {

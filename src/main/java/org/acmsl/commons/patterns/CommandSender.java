@@ -36,6 +36,11 @@
 package org.acmsl.commons.patterns;
 
 /*
+ * Importing project classes.
+ */
+import org.acmsl.commons.CheckedException;
+
+/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +49,7 @@ import org.jetbrains.annotations.NotNull;
  * Defines the behavior of any class capable to send {@link Command} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface CommandSender<C extends Command>
+public interface CommandSender<C extends Command, E extends CheckedException>
 {
     /**
      * Sends given command to the chain.
@@ -53,5 +58,6 @@ public interface CommandSender<C extends Command>
      * @return <code>true</code> if the command is processed by the chain.
      */
     @SuppressWarnings("unused")
-    public boolean send(@NotNull final C command);
+    public boolean send(@NotNull final C command)
+        throws E;
 }

@@ -39,7 +39,6 @@ package org.acmsl.commons.patterns;
 /*
  * Importing JetBrains annotations.
  */
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -57,5 +56,5 @@ public interface ChainOfResponsibility<C extends CommandHandler>
      * @return the next handler in the chain.
      */
     @Nullable
-    public C getNextChainLink(@NotNull final C commandHandler);
+    public C getNextChainLink(@Nullable final C commandHandler);
 }
