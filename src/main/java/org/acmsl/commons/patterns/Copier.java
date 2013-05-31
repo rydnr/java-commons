@@ -38,6 +38,7 @@ package org.acmsl.commons.patterns;
  * Denotes objects able to make copies of objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface Copier
 {
 }

@@ -34,6 +34,11 @@
 package org.acmsl.commons.patterns;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing JDK classes.
  */
 import java.util.Locale;
@@ -49,5 +54,6 @@ public interface I14able
      * @param locale the locale.
      * @return such text.
      */
-    public String toString(final Locale locale);
+    @NotNull
+    public String toString(@NotNull final Locale locale);
 }

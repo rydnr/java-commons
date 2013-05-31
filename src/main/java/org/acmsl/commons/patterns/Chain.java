@@ -34,31 +34,37 @@
  */
 package org.acmsl.commons.patterns;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Represents chain objects, as they are modelled by GoF's Chain Of
  * Responsibility design pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Chain<C extends CommandHandler>
+public interface Chain<CH extends CommandHandler>
 {
     /**
      * Adds a new commandHandler to the chain.
      * @param commandHandler the commandHandler to be added.
      */
-    public void add(final C commandHandler);
+    public void add(@NotNull final CH commandHandler);
 
     /**
      * Adds a new commandHandler to the first position of the chain.
      * @param commandHandler the commandHandler to be added.
      */
-    public void addFirst(final C commandHandler);
+    public void addFirst(@NotNull final CH commandHandler);
 
     /**
      * Checks whether or not this chain contains given command handler.
      * @param commandHandler the handler to look for inside this chain.
      * @return true if such handler is already included in this chain.
      */
-    public boolean contains(final C commandHandler);
+    public boolean contains(@NotNull final CH commandHandler);
 
     /**
      * Retrieves the position given handler occupies in this chain.
@@ -66,14 +72,15 @@ public interface Chain<C extends CommandHandler>
      * @return the first position in which given handler is found, or
      * -1 if doesn't participate in this chain.
      */
-    public int indexOf(final C commandHandler);
+    public int indexOf(@NotNull final CH commandHandler);
 
     /**
      * Retrieves the command handler that is located at given position.
      * @param commandHandlerIndex the position of the chain.
      * @return the command handler referred at such position.
      */
-    public C get(final int commandHandlerIndex);
+    @Nullable
+    public CH get(final int commandHandlerIndex);
 
     /**
      * Checks this chain is empty.

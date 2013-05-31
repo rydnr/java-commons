@@ -33,6 +33,11 @@
 package org.acmsl.commons.automata;
 
 /*
+ * Importing some JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK classes.
  */
 import java.io.Serializable;
@@ -41,19 +46,24 @@ import java.io.Serializable;
  * Models stateful entities.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Stateful
+@SuppressWarnings("unused")
+public interface Stateful<S extends State, T extends Transition>
     extends  Serializable
 {
     /**
      * Retrieves the current state.
      * @return such state.
      */
-    public State getCurrentState();
+    @SuppressWarnings("unused")
+    @NotNull
+    public S getCurrentState();
 
     /**
      * Accepts given transition.
      * @param transition the transition.
      * @return the new state  this stateful instance has just reached.
      */
-    public State acceptTransition(Transition transition);
+    @SuppressWarnings("unused")
+    @NotNull
+    public S acceptTransition(@NotNull T transition);
 }

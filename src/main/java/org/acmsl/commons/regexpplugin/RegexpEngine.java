@@ -33,6 +33,11 @@
  */
 package org.acmsl.commons.regexpplugin;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Represents a regexp engine.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -43,17 +48,20 @@ public interface RegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
+    @Nullable
     public Compiler createCompiler();
 
     /**
      * Creates a matcher instance.
      * @return such instance.
      */
+    @Nullable
     public Matcher createMatcher();
 
     /**
      * Creates a helper instance.
      * @return such instance.
      */
+    @Nullable
     public Helper createHelper();
 }

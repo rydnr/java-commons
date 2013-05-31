@@ -44,6 +44,7 @@ import org.acmsl.commons.regexpplugin.Pattern;
  */
 import org.apache.regexp.RE;
 import org.apache.regexp.REProgram;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Implements a {@link Matcher} in Jakarta Regexp package.
@@ -99,7 +100,7 @@ public class MatcherRegexpAdapter
      */
     @Override
     public boolean contains(
-        final String text, final Pattern pattern)
+        @NotNull final String text, @NotNull final Pattern pattern)
     {
         boolean result;
 

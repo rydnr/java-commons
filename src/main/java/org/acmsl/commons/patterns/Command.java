@@ -37,6 +37,7 @@ package org.acmsl.commons.patterns;
  * Marks all different implementations of the Command pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface Command
 {
 }

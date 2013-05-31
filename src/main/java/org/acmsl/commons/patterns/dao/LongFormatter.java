@@ -33,12 +33,22 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+/*
+ * Importing project classes.
+ */
+import org.acmsl.commons.patterns.Singleton;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Is able to format {@link ValueObjectField.Long} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class LongFormatter
-    implements  ValueObjectFieldFormatter<ValueObjectField.Long>
+    implements  ValueObjectFieldFormatter<ValueObjectField<Long>>, Singleton
 {
     /**
      * Singleton instance implemented to avoid double-check locking.
@@ -48,13 +58,14 @@ public class LongFormatter
         /**
          * The singleton instance.
          */
-        public static final LongFormatter SINGLETON = new LongFormatter();
+        @NotNull public static final LongFormatter SINGLETON = new LongFormatter();
     }
 
     /**
      * Retrieves a LongFormatter instance.
      * @return a long formatter.
      */
+    @NotNull
     public static LongFormatter getInstance()
     {
         return LongFormatterSingletonContainer.SINGLETON;
@@ -66,7 +77,8 @@ public class LongFormatter
      * @return the String format.
      */
     @Override
-    public String format(final ValueObjectField.Long longField)
+    @NotNull
+    public String format(@NotNull final ValueObjectField<Long> longField)
     {
         return longField.getValue() + "";
     }

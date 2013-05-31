@@ -37,6 +37,7 @@ package org.acmsl.commons.patterns;
  * Represents entities that are able to update others.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface Setter
 {
 }

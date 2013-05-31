@@ -39,6 +39,7 @@ package org.acmsl.commons.patterns.mvc;
  * Model-View-Controller architecture.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface View
 {
 }

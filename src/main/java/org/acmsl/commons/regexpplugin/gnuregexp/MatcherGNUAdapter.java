@@ -47,6 +47,7 @@ import org.acmsl.commons.regexpplugin.Pattern;
  */
 import gnu.regexp.RE;
 import gnu.regexp.REMatchEnumeration;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GNU Regexp 1.1.4 matcher adapter. This class makes possible
@@ -78,7 +79,7 @@ public class MatcherGNUAdapter
      * @return true if the pattern is found.
      */
     @Override
-    public boolean contains(final String text, final Pattern pattern)
+    public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
     {
         boolean result = false;
 

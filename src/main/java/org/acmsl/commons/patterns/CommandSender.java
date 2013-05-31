@@ -35,11 +35,16 @@
  */
 package org.acmsl.commons.patterns;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Defines the behavior of any class capable to send {@link Command} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface CommandSender
+public interface CommandSender<C extends Command>
 {
     /**
      * Sends given command to the chain.
@@ -47,5 +52,6 @@ public interface CommandSender
      * be done.
      * @return <code>true</code> if the command is processed by the chain.
      */
-    public boolean send(final Command command);
+    @SuppressWarnings("unused")
+    public boolean send(@NotNull final C command);
 }

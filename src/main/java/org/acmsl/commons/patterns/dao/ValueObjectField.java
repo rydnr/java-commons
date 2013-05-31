@@ -33,33 +33,42 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents any information stored inside a {@link ValueObject}.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public class ValueObjectField
+public class ValueObjectField<V>
 {
     /**
      * Field name.
      */
-    private java.lang.String m__strName;
+    @NotNull private java.lang.String m__strName;
 
     /**
      * Formatter.
      */
-    private ValueObjectFieldFormatter m__Formatter;
+    @NotNull private ValueObjectFieldFormatter<ValueObjectField<V>> m__Formatter;
+
+    /**
+     * The value.
+     */
+    @NotNull private V m__Value;
 
     /**
      * Constructs a field using given name.
      * @param name the name of the field.
+     * @param value the value.
      * @param formatter the entity able to format this field correctly.
      */
     public ValueObjectField(
-        final java.lang.String name,
-        final ValueObjectFieldFormatter formatter)
+        @NotNull final java.lang.String name,
+        @NotNull final V value,
+        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
     {
         immutableSetName(name);
-
+        immutableSetValue(value);
         immutableSetFormatter(formatter);
     }
 
@@ -76,7 +85,8 @@ public class ValueObjectField
      * Sets field's name.
      * @param name the name of the field.
      */
-    protected void setName(java.lang.String name)
+    @SuppressWarnings("unused")
+    protected void setName(@NotNull java.lang.String name)
     {
         immutableSetName(name);
     }
@@ -85,17 +95,47 @@ public class ValueObjectField
      * Retrieves field's name.
      * @return the name of the field.
      */
+    @NotNull
     public java.lang.String getName()
     {
         return m__strName;
     }
 
     /**
+     * Sets the value.
+     * @param value the value
+     */
+    protected final void immutableSetValue(@NotNull final V value)
+    {
+        m__Value = value;
+    }
+
+    /**
+     * Sets the value.
+     * @param value the value
+     */
+    @SuppressWarnings("unused")
+    protected void setValue(@NotNull final V value)
+    {
+        immutableSetValue(value);
+    }
+
+    /**
+     * Retrieves the value.
+     * @return field's value.
+     */
+    @NotNull
+    public V getValue()
+    {
+        return m__Value;
+    }
+
+    /**
      * Sets the formatter.
      * @param formatter the formatter itself.
      */
-    private void immutableSetFormatter(
-        final ValueObjectFieldFormatter formatter)
+    protected final void immutableSetFormatter(
+        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
     {
         m__Formatter = formatter;
     }
@@ -104,17 +144,19 @@ public class ValueObjectField
      * Sets the formatter.
      * @param formatter the formatter itself.
      */
+    @SuppressWarnings("unused")
     protected void setFormatter(
-        final ValueObjectFieldFormatter formatter)
+        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
     {
         immutableSetFormatter(formatter);
     }
 
     /**
      * Retrieves the formatter.
-     * @return this field's associated foramtter.
+     * @return this field's associated formatter.
      */
-    public ValueObjectFieldFormatter getFormatter()
+    @NotNull
+    public ValueObjectFieldFormatter<ValueObjectField<V>> getFormatter()
     {
         return m__Formatter;
     }
@@ -123,6 +165,8 @@ public class ValueObjectField
      * Formats the field in a correct way.
      * @return this field in String format.
      */
+    @Override
+    @NotNull
     public java.lang.String toString()
     {
         return toString(getFormatter());
@@ -132,9 +176,9 @@ public class ValueObjectField
      * Formats the field in a correct way.
      * @param formatter the formatter.
      * @return this field in String format.
-     * @precondition formatter != null
      */
-    protected java.lang.String toString(final ValueObjectFieldFormatter formatter)
+    @NotNull
+    protected java.lang.String toString(@NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
     {
         return formatter.format(this);
     }
@@ -143,65 +187,24 @@ public class ValueObjectField
      * Represents int fields.
      */
     public static class Int
-        extends ValueObjectField
+        extends ValueObjectField<Integer>
     {
-        /**
-         * Field value.
-         */
-        private int m__iValue;
-
         /**
          * Constructs a field using given name.
          * @param name the name of the field.
          */
-        public Int(final java.lang.String name, final int value)
+        public Int(@NotNull final java.lang.String name, final int value)
         {
-            super(name, IntFormatter.getInstance());
-            immutableSetValue(value);
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        private void immutableSetValue(final int value)
-        {
-            m__iValue = value;
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        protected void setValue(final int value)
-        {
-            immutableSetValue(value);
-        }
-
-        /**
-         * Retrieves the value.
-         * @return field's value.
-         */
-        public int getValue()
-        {
-            return m__iValue;
+            super(name, value, IntFormatter.getInstance());
         }
     }
 
     /**
      * Represents String fields.
-     * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armend�riz</a>
-     * @version $Revision: 419 $
      */
     public static class String
-        extends  ValueObjectField
+        extends  ValueObjectField<java.lang.String>
     {
-        /**
-         * Field value.
-         */
-        private java.lang.String m__strValue;
-
         /**
          * Constructs a field using given name and value.
          * @param name the name of the field.
@@ -210,36 +213,7 @@ public class ValueObjectField
         public String(
             final java.lang.String name, final java.lang.String value)
         {
-            super(name, StringFormatter.getInstance());
-
-            immutableSetValue(value);
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        private void immutableSetValue(final java.lang.String value)
-        {
-            m__strValue = value;
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        protected void setValue(final java.lang.String value)
-        {
-            immutableSetValue(value);
-        }
-
-        /**
-         * Retrieves the value.
-         * @return field's value.
-         */
-        public java.lang.String getValue()
-        {
-            return m__strValue;
+            super(name, value, StringFormatter.getInstance());
         }
     }
 
@@ -250,13 +224,8 @@ public class ValueObjectField
      * @version $Revision: 419 $
      */
     public static class Long
-        extends  ValueObjectField
+        extends  ValueObjectField<java.lang.Long>
     {
-        /**
-         * Field value.
-         */
-        private long m__lValue;
-
         /**
          * Constructs a field using given name and value.
          * @param name the name of the field.
@@ -264,35 +233,7 @@ public class ValueObjectField
          */
         public Long(final java.lang.String name, final long value)
         {
-            super(name, LongFormatter.getInstance());
-            immutableSetValue(value);
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        private void immutableSetValue(final long value)
-        {
-            m__lValue = value;
-        }
-
-        /**
-         * Sets the value.
-         * @param value the value
-         */
-        protected void setValue(final long value)
-        {
-            immutableSetValue(value);
-        }
-
-        /**
-         * Retrieves the value.
-         * @return field's value.
-         */
-        public long getValue()
-        {
-            return m__lValue;
+            super(name, value, LongFormatter.getInstance());
         }
     }
 }

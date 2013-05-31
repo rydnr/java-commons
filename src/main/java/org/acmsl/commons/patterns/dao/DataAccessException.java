@@ -33,25 +33,30 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents abnormal situations regarding data accessing.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public class DataAccessException
     extends  RuntimeException
 {
     /**
      * Specifies the DAO which throws the error.
      */
-    private DAO m__DAO;
+    @NotNull private DAO m__DAO;
 
     /**
      * Builds a DataAccessException with a certain message.
      * @param message the message.
      * @param dao the DAO entity.
-     * @precondition dao != null
      */
-    public DataAccessException(final String message, final DAO dao)
+    public DataAccessException(@NotNull final String message, @NotNull final DAO dao)
     {
         super(message);
         immutableSetDAO(dao);
@@ -63,7 +68,7 @@ public class DataAccessException
      * @param cause the exception to wrap.
      */
     public DataAccessException(
-        final String message, final Throwable cause, final DAO dao)
+        @NotNull final String message, @NotNull final Throwable cause, @NotNull final DAO dao)
     {
         super(message, cause);
         immutableSetDAO(dao);
@@ -73,7 +78,7 @@ public class DataAccessException
      * Specifies the DAO entity which throws the error.
      * @param dao the DAO instance.
      */
-    private void immutableSetDAO(final DAO dao)
+    private void immutableSetDAO(@NotNull final DAO dao)
     {
         m__DAO = dao;
     }
@@ -82,7 +87,8 @@ public class DataAccessException
      * Specifies the DAO entity which throws the error.
      * @param dao the DAO instance.
      */
-    protected void setDAO(final DAO dao)
+    @SuppressWarnings("unused")
+    protected void setDAO(@NotNull final DAO dao)
     {
         immutableSetDAO(dao);
     }
@@ -91,6 +97,7 @@ public class DataAccessException
      * Retrieves the DAO entity with threw this error.
      * @return such instance.
      */
+    @NotNull
     public DAO getDAO()
     {
         return m__DAO;
@@ -100,9 +107,11 @@ public class DataAccessException
      * Outputs a text representation of this exception.
      * @return the error description.
      */
+    @Override
+    @NotNull
     public String toString()
     {
-        StringBuffer t_sbResult = new StringBuffer();
+        @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
         t_sbResult.append(getMessage());
 

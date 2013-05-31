@@ -50,10 +50,6 @@ package org.acmsl.commons.patterns.dao;
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.patterns.dao.ValueObjectField;
-import org.acmsl.commons.patterns.dao.IntFormatter;
-import org.acmsl.commons.patterns.dao.LongFormatter;
-import org.acmsl.commons.patterns.dao.StringFormatter;
 // JUnitDoclet end import
 
 /*
@@ -159,36 +155,36 @@ public class ValueObjectFieldTest
      * Creates an int instance of the tested class.
      * @return such instance.
      */
-    public org.acmsl.commons.patterns.dao.ValueObjectField createIntInstance()
+    public org.acmsl.commons.patterns.dao.ValueObjectField<Integer> createIntInstance()
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField(
-                "int", IntFormatter.getInstance());
+            new org.acmsl.commons.patterns.dao.ValueObjectField<Integer>(
+                "int", 1, IntFormatter.getInstance());
     }
   
     /**
      * Creates a long instance of the tested class.
      * @return such instance.
      */
-    public org.acmsl.commons.patterns.dao.ValueObjectField createLongInstance()
+    public org.acmsl.commons.patterns.dao.ValueObjectField<Long> createLongInstance()
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField(
-                "long", LongFormatter.getInstance());
+            new org.acmsl.commons.patterns.dao.ValueObjectField<Long>(
+                "long", 1L, LongFormatter.getInstance());
     }
   
     /**
      * Creates a string instance of the tested class.
      * @return such instance.
      */
-    public org.acmsl.commons.patterns.dao.ValueObjectField createStringInstance()
+    public org.acmsl.commons.patterns.dao.ValueObjectField<String> createStringInstance()
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField(
-                "string", StringFormatter.getInstance());
+            new org.acmsl.commons.patterns.dao.ValueObjectField<String>(
+                "string", "a", StringFormatter.getInstance());
     }
   
   // JUnitDoclet end class
@@ -213,7 +209,7 @@ public class ValueObjectFieldTest
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.patterns.dao.ValueObjectField("unknown", null);
+    return new org.acmsl.commons.patterns.dao.ValueObjectField<String>("unknown", "a", StringFormatter.getInstance());
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -252,6 +248,7 @@ public class ValueObjectFieldTest
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.dao.ValueObjectField#getName()
   */
+  @SuppressWarnings("unused")
   public void testGetName()
   throws Exception
   {
@@ -270,6 +267,7 @@ public class ValueObjectFieldTest
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.dao.ValueObjectField#getFormatter()
   */
+  @SuppressWarnings("unused")
   public void testGetFormatter()
   throws Exception
   {
@@ -282,6 +280,7 @@ public class ValueObjectFieldTest
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.dao.ValueObjectField#toString()
   */
+  @SuppressWarnings("unused")
   public void testToString()
   throws Exception
   {

@@ -41,6 +41,11 @@ package org.acmsl.commons.utils;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provides some useful methods when working with characters and buffers.
  * @author <a href="mailto:chous@acm-sl.org"
@@ -51,11 +56,6 @@ public class CharUtils
                 Singleton
 {
     /**
-     * An empty char array for building invalid method invocations.
-     */
-    protected static final char[] EMPTY_CHAR_ARRAY = new char[0];
-
-    /**
      * Singleton implemented to avoid the double-checked locking.
      */
     private static class CharUtilsSingletonContainer
@@ -63,18 +63,19 @@ public class CharUtils
         /**
          * The actual singleton.
          */
-        public static final CharUtils SINGLETON = new CharUtils();
+        @NotNull public static final CharUtils SINGLETON = new CharUtils();
     }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected CharUtils()  {};
+    protected CharUtils() {}
 
     /**
      * Retrieves a CharUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static CharUtils getInstance()
     {
         return CharUtilsSingletonContainer.SINGLETON;
@@ -87,13 +88,13 @@ public class CharUtils
      * @param offset the subcontents length.
      * @return the sub-buffer, or null if any parameter is invalid.
      */
+    @NotNull
     public char[] subbuffer(
-        final char[] buffer, final int start, final int offset)
+        @NotNull final char[] buffer, final int start, final int offset)
     {
-        char[] result = EMPTY_CHAR_ARRAY;
+        @NotNull final char[] result;
 
-        if  (   (buffer != null)
-             && (start  > -1)
+        if  (   (start  > -1)
              && (offset >  0))
         {
             int t_iEnd =
@@ -111,6 +112,10 @@ public class CharUtils
                 result[t_iCharIndex - start] = buffer[t_iCharIndex];
             }
         }
+        else
+        {
+            result = new char[0];
+        }
 
         return result;
     }
@@ -121,15 +126,10 @@ public class CharUtils
      * @param start the starting position of the desired subcontents.
      * @return the sub-buffer.
      */
-    public char[] subbuffer(final char[] buffer, final int start)
+    @SuppressWarnings("unused")
+    @NotNull
+    public char[] subbuffer(@NotNull final char[] buffer, final int start)
     {
-        char[] result = EMPTY_CHAR_ARRAY;
-
-        if  (buffer != null)
-        {
-            result = subbuffer(buffer, start, buffer.length);
-        }
-
-        return result;
+        return subbuffer(buffer, start, buffer.length);
     }
 }

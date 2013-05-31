@@ -34,6 +34,11 @@
 package org.acmsl.commons.regexpplugin;
 
 /*
+ * Importing JetBrains annotations..
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK classes.
  */
 import java.io.Serializable;
@@ -51,14 +56,13 @@ public class MalformedPatternException
      * Just constructs the exception with the default logic defined in its
      * super class.
      */
-    public MalformedPatternException()  {}
+    public MalformedPatternException() {}
 
     /**
      * Constructs the exception with given message.
      * @param message the error message.
-     * @precondition message != null
      */
-    public MalformedPatternException(final String message)
+    public MalformedPatternException(@NotNull final String message)
     {
         super(message);
     }
@@ -67,10 +71,9 @@ public class MalformedPatternException
      * Constructs the exception with given message.
      * @param message the error message.
      * @param cause the cause.
-     * @precondition message != null
      */
     public MalformedPatternException(
-        final String message, final Throwable cause)
+        @NotNull final String message, @NotNull final Throwable cause)
     {
         super(message, cause);
     }

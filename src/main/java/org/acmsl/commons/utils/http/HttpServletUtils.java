@@ -68,6 +68,12 @@ import java.util.StringTokenizer;
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Provides some useful methods when dealing with HttpServlet-related issues.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -99,18 +105,20 @@ public class HttpServletUtils
         /**
          * The actual singleton.
          */
+        @NotNull
         public static final HttpServletUtils SINGLETON = new HttpServletUtils();
     }
 
     /**
      * Default protected constructor to avoid accidental instantiation.
      */
-    protected HttpServletUtils() {};
+    protected HttpServletUtils() {}
 
     /**
      * Retrieves a HttpServletUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static HttpServletUtils getInstance()
     {
         return HttpServletUtilsSingletonContainer.SINGLETON;
@@ -120,15 +128,25 @@ public class HttpServletUtils
      * Specifies the name-value pair regexp.
      * @param regexp such regexp.
      */
-    protected void setNameValuePairRegexp(final Pattern regexp)
+    protected final void immutableSetNameValuePairRegexp(@NotNull final Pattern regexp)
     {
         m__NameValuePairRegexp = regexp;
+    }
+
+    /**
+     * Specifies the name-value pair regexp.
+     * @param regexp such regexp.
+     */
+    protected void setNameValuePairRegexp(@NotNull final Pattern regexp)
+    {
+        immutableSetNameValuePairRegexp(regexp);
     }
 
     /**
      * Retrieves the name-value pair regexp.
      * @return such regexp.
      */
+    @Nullable
     protected Pattern getNameValuePairRegexp()
     {
         return m__NameValuePairRegexp;
@@ -139,10 +157,9 @@ public class HttpServletUtils
      * @param url the url to internationalize.
      * @param locale the language.
      * @return the translated url.
-     * @precondition url != null
-     * @precondition locale != null
      */
-    public String i14e(final String url, final Locale locale)
+    @NotNull
+    public String i14e(@NotNull final String url, @NotNull final Locale locale)
     {
         return i14e(url, locale, LOCALE_PARAMETER);
     }
@@ -153,14 +170,12 @@ public class HttpServletUtils
      * @param locale the language.
      * @param localeParameter the locale parameter.
      * @return the translated url.
-     * @precondition url != null
-     * @precondition locale != null
-     * @precondition localeParameter != null
      */
+    @NotNull
     public String i14e(
-        final String url,
-        final Locale locale,
-        final String localeParameter)
+        @NotNull final String url,
+        @NotNull final Locale locale,
+        @NotNull final String localeParameter)
     {
         return
             addParameter(
@@ -175,16 +190,14 @@ public class HttpServletUtils
      * @param paramName the parameter name.
      * @param paramValue the parameter value.
      * @return the modified url.
-     * @precondition url != null
-     * @precondition paramName != null
-     * @precondition paramValue != null
      */
+    @NotNull
     public String addParameter(
-        final String url,
-        final String paramName,
-        final String paramValue)
+        @NotNull final String url,
+        @NotNull final String paramName,
+        @NotNull final String paramValue)
     {
-        String result = url;
+        @NotNull String result = url;
 
         try 
         {
@@ -210,10 +223,9 @@ public class HttpServletUtils
      * @param url the first part of the url.
      * @param extraInfo the new information to add.
      * @return the updated url.
-     * @precondition url != null
-     * @precondition extraInfo != null
      */
-    public String append(final String url, final String extraInfo)
+    @NotNull
+    public String append(@NotNull final String url, @NotNull final String extraInfo)
     {
         String result;
 
@@ -246,17 +258,15 @@ public class HttpServletUtils
      * @param paramName the parameter name
      * @param defaultValue the default value.
      * @return the int value.
-     * @precondition request != null
-     * @precondition paramName != null
      */
     public int getIntParam(
-        final ServletRequest request,
-        final String paramName,
+        @NotNull final ServletRequest request,
+        @NotNull final String paramName,
         final int defaultValue)
     {
         int result = defaultValue;
 
-        String value = request.getParameter(paramName);
+        @Nullable final String value = request.getParameter(paramName);
 
         if  (value != null)
         {
@@ -272,12 +282,10 @@ public class HttpServletUtils
      * @param paramValue the parameter value.
      * @param defaultValue the default value.
      * @return the int value.
-     * @precondition paramName != null
-     * @precondition paramValue != null
      */
     protected int getIntParam(
-        final String paramName,
-        final String paramValue,
+        @NotNull final String paramName,
+        @NotNull final String paramValue,
         final int defaultValue)
     {
         int result = defaultValue;
@@ -288,7 +296,7 @@ public class HttpServletUtils
         }
         catch  (final NumberFormatException numberFormatException)
         {
-            LogFactory.getLog(getClass()).debug(
+            LogFactory.getLog(HttpServletUtils.class).debug(
                 "Cannot retrieve the " + paramName + " value");
         }
 
@@ -300,9 +308,9 @@ public class HttpServletUtils
      * of the application.
      * @param request the request.
      * @return the real context path.
-     * @precondition request != null
      */
-    public String getContextPath(final HttpServletRequest request)
+    @NotNull
+    public String getContextPath(@NotNull final HttpServletRequest request)
     {
         return
             getContextPath(
@@ -315,11 +323,10 @@ public class HttpServletUtils
      * @param request the request.
      * @param subContext the subcontext.
      * @return the real context path.
-     * @precondition request != null
-     * @precondition subContext != null
      */
+    @NotNull
     protected String getContextPath(
-        final HttpServletRequest request, final String subContext)
+        @NotNull final HttpServletRequest request, @NotNull final String subContext)
     {
         return request.getContextPath() + subContext;
     }
@@ -329,9 +336,9 @@ public class HttpServletUtils
      * of the application.
      * @param request the request.
      * @return the real context path.
-     * @precondition request != null
      */
-    public String getServletPath(final HttpServletRequest request)
+    @NotNull
+    public String getServletPath(@NotNull final HttpServletRequest request)
     {
         return
             removeServletInfo(request.getServletPath());
@@ -342,13 +349,13 @@ public class HttpServletUtils
      * @param servletPath the servlet path.
      * @return the actual relative path of the servlet, without the
      * information about the servlet itself.
-     * @precondition servletPath != null
      */
-    protected String removeServletInfo(final String servletPath)
+    @NotNull
+    protected String removeServletInfo(@NotNull final String servletPath)
     {
-        StringBuffer result = new StringBuffer();
+        @NotNull final StringBuilder result = new StringBuilder();
 
-        StringTokenizer tokenizer = new StringTokenizer(servletPath, "/");
+        @NotNull final StringTokenizer tokenizer = new StringTokenizer(servletPath, "/");
 
         int totalTokens = tokenizer.countTokens();
 
@@ -376,10 +383,9 @@ public class HttpServletUtils
      * @param key the key.
      * @param request the request.
      * @return the object if it's found.
-     * @precondition key != null
-     * @precondition request != null
      */
-    public Object retrieve(final String key, final HttpServletRequest request)
+    @Nullable
+    public Object retrieve(@NotNull final String key, @NotNull final HttpServletRequest request)
     {
         return retrieve(key, request, request.getSession(true), null);
     }
@@ -389,10 +395,9 @@ public class HttpServletUtils
      * @param key the key.
      * @param session the session.
      * @return the object if it's found.
-     * @precondition key != null
-     * @precondition session != null
      */
-    public Object retrieve(final String key, final HttpSession session)
+    @Nullable
+    public Object retrieve(@NotNull final String key, @NotNull final HttpSession session)
     {
         return retrieve(key, null, session, null);
     }
@@ -403,12 +408,12 @@ public class HttpServletUtils
      * @param request the request.
      * @param session the session.
      * @return the object if it's found.
-     * @precondition key != null
      */
+    @Nullable
     public Object retrieve(
-        final String key,
-        final ServletRequest request,
-        final HttpSession session)
+        @NotNull final String key,
+        @NotNull final ServletRequest request,
+        @NotNull final HttpSession session)
     {
         return retrieve(key, request, session, null);
     }
@@ -420,15 +425,15 @@ public class HttpServletUtils
      * @param session the session.
      * @param context the context.
      * @return the object if it's found.
-     * @precondition key != null
      */
+    @Nullable
     public Object retrieve(
-        final String key,
-        final ServletRequest request,
-        final HttpSession session,
-        final ServletContext context)
+        @NotNull final String key,
+        @Nullable final ServletRequest request,
+        @Nullable final HttpSession session,
+        @Nullable final ServletContext context)
     {
-        Object result = null;
+        @Nullable Object result = null;
 
         // Thanks Sun for had missed an interface for
         // all classes that export setAttribute().
@@ -459,14 +464,12 @@ public class HttpServletUtils
      * @param request the request.
      * @param session the session.
      * @return <code>true</code> if the object has been stored successfully.
-     * @precondition object != null
-     * @precondition key != null
      */
     public boolean store(
-        final Object object,
-        final String key,
-        final ServletRequest request,
-        final HttpSession session)
+        @NotNull final Object object,
+        @NotNull final String key,
+        @Nullable final ServletRequest request,
+        @Nullable final HttpSession session)
     {
         return
             store(
@@ -483,14 +486,11 @@ public class HttpServletUtils
      * @param key the key.
      * @param request the request.
      * @return <code>true</code> if the object has been stored successfully.
-     * @precondition object != null
-     * @precondition key != null
-     * @precondition request != null
      */
     public boolean store(
-        final Object object,
-        final String key,
-        final ServletRequest request)
+        @NotNull final Object object,
+        @NotNull final String key,
+        @NotNull final ServletRequest request)
     {
         return
             store(
@@ -506,14 +506,11 @@ public class HttpServletUtils
      * @param key the key.
      * @param session the session.
      * @return <code>true</code> if the object has been stored successfully.
-     * @precondition object != null
-     * @precondition key != null
-     * @precondition session != null
      */
     public boolean store(
-        final Object object,
-        final String key,
-        final HttpSession session)
+        @NotNull final Object object,
+        @NotNull final String key,
+        @NotNull final HttpSession session)
     {
         return
             store(
@@ -531,15 +528,13 @@ public class HttpServletUtils
      * @param session the session.
      * @param servletContext the context.
      * @return <code>true</code> if the object has been stored successfully.
-     * @precondition object != null
-     * @precondition key != null
      */
     public boolean store(
-        final Object object,
-        final String key,
-        final ServletRequest request,
-        final HttpSession session,
-        final ServletContext servletContext)
+        @NotNull final Object object,
+        @NotNull final String key,
+        @Nullable final ServletRequest request,
+        @Nullable final HttpSession session,
+        @Nullable final ServletContext servletContext)
     {
         boolean result = false;
 
@@ -571,9 +566,8 @@ public class HttpServletUtils
      * @param key the key.
      * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
-     * @precondition key != null
      */
-    public boolean remove(final String key, final HttpSession session)
+    public boolean remove(@NotNull final String key, @NotNull final HttpSession session)
     {
         return remove(key, null, session, null);
     }
@@ -584,12 +578,11 @@ public class HttpServletUtils
      * @param request the request.
      * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
-     * @precondition key != null
      */
     public boolean remove(
-        final String key,
-        final ServletRequest request,
-        final HttpSession session)
+        @NotNull final String key,
+        @Nullable final ServletRequest request,
+        @Nullable final HttpSession session)
     {
         return remove(key, request, session, null);
     }
@@ -600,13 +593,12 @@ public class HttpServletUtils
      * @param request the request.
      * @param session the session.
      * @return <code>true</code> if the object has been removed successfully.
-     * @precondition key != null
      */
     public boolean remove(
-        final String key,
-        final ServletRequest request,
-        final HttpSession session,
-        final ServletContext context)
+        @NotNull final String key,
+        @Nullable final ServletRequest request,
+        @Nullable final HttpSession session,
+        @Nullable final ServletContext context)
     {
         boolean result = false;
 
@@ -641,6 +633,7 @@ public class HttpServletUtils
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
      */
+    @NotNull
     protected static synchronized Matcher createMatcher()
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
@@ -656,10 +649,10 @@ public class HttpServletUtils
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
-     * @precondition regexpManager != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
-        final RegexpManager regexpManager)
+        @NotNull final RegexpManager regexpManager)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -670,10 +663,10 @@ public class HttpServletUtils
      * Creates the matcher.
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp matcher.
-     * @precondition regexpEngine != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
-        final RegexpEngine regexpEngine)
+        @NotNull final RegexpEngine regexpEngine)
     {
         return regexpEngine.createMatcher();
     }
@@ -685,9 +678,9 @@ public class HttpServletUtils
      * right.
      * @throws RegexpEngineNotFoundException if the system is not configured
      * properly in order to provide regexp services.
-     * @precondition unparsed != null
      */
-    public String[] parseNameValuePair(final String unparsed)
+    @NotNull
+    public String[] parseNameValuePair(@NotNull final String unparsed)
         throws  RegexpEngineNotFoundException
     {
         return
@@ -701,15 +694,14 @@ public class HttpServletUtils
      * @param matcher the regexp matcher.
      * @return a two-element array, first for the left part, second for the
      * right.
-     * @precondition unparsed != null
-     * @precondition matcher != null
      */
+    @NotNull
     public String[] parseNameValuePair(
-        final String unparsed, final Matcher matcher)
+        @NotNull final String unparsed, @NotNull final Matcher matcher)
     {
-        Pattern t_Pattern = getNameValuePairRegexp();
+        @Nullable Pattern t_Pattern = getNameValuePairRegexp();
 
-        RegexpUtils regexpUtils = RegexpUtils.getInstance();
+        @NotNull final RegexpUtils regexpUtils = RegexpUtils.getInstance();
 
         if  (t_Pattern == null)
         {
@@ -725,10 +717,9 @@ public class HttpServletUtils
      * Builds the regexp for parsing name=value texts.
      * @param regexpUtils the RegexpUtils instance.
      * @return such compiled regexp.
-     * @precondition regexpUtils != null
      */
     protected Pattern buildNameValuePairRegexp(
-        final RegexpUtils regexpUtils)
+        @NotNull final RegexpUtils regexpUtils)
     {
         return regexpUtils.buildPattern(NAME_VALUE_PAIR_REGEXP);
     }
@@ -740,18 +731,16 @@ public class HttpServletUtils
      * @param matcher the regexp matcher.
      * @return a two-element array, first for the left part, second for the
      * right.
-     * @precondition unparsed != null
-     * @precondition pattern != null
-     * @precondition matcher != null
      */
+    @NotNull
     protected String[] parseNameValuePair(
-        final String unparsed, final Pattern pattern, final Matcher matcher)
+        @NotNull final String unparsed, @NotNull final Pattern pattern, @NotNull final Matcher matcher)
     {
-        String[] result = new String[2];
+        @NotNull final String[] result = new String[2];
 
         if  (matcher.contains(unparsed, pattern))
         {
-            MatchResult t_MatchResult = matcher.getMatch();
+            @Nullable final MatchResult t_MatchResult = matcher.getMatch();
 
             if  (   (t_MatchResult != null)
                  && (t_MatchResult.groups() >= 2))

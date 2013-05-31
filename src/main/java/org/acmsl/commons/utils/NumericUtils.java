@@ -40,6 +40,12 @@ import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
  * Importing some JDK classes.
  */
 import java.util.StringTokenizer;
@@ -48,6 +54,7 @@ import java.util.StringTokenizer;
  * Provides some useful methods when working with numbers.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public class NumericUtils
     implements  Utils,
                 Singleton
@@ -60,18 +67,19 @@ public class NumericUtils
         /**
          * The actual singleton.
          */
-        public static final NumericUtils SINGLETON = new NumericUtils();
+        @NotNull public static final NumericUtils SINGLETON = new NumericUtils();
     }
 
     /**
      * Private constructor to avoid accidental instantiation.
      */
-    private NumericUtils()  {};
+    private NumericUtils() {}
 
     /**
      * Retrieves a NumericUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static NumericUtils getInstance()
     {
         return NumericUtilsSingletonContainer.SINGLETON;
@@ -82,15 +90,16 @@ public class NumericUtils
      * @param object the object to check if it represents a number.
      * @return true if such object actually is a number.
      */
-    public boolean isNumeric(final Object object)
+    @SuppressWarnings("unused")
+    public boolean isNumeric(@Nullable final Object object)
     {
         boolean result = false;
 
         if  (object != null)
         {
-            String t_strValue = object.toString();
+            @NotNull final String t_strValue = object.toString();
 
-            StringTokenizer t_strtokFigures =
+            @NotNull final StringTokenizer t_strtokFigures =
                 new StringTokenizer(t_strValue, "0123456789.,", false);
 
             result = !t_strtokFigures.hasMoreTokens();
@@ -104,13 +113,12 @@ public class NumericUtils
      * @param numbers the collection of all numbers.
      * @return the maximum number,
      */
-    public int getMax(final int[] numbers)
+    @SuppressWarnings("unused")
+    public int getMax(@NotNull final int[] numbers)
     {
         int result = 0;
 
-        int t_iCount = (numbers != null) ? numbers.length : 0;
-
-        for (int t_iIndex = 0; t_iIndex < t_iCount; t_iIndex++)
+        for (int t_iIndex = 0; t_iIndex < numbers.length; t_iIndex++)
         {
             result = Math.max(result, numbers[t_iIndex]);
         }
@@ -123,13 +131,12 @@ public class NumericUtils
      * @param numbers the collection of all numbers.
      * @return the maximum number,
      */
-    public double getMax(final double[] numbers)
+    @SuppressWarnings("unused")
+    public double getMax(@NotNull final double[] numbers)
     {
         double result = 0.0;
 
-        int t_iCount = (numbers != null) ? numbers.length : 0;
-
-        for (int t_iIndex = 0; t_iIndex < t_iCount; t_iIndex++)
+        for (int t_iIndex = 0; t_iIndex < numbers.length; t_iIndex++)
         {
             result = Math.max(result, numbers[t_iIndex]);
         }

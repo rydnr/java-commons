@@ -35,6 +35,11 @@
 package org.acmsl.commons.automata;
 
 /*
+ * Importing some JetBrains annotations..
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK classes.
  */
 import java.io.Serializable;
@@ -45,7 +50,7 @@ import java.io.Serializable;
  * automata (DFSA).
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Transition
+public interface Transition<S1 extends State, S2 extends State>
     extends  Serializable
 {
     /**
@@ -53,12 +58,16 @@ public interface Transition
      * transition.
      * @return the origin state.
      */
-    public State getOrigin();
+    @SuppressWarnings("unused")
+    @NotNull
+    public S1 getOrigin();
 
     /**
      * Retrieves the destination of the directed link represented by
      * this transition.
      * @return the destination state.
      */
-    public State getDestination();
+    @NotNull
+    @SuppressWarnings("unused")
+    public S2 getDestination();
 }

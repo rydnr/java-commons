@@ -36,6 +36,12 @@
  */
 package org.acmsl.commons.patterns;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Represents classes that know about the ordering in which {@link Command} instances are
  * handled by {@link CommandHandler} objects, under the model defined in GoF's Chain Of
@@ -50,5 +56,6 @@ public interface ChainOfResponsibility<C extends CommandHandler>
      * @param commandHandler the handler just before the desired link.
      * @return the next handler in the chain.
      */
-    public C getNextChainLink(final C commandHandler);
+    @Nullable
+    public C getNextChainLink(@NotNull final C commandHandler);
 }

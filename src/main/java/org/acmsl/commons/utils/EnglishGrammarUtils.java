@@ -40,6 +40,11 @@ package org.acmsl.commons.utils;
 import org.acmsl.commons.patterns.Singleton;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK classes.
  */
 import java.util.Locale;
@@ -60,7 +65,7 @@ public class EnglishGrammarUtils
         /**
          * The actual singleton.
          */
-        public static final EnglishGrammarUtils SINGLETON =
+        @NotNull public static final EnglishGrammarUtils SINGLETON =
             new EnglishGrammarUtils();
     }
 
@@ -76,6 +81,7 @@ public class EnglishGrammarUtils
      * Retrieves a EnglishGrammarUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static EnglishGrammarUtils getInstance()
     {
         return EnglishGrammarUtilsSingletonContainer.SINGLETON;
@@ -85,12 +91,12 @@ public class EnglishGrammarUtils
      * Manages the regular plural forms.
      * @param word the word.
      * @return the regular plural form.
-     * @precondition word != null
      */
     @Override
-    protected String getRegularPluralForm(final String word)
+    @NotNull
+    protected String getRegularPluralForm(@NotNull final String word)
     {
-        String result = word.trim().toLowerCase();
+        @NotNull String result = word.trim().toLowerCase();
 
         if (   (result.endsWith("y"))
             && (!result.endsWith("ey")))
@@ -120,11 +126,11 @@ public class EnglishGrammarUtils
      * Manages the regular singular forms.
      * @param word the word.
      * @return the regular plural form.
-     * @precondition word != null
      */
-    protected String getRegularSingularForm(final String word)
+    @NotNull
+    protected String getRegularSingularForm(@NotNull final String word)
     {
-        String result = word.trim().toLowerCase();
+        @NotNull String result = word.trim().toLowerCase();
 
         if  (result.endsWith("ies"))
         {

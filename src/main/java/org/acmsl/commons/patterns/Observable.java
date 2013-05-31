@@ -37,21 +37,21 @@ package org.acmsl.commons.patterns;
  * Represents generic Observable objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Observable
+public interface Observable<O extends Observer>
 {
     /**
      * Attaches given observer in order to be notified of state
      * changes.
      * @param observer the new observer to attach.
      */
-    public void attach(final Observer observer);
+    public void attach(final O observer);
 
     /**
      * Detaches given observer in order to stop being notified of
      * state changes.
      * @param observer the new observer to attach.
      */
-    public void detach(final Observer observer);
+    public void detach(final O observer);
 
     /**
      * Notifies all attached observers of state changes.

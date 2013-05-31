@@ -40,11 +40,15 @@ package org.acmsl.commons.utils;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Validator;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Responsible of checking the validness of strings.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @stereotype validator
- * @version $Revision: 550 $
  */
 public class StringValidator
     implements  Validator,
@@ -58,18 +62,20 @@ public class StringValidator
         /**
          * The actual singleton.
          */
+        @NotNull
         public static final StringValidator SINGLETON = new StringValidator();
     }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected StringValidator() {};
+    protected StringValidator() {}
 
     /**
      * Retrieves a StringValidator instance.
      * @return such instance.
      */
+    @NotNull
     public static StringValidator getInstance()
     {
         return StringValidatorSingletonContainer.SINGLETON;
@@ -80,7 +86,7 @@ public class StringValidator
      * @param value the string to be checked.
      * @return true whenever given value is empty or null.
      */
-    public boolean isEmpty(final String value)
+    public boolean isEmpty(@Nullable final String value)
     {
         return
             (   (value == null)

@@ -34,6 +34,12 @@
 package org.acmsl.commons.patterns;
 
 /*
+ * Importing some JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
  * Importing some JDK classes.
  */
 import java.util.ArrayList;
@@ -43,20 +49,19 @@ import java.util.Collection;
  * Generic implementation of the Observable pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public class Subject
-    implements  Observable
+public class Subject<O extends Observer>
+    implements  Observable<O>
 {
     /**
      * Concrete reference to the observers' collection.
-     * @associates <{Observer}>
      */
-    private Collection<Observer> m__cObservers;
+    private Collection<O> m__cObservers;
 
     /**
      * Specifies the observer collection.
      * @param observers the observers.
      */
-    protected void setObservers(final Collection<Observer> observers)
+    protected void setObservers(@NotNull final Collection<O> observers)
     {
         m__cObservers = observers;
     }
@@ -65,7 +70,8 @@ public class Subject
      * Retrieves the observer collection.
      * @return the observers.
      */
-    protected final Collection<Observer> immutableGetObservers()
+    @Nullable
+    protected final Collection<O> immutableGetObservers()
     {
         return m__cObservers;
     }
@@ -74,9 +80,21 @@ public class Subject
      * Retrieves the observer collection.
      * @return the observers.
      */
-    protected Collection<Observer> getObservers()
+    @SuppressWarnings("unused")
+    protected Collection<O> getObservers()
     {
-        return new ArrayList<Observer>(immutableGetObservers());
+        @Nullable Collection<O> result = immutableGetObservers();
+
+        if (result == null)
+        {
+            result = new ArrayList<O>(0);
+        }
+        else
+        {
+            result = new ArrayList<O>(result);
+        }
+
+        return result;
     }
 
     /**
@@ -84,13 +102,14 @@ public class Subject
      * time, so this method never returns a <code>null</code> value.
      * @return a not <code>null</code> collection.
      */
-    protected final Collection<Observer> getObserverCollection()
+    @NotNull
+    protected final Collection<O> getObserverCollection()
     {
-        Collection<Observer> result = immutableGetObservers();
+        @Nullable Collection<O> result = immutableGetObservers();
 
         if  (result == null)
         {
-            result = new ArrayList<Observer>();
+            result = new ArrayList<O>();
             setObservers(result);
         }
 
@@ -102,11 +121,11 @@ public class Subject
      * @param observer the new observer to attach.
      */
     @Override
-    public void attach(final Observer observer)
+    public void attach(@Nullable final O observer)
     {
         if  (observer != null)
         {
-            getObserverCollection().add(observer);
+            attach(observer, getObserverCollection());
         }
     }
 
@@ -114,11 +133,9 @@ public class Subject
      * Attaches given observer in order to be notified of state changes.
      * @param observer the new observer to attach.
      * @param observerCollection the observer collection.
-     * @precondition observer != null
-     * @precondition observerCollection != null
      */
     protected void attach(
-        final Observer observer, final Collection<Observer> observerCollection)
+        @NotNull final O observer, @NotNull final Collection<O> observerCollection)
     {
         observerCollection.add(observer);
     }
@@ -129,11 +146,11 @@ public class Subject
      * @param observer the new observer to attach.
      */
     @Override
-    public void detach(final Observer observer)
+    public void detach(@Nullable final O observer)
     {
         if  (observer != null)
         {
-            getObserverCollection().remove(observer);
+            detach(observer, getObserverCollection());
         }
     }
 
@@ -142,11 +159,9 @@ public class Subject
      * changes.
      * @param observer the new observer to attach.
      * @param observerCollection the observer collection.
-     * @precondition observer != null
-     * @precondition observerCollection != null
      */
     protected void detach(
-        final Observer observer, final Collection<Observer> observerCollection)
+        @NotNull final O observer, @NotNull final Collection<O> observerCollection)
     {
         observerCollection.remove(observer);
     }
@@ -156,7 +171,7 @@ public class Subject
      */
     public void inform()
     {
-        for (Observer t_Observer : getObserverCollection())
+        for (@Nullable final O t_Observer : getObserverCollection())
         {
             if (t_Observer != null)
             {

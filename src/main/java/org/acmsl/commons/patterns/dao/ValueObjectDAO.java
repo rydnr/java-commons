@@ -34,11 +34,17 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Data Access Object able to access and retrieve {@link ValueObject} instances.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface ValueObjectDAO
+@SuppressWarnings("unused")
+public interface ValueObjectDAO<VO extends ValueObject>
     extends DAO
 {
     /**
@@ -46,9 +52,9 @@ public interface ValueObjectDAO
      * @param pk the identifier used to select the concrete value object to
      * load.
      * @return the information associated to such id in the underlying
-     * persistente layer.
+     * persistence layer.
      */
-    public ValueObject find(final ValueObjectPrimaryKey pk);
+    public VO find(@NotNull final ValueObjectPrimaryKey pk);
 
     /**
      * Stores the value object into the persistent layer.
@@ -56,15 +62,15 @@ public interface ValueObjectDAO
      * @param reload whether or not the reload is needed.
      * @return true if the operation ends up successfully.
      */
-    public ValueObject insert(
-        final ValueObject valueObject, final boolean reload);
+    public VO insert(
+        @NotNull final ValueObject valueObject, final boolean reload);
 
     /**
      * Removes a value object in the persistence layer.
      * @param valueObject the value object to be removed.
      * @return true if the operation ends up successfully.
      */
-    public boolean delete(final ValueObject valueObject);
+    public boolean delete(@NotNull final VO valueObject);
 
     /**
      * Removes a value object in the persistence layer.
@@ -72,6 +78,6 @@ public interface ValueObjectDAO
      * @param reload whether or not the reload is needed.
      * @return true if the operation ends up successfully.
      */
-    public ValueObject update(
-       final ValueObject valueObject, final boolean reload);
+    public VO update(
+       @NotNull final VO valueObject, final boolean reload);
 }

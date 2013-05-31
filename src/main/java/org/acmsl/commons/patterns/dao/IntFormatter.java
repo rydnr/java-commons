@@ -33,14 +33,22 @@
  */
 package org.acmsl.commons.patterns.dao;
 
-import org.acmsl.commons.patterns.dao.ValueObjectField.Int;
+/*
+ * Importing project classes.
+ */
+import org.acmsl.commons.patterns.Singleton;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Is able to format {@link ValueObjectField.Int} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class IntFormatter
-    implements  ValueObjectFieldFormatter<Int>
+    implements  ValueObjectFieldFormatter<ValueObjectField<Integer>>, Singleton
 {
     /**
      * Singleton implemented to avoid double-check locking.
@@ -50,13 +58,14 @@ public class IntFormatter
         /**
          * The singleton instance.
          */
-        public static final IntFormatter SINGLETON = new IntFormatter();
+        @NotNull public static final IntFormatter SINGLETON = new IntFormatter();
     }
 
     /**
      * Retrieves an IntFormatter instance.
      * @return a int formatter.
      */
+    @NotNull
     public static IntFormatter getInstance()
     {
         return IntFormatterSingletonContainer.SINGLETON;
@@ -68,7 +77,8 @@ public class IntFormatter
      * @return the String format.
      */
     @Override
-    public String format(ValueObjectField.Int intField)
+    @NotNull
+    public String format(@NotNull final ValueObjectField<Integer> intField)
     {
         return intField.getValue() + "";
     }

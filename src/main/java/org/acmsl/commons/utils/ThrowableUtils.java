@@ -54,11 +54,16 @@ import java.lang.Throwable;
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provides some useful methods when working with throwable instances.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @stereotype Utils
  */
+@SuppressWarnings("unused")
 public class ThrowableUtils
     implements  Utils,
                 Singleton
@@ -71,18 +76,20 @@ public class ThrowableUtils
         /**
          * The actual singleton.
          */
+        @NotNull
         public static final ThrowableUtils SINGLETON = new ThrowableUtils();
     }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected ThrowableUtils() {};
+    protected ThrowableUtils() {}
 
     /**
      * Retrieves a ThrowableUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static ThrowableUtils getInstance()
     {
         return ThrowableUtilsSingletonContainer.SINGLETON;
@@ -93,32 +100,31 @@ public class ThrowableUtils
      * @param throwable the error to output.
      * @return its stack trace.
      */
-    public String getStackTrace(final Throwable throwable)
+    @SuppressWarnings("unused")
+    @NotNull
+    public String getStackTrace(@NotNull final Throwable throwable)
     {
-        String result = "";
+        @NotNull final String result;
 
-        if  (throwable != null)
+        @NotNull final StringWriter t_swResult = new StringWriter();
+
+        @NotNull final PrintWriter t_PrintWriter = new PrintWriter(t_swResult);
+
+        throwable.printStackTrace(t_PrintWriter);
+
+        result = t_swResult.toString();
+
+        t_PrintWriter.close();
+
+        try
         {
-            StringWriter t_swResult = new StringWriter();
-
-            PrintWriter t_PrintWriter = new PrintWriter(t_swResult);
-
-            throwable.printStackTrace(t_PrintWriter);
-
-            result = t_swResult.toString();
-
-            t_PrintWriter.close();
-
-            try 
-            {
-                t_swResult.close();
-            }
-            catch  (final IOException ioException)
-            {
-                LogFactory.getLog(ThrowableUtils.class).fatal(
-                    "Strange and exceptional error",
-                    ioException);
-            }
+            t_swResult.close();
+        }
+        catch  (final IOException ioException)
+        {
+            LogFactory.getLog(ThrowableUtils.class).fatal(
+                "Strange and exceptional error",
+                ioException);
         }
 
         return result;

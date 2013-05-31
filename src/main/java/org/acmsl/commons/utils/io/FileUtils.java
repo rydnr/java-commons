@@ -66,6 +66,8 @@ import java.nio.charset.Charset;
  * Importing Apache Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides some useful methods when working with files.
@@ -77,11 +79,6 @@ public class FileUtils
                 Singleton
 {
     /**
-     * An empty char array.
-     */
-    public static final char[] EMPTY_CHAR_ARRAY = new char[0];
-
-    /**
      * Singleton implemented to avoid the double-checked locking.
      */
     private static class FileUtilsSingletonContainer
@@ -89,6 +86,7 @@ public class FileUtils
         /**
          * The actual singleton.
          */
+        @NotNull
         public static final FileUtils SINGLETON = new FileUtils();
     }
 
@@ -96,6 +94,7 @@ public class FileUtils
      * Retrieves a FileUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static FileUtils getInstance()
     {
         return FileUtilsSingletonContainer.SINGLETON;
@@ -104,7 +103,7 @@ public class FileUtils
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected FileUtils() {};
+    protected FileUtils() {}
 
     /**
      * Reads a file pointed by given path, and returns its contents.
@@ -114,9 +113,9 @@ public class FileUtils
      * @throws SecurityException if the operation is forbidden because of
      * security manager settings.
      * @throws IOException if some I/O exception occurs.
-     * @precondition filePath != null
      */
-    public String readFile(final String filePath)
+    @NotNull
+    public String readFile(@NotNull final String filePath)
         throws  SecurityException,
                 IOException
     {
@@ -131,9 +130,9 @@ public class FileUtils
      * @throws SecurityException if the operation is forbidden because of
      * security manager settings.
      * @throws IOException if some I/O exception occurs.
-     * @precondition file != null
      */
-    public char[] readFileContents(final File file)
+    @NotNull
+    public char[] readFileContents(@NotNull final File file)
         throws  SecurityException,
                 IOException
     {
@@ -142,12 +141,12 @@ public class FileUtils
         /*
          * Instantiate a FileReader object to read file's contents.
          */
-        FileReader t_frPageReader = new FileReader(file);
+        @NotNull final FileReader t_frPageReader = new FileReader(file);
 
         /*
          * To read file's contents it's better to use BufferedReader class.
          */
-        BufferedReader t_frPageBufferedReader =
+        @NotNull final BufferedReader t_frPageBufferedReader =
             new BufferedReader(t_frPageReader);
 
         if  (file.length() > Integer.MAX_VALUE)
@@ -182,9 +181,9 @@ public class FileUtils
      * @throws SecurityException if the operation is forbidden because of
      * security manager settings.
      * @throws IOException if some I/O exception occurs.
-     * @precondition file != null
      */
-    public String readFile(final File file)
+    @NotNull
+    public String readFile(@NotNull final File file)
         throws  SecurityException,
                 IOException
     {
@@ -202,9 +201,10 @@ public class FileUtils
      * @param filePath the path to the file to be read.
      * @return the contents of the file, or empty if reading cannot be
      * accomplished.
-     * @precondition filePath != null
      */
-    public String readFileIfPossible(final String filePath)
+    @SuppressWarnings("unused")
+    @NotNull
+    public String readFileIfPossible(@NotNull final String filePath)
     {
         String result = null;
 
@@ -258,11 +258,12 @@ public class FileUtils
      * @param file the file to be read.
      * @return the contents of the file, or empty if reading cannot be
      * accomplished.
-     * @precondition file != null
      */
-    public String readFileIfPossible(final File file)
+    @SuppressWarnings("unused")
+    @NotNull
+    public String readFileIfPossible(@NotNull final File file)
     {
-        String result = new String();
+        @NotNull String result = "";
 
         try
         {
@@ -307,12 +308,12 @@ public class FileUtils
      * @param inputStream the stream to read from.
      * @return the contents read.
      * @throws IOException if the input stream could not be read or closed.
-     * @precondition inputStream != null
      */
-    public String read(final InputStream inputStream)
+    @NotNull
+    public String read(@NotNull final InputStream inputStream)
         throws  IOException
     {
-        BufferedInputStream bufferedInputStream;
+        @NotNull final BufferedInputStream bufferedInputStream;
 
         if  (inputStream instanceof BufferedInputStream)
         {
@@ -331,14 +332,14 @@ public class FileUtils
      * @param bufferedInputStream the stream to read from.
      * @return the contents read.
      * @throws IOException if the input stream could not be read or closed.
-     * @precondition bufferedInputStream != null
      */
-    public String read(final BufferedInputStream bufferedInputStream)
+    @NotNull
+    public String read(@NotNull final BufferedInputStream bufferedInputStream)
         throws  IOException
     {
-        StringWriter t_swResult = new StringWriter();
+        @NotNull final StringWriter t_swResult = new StringWriter();
 
-        PrintWriter t_Writer = new PrintWriter(t_swResult);
+        @NotNull final PrintWriter t_Writer = new PrintWriter(t_swResult);
 
         int t_iReadChar = bufferedInputStream.read();
 
@@ -361,12 +362,12 @@ public class FileUtils
      * @param filePath the path of the file.
      * @param contents the text to save.
      * @return <code>true</code> if the process is successfully accomplished.
-     * @precondition filePath != null
-     * @precondition contents != null
      * @deprecated Specify the charset instead.
      */
+    @Deprecated
+    @SuppressWarnings("unused")
     public boolean writeFileIfPossible(
-        final String filePath, final String contents)
+        @NotNull final String filePath, @NotNull final String contents)
     {
         return writeFileIfPossible(new File(filePath), contents);
     }
@@ -377,11 +378,10 @@ public class FileUtils
      * @param contents the text to save.
      * @param charset the file charset to use.
      * @return <code>true</code> if the process is successfully accomplished.
-     * @precondition filePath != null
-     * @precondition contents != null
      */
+    @SuppressWarnings("unused")
     public boolean writeFileIfPossible(
-        final String filePath, final String contents, final Charset charset)
+        @NotNull final String filePath, @NotNull final String contents, @NotNull final Charset charset)
     {
         return writeFileIfPossible(new File(filePath), contents, charset);
     }
@@ -391,11 +391,10 @@ public class FileUtils
      * @param file the file to be overwritten.
      * @param contents the text to save.
      * @return <code>true</code> if the process is successfully accomplished.
-     * @precondition file != null
-     * @precondition contents != null
      * @deprecated Specify the charset instead.
      */
-    public boolean writeFileIfPossible(final File file, final String contents)
+    @Deprecated
+    public boolean writeFileIfPossible(@NotNull final File file, @NotNull final String contents)
     {
         boolean result = false;
 
@@ -443,11 +442,9 @@ public class FileUtils
      * @param contents the text to save.
      * @param charset the file charset to use.
      * @return <code>true</code> if the process is successfully accomplished.
-     * @precondition file != null
-     * @precondition contents != null
      */
     public boolean writeFileIfPossible(
-        final File file, final String contents, final Charset charset)
+        @NotNull final File file, @NotNull final String contents, @NotNull final Charset charset)
     {
         boolean result = false;
 
@@ -497,11 +494,11 @@ public class FileUtils
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition filePath != null
-     * @precondition contents != null
      * @deprecated Specify the charset instead.
      */
-    public void writeFile(final String filePath, final String contents)
+    @Deprecated
+    @SuppressWarnings("unused")
+    public void writeFile(@NotNull final String filePath, @NotNull final String contents)
         throws  SecurityException,
                 IOException
     {
@@ -517,11 +514,10 @@ public class FileUtils
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition filePath != null
-     * @precondition contents != null
      */
+    @SuppressWarnings("unused")
     public void writeFile(
-        final String filePath, final String contents, final Charset charset)
+        @NotNull final String filePath, @NotNull final String contents, @NotNull final Charset charset)
         throws  SecurityException,
                 IOException
     {
@@ -536,27 +532,21 @@ public class FileUtils
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition file != null
-     * @precondition contents != null
      * @deprecated Specify the charset instead.
      */
-    public void writeFile(final File file, final String contents)
+    public void writeFile(@NotNull final File file, @NotNull final String contents)
         throws  SecurityException,
                 IOException
     {
-        if  (   (file     != null)
-             && (contents != null))
-        {
-            FileWriter t_fwWriter = new FileWriter(file);
+        @NotNull final FileWriter t_fwWriter = new FileWriter(file);
 
-            PrintWriter t_pwWriter = new PrintWriter(t_fwWriter);
+        @NotNull final PrintWriter t_pwWriter = new PrintWriter(t_fwWriter);
 
-            t_pwWriter.println(contents);
+        t_pwWriter.println(contents);
 
-            t_pwWriter.close();
+        t_pwWriter.close();
 
-            t_fwWriter.close();
-        }
+        t_fwWriter.close();
     }
 
     /**
@@ -564,54 +554,40 @@ public class FileUtils
      * @param file the file to write.
      * @param contents the text to write.
      * @param charset the charset to use.
-     * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition file != null
-     * @precondition contents != null
-     * @precondition charset != null
      */
     public void writeFile(
-        final File file, final String contents, final Charset charset)
-        throws  FileNotFoundException,
-                SecurityException,
+        @NotNull final File file, @NotNull final String contents, @NotNull final Charset charset)
+        throws  SecurityException,
                 IOException
     {
-        if  (   (file     != null)
-             && (contents != null)
-             && (charset != null))
-        {
-            FileOutputStream t_fosFileStream = new FileOutputStream(file);
+        @NotNull final FileOutputStream t_fosFileStream = new FileOutputStream(file);
 
-            OutputStreamWriter t_osFileWriter = new OutputStreamWriter(t_fosFileStream, charset);
+        @NotNull final OutputStreamWriter t_osFileWriter = new OutputStreamWriter(t_fosFileStream, charset);
 
-            PrintWriter t_pwWriter = new PrintWriter(t_osFileWriter);
+        @NotNull final PrintWriter t_pwWriter = new PrintWriter(t_osFileWriter);
 
-            t_pwWriter.println(contents);
+        t_pwWriter.println(contents);
 
-            t_pwWriter.close();
+        t_pwWriter.close();
 
-            t_osFileWriter.close();
+        t_osFileWriter.close();
 
-            t_fosFileStream.close();
-        }
+        t_fosFileStream.close();
     }
 
     /**
      * Copies one file from its current path to another.
      * @param filePath file's path.
      * @param destinationPath the new path of the file.
-     * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition filePath != null
-     * @precondition destinationPath != null
      */
-    public void copy(final String filePath, final String destinationPath)
-        throws  FileNotFoundException,
-                SecurityException,
+    public void copy(@NotNull final String filePath, @NotNull final String destinationPath)
+        throws  SecurityException,
                 IOException
     {
         copy(new File(filePath), new File(destinationPath));
@@ -621,19 +597,15 @@ public class FileUtils
      * Copies the contents of a file to another.
      * @param original the content to copy.
      * @param destination the file to be overwritten.
-     * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition original != null
-     * @precondition destination != null
      */
-    public void copy(final File original, final File destination)
-        throws  FileNotFoundException,
-                SecurityException,
+    public void copy(@NotNull final File original, @NotNull final File destination)
+        throws  SecurityException,
                 IOException
     {
-        FileWriter t_FileWriter = new FileWriter(destination);
+        @NotNull final FileWriter t_FileWriter = new FileWriter(destination);
 
         t_FileWriter.write(readFileContents(original));
 
@@ -645,11 +617,10 @@ public class FileUtils
      * @param originalPath the path of the file to copy.
      * @param destinationPath the path of the file to be overwritten.
      * @return <code>true</code> if the operation ends up successfully.
-     * @precondition originalPath != null
-     * @precondition destinationPath != null
      */
+    @SuppressWarnings("unused")
     public boolean copyIfPossible(
-        final String originalPath, final String destinationPath)
+        @NotNull final String originalPath, @NotNull final String destinationPath)
     {
         return
             copyIfPossible(new File(originalPath), new File(destinationPath));
@@ -660,10 +631,8 @@ public class FileUtils
      * @param original the content to copy.
      * @param destination the file to be overwritten.
      * @return <code>true</code> if the operation ends up successfully.
-     * @precondition original != null
-     * @precondition destination != null
      */
-    public boolean copyIfPossible(final File original, final File destination)
+    public boolean copyIfPossible(@NotNull final File original, @NotNull final File destination)
     {
         boolean result = false;
 
@@ -715,10 +684,8 @@ public class FileUtils
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition originalFile != null
-     * @precondition destinationFile != null
      */
-    public void move(final File originalFile, final File destinationFile)
+    public void move(@NotNull final File originalFile, @NotNull final File destinationFile)
         throws  SecurityException,
                 IOException
     {
@@ -735,10 +702,9 @@ public class FileUtils
      * @throws SecurityException if the security manager forbids this 
      + operation.
      * @throws IOException if any other I/O error occurs.
-     * @precondition filePath != null
-     * @precondition destinationPath != null
      */
-    public void move(final String filePath, final String destinationPath)
+    @SuppressWarnings("unused")
+    public void move(@NotNull final String filePath, @NotNull final String destinationPath)
         throws  SecurityException,
                 IOException
     {
@@ -750,11 +716,9 @@ public class FileUtils
      * @param originalFile the file to move.
      * @param destinationFile the new file.
      * @return <code>true</code> if the operation ends up successfully.
-     * @precondition originalFile != null
-     * @precondition destinationFile != null
      */
     public boolean moveIfPossible(
-        final File originalFile, final File destinationFile)
+        @NotNull final File originalFile, @NotNull final File destinationFile)
     {
         boolean result = false;
 
@@ -802,11 +766,10 @@ public class FileUtils
      * @param filePath the path of the file to move.
      * @param destinationPath the new file's path.
      * @return <code>true</code> if the operation ends up successfully.
-     * @precondition filePath != null
-     * @precondition destinationPath != null
      */
+    @SuppressWarnings("unused")
     public boolean moveIfPossible(
-        final String filePath, final String destinationPath)
+        @NotNull final String filePath, @NotNull final String destinationPath)
     {
         return
             moveIfPossible(
@@ -818,15 +781,15 @@ public class FileUtils
      * Translates given package name to a relative path.
      * @param packageName the package name.
      * @return the path.
-     * @precondition packageName != null
      */
-    public String packageToPath(final String packageName)
+    @Nullable
+    public String packageToPath(@NotNull final String packageName)
     {
         String result = null;
 
         try
         {
-            final Helper t_Helper = createHelper(RegexpManager.getInstance());
+            @NotNull final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
             result =
                 t_Helper.replaceAll(packageName, "\\.", File.separator);
@@ -840,7 +803,7 @@ public class FileUtils
              * since all patterns are defined with strings, and therefore
              * they escape all compiler checks.
              */
-            LogFactory.getLog(getClass()).warn(
+            LogFactory.getLog(FileUtils.class).warn(
                 "Malformed static patterns are fatal coding errors.",
                 malformedPatternException);
         }
@@ -851,7 +814,7 @@ public class FileUtils
              * at runtime. Not only this one, but any method provided by this
              * class that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(FileUtils.class).fatal(
                 "Cannot find any regexp engine.",
                 regengNotFoundException);
         }
@@ -863,7 +826,7 @@ public class FileUtils
              * properly at runtime. Not only this one, but any method provided
              * by thisclass that use regexps will not work.
              */
-            LogFactory.getLog(getClass()).fatal(
+            LogFactory.getLog(FileUtils.class).fatal(
                 "Cannot configure RegexpPlugin.",
                 regexpPluginMisconfiguredException);
         }
@@ -879,6 +842,7 @@ public class FileUtils
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
      */
+    @NotNull
     protected static synchronized Helper createHelper()
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
@@ -894,10 +858,10 @@ public class FileUtils
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
-     * @precondition regexpManager != null
      */
+    @NotNull
     protected static synchronized Helper createHelper(
-        final RegexpManager regexpManager)
+        @NotNull final RegexpManager regexpManager)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -908,10 +872,10 @@ public class FileUtils
      * Creates the helper.
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp helper.
-     * @precondition regexpEngine != null
      */
+    @NotNull
     protected static synchronized Helper createHelper(
-        final RegexpEngine regexpEngine)
+        @NotNull final RegexpEngine regexpEngine)
     {
         return regexpEngine.createHelper();
     }

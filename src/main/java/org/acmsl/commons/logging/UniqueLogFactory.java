@@ -43,6 +43,8 @@ package org.acmsl.commons.logging;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogConfigurationException;
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * {@link LogFactory} implementation that uses a
@@ -55,19 +57,18 @@ public class UniqueLogFactory
     /**
      * The {@link Log} instance.
      */
-    private static Log m__Log;
+    @Nullable private static Log m__Log;
 
     /**
      * The singleton instance.
      */
-    private static LogFactory m__Singleton;
+    @Nullable private static LogFactory m__Singleton;
     
     /**
      * Specifies the {@link Log} instance.
      * @param log the log instance.
      */
-    protected static final void immutableSetLog(
-        final Log log)
+    protected static final void immutableSetLog(@NotNull final Log log)
     {
         m__Log = log;
     }
@@ -76,15 +77,19 @@ public class UniqueLogFactory
      * Specifies the <code>Log</code> instance.
      * @param log the log instance.
      */
-    protected static void setLog(final Log log)
+    protected static void setLog(@Nullable final Log log)
     {
-        immutableSetLog(log);
+        if (log != null)
+        {
+            immutableSetLog(log);
+        }
     }
 
     /**
      * Retrieves the {@link Log} instance.
      * @return the long instance.
      */
+    @Nullable
     public static Log getLog()
     {
         return m__Log;
@@ -93,10 +98,9 @@ public class UniqueLogFactory
     /**
      * Specifies the singleton instance.
      * @param singleton such instance.
-     * @precondition singleton != null
      */
     protected static final void immutableSetSingleton(
-        final LogFactory singleton)
+        @NotNull final LogFactory singleton)
     {
         m__Singleton = singleton;
     }
@@ -104,10 +108,9 @@ public class UniqueLogFactory
     /**
      * Specifies the singleton instance.
      * @param singleton such instance.
-     * @precondition singleton != null
      */
     protected static void setSingleton(
-        final LogFactory singleton)
+        @NotNull final LogFactory singleton)
     {
         immutableSetSingleton(singleton);
     }
@@ -116,6 +119,7 @@ public class UniqueLogFactory
      * Retrieves the singleton instance.
      * @return such instance.
      */
+    @Nullable
     protected static LogFactory getSingleton()
     {
         return m__Singleton;
@@ -125,9 +129,8 @@ public class UniqueLogFactory
      * Creates a {@link UniqueLogFactory} instance with
      * given log instance.
      * @param log the log instance.
-     * @precondition log != null
      */
-    protected UniqueLogFactory(final Log log)
+    protected UniqueLogFactory(@NotNull final Log log)
     {
         immutableSetLog(log);
     }
@@ -136,6 +139,7 @@ public class UniqueLogFactory
      * Retrieves the singleton instance.
      * @return such instance.
      */
+    @Nullable
     public static final LogFactory getInstance()
     {
         return getSingleton();
@@ -146,7 +150,8 @@ public class UniqueLogFactory
      * @param clazz the class name.
      * @return the log instance.
      */
-    public static Log getLog(@SuppressWarnings("unused") final Class clazz)
+    @Nullable
+    public static Log getLog(@NotNull @SuppressWarnings("unused") final Class clazz)
     {
         return getLog();
     }
@@ -156,7 +161,8 @@ public class UniqueLogFactory
      * @param className the class name.
      * @return the log instance.
      */
-    public static Log getLog(@SuppressWarnings("unused") final String className)
+    @Nullable
+    public static Log getLog(@NotNull @SuppressWarnings("unused") final String className)
     {
         return getLog();
     }
@@ -164,9 +170,8 @@ public class UniqueLogFactory
     /**
      * Initializes the log factory.
      * @param log the log instance.
-     * @precondition log != null
      */
-    public static final void initializeInstance(final Log log)
+    public static final void initializeInstance(@NotNull final Log log)
     {
         setSingleton(new UniqueLogFactory(log));
     }
@@ -176,7 +181,8 @@ public class UniqueLogFactory
      * or <code>null</code> if there is no such attribute.
      * @param name Name of the attribute to return.
      */
-    public Object getAttribute(final String name)
+    @Nullable
+    public Object getAttribute(@NotNull final String name)
     {
         return null;
     }
@@ -186,6 +192,7 @@ public class UniqueLogFactory
      * configuration attributes.  If there are no such attributes, a zero
      * length array is returned.
      */
+    @NotNull
     public String[] getAttributeNames()
     {
         return new String[0];
@@ -198,7 +205,8 @@ public class UniqueLogFactory
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
      */
-    public Log getInstance(final Class clazz)
+    @Nullable
+    public Log getInstance(@NotNull final Class clazz)
         throws LogConfigurationException
     {
         return getInstance(clazz, getLog());
@@ -212,16 +220,21 @@ public class UniqueLogFactory
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
      */
-    protected Log getInstance(final Class clazz, final Log log)
+    @Nullable
+    protected Log getInstance(@NotNull final Class clazz, @Nullable final Log log)
         throws LogConfigurationException
     {
-        Log result = log;
+        @Nullable final Log result;
         
         LogFactory t_LogFactory = LogFactory.getFactory();
         
         if  (t_LogFactory != null)
         {
             result = t_LogFactory.getInstance(clazz);
+        }
+        else
+        {
+            result = log;
         }
             
         return result;
@@ -241,7 +254,8 @@ public class UniqueLogFactory
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
      */
-    public Log getInstance(final String name)
+    @Nullable
+    public Log getInstance(@NotNull final String name)
         throws LogConfigurationException
     {
         return getInstance(name, getLog());
@@ -262,12 +276,13 @@ public class UniqueLogFactory
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
      */
-    public Log getInstance(final String name, final Log log)
+    @Nullable
+    public Log getInstance(@NotNull final String name, @Nullable final Log log)
         throws LogConfigurationException
     {
-        Log result = log;
+        @Nullable final Log result;
         
-        if  (result == null)
+        if  (log == null)
         {
             LogFactory t_LogFactory = LogFactory.getFactory();
         
@@ -275,6 +290,14 @@ public class UniqueLogFactory
             {
                 result = t_LogFactory.getInstance(name);
             }
+            else
+            {
+                result = null;
+            }
+        }
+        else
+        {
+            result = log;
         }
         
         return result;
@@ -287,6 +310,7 @@ public class UniqueLogFactory
      * throwing away a ClassLoader.  Dangling references to objects in that
      * class loader would prevent garbage collection.
      */
+    @Override
     public void release()
     {
         setLog(null);
@@ -297,7 +321,8 @@ public class UniqueLogFactory
      * If there is no such attribute, no action is taken.
      * @param name Name of the attribute to remove.
      */
-    public void removeAttribute(final String name)
+    @Override
+    public void removeAttribute(@NotNull @SuppressWarnings("unused") final String name)
     {
     }
 
@@ -310,7 +335,8 @@ public class UniqueLogFactory
      * @param value Value of the attribute to set, or <code>null</code>
      *  to remove any setting for this attribute
      */
-    public void setAttribute(final String name, final Object value)
+    @Override
+    public void setAttribute(@NotNull final String name, @NotNull final Object value)
     {
     }
 }

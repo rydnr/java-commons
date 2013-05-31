@@ -39,6 +39,12 @@ package org.acmsl.commons;
 import org.acmsl.commons.patterns.Manager;
 
 /*
+ * Importing JetBrains annotations..
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
  * Importing some JDK classes.
  */
 import java.io.InputStream;
@@ -64,24 +70,25 @@ public abstract class ConfigurationManager
     /**
      * In-memory configuration settings.
      */
-    private Properties m__Properties = null;
+    @Nullable private Properties m__Properties = null;
 
     /**
      * Default protected constructor to avoid accidental instantiation.
      */
-    protected ConfigurationManager() {};
+    protected ConfigurationManager() {}
 
     /**
      * Retrieves the properties file name.
      * @return such name.
      */
+    @NotNull
     protected abstract String getPropertiesFileName();
 
     /**
      * Specifies the configuration settings.
      * @param properties the properties.
      */
-    protected final void immutableSetProperties(final Properties properties)
+    protected final void immutableSetProperties(@NotNull final Properties properties)
     {
         m__Properties = properties;
     }
@@ -89,8 +96,8 @@ public abstract class ConfigurationManager
     /**
      * Retrieves the configuration settings.
      * @return the properties.
-     * @precondition propertiesFileName != null
      */
+    @Nullable
     protected final Properties immutableGetProperties()
     {
         return m__Properties;
@@ -100,6 +107,7 @@ public abstract class ConfigurationManager
      * Retrieves the configuration settings.
      * @return the properties.
      */
+    @NotNull
     public Properties getProperties()
     {
         return getProperties(getPropertiesFileName());
@@ -109,10 +117,10 @@ public abstract class ConfigurationManager
      * Retrieves the configuration settings.
      * @param propertiesFileName the properties' file name.
      * @return the properties.
-     * @precondition propertiesFileName != null
      */
+    @NotNull
     public synchronized final Properties getProperties(
-        final String propertiesFileName)
+        @NotNull final String propertiesFileName)
     {
         return
             getProperties(
@@ -125,35 +133,39 @@ public abstract class ConfigurationManager
      * @param propertiesFileName the properties' file name.
      * @param properties the properties.
      * @return the properties.
-     * @precondition propertiesFileName != null
      */
+    @NotNull
     protected final Properties getProperties(
-        final String propertiesFileName,
-        final Properties properties)
+        @NotNull final String propertiesFileName,
+        @Nullable final Properties properties)
     {
-        Properties auxProperties = properties;
+        @NotNull final Properties result;
         
-        if  (auxProperties == null)
+        if  (properties == null)
         {
-            auxProperties = new Properties();
-            immutableSetProperties(auxProperties);
+            result = new Properties();
+            immutableSetProperties(result);
+        }
+        else
+        {
+            result = properties;
         }
 
-        if  (auxProperties.size() == 0)
+        if  (result.size() == 0)
         {
-            loadProperties(auxProperties, propertiesFileName);
+            loadProperties(result, propertiesFileName);
         }
 
-        return auxProperties;
+        return result;
     }
 
     /**
      * Retrieves the property.
      * @param key the setting name.
      * @return the configuration value associated to such setting.
-     * @precondition key != null
      */
-    public String getProperty(final String key)
+    @Nullable
+    public String getProperty(@NotNull final String key)
     {
         return getProperty(key, getProperties());
     }
@@ -163,10 +175,9 @@ public abstract class ConfigurationManager
      * @param key the setting name.
      * @param properties the property collection.
      * @return the configuration value associated to such setting.
-     * @precondition key != null
-     * @precondition properties != null
      */
-    protected String getProperty(final String key, final Properties properties)
+    @Nullable
+    protected String getProperty(@NotNull final String key, @NotNull final Properties properties)
     {
         return properties.getProperty(key);
     }
@@ -175,29 +186,36 @@ public abstract class ConfigurationManager
      * Retrieves the array property.
      * @param name the name.
      * @return the array of values.
-     * @precondition name != null
      */
-    public String[] getStringArray(final String name)
+    @NotNull
+    @SuppressWarnings("unused")
+    public String[] getStringArray(@NotNull final String name)
     {
-        return getStringArrayValue(getProperty(name));
+        @NotNull final String[] result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getStringArrayValue(t_strValue);
+        }
+        else
+        {
+            result = new String[0];
+        }
+
+        return result;
     }
 
     /**
      * Retrieves the array property.
      * @param value the value.
      * @return the array of values.
-     * @precondition name != null
      */
-    protected String[] getStringArrayValue(final String value)
+    @NotNull
+    protected String[] getStringArrayValue(@NotNull final String value)
     {
-        String[] result = null;
-
-        if  (value != null)
-        {
-            result = value.split(",");
-        }
-
-        return result;
+        return value.split(",");
     }
 
     /**
@@ -205,9 +223,10 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      */
-    public void setStringArray(@SuppressWarnings("unused") final String name, final String[] value)
+    @SuppressWarnings("unused")
+    public void setStringArray(@SuppressWarnings("unused") @NotNull final String name, @NotNull final String[] value)
     {
-        StringBuffer propertyValue = new StringBuffer();
+        @NotNull final StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
@@ -224,10 +243,8 @@ public abstract class ConfigurationManager
      * Retrieves the property.
      * @param key the setting name.
      * @param value the value.
-     * @precondition key != null
-     * @precondition value != null
      */
-    public void setProperty(final String key, final String value)
+    public void setProperty(@NotNull final String key, @NotNull final String value)
     {
         setProperty(key, value, getProperties());
     }
@@ -237,12 +254,9 @@ public abstract class ConfigurationManager
      * @param key the setting name.
      * @param value the value.
      * @param properties the property collection.
-     * @precondition key != null
-     * @precondition value != null
-     * @precondition properties != null
      */
     protected void setProperty(
-        final String key, final String value, final Properties properties)
+        @NotNull final String key, @NotNull final String value, @NotNull final Properties properties)
     {
         properties.setProperty(key, value);
     }
@@ -251,11 +265,24 @@ public abstract class ConfigurationManager
      * Retrieves a concrete integer setting.
      * @param name the name.
      * @return such parameter.
-     * @precondition name != null
      */
-    public int getIntProperty(final String name)
+    @SuppressWarnings("unused")
+    public int getIntProperty(@NotNull final String name)
     {
-        return getIntProperty(name, getProperty(name));
+        final int result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getIntProperty(name, t_strValue);
+        }
+        else
+        {
+            result = -1;
+        }
+
+        return result;
     }
 
     /**
@@ -263,11 +290,9 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      * @return such parameter.
-     * @precondition name != null
-     * @precondition value != null
      */
     protected int getIntProperty(
-        final String name, final String value)
+        @NotNull final String name, @NotNull final String value)
     {
         int result = -1;
 
@@ -289,22 +314,36 @@ public abstract class ConfigurationManager
      * Specifies a concrete integer setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
      */
-    public void setIntProperty(final String name, final int value)
+    @SuppressWarnings("unused")
+    public void setIntProperty(@NotNull final String name, final int value)
     {
-        setProperty(name, "" + value);
+        setProperty(name, String.valueOf(value));
     }
 
     /**
      * Retrieves an array of integers associated to given name.
      * @param name the name.
      * @return such value.
-     * @precondition name != null
      */
-    public int[] getIntArray(final String name)
+    @SuppressWarnings("unused")
+    @NotNull
+    public int[] getIntArray(@NotNull final String name)
     {
-        return getIntArray(name, getProperty(name));
+        @NotNull final int[] result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getIntArray(name, t_strValue);
+        }
+        else
+        {
+            result = new int[0];
+        }
+
+        return result;
     }
 
     /**
@@ -312,31 +351,28 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the property value.
      * @return such parsed value.
-     * @precondition name != null
      */
-    protected int[] getIntArray(final String name, final String value)
+    @NotNull
+    protected int[] getIntArray(@NotNull final String name, @NotNull final String value)
     {
-        int[] result = null;
+        @NotNull final int[] result;
 
-        if  (value != null)
+        @NotNull final String[] splitValue = value.split(",");
+
+        result = new int[splitValue.length];
+
+        try
         {
-            try
+            for  (int t_iIndex = 0; t_iIndex < splitValue.length; t_iIndex++)
             {
-                String[] splittedValue = value.split(",");
-
-                result = new int[splittedValue.length];
-
-                for  (int index = 0; index < result.length; index++)
-                {
-                    result[index] = Integer.parseInt(splittedValue[index]);
-                }
+                result[t_iIndex] = Integer.parseInt(splitValue[t_iIndex]);
             }
-            catch  (final NumberFormatException numberFormatException)
-            {
-                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
-                    "Invalid integer array setting (" + name + "): " + value,
-                    numberFormatException);
-            }
+        }
+        catch  (final NumberFormatException numberFormatException)
+        {
+            LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
+                "Invalid integer array setting (" + name + "): " + value,
+                numberFormatException);
         }
 
         return result;
@@ -346,33 +382,47 @@ public abstract class ConfigurationManager
      * Specifies an integer setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
-     * @precondition value != null
      */
-    public void setIntArray(@SuppressWarnings("unused") final String name, final int[] value)
+    @SuppressWarnings("unused")
+    public void setIntArray(@NotNull final String name, @NotNull final int[] value)
     {
-        StringBuffer propertyValue = new StringBuffer();
+        @NotNull final StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
-            propertyValue.append("" + value[index]);
+            propertyValue.append(value[index]);
 
             if  (index < value.length - 1)
             {
                 propertyValue.append(",");
             }
         }
+
+        setProperty(name, propertyValue.toString());
     }
 
     /**
      * Retrieves a concrete long setting.
      * @param name the name.
      * @return such parameter.
-     * @precondition name != null
      */
-    public long getLongProperty(final String name)
+    @SuppressWarnings("unused")
+    public long getLongProperty(@NotNull final String name)
     {
-        return getLongProperty(name, getProperty(name));
+        final long result;
+
+        String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getLongProperty(name, t_strValue);
+        }
+        else
+        {
+            result = -1;
+        }
+
+        return result;
     }
 
     /**
@@ -380,11 +430,9 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      * @return such parameter.
-     * @precondition name != null
-     * @precondition value != null
      */
     protected long getLongProperty(
-        final String name, final String value)
+        @NotNull final String name, @NotNull final String value)
     {
         long result = -1;
 
@@ -406,22 +454,36 @@ public abstract class ConfigurationManager
      * Specifies a concrete long setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
      */
-    public void setLongProperty(final String name, final long value)
+    @SuppressWarnings("unused")
+    public void setLongProperty(@NotNull final String name, final long value)
     {
-        setProperty(name, "" + value);
+        setProperty(name, String.valueOf(value));
     }
 
     /**
      * Retrieves an array of longs associated to given name.
      * @param name the name.
      * @return such value.
-     * @precondition name != null
      */
-    public long[] getLongArray(final String name)
+    @NotNull
+    @SuppressWarnings("unused")
+    public long[] getLongArray(@NotNull final String name)
     {
-        return getLongArray(name, getProperty(name));
+        @NotNull final long[] result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getLongArray(name, t_strValue);
+        }
+        else
+        {
+            result = new long[0];
+        }
+
+        return result;
     }
 
     /**
@@ -429,31 +491,28 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the property value.
      * @return such parsed value.
-     * @precondition name != null
      */
-    protected long[] getLongArray(final String name, final String value)
+    @NotNull
+    protected long[] getLongArray(@NotNull final String name, @NotNull final String value)
     {
-        long[] result = null;
+        @NotNull final long[] result;
 
-        if  (value != null)
+        @NotNull final String[] splitValue = value.split(",");
+
+        result = new long[splitValue.length];
+
+        try
         {
-            try
+            for  (int index = 0; index < result.length; index++)
             {
-                String[] splittedValue = value.split(",");
-
-                result = new long[splittedValue.length];
-
-                for  (int index = 0; index < result.length; index++)
-                {
-                    result[index] = Long.parseLong(splittedValue[index]);
-                }
+                result[index] = Long.parseLong(splitValue[index]);
             }
-            catch  (final NumberFormatException numberFormatException)
-            {
-                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
-                    "Invalid long array setting (" + name + "): " + value,
-                    numberFormatException);
-            }
+        }
+        catch  (final NumberFormatException numberFormatException)
+        {
+            LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
+                "Invalid long array setting (" + name + "): " + value,
+                numberFormatException);
         }
 
         return result;
@@ -463,12 +522,11 @@ public abstract class ConfigurationManager
      * Specifies an long setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
-     * @precondition value != null
      */
-    public void setLongArray(@SuppressWarnings("unused") final String name, final long[] value)
+    @SuppressWarnings("unused")
+    public void setLongArray(@NotNull final String name, @NotNull final long[] value)
     {
-        StringBuffer propertyValue = new StringBuffer();
+        StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
@@ -479,17 +537,32 @@ public abstract class ConfigurationManager
                 propertyValue.append(",");
             }
         }
+
+        setProperty(name, propertyValue.toString());
     }
 
     /**
      * Retrieves a concrete double setting.
      * @param name the name.
      * @return such parameter.
-     * @precondition name != null
      */
-    public double getDoubleProperty(final String name)
+    @SuppressWarnings("unused")
+    public double getDoubleProperty(@NotNull final String name)
     {
-        return getDoubleProperty(name, getProperty(name));
+        final double result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getDoubleProperty(name, t_strValue);
+        }
+        else
+        {
+            result = -1.0d;
+        }
+
+        return result;
     }
 
     /**
@@ -497,13 +570,11 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      * @return such parameter.
-     * @precondition name != null
-     * @precondition value != null
      */
     protected double getDoubleProperty(
-        final String name, final String value)
+        @NotNull final String name, @NotNull final String value)
     {
-        double result = -1;
+        double result = -1.0d;
 
         try
         {
@@ -523,22 +594,36 @@ public abstract class ConfigurationManager
      * Specifies a concrete double setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
      */
-    public void setDoubleProperty(final String name, final double value)
+    @SuppressWarnings("unused")
+    public void setDoubleProperty(@NotNull final String name, final double value)
     {
-        setProperty(name, "" + value);
+        setProperty(name, String.valueOf(value));
     }
 
     /**
      * Retrieves an array of doubles associated to given name.
      * @param name the name.
      * @return such value.
-     * @precondition name != null
      */
-    public double[] getDoubleArray(final String name)
+    @SuppressWarnings("unused")
+    @NotNull
+    public double[] getDoubleArray(@NotNull final String name)
     {
-        return getDoubleArray(name, getProperty(name));
+        @NotNull final double[] result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getDoubleArray(name, t_strValue);
+        }
+        else
+        {
+            result = new double[0];
+        }
+
+        return result;
     }
 
     /**
@@ -546,31 +631,28 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the property value.
      * @return such parsed value.
-     * @precondition name != null
      */
-    protected double[] getDoubleArray(final String name, final String value)
+    @NotNull
+    protected double[] getDoubleArray(@NotNull final String name, @NotNull final String value)
     {
-        double[] result = null;
+        @NotNull final double[] result;
 
-        if  (value != null)
+        @NotNull final String[] splitValue = value.split(",");
+
+        result = new double[splitValue.length];
+
+        try
         {
-            try
+            for  (int index = 0; index < result.length; index++)
             {
-                String[] splittedValue = value.split(",");
-
-                result = new double[splittedValue.length];
-
-                for  (int index = 0; index < result.length; index++)
-                {
-                    result[index] = Double.parseDouble(splittedValue[index]);
-                }
+                result[index] = Double.parseDouble(splitValue[index]);
             }
-            catch  (final NumberFormatException numberFormatException)
-            {
-                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
-                    "Invalid double array setting (" + name + "): " + value,
-                    numberFormatException);
-            }
+        }
+        catch  (final NumberFormatException numberFormatException)
+        {
+            LogFactory.getLog(ConfigurationManager.class + "." + getClass()).fatal(
+                "Invalid double array setting (" + name + "): " + value,
+                numberFormatException);
         }
 
         return result;
@@ -580,12 +662,11 @@ public abstract class ConfigurationManager
      * Specifies an double setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
-     * @precondition value != null
      */
-    public void setDoubleArray(@SuppressWarnings("unused") final String name, final double[] value)
+    @SuppressWarnings("unused")
+    public void setDoubleArray(@NotNull final String name, @NotNull final double[] value)
     {
-        StringBuffer propertyValue = new StringBuffer();
+        StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
@@ -596,26 +677,40 @@ public abstract class ConfigurationManager
                 propertyValue.append(",");
             }
         }
+
+        setProperty(name, propertyValue.toString());
     }
 
     /**
      * Retrieves a concrete boolean setting.
      * @param name the name.
      * @return such parameter.
-     * @precondition name != null
      */
-    public boolean getBooleanProperty(final String name)
+    @SuppressWarnings("unused")
+    public boolean getBooleanProperty(@NotNull final String name)
     {
-        return getBooleanPropertyValue(getProperty(name));
+        final boolean result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getBooleanPropertyValue(t_strValue);
+        }
+        else
+        {
+            result = false;
+        }
+
+        return result;
     }
 
     /**
      * Retrieves a concrete boolean setting.
      * @param value the value.
      * @return such parameter.
-     * @precondition value != null
      */
-    protected boolean getBooleanPropertyValue(final String value)
+    protected boolean getBooleanPropertyValue(@NotNull final String value)
     {
         return Boolean.valueOf(value).booleanValue();
     }
@@ -624,44 +719,55 @@ public abstract class ConfigurationManager
      * Specifies a concrete boolean setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
      */
-    public void setBooleanProperty(final String name, final boolean value)
+    @SuppressWarnings("unused")
+    public void setBooleanProperty(@NotNull final String name, final boolean value)
     {
-        setProperty(name, "" + value);
+        setProperty(name, String.valueOf(value));
     }
 
     /**
-     * Retrieves an array of booleans associated to given name.
+     * Retrieves an array of boolean values associated to given name.
      * @param name the name.
      * @return such value.
-     * @precondition name != null
      */
-    public boolean[] getBooleanArray(final String name)
+    @SuppressWarnings("unused")
+    @NotNull
+    public boolean[] getBooleanArray(@NotNull final String name)
     {
-        return getBooleanArrayValue(getProperty(name));
+        @NotNull final boolean[] result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getBooleanArrayValue(t_strValue);
+        }
+        else
+        {
+            result = new boolean[0];
+        }
+
+        return result;
     }
 
     /**
-     * Retrieves an array of booleans associated to given name.
+     * Retrieves an array of boolean values associated to given name.
      * @param value the property value.
      * @return such parsed value.
-     * @precondition name != null
      */
-    protected boolean[] getBooleanArrayValue(final String value)
+    @NotNull
+    protected boolean[] getBooleanArrayValue(@NotNull final String value)
     {
-        boolean[] result = null;
+        @NotNull final boolean[] result;
 
-        if  (value != null)
+        @NotNull final String[] splitValue = value.split(",");
+
+        result = new boolean[splitValue.length];
+
+        for  (int index = 0; index < result.length; index++)
         {
-            String[] splittedValue = value.split(",");
-
-            result = new boolean[splittedValue.length];
-
-            for  (int index = 0; index < result.length; index++)
-            {
-                result[index] = Boolean.valueOf(splittedValue[index]).booleanValue();
-            }
+            result[index] = Boolean.valueOf(splitValue[index]);
         }
 
         return result;
@@ -671,22 +777,23 @@ public abstract class ConfigurationManager
      * Specifies an boolean setting.
      * @param name the name.
      * @param value the value.
-     * @precondition name != null
-     * @precondition value != null
      */
-    public void setBooleanArray(@SuppressWarnings("unused") String name, final boolean[] value)
+    @SuppressWarnings("unused")
+    public void setBooleanArray(@NotNull String name, @NotNull final boolean[] value)
     {
-        StringBuffer propertyValue = new StringBuffer();
+        @NotNull final StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
-            propertyValue.append("" + value[index]);
+            propertyValue.append(value[index]);
 
             if  (index < value.length - 1)
             {
                 propertyValue.append(",");
             }
         }
+
+        setProperty(name, propertyValue.toString());
     }
 
     /**
@@ -694,12 +801,25 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param format the date format.
      * @return the property.
-     * @precondition name != null
-     * @precondition format != null
      */
-    public Date getDateProperty(final String name, final String format)
+    @SuppressWarnings("unused")
+    @Nullable
+    public Date getDateProperty(@NotNull final String name, @NotNull final String format)
     {
-        return getDateProperty(name, format, getProperty(name));
+        @Nullable final Date result;
+
+        @Nullable final String t_strValue = getProperty(name);
+
+        if (t_strValue != null)
+        {
+            result = getDateProperty(name, format, t_strValue);
+        }
+        else
+        {
+            result = null;
+        }
+
+        return result;
     }
 
     /**
@@ -708,26 +828,22 @@ public abstract class ConfigurationManager
      * @param format the date format.
      * @param value the value.
      * @return the property.
-     * @precondition name != null
-     * @precondition format != null
      */
+    @Nullable
     protected Date getDateProperty(
-        final String name, final String format, final String value)
+        @NotNull final String name, @NotNull final String format, @NotNull final String value)
     {
-        Date result = null;
+        @Nullable Date result = null;
 
-        if  (value != null)
+        try
         {
-            try
-            {
-                result = new SimpleDateFormat(format).parse(value);
-            }
-            catch  (final ParseException parseException)
-            {
-                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).error(
-                    "Invalid date property (" + name + "):" + value,
-                    parseException);
-            }
+            result = new SimpleDateFormat(format).parse(value);
+        }
+        catch  (final ParseException parseException)
+        {
+            LogFactory.getLog(ConfigurationManager.class + "." + getClass()).error(
+                "Invalid date property (" + name + "):" + value,
+                parseException);
         }
 
         return result;
@@ -738,12 +854,10 @@ public abstract class ConfigurationManager
      * @param name the name.
      * @param value the value.
      * @param format the format.
-     * @precondition name != null
-     * @precondition value != null
-     * @precondition format != null
      */
+    @SuppressWarnings("unused")
     public void setDateProperty(
-        final String name, final Date value, final String format)
+        @NotNull final String name, @NotNull final Date value, @NotNull final String format)
     {
         setProperty(name, new SimpleDateFormat(format).format(value));
         setProperty(name + ".format", format);
@@ -753,11 +867,9 @@ public abstract class ConfigurationManager
      * Loads the configuration from a property file.
      * @param properties where to store the settings.
      * @param propertiesFileName the properties file.
-     * @precondition properties != null
-     * @precondition propertiesFileName != null
      */
     public final void loadProperties(
-        final Properties properties, final String propertiesFileName)
+        @NotNull final Properties properties, @NotNull final String propertiesFileName)
     {
         loadProperties(properties, propertiesFileName, true);
     }
@@ -768,19 +880,17 @@ public abstract class ConfigurationManager
      * @param propertiesFileName the properties file.
      * @param retry whether to retry to load the properties appending an slash
      * at the beginning of the file name or not.
-     * @precondition properties != null
-     * @precondition propertiesFileName != null
      */
     public synchronized void loadProperties(
-        final Properties properties,
-        final String propertiesFileName,
+        @NotNull final Properties properties,
+        @NotNull final String propertiesFileName,
         final boolean retry)
     {
-        InputStream propertiesFile;
+        final InputStream propertiesFile;
 
-        boolean startsWithSlash = propertiesFileName.startsWith("/");
+        final boolean startsWithSlash = propertiesFileName.startsWith("/");
 
-        String alternatePropertiesFileName;
+        @NotNull final String alternatePropertiesFileName;
 
         if  (startsWithSlash)
         {
@@ -803,7 +913,7 @@ public abstract class ConfigurationManager
             }
             else if (retry)
             {
-                LogFactory.getLog(getClass()).debug(
+                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).debug(
                       "Properties file: "
                     + propertiesFileName
                     + " not found. Trying " + alternatePropertiesFileName);
@@ -815,7 +925,7 @@ public abstract class ConfigurationManager
             }
             else
             {
-                LogFactory.getLog(getClass()).warn(
+                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).warn(
                       "Could not load configuration properties from file: "
                     + propertiesFileName);
             }
@@ -824,7 +934,7 @@ public abstract class ConfigurationManager
         {
             if  (retry)
             {
-                LogFactory.getLog(getClass()).debug(
+                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).debug(
                       "Properties file: "
                     + propertiesFileName
                     + " not found. Trying " + alternatePropertiesFileName);
@@ -836,7 +946,7 @@ public abstract class ConfigurationManager
             }
             else
             {
-                LogFactory.getLog(getClass()).warn(
+                LogFactory.getLog(ConfigurationManager.class + "." + getClass()).warn(
                       "Could not load configuration properties from file: "
                     + propertiesFileName);
             }

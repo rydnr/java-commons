@@ -47,6 +47,12 @@ import org.acmsl.commons.utils.ReflectionUtils;
 import org.apache.commons.logging.LogFactory;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
  * Importing JDK classes.
  */
 import java.io.BufferedReader;
@@ -151,6 +157,7 @@ public class RegexpManager
      * Retrieves a <code>RegexpManager</code> instance.
      * @return such instance.
      */
+    @NotNull
     public static RegexpManager getInstance()
     {
         return RegexpManagerSingletonContainer.SINGLETON;
@@ -169,6 +176,7 @@ public class RegexpManager
      * Specifies whether to use class loader or not.
      * @param flag such flag.
      */
+    @SuppressWarnings("unused")
     public void setUsingClassLoader(final boolean flag)
     {
         immutableSetUsingClassLoader(flag);
@@ -187,6 +195,7 @@ public class RegexpManager
      * Retrieves the cached engines.
      * @return such map.
      */
+    @Nullable
     protected Map<ClassLoader, RegexpEngine> getCachedEngines()
     {
         return m__htCachedEngines;
@@ -212,7 +221,7 @@ public class RegexpManager
     {
         RegexpEngine result;
 
-        ClassLoader t_ClassLoader = getClass().getClassLoader();
+        @NotNull ClassLoader t_ClassLoader = getClass().getClassLoader();
 
         if  (useClassLoader)
         {
@@ -238,11 +247,11 @@ public class RegexpManager
      * Note: The lookup mechanism is adapted from Commons-Logging.
      * @param classLoader the class loader.
      * @return the engine information.
-     * @precondition classLoader != null
      */
-    protected RegexpEngine getEngineUsingClassLoader(final ClassLoader classLoader)
+    @Nullable
+    protected RegexpEngine getEngineUsingClassLoader(@NotNull final ClassLoader classLoader)
     {
-        RegexpEngine result;
+        @Nullable RegexpEngine result;
 
         // Return any previously registered engine for this class loader
         result = getCachedEngine(classLoader);
@@ -257,7 +266,7 @@ public class RegexpManager
             // First, try the system property
             try
             {
-                String engineClass =
+                @NotNull final String engineClass =
                     System.getProperty(ENGINE_PROPERTY);
 
                 if  (engineClass != null)
@@ -310,7 +319,7 @@ public class RegexpManager
                                 new InputStreamReader(t_isStream));
                     }
 
-                    String engineClassName = t_brReader.readLine();
+                    final String engineClassName = t_brReader.readLine();
 
                     t_brReader.close();
 
@@ -431,6 +440,7 @@ public class RegexpManager
      * @throws RegexpPluginMisconfiguredException if a suitable class loader
      * cannot be identified.
      */
+    @NotNull
     protected ClassLoader getContextClassLoader()
         throws RegexpPluginMisconfiguredException
     {
@@ -446,10 +456,10 @@ public class RegexpManager
      * @return the class loader.
      * @throws RegexpPluginMisconfiguredException if a suitable class loader
      * cannot be identified.
-     * @precondition reflectionUtils != null
      */
+    @NotNull
     protected ClassLoader getContextClassLoader(
-        final ReflectionUtils reflectionUtils)
+        @NotNull final ReflectionUtils reflectionUtils)
       throws RegexpPluginMisconfiguredException
     {
         ClassLoader result;
@@ -481,10 +491,9 @@ public class RegexpManager
      * Retrieves the cached engine associated to given contextClassLoader.
      * @param contextClassLoader the context class loader.
      * @return the engine.
-     * @precondition engines != null
      */
-    protected RegexpEngine getCachedEngine(
-        final ClassLoader contextClassLoader)
+    @Nullable
+    protected RegexpEngine getCachedEngine(@NotNull final ClassLoader contextClassLoader)
     {
         return getCachedEngine(contextClassLoader, getCachedEngines());
     }
@@ -493,20 +502,13 @@ public class RegexpManager
      * Check cached engines (keyed by contextClassLoader).
      * @param contextClassLoader the context class loader.
      * @param engines the cached engines.
-     * @precondition engines != null
      */
+    @Nullable
     protected RegexpEngine getCachedEngine(
-        final ClassLoader contextClassLoader,
-        final Map<ClassLoader, RegexpEngine> engines)
+        @NotNull final ClassLoader contextClassLoader,
+        @NotNull final Map<ClassLoader, RegexpEngine> engines)
     {
-        RegexpEngine result = null;
-
-        if  (contextClassLoader != null)
-        {
-            result = engines.get(contextClassLoader);
-        }
-
-        return result;
+        return engines.get(contextClassLoader);
     }
 
     /**
@@ -515,7 +517,7 @@ public class RegexpManager
      * @param engine the engine.
      */
     protected void cacheEngine(
-        final ClassLoader classLoader, final RegexpEngine engine)
+        @NotNull final ClassLoader classLoader, @NotNull final RegexpEngine engine)
     {
         cacheEngine(classLoader, engine, getCachedEngines());
     }
@@ -525,18 +527,13 @@ public class RegexpManager
      * @param classLoader the key.
      * @param engine the engine.
      * @param engines the cached engines.
-     * @precondition engines != null
      */
     protected void cacheEngine(
-        final ClassLoader classLoader,
-        final RegexpEngine engine,
-        final Map<ClassLoader, RegexpEngine> engines)
+        @NotNull final ClassLoader classLoader,
+        @NotNull final RegexpEngine engine,
+        @NotNull final Map<ClassLoader, RegexpEngine> engines)
     {
-        if  (   (classLoader != null)
-             && (engine != null))
-        {
-            engines.put(classLoader, engine);
-        }
+        engines.put(classLoader, engine);
     }
 
     /**
@@ -551,7 +548,8 @@ public class RegexpManager
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
      */
-    public RegexpEngine createEngine(final String engineClass)
+    @SuppressWarnings("unused")
+    public RegexpEngine createEngine(@NotNull final String engineClass)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -572,6 +570,7 @@ public class RegexpManager
      * misconfigured.
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     protected RegexpEngine createEngine(
         final String engineClass, final ClassLoader classLoader)
       throws RegexpEngineNotFoundException,
@@ -704,10 +703,10 @@ public class RegexpManager
      * @param loader the class loader.
      * @param name the resource name.
      * @return the stream.
-     * @precondition name != null
      */
+    @Nullable
     protected InputStream getResourceAsStream(
-        final ClassLoader loader, final String name)
+        @Nullable final ClassLoader loader, @NotNull final String name)
     {
         return
             AccessController.doPrivileged(

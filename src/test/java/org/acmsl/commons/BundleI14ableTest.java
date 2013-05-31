@@ -50,7 +50,6 @@ package org.acmsl.commons;
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.BundleI14able;
 // JUnitDoclet end import
 
 /*
@@ -102,7 +101,7 @@ extends TestCase
         public _BundleI14able(
             final String key, final Object[] params, final String bundleName)
         {
-            super(key, params, null, bundleName);
+            super(key, params, "", bundleName);
         }
     }
 
@@ -163,6 +162,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#getMessageKey()
   */
+  @SuppressWarnings("unused")
   public void testGetMessageKey()
   throws Exception
   {
@@ -172,10 +172,11 @@ extends TestCase
   }
   
   /**
-  * Tests BundleI14ableTestgetParams()
+  * Tests BundleI14able#getParams()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#getParams()
   */
+  @SuppressWarnings("unused")
   public void testGetParams()
   throws Exception
   {
@@ -185,10 +186,11 @@ extends TestCase
   }
   
   /**
-  * Tests BundleI14ableTestgetSystemProperty()
+  * Tests BundleI14able#getSystemProperty()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#getSystemProperty()
   */
+  @SuppressWarnings("unused")
   public void testGetSystemProperty()
   throws Exception
   {
@@ -197,10 +199,11 @@ extends TestCase
   }
   
   /**
-  * Tests BundleI14ableTestgetBundleName()
+  * Tests BundleI14able#getBundleName()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#getBundleName()
   */
+  @SuppressWarnings("unused")
   public void testGetBundleName()
   throws Exception
   {
@@ -213,6 +216,7 @@ extends TestCase
   * Tests BundleI14ableTest accessor methods.
   * @throws Exception if an unexpected situation occurs.
   */
+  @SuppressWarnings("unused")
   public void testSetIsUsingClassLoader()
   throws Exception
   {
@@ -230,10 +234,11 @@ extends TestCase
   }
   
   /**
-  * Tests BundleI14ableTesttoString()
+  * Tests BundleI14able#toString()
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.BundleI14able#toString()
   */
+  @SuppressWarnings("unused")
   public void testToString()
   throws Exception
   {

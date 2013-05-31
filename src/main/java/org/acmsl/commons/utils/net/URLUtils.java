@@ -55,6 +55,12 @@ import org.acmsl.commons.utils.regexp.RegexpUtils;
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Provides some useful methods when working with URLs.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -71,7 +77,7 @@ public class URLUtils
         /**
          * The actual singleton.
          */
-        public static final URLUtils SINGLETON = new URLUtils();
+        @NotNull public static final URLUtils SINGLETON = new URLUtils();
     }
 
     /**
@@ -93,13 +99,14 @@ public class URLUtils
      * Retrieves an URLUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static URLUtils getInstance()
     {
-        URLUtils result =  URLUtilsSingletonContainer.SINGLETON;
+        @NotNull final URLUtils result =  URLUtilsSingletonContainer.SINGLETON;
 
         synchronized (result)
         {
-            Compiler t_Compiler = retrieveCompiler();
+            @NotNull final Compiler t_Compiler = retrieveCompiler();
 
             result.initialize(t_Compiler);
         }
@@ -110,14 +117,13 @@ public class URLUtils
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected URLUtils() {};
+    protected URLUtils() {}
 
     /**
      * Initializes given URLUtils instance.
      * @param compiler the regexp compiler.
-     * @precondition compiler != null
      */
-    private void initialize(final Compiler compiler)
+    protected final void initialize(@NotNull final Compiler compiler)
     {
         immutableSetQuestionMarkPattern(
             compiler.compile("(.*?)\\?(.*)"));
@@ -132,9 +138,8 @@ public class URLUtils
     /**
      * Specifies the question mark pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    private void immutableSetQuestionMarkPattern(final Pattern pattern)
+    protected final void immutableSetQuestionMarkPattern(@NotNull final Pattern pattern)
     {
         m__QuestionMarkPattern = pattern;
     }
@@ -142,9 +147,9 @@ public class URLUtils
     /**
      * Specifies the question mark pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    protected void setQuestionMarkPattern(final Pattern pattern)
+    @SuppressWarnings("unused")
+    protected void setQuestionMarkPattern(@NotNull final Pattern pattern)
     {
         immutableSetQuestionMarkPattern(pattern);
     }
@@ -153,6 +158,7 @@ public class URLUtils
      * Retrieves the question mark pattern.
      * @return such pattern.
      */
+    @NotNull
     public Pattern getQuestionMarkPattern()
     {
         return m__QuestionMarkPattern;
@@ -161,9 +167,8 @@ public class URLUtils
     /**
      * Specifies the block pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    private void immutableSetBlockPattern(final Pattern pattern)
+    protected final void immutableSetBlockPattern(@NotNull final Pattern pattern)
     {
         m__BlockPattern = pattern;
     }
@@ -171,9 +176,9 @@ public class URLUtils
     /**
      * Specifies the block pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    protected void setBlockPattern(final Pattern pattern)
+    @SuppressWarnings("unused")
+    protected void setBlockPattern(@NotNull final Pattern pattern)
     {
         immutableSetBlockPattern(pattern);
     }
@@ -182,6 +187,7 @@ public class URLUtils
      * Retrieves the block pattern.
      * @return such pattern.
      */
+    @NotNull
     public Pattern getBlockPattern()
     {
         return m__BlockPattern;
@@ -190,9 +196,8 @@ public class URLUtils
     /**
      * Specifies the parameter pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    private void immutableSetParameterPattern(final Pattern pattern)
+    protected final void immutableSetParameterPattern(@NotNull final Pattern pattern)
     {
         m__ParameterPattern = pattern;
     }
@@ -200,9 +205,9 @@ public class URLUtils
     /**
      * Specifies the parameter pattern.
      * @param pattern the pattern.
-     * @precondition pattern != null
      */
-    protected void setParameterPattern(final Pattern pattern)
+    @SuppressWarnings("unused")
+    protected void setParameterPattern(@NotNull final Pattern pattern)
     {
         immutableSetParameterPattern(pattern);
     }
@@ -211,6 +216,7 @@ public class URLUtils
      * Retrieves the parameter pattern.
      * @return such pattern.
      */
+    @NotNull
     public Pattern getParameterPattern()
     {
         return m__ParameterPattern;
@@ -221,10 +227,10 @@ public class URLUtils
      * @param url the first part of the url.
      * @param extraInfo the new information to add.
      * @return the updated url.
-     * @precondition url != null
-     * @precondition extraInfo != null
      */
-    public String append(final String url, final String extraInfo)
+    @NotNull
+    @SuppressWarnings("unused")
+    public String append(@NotNull final String url, @NotNull final String extraInfo)
     {
         String result;
 
@@ -265,14 +271,12 @@ public class URLUtils
      * @return the updated query.
      * @throws RegexpEngineNotFoundException if the regexp services are
      * not available.
-     * @precondition query != null
-     * @precondition name != null
-     * @precondition value != null
      */
+    @NotNull
     public String putParamInQueryString(
-        final String query,
-        final String name,
-        final String value)
+        @NotNull final String query,
+        @NotNull final String name,
+        @NotNull final String value)
       throws  RegexpEngineNotFoundException
     {
         return
@@ -305,24 +309,19 @@ public class URLUtils
      * @param questionMarkPattern the question mark pattern.
      * @param blockPattern the block pattern.
      * @return the updated query.
-     * @precondition query != null
-     * @precondition name != null
-     * @precondition value != null
-     * @precondition matcher != null
-     * @precondition questionMarkPattern != null
-     * @precondition blockPattern != null
      */
+    @NotNull
     protected String putParamInQueryString(
-        final String query,
-        final String name,
-        final String value,
+        @NotNull final String query,
+        @NotNull final String name,
+        @NotNull final String value,
         final boolean isMultiple,
         final boolean valuePresent,
-        final Matcher matcher,
-        final Pattern questionMarkPattern,
-        final Pattern blockPattern)
+        @NotNull final Matcher matcher,
+        @NotNull final Pattern questionMarkPattern,
+        @NotNull final Pattern blockPattern)
     {
-        StringBuffer t_sbResult = new StringBuffer();
+        @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
         if  (matcher.contains(query, questionMarkPattern))
         {
@@ -430,12 +429,12 @@ public class URLUtils
      * @return the updated block.
      * @throws RegexpEngineNotFoundException if the system is not properly
      * configured to provide regexp services.
-     * @precondition block != null
      */
+    @NotNull
     protected String parseParameter(
-        final String block,
-        final String name,
-        final String value,
+        @NotNull final String block,
+        @NotNull final String name,
+        @NotNull final String value,
         final boolean valuePresent)
       throws  RegexpEngineNotFoundException
     {
@@ -459,25 +458,21 @@ public class URLUtils
      * @param matcher the regexp matcher.
      * @param parameterPattern the parameter pattern.
      * @return the updated block.
-     * @precondition block != null
-     * @precondition name != null
-     * @precondition value != null
-     * @precondition matcher != null
-     * @precondition parameterPattern != null
      */
+    @NotNull
     protected String parseParameter(
-        final String block,
-        final String name,
-        final String value,
+        @NotNull final String block,
+        @NotNull final String name,
+        @NotNull final String value,
         final boolean valuePresent,
-        final Matcher matcher,
-        final Pattern parameterPattern)
+        @NotNull final Matcher matcher,
+        @NotNull final Pattern parameterPattern)
     {
-        StringBuffer t_sbResult = new StringBuffer();
+        @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
         if  (matcher.contains(block, parameterPattern))
         {
-            MatchResult t_ParamMatchResult = matcher.getMatch();
+            @Nullable final MatchResult t_ParamMatchResult = matcher.getMatch();
 
             if  (t_ParamMatchResult != null)
             {
@@ -526,54 +521,46 @@ public class URLUtils
      * @param name the parameter name.
      * @return true if the parameter has more than one value.
      */
-    public boolean isMultiple(final String query, final String name)
+    public boolean isMultiple(@NotNull final String query, @NotNull final String name)
     {
         boolean result = false;
 
         try
         {
-            if  (   (query != null)
-                 && ( name != null))
-            {
-                Compiler t_Compiler = retrieveCompiler();
+            @NotNull final Compiler t_Compiler = retrieveCompiler();
 
-                if  (t_Compiler != null)
-                {
-                    Pattern t_Pattern =
-                        t_Compiler.compile(
-                            "(.*?)(\\?|&)?"
+            @NotNull final Pattern t_Pattern =
+                t_Compiler.compile(
+                    "(.*?)(\\?|&)?"
 //                        + Perl5Compiler.quotemeta(name)
-                          + name
-                          + "(=|&)(.*)");
+                  + name
+                  + "(=|&)(.*)");
 
-                    Matcher t_Matcher =
-                        createMatcher(RegexpManager.getInstance());
+            @NotNull final Matcher t_Matcher =
+                createMatcher(RegexpManager.getInstance());
 
-                    if  (   (t_Matcher != null)
-                         && (t_Matcher.contains(query, t_Pattern)))
-                    {
-                        result =
-                            t_Matcher.contains(
-                                t_Matcher.getMatch().group(4),
-                                t_Pattern);
-                    }
-                }
+            if  (t_Matcher.contains(query, t_Pattern))
+            {
+                result =
+                    t_Matcher.contains(
+                        t_Matcher.getMatch().group(4),
+                        t_Pattern);
             }
         }
-        catch  (MalformedPatternException malformedPatternException)
+        catch (final MalformedPatternException malformedPatternException)
         {
             /*
              * Possibly the name contains invalid characters, that
              * conflicts with Perl5 regexp syntax.
              */
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(URLUtils.class).error(
                 "Invalid pattern (possibly quote symbol conflict)",
                 malformedPatternException);
 
         }
-        catch  (RegexpEngineNotFoundException regexpEngineNotFoundException)
+        catch  (final RegexpEngineNotFoundException regexpEngineNotFoundException)
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(URLUtils.class).error(
                 "no regexp engine found",
                 regexpEngineNotFoundException);
         }
@@ -590,20 +577,17 @@ public class URLUtils
      * @return <code>true</code> if the parameter value is already present.
      * @throws RegexpEngineNotFoundException if the system is not configured
      * properly in order to provide regexp services.
-     * @precondition query != null
-     * @precondition name != null
-     * @precondition value != null
      */
     public boolean valuePresent(String query, String name, String value)
         throws  RegexpEngineNotFoundException
     {
         boolean result = false;
 
-        Compiler t_Compiler = retrieveCompiler();
+        @NotNull final Compiler t_Compiler = retrieveCompiler();
 
         try
         {
-            Pattern t_Pattern =
+            @NotNull final Pattern t_Pattern =
                 t_Compiler.compile(
                       "(.*?)(\\?|&)?"
 //                  + Perl5Compiler.quotemeta(name)
@@ -623,7 +607,7 @@ public class URLUtils
         }
         catch  (final MalformedPatternException malformedPatternException)
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(URLUtils.class).error(
                 "Invalid pattern (possibly quote symbol conflict)",
                 malformedPatternException);
         }
@@ -640,18 +624,13 @@ public class URLUtils
      * @param pattern the pattern.
      * @param matcher the regexp matcher.
      * @return <code>true</code> if the parameter value is already present.
-     * @precondition query != null
-     * @precondition name != null
-     * @precondition value != null
-     * @precondition pattern != null
-     * @precondition matcher != null
      */
     public boolean valuePresent(
-        final String query,
+        @NotNull final String query,
         @SuppressWarnings("unused") final String name,
         @SuppressWarnings("unused") final String value,
-        final Pattern pattern,
-        final Matcher matcher)
+        @NotNull final Pattern pattern,
+        @NotNull final Matcher matcher)
     {
         return matcher.contains(query, pattern);
     }
@@ -662,6 +641,7 @@ public class URLUtils
      * @throws RegexpEngineNotFoundException if the system is not configured
      * properly in order to provide regexp services.
      */
+    @NotNull
     protected static Compiler retrieveCompiler()
         throws  RegexpEngineNotFoundException
     {
@@ -672,9 +652,8 @@ public class URLUtils
      * Retrieves the regexp compiler.
      * @param regexpUtils the RegexpUtils instance.
      * @return such compiler.
-     * @precondition regexpUtils != null
      */
-    protected static Compiler retrieveCompiler(final RegexpUtils regexpUtils)
+    protected static Compiler retrieveCompiler(@NotNull final RegexpUtils regexpUtils)
     {
         return regexpUtils.getRegexpCompiler();
     }
@@ -686,6 +665,7 @@ public class URLUtils
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
      */
+    @NotNull
     protected static synchronized Matcher createMatcher()
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
@@ -701,10 +681,10 @@ public class URLUtils
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
-     * @precondition regexpManager != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
-        final RegexpManager regexpManager)
+        @NotNull final RegexpManager regexpManager)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -715,10 +695,10 @@ public class URLUtils
      * Creates the matcher.
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp matcher.
-     * @precondition regexpEngine != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
-        final RegexpEngine regexpEngine)
+        @NotNull final RegexpEngine regexpEngine)
     {
         return regexpEngine.createMatcher();
     }

@@ -51,6 +51,7 @@ import java.util.regex.Pattern;
  * Importing Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JDK1.4-specific regexp matcher adapter. This class makes possible
@@ -81,8 +82,8 @@ public class MatcherJDKAdapter
      */
     @Override
     public boolean contains(
-        final String text,
-        final org.acmsl.commons.regexpplugin.Pattern pattern)
+        @NotNull final String text,
+        @NotNull final org.acmsl.commons.regexpplugin.Pattern pattern)
     {
         boolean result = false;
 

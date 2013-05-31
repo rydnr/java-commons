@@ -37,6 +37,7 @@ package org.acmsl.commons.patterns;
  * Denotes objects that act as proxies.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface Proxy
 {
 }

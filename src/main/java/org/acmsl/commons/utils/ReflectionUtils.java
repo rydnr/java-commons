@@ -42,6 +42,8 @@ import org.acmsl.commons.patterns.Utils;
  * Importing Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /*
  * Importing some JDK classes.
@@ -55,17 +57,11 @@ import java.util.Collection;
 /**
  * Provides some useful methods when working with reflection.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- * @stereotype Utils
  */
 public class ReflectionUtils
     implements  Utils,
                 Singleton
 {
-    /**
-     * A cached empty class array.
-     */
-    public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
-    
     /**
      * A cached empty field array.
      */
@@ -79,19 +75,20 @@ public class ReflectionUtils
         /**
          * The actual singleton.
          */
-        public static final ReflectionUtils SINGLETON =
+        @NotNull public static final ReflectionUtils SINGLETON =
             new ReflectionUtils();
     }
 
     /**
      * Default protected constructor to avoid accidental instantiation.
      */
-    protected ReflectionUtils() {};
+    protected ReflectionUtils() {}
 
     /**
      * Retrieves a ReflectionUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static ReflectionUtils getInstance()
     {
         return ReflectionUtilsSingletonContainer.SINGLETON;
@@ -101,9 +98,9 @@ public class ReflectionUtils
      * Retrieves the parent classes of given object.
      * @param object the object to analyze.
      * @return the ordered collection of superclasses.
-     * @precondition object != null
      */
-    public Class[] retrieveSuperClasses(final Object object)
+    @NotNull
+    public Class[] retrieveSuperClasses(@NotNull final Object object)
     {
         return retrieveSuperClasses(object.getClass());
     }
@@ -112,20 +109,20 @@ public class ReflectionUtils
      * Retrieves the parent classes of given class.
      * @param classInstance the class to analyze.
      * @return the ordered collection of superclasses.
-     * @precondition classInstance != null
      */
     @SuppressWarnings("unchecked")
-    public Class[] retrieveSuperClasses(final Class classInstance)
+    @NotNull
+    public Class[] retrieveSuperClasses(@NotNull final Class classInstance)
     {
-        Class[] result = EMPTY_CLASS_ARRAY;
+        @NotNull final Class[] result;
 
-        Collection t_cSuperClasses = new ArrayList();
+        @NotNull final Collection<Class> t_cSuperClasses = new ArrayList<Class>();
 
         t_cSuperClasses.add(classInstance);
 
-        retrieveSuperClasses(classInstance, t_cSuperClasses);
+        t_cSuperClasses.addAll(retrieveParentClasses(classInstance));
 
-        result = (Class[]) t_cSuperClasses.toArray(result);
+        result = t_cSuperClasses.toArray(new Class[t_cSuperClasses.size()]);
 
         return result;
     }
@@ -133,21 +130,28 @@ public class ReflectionUtils
     /**
      * Recursively retrieves the parent classes.
      * @param objectClass the object class.
-     * @param collection the collection to fill with superclasses.
-     * @precondition objectClass != null
-     * @precondition collection != null
      */
-    protected void retrieveSuperClasses(
-        final Class objectClass, final Collection<Class> collection)
+    @NotNull
+    protected Collection<Class> retrieveParentClasses(@NotNull final Class objectClass)
     {
-        Class parent = objectClass.getSuperclass();
+        @NotNull final Collection<Class> result;
+
+        @Nullable final Class parent = objectClass.getSuperclass();
 
         if  (parent != null)
         {
-            collection.add(parent);
+            result = new ArrayList<Class>();
 
-            retrieveSuperClasses(parent, collection);
+            result.add(parent);
+
+            result.addAll(retrieveParentClasses(parent));
         }
+        else
+        {
+            result = new ArrayList<Class>(0);
+        }
+
+        return result;
     }
 
     /**
@@ -158,21 +162,17 @@ public class ReflectionUtils
      * @param classInstance the class instance.
      * @param type the type to match.
      * @return such member instance.
-     * @precondition classInstance != null
-     * @precondition type != null
      */
-    public Field[] getMember(final Class classInstance, final Class type)
+    @NotNull
+    public Field[] getMember(@NotNull final Class classInstance, @NotNull final Class type)
     {
-        Collection<Field> t_cResult = new ArrayList<Field>();
+        @NotNull final Collection<Field> t_cResult = new ArrayList<Field>();
 
-        Class[] t_aClasses = retrieveSuperClasses(classInstance);
+        @NotNull final Class[] t_aClasses = retrieveSuperClasses(classInstance);
         
-        int t_iLength = (t_aClasses != null) ? t_aClasses.length : 0;
-        
-        for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+        for  (@NotNull final Class t_Class : t_aClasses)
         {
-            t_cResult.addAll(
-                getClassMembersAsCollection(t_aClasses[t_iIndex], type));
+            t_cResult.addAll(getClassMembersAsCollection(t_Class, type));
         }
         
         return t_cResult.toArray(new Field[t_cResult.size()]);
@@ -186,19 +186,22 @@ public class ReflectionUtils
      * @param classInstance the class instance.
      * @param type the type to match.
      * @return such member instance.
-     * @precondition classInstance != null
-     * @precondition type != null
      */
-    public Field[] getClassMembers(final Class classInstance, final Class type)
+    @NotNull
+    public Field[] getClassMembers(@NotNull final Class classInstance, @NotNull final Class type)
     {
-        Field[] result = EMPTY_FIELD_ARRAY;
+        @NotNull final Field[] result;
         
-        Collection<Field> t_cMembers =
+        @NotNull final Collection<Field> t_cMembers =
             getClassMembersAsCollection(classInstance, type);
         
-        if  (t_cMembers != null)
+        if  (t_cMembers.size() == 0)
         {
             result = t_cMembers.toArray(new Field[t_cMembers.size()]);
+        }
+        else
+        {
+            result = EMPTY_FIELD_ARRAY;
         }
         
         return result;
@@ -212,22 +215,21 @@ public class ReflectionUtils
      * @param classInstance the class instance.
      * @param type the type to match.
      * @return such fields.
-     * @precondition classInstance != null
-     * @precondition type != null
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     public Collection<Field> getClassMembersAsCollection(
-        final Class classInstance, final Class type)
+        @NotNull final Class classInstance, @NotNull final Class type)
     {
-        Collection<Field> result = new ArrayList<Field>();
+        @NotNull final Collection<Field> result = new ArrayList<Field>();
 
-        Field[] t_Aux = null;
+        @Nullable Field[] t_Aux = null;
         
         try
         {
             t_Aux = classInstance.getDeclaredFields();
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
             try
             {
@@ -238,33 +240,28 @@ public class ReflectionUtils
             catch  (final Throwable classLoadingProblem)
             {
                 System.err.println(
-                        "Error using Commons-Logging. This can happen "
-                      + "due to Log4J class-loading issues.");
+                      "Error using Commons-Logging. This can happen "
+                    + "due to Log4J class-loading issues.");
 
                 classLoadingProblem.printStackTrace(System.err);
             }
         }
 
-        int t_iLength = (t_Aux != null) ? t_Aux.length : 0;
-
-        Field t_CurrentField;
-        
-        Class t_CurrentMemberClass;
-        
-        for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
+        if (t_Aux != null)
         {
-            t_CurrentField = t_Aux[t_iIndex];
-
-            if  (t_CurrentField != null)
+            for (@Nullable final Field t_CurrentField : t_Aux)
             {
-                t_CurrentMemberClass = t_CurrentField.getType();
-
-                if  (   (t_CurrentMemberClass != null)
-                     && (   (t_CurrentMemberClass.equals(type)
-                         || (type.isAssignableFrom(t_CurrentMemberClass))
-                         || (t_CurrentMemberClass.isAssignableFrom(type)))))
+                if  (t_CurrentField != null)
                 {
-                    result.add(t_CurrentField);
+                    @Nullable final Class t_CurrentMemberClass = t_CurrentField.getType();
+
+                    if  (   (t_CurrentMemberClass != null)
+                         && (   (t_CurrentMemberClass.equals(type)
+                             || (type.isAssignableFrom(t_CurrentMemberClass))
+                             || (t_CurrentMemberClass.isAssignableFrom(type)))))
+                    {
+                        result.add(t_CurrentField);
+                    }
                 }
             }
         }
@@ -278,12 +275,11 @@ public class ReflectionUtils
      * @param field the field.
      * @return the field value, on given instance, or <code>null</code>
      * if such field doesn't exist or is not accessible.
-     * @precondition instance != null
-     * @precondition field != null
      */
-    public Object getFieldValue(final Object instance, final Field field)
+    @Nullable
+    public Object getFieldValue(@NotNull final Object instance, @NotNull final Field field)
     {
-        Object result = null;
+        @Nullable Object result = null;
         
         try
         {
@@ -297,7 +293,7 @@ public class ReflectionUtils
                       "Cannot retrieve the value of "
                     + "the field " + field
                     + " on instance " + instance,
-                      throwable);
+                    throwable);
             }
             catch  (final Throwable classLoadingProblem)
             {
@@ -324,16 +320,17 @@ public class ReflectionUtils
      * <code>Thread.getContextClassLoader()</code> via reflection, and
      * the target exception is not a <code>SecurityException</code>..
      */
+    @NotNull
     public ClassLoader getContextClassLoader()
         throws IllegalAccessException,
                InvocationTargetException
     {
-        ClassLoader result = null;
+        @Nullable ClassLoader result = null;
         
         try
         {
             // Are we running on a JDK 1.2 or later system?
-            Method t_Method =
+            @NotNull final Method t_Method =
                 Thread.class.getMethod("getContextClassLoader", null);
 
             // Get the thread context class loader (if there is one)
@@ -380,6 +377,10 @@ public class ReflectionUtils
         catch  (final NoSuchMethodException noSuchMethodException)
         {
             // Assume we are running on JDK 1.1
+            result = ReflectionUtils.class.getClassLoader();
+        }
+        if (result == null)
+        {
             result = ReflectionUtils.class.getClassLoader();
         }
 

@@ -42,6 +42,12 @@ import org.acmsl.commons.BundleI14able;
 import org.acmsl.commons.patterns.Utils;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
  * Importing some JDK classes.
  */
 import java.util.Locale;
@@ -57,12 +63,12 @@ public abstract class GrammarUtils
     /**
      * The locale.
      */
-    private Locale m__Locale = null;
+    @NotNull private Locale m__Locale;
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected GrammarUtils(final Locale locale)
+    protected GrammarUtils(@NotNull final Locale locale)
     {
         immutableSetLocale(locale);
     }
@@ -71,7 +77,7 @@ public abstract class GrammarUtils
      * Specifies the locale.
      * @param locale the locale.
      */
-    private void immutableSetLocale(final Locale locale)
+    private void immutableSetLocale(@NotNull final Locale locale)
     {
         m__Locale = locale;
     }
@@ -80,7 +86,8 @@ public abstract class GrammarUtils
      * Specifies the locale.
      * @param locale the locale.
      */
-    protected void setLocale(final Locale locale)
+    @SuppressWarnings("unused")
+    protected void setLocale(@NotNull final Locale locale)
     {
         immutableSetLocale(locale);
     }
@@ -89,6 +96,7 @@ public abstract class GrammarUtils
      * Retrieves the locale.
      * @return such instance.
      */
+    @NotNull
     public Locale getLocale()
     {
         return m__Locale;
@@ -98,6 +106,7 @@ public abstract class GrammarUtils
      * Retrieves the system property for the words bundle.
      * @return such property.
      */
+    @NotNull
     protected String retrieveGrammarBundleProperty()
     {
         return
@@ -109,10 +118,10 @@ public abstract class GrammarUtils
      * Retrieves the system property for the words bundle.
      * @param bundleRepository the bundle repository.
      * @return such property.
-     * @precondition bundleRepository != null
      */
+    @NotNull
     protected String retrieveGrammarBundleProperty(
-        final CommonsBundleRepository bundleRepository)
+        @NotNull final CommonsBundleRepository bundleRepository)
     {
         return bundleRepository.getGrammarBundleProperty();
     }
@@ -121,6 +130,7 @@ public abstract class GrammarUtils
      * Retrieves the words bundle.
      * @return such bundle name.
      */
+    @NotNull
     protected String retrieveGrammarBundleName()
     {
         return
@@ -132,10 +142,10 @@ public abstract class GrammarUtils
      * Retrieves the words bundle.
      * @param bundleRepository the bundle repository.
      * @return such bundle name.
-     * @precondition bundleRepository != null
      */
+    @NotNull
     protected String retrieveGrammarBundleName(
-        final CommonsBundleRepository bundleRepository)
+        @NotNull final CommonsBundleRepository bundleRepository)
     {
         return bundleRepository.getGrammarBundleName();
     }
@@ -144,9 +154,9 @@ public abstract class GrammarUtils
      * Converts given word to singular.
      * @param word the word to convert.
      * @return the converted word.
-     * @precondition word != null
      */
-    public String getSingular(final String word)
+    @Nullable
+    public String getSingular(@NotNull final String word)
     {
         return getSingular(word, retrieveGrammarBundleName());
 
@@ -157,10 +167,9 @@ public abstract class GrammarUtils
      * @param word the word to convert.
      * @param bundleName the bundle name.
      * @return the converted word.
-     * @precondition word != null
-     * @precondition bundleName != null
      */
-    public String getSingular(final String word, final String bundleName)
+    @Nullable
+    public String getSingular(@NotNull final String word, @NotNull final String bundleName)
     {
         return
             getWord(
@@ -176,9 +185,9 @@ public abstract class GrammarUtils
      * Converts given word to plural.
      * @param word the word to convert.
      * @return the converted word.
-     * @precondition word != null
      */
-    public String getPlural(final String word)
+    @Nullable
+    public String getPlural(@NotNull final String word)
     {
         return getPlural(word, retrieveGrammarBundleName());
     }
@@ -188,10 +197,9 @@ public abstract class GrammarUtils
      * @param word the word to convert.
      * @param bundleName the bundle name.
      * @return the converted word.
-     * @precondition word != null
-     * @precondition bundleName != null
      */
-    public String getPlural(final String word, final String bundleName)
+    @Nullable
+    public String getPlural(@NotNull final String word, @NotNull final String bundleName)
     {
         return
             getWord(
@@ -208,14 +216,12 @@ public abstract class GrammarUtils
      * @param bundleProperty the bundle property.
      * @param bundleName the bundle name.
      * @return the <code>BundleI14able</code> instance.
-     * @precondition messageKey != null
-     * @precondition bundleProperty != null
-     * @precondition bundleName != null
      */
+    @NotNull
     protected BundleI14able createBundleI14able(
-        final String messageKey,
-        final String bundleProperty,
-        final String bundleName)
+        @NotNull final String messageKey,
+        @NotNull final String bundleProperty,
+        @NotNull final String bundleName)
     {
         return
             new _BundleI14able(
@@ -232,20 +238,16 @@ public abstract class GrammarUtils
      * @param locale the locale.
      * @param suffix the suffix.
      * @return the converted word.
-     * @precondition word != null
-     * @precondition bundleName != null
-     * @precondition bundleProperty != null
-     * @precondition locale != null
-     * @precondition suffix != null
      */
+    @Nullable
     protected String getWord(
-        final String word,
-        final String bundleName,
-        final String bundleProperty,
-        final Locale locale,
-        final String suffix)
+        @NotNull final String word,
+        @NotNull final String bundleName,
+        @NotNull final String bundleProperty,
+        @NotNull final Locale locale,
+        @NotNull final String suffix)
     {
-        String result =
+        @Nullable String result =
             getWord(
                 createBundleI14able(
                     word + suffix,
@@ -318,10 +320,10 @@ public abstract class GrammarUtils
      * @param bundleI14able the bundleI14able instance.
      * @param locale the locale.
      * @return the converted word.
-     * @precondition bundleI14able != null
      */
+    @Nullable
     protected String getWord(
-        final BundleI14able bundleI14able, final Locale locale)
+        @NotNull final BundleI14able bundleI14able, @NotNull final Locale locale)
     {
         String result = null;
 
@@ -341,17 +343,17 @@ public abstract class GrammarUtils
      * Manages the regular plural forms.
      * @param word the word.
      * @return the regular plural form.
-     * @precondition word != null
      */
-    protected abstract String getRegularPluralForm(final String word);
+    @NotNull
+    protected abstract String getRegularPluralForm(@NotNull final String word);
 
     /**
      * Manages the regular singular forms.
      * @param word the word.
      * @return the regular plural form.
-     * @precondition word != null
      */
-    protected abstract String getRegularSingularForm(final String word);
+    @NotNull
+    protected abstract String getRegularSingularForm(@NotNull final String word);
 
     /**
      * BundleI14able suited for <code>GrammarUtils</code> class.
@@ -368,9 +370,9 @@ public abstract class GrammarUtils
          * @param bundleName the name of the bundle.
          */
         protected _BundleI14able(
-            final String messageKey,
-            final String propertyName,
-            final String bundleName)
+            @NotNull final String messageKey,
+            @NotNull final String propertyName,
+            @NotNull final String bundleName)
         {
             super(messageKey, propertyName, bundleName);
         }

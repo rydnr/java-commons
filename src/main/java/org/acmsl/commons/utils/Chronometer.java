@@ -35,6 +35,11 @@
 package org.acmsl.commons.utils;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing JDK classes.
  */
 import java.lang.System;
@@ -44,6 +49,7 @@ import java.lang.System;
  * @author <a href="mailto:chous@acm-sl.org"
   >Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public class Chronometer
 {
     /**
@@ -88,6 +94,7 @@ public class Chronometer
     /**
      * Creates a new <code>Chronometer</code>.
      */
+    @SuppressWarnings("unused")
     public Chronometer()
     {
         immutableSetStart(System.currentTimeMillis());
@@ -97,7 +104,7 @@ public class Chronometer
      * Specifies the starting point.
      * @param start such point.
      */
-    private void immutableSetStart(final long start)
+    protected final void immutableSetStart(final long start)
     {
         m__lStart = start;
     }
@@ -106,6 +113,7 @@ public class Chronometer
      * Specifies the starting point.
      * @param start such point.
      */
+    @SuppressWarnings("unused")
     protected void setStart(final long start)
     {
         immutableSetStart(start);
@@ -125,6 +133,7 @@ public class Chronometer
      * in MM:ss:ms format.
      * @return such time interval.
      */
+    @NotNull
     public String now()
     {
         return between(getStart(), System.currentTimeMillis());
@@ -137,6 +146,7 @@ public class Chronometer
      * @param end the end.
      * @return such time interval.
      */
+    @NotNull
     public String between(final long start, final long end)
     {
         return between(start, end, EMPTY_STRING_ARRAY);
@@ -156,12 +166,12 @@ public class Chronometer
      * <li>years (separators[4] ? separators[4] : separators[3]) days</li>
      * </ol>
      * @return such time interval.
-     * @precondition separators != null
      */
+    @NotNull
     public String between(
-        final long start, final long end, final String[] separators)
+        final long start, final long end, @NotNull final String[] separators)
     {
-        StringBuffer result = new StringBuffer();
+        @NotNull final StringBuilder result = new StringBuilder();
         
         long delta = end - start;
 
@@ -184,8 +194,6 @@ public class Chronometer
                 years, days, hours, minutes, seconds, milliseconds
             };
 
-        long separatorCount = (separators != null) ? separators.length : 0;
-
         String[] actualSeparators =
             new String[] { "y", "d", "h", "m", "s", "ms"};
 
@@ -195,7 +203,7 @@ public class Chronometer
         
         for  (int index = 0; index < actualSeparatorCount; index++)
         {
-            if  (   (separatorCount > separatorIndex)
+            if  (   (separators.length > separatorIndex)
                  && (separators[separatorIndex] != null))
             {
                 actualSeparators[index] = separators[separatorIndex++];
@@ -230,8 +238,8 @@ public class Chronometer
      * Retrieves given milliseconds in years.
      * @param millis such amount.
      * @return the years.
-     * @precondition millis > 0
      */
+    @SuppressWarnings("unused")
     public long inYears(final long millis)
     {
         return intervalInYears(millis - getStart());
@@ -241,7 +249,6 @@ public class Chronometer
      * Retrieves given milliseconds in years.
      * @param millis such amount.
      * @return the years.
-     * @precondition millis > 0
      */
     public long intervalInYears(final long millis)
     {
@@ -252,7 +259,6 @@ public class Chronometer
      * Retrieves given milliseconds in days.
      * @param millis such amount.
      * @return the days.
-     * @precondition millis > 0
      */
     public long inDays(final long millis)
     {
@@ -263,7 +269,6 @@ public class Chronometer
      * Retrieves given milliseconds in days.
      * @param millis such amount.
      * @return the days.
-     * @precondition millis > 0
      */
     public long intervalInDays(final long millis)
     {
@@ -275,7 +280,6 @@ public class Chronometer
      * @param millis such amount.
      * @param years the previously-calculated years.
      * @return the days.
-     * @precondition millis > 0
      */
     protected long intervalInDays(final long millis, final long years)
     {
@@ -291,8 +295,8 @@ public class Chronometer
      * Retrieves given milliseconds in hours.
      * @param millis such amount.
      * @return the hours.
-     * @precondition millis > 0
      */
+    @SuppressWarnings("unused")
     public long inHours(final long millis)
     {
         return intervalInHours(millis - getStart());
@@ -302,7 +306,6 @@ public class Chronometer
      * Retrieves given milliseconds in hours.
      * @param millis such amount.
      * @return the hours.
-     * @precondition millis > 0
      */
     public long intervalInHours(final long millis)
     {
@@ -314,7 +317,6 @@ public class Chronometer
      * @param millis such amount.
      * @param days the previously-calculated days.
      * @return the hours.
-     * @precondition millis > 0
      */
     protected long intervalInHours(final long millis, final long days)
     {
@@ -327,7 +329,6 @@ public class Chronometer
      * @param days the previously-calculated days.
      * @param years the previously-calculated years.
      * @return the hours.
-     * @precondition millis > 0
      */
     protected long intervalInHours(
         final long millis, final long days, final long years)
@@ -345,8 +346,8 @@ public class Chronometer
      * Retrieves given milliseconds in minutes.
      * @param millis such amount.
      * @return the minutes.
-     * @precondition millis > 0
      */
+    @SuppressWarnings("unused")
     public long inMinutes(final long millis)
     {
         return intervalInMinutes(millis - getStart());
@@ -356,7 +357,6 @@ public class Chronometer
      * Retrieves given milliseconds in minutes.
      * @param millis such amount.
      * @return the minutes.
-     * @precondition millis > 0
      */
     public long intervalInMinutes(final long millis)
     {
@@ -368,7 +368,6 @@ public class Chronometer
      * @param millis such amount.
      * @param hours the previously-calculated hours.
      * @return the minutes.
-     * @precondition millis > 0
      */
     protected long intervalInMinutes(final long millis, final long hours)
     {
@@ -381,7 +380,6 @@ public class Chronometer
      * @param hours the previously-calculated hours.
      * @param days the previously-calculated days.
      * @return the minutes.
-     * @precondition millis > 0
      */
     protected long intervalInMinutes(
         final long millis, final long hours, final long days)
@@ -396,7 +394,6 @@ public class Chronometer
      * @param days the previously-calculated days.
      * @param years the previously-calculated years.
      * @return the minutes.
-     * @precondition millis > 0
      */
     protected long intervalInMinutes(
         final long millis,
@@ -418,8 +415,8 @@ public class Chronometer
      * Retrieves given milliseconds in seconds.
      * @param millis such amount.
      * @return the seconds.
-     * @precondition millis > 0
      */
+    @SuppressWarnings("unused")
     public long inSeconds(final long millis)
     {
         return intervalInSeconds(millis - getStart());
@@ -429,7 +426,6 @@ public class Chronometer
      * Retrieves given milliseconds in seconds.
      * @param millis such amount.
      * @return the seconds.
-     * @precondition millis > 0
      */
     public long intervalInSeconds(final long millis)
     {
@@ -441,7 +437,6 @@ public class Chronometer
      * @param millis such amount.
      * @param minutes the previously-calculated minutes.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInSeconds(final long millis, final long minutes)
     {
@@ -454,7 +449,6 @@ public class Chronometer
      * @param minutes the previously-calculated minutes.
      * @param hours the previously-calculated hours.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInSeconds(
         final long millis, final long minutes, final long hours)
@@ -469,7 +463,6 @@ public class Chronometer
      * @param hours the previously-calculated hours.
      * @param days the previously-calculated days.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInSeconds(
         final long millis,
@@ -488,7 +481,6 @@ public class Chronometer
      * @param days the previously-calculated days.
      * @param years the previously-calculated years.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInSeconds(
         final long millis,
@@ -512,8 +504,8 @@ public class Chronometer
      * Retrieves given milliseconds in seconds.
      * @param millis such amount.
      * @return the seconds.
-     * @precondition millis > 0
      */
+    @SuppressWarnings("unused")
     protected long inMilliseconds(final long millis)
     {
         return intervalInMilliseconds(millis - getStart());
@@ -523,7 +515,6 @@ public class Chronometer
      * Retrieves given milliseconds in seconds.
      * @param millis such amount.
      * @return the seconds.
-     * @precondition millis > 0
      */
     public long intervalInMilliseconds(final long millis)
     {
@@ -535,7 +526,6 @@ public class Chronometer
      * @param millis such amount.
      * @param seconds the previously-calculated seconds.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInMilliseconds(
         final long millis, final long seconds)
@@ -549,7 +539,6 @@ public class Chronometer
      * @param seconds the previously-calculated seconds.
      * @param minutes the previously-calculated minutes.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInMilliseconds(
         final long millis, final long seconds, final long minutes)
@@ -564,7 +553,6 @@ public class Chronometer
      * @param minutes the previously-calculated minutes.
      * @param hours the previously-calculated hours.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInMilliseconds(
         final long millis,
@@ -584,7 +572,6 @@ public class Chronometer
      * @param hours the previously-calculated hours.
      * @param days the previously-calculated days.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInMilliseconds(
         final long millis,
@@ -607,7 +594,6 @@ public class Chronometer
      * @param days the previously-calculated days.
      * @param years the previously-calculated years.
      * @return the seconds.
-     * @precondition millis > 0
      */
     protected long intervalInMilliseconds(
         final long millis,

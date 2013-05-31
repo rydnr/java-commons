@@ -51,6 +51,7 @@ import org.apache.oro.text.awk.AwkMatcher;
  * Importing some commons-logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Jakarta ORO-specific regexp compiler adapter. This class makes possible the
@@ -108,7 +109,7 @@ public class AwkMatcherOROAdapter
      * @return true if the pattern is found.
      */
     @Override
-    public boolean contains(final String text, final Pattern pattern)
+    public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
     {
         boolean result = false;
 

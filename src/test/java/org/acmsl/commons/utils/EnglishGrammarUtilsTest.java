@@ -188,6 +188,7 @@ public class EnglishGrammarUtilsTest
      * Tests {EnglishGrammarUtils#getRegularSingularForm(String)}.
      * @see EnglishGrammarUtils#getRegularSingularForm(String)
      */
+    @SuppressWarnings("unused")
     public void testGetRegularSingularForm()
     {
         EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
@@ -240,6 +241,7 @@ public class EnglishGrammarUtilsTest
      * Tests {EnglishGrammarUtils#getRegularPluralForm(String)}.
      * @see EnglishGrammarUtils#getRegularPluralForm(String)
      */
+    @SuppressWarnings("unused")
     public void testGetRegularPluralForm()
     {
         EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();
@@ -284,6 +286,7 @@ public class EnglishGrammarUtilsTest
      * Tests {EnglishGrammarUtils#getSingular(String)}.
      * @see EnglishGrammarUtils#getSingular(String)
      */
+    @SuppressWarnings("unused")
     public void testGetSingular()
     {
         EnglishGrammarUtils t_EnglishGrammarUtils = EnglishGrammarUtils.getInstance();

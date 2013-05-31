@@ -39,6 +39,11 @@ package org.acmsl.commons;
 import org.acmsl.commons.patterns.Repository;
 import org.acmsl.commons.patterns.Singleton;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provides the bundles used by ACM-SL Commons.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -80,19 +85,20 @@ public class CommonsBundleRepository
         /**
          * The actual singleton.
          */
-        public static final CommonsBundleRepository SINGLETON =
+        @NotNull public static final CommonsBundleRepository SINGLETON =
             new CommonsBundleRepository();
     }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected CommonsBundleRepository() {};
+    protected CommonsBundleRepository() {}
 
     /**
      * Retrieves a (the) repository instance.
      * @return such instance.
      */
+    @NotNull
     public static CommonsBundleRepository getInstance()
     {
         return CommonsBundleRepositorySingletonContainer.SINGLETON;
@@ -102,6 +108,7 @@ public class CommonsBundleRepository
      * Retrieves the exceptions' system property.
      * @return such property.
      */
+    @NotNull
     public String getExceptionsBundleProperty()
     {
         return EXCEPTIONS_SYSTEM_PROPERTY;
@@ -111,6 +118,7 @@ public class CommonsBundleRepository
      * Retrieves the exceptions bundle name.
      * @return such name.
      */
+    @NotNull
     public String getExceptionsBundleName()
     {
         return EXCEPTIONS_BUNDLE;
@@ -120,6 +128,7 @@ public class CommonsBundleRepository
      * Retrieves the constants bundle name.
      * @return such name.
      */
+    @NotNull
     public String getConstantsBundleName()
     {
         return CONSTANTS_BUNDLE;
@@ -129,6 +138,7 @@ public class CommonsBundleRepository
      * Retrieves the grammar's system property.
      * @return such property.
      */
+    @NotNull
     public String getGrammarBundleProperty()
     {
         return GRAMMAR_SYSTEM_PROPERTY;
@@ -138,6 +148,7 @@ public class CommonsBundleRepository
      * Retrieves the grammar bundle name.
      * @return such name.
      */
+    @NotNull
     public String getGrammarBundleName()
     {
         return GRAMMAR_BUNDLE;

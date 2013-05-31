@@ -38,6 +38,7 @@ package org.acmsl.commons.regexpplugin;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.ConfigurationException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Designed to be thrown at runtime when the specified regexp engine
@@ -61,9 +62,8 @@ public class RegexpEngineNotFoundException
      * Builds an exception to indicate the regexp engine was not found.
      * @param engineClass the class name of the Regexp implementation whose
      * instantiation has failed.
-     * @precondition engineClass != null
      */
-    public RegexpEngineNotFoundException(final String engineClass)
+    public RegexpEngineNotFoundException(@NotNull final String engineClass)
     {
         super(
             MESSAGE_KEY,
@@ -78,9 +78,8 @@ public class RegexpEngineNotFoundException
     /**
      * Specifies the implementation class name.
      * @param engineClass the implementation class.
-     * @precondition engineClass != null
      */
-    protected final void immutableSetEngineClass(final String engineClass)
+    protected final void immutableSetEngineClass(@NotNull final String engineClass)
     {
         m__strEngineClass = engineClass;
     }
@@ -88,9 +87,9 @@ public class RegexpEngineNotFoundException
     /**
      * Specifies the implementation class name.
      * @param engineClass the implementation class.
-     * @precondition engineClass != null
      */
-    protected void setEngineClass(final String engineClass)
+    @SuppressWarnings("unused")
+    protected void setEngineClass(@NotNull final String engineClass)
     {
         immutableSetEngineClass(engineClass);
     }
@@ -99,6 +98,7 @@ public class RegexpEngineNotFoundException
      * Retrieves the implementation class name.
      * @return implementation class.
      */
+    @SuppressWarnings("unused")
     public String getEngineClass()
     {
         return m__strEngineClass;

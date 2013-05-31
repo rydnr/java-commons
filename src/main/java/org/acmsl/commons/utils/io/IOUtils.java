@@ -51,17 +51,23 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.StringBuffer;
 
 /*
  * Importing Commons-Logging classes.
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Provides some commonly used static methods related to java.io classes.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public class IOUtils
     implements  Utils,
                 Singleton
@@ -79,18 +85,20 @@ public class IOUtils
         /**
          * The actual singleton.
          */
+        @NotNull
         public static final IOUtils SINGLETON = new IOUtils();
     }
 
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected IOUtils() {};
+    protected IOUtils() {}
 
     /**
      * Retrieves an IOUtils instance.
      * @return such instance.
      */
+    @NotNull
     public static IOUtils getInstance()
     {
         return IOUtilsSingletonContainer.SINGLETON;
@@ -104,57 +112,47 @@ public class IOUtils
      * fails.
      * @exception IOException if the input stream cannot be read.
      */
-    public String read(final InputStream inputStream, final int contentLength)
+    @NotNull
+    public String read(@NotNull final InputStream inputStream, final int contentLength)
         throws IOException
     {
-        StringBuffer t_sbResult = new StringBuffer();
+        @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
-        CharUtils t_CharUtils = CharUtils.getInstance();
+        @NotNull final CharUtils t_CharUtils = CharUtils.getInstance();
 
-        if  (t_CharUtils != null)
+        if  (contentLength > 0)
         {
-            if  (inputStream != null)
+            @NotNull final InputStreamReader t_isrReader =
+                new InputStreamReader(inputStream);
+
+            @NotNull final char[] t_acContents = new char[contentLength];
+
+            if  (t_isrReader.ready())
             {
-                if  (contentLength > 0)
-                {
-                    InputStreamReader t_isrReader =
-                        new InputStreamReader(inputStream);
-
-                    char[] t_acContents = new char[contentLength];
-
-                    if  (t_isrReader.ready())
-                    {
-                        t_isrReader.read(t_acContents);
-                    }
-
-                    t_sbResult.append(t_acContents);
-                }
-                else
-                {
-                    InputStreamReader t_isrReader =
-                        new InputStreamReader(inputStream);
-
-                    char[] t_acContents = new char[BLOCK_SIZE];
-
-                    while  (t_isrReader.ready())
-                    {
-                        int t_iCharsRead = t_isrReader.read(t_acContents);
-
-                        char[] t_acCharsRead =
-                            (t_iCharsRead == BLOCK_SIZE)
-                            ?   t_acContents
-                            :   t_CharUtils.subbuffer(
-                                t_acContents, 0, t_iCharsRead);
-
-                        t_sbResult.append(t_acCharsRead);
-                    }
-                }
+                t_isrReader.read(t_acContents);
             }
+
+            t_sbResult.append(t_acContents);
         }
-        else 
+        else
         {
-            LogFactory.getLog(getClass()).error(
-                "Cannot retrieve CharUtils instance");
+            @NotNull final InputStreamReader t_isrReader =
+                new InputStreamReader(inputStream);
+
+            @NotNull final char[] t_acContents = new char[BLOCK_SIZE];
+
+            while  (t_isrReader.ready())
+            {
+                int t_iCharsRead = t_isrReader.read(t_acContents);
+
+                char[] t_acCharsRead =
+                    (t_iCharsRead == BLOCK_SIZE)
+                    ?   t_acContents
+                    :   t_CharUtils.subbuffer(
+                        t_acContents, 0, t_iCharsRead);
+
+                t_sbResult.append(t_acCharsRead);
+            }
         }
 
         return t_sbResult.toString();
@@ -165,25 +163,25 @@ public class IOUtils
      * @param input the input stream to be read.
      * @return the contents of the stream.
      * @throws IOException whenever the operation cannot be accomplished.
-     * @precondition input != null
      */
-    public String read(final InputStream input)
+    @NotNull
+    public String read(@NotNull final InputStream input)
         throws  IOException
     {
-        StringBuffer t_sbResult = new StringBuffer();
+        @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
         /*
          * Instantiating an InputStreamReader object to read the contents.
          */
-        InputStreamReader t_isrReader = new InputStreamReader(input);
+        @NotNull final InputStreamReader t_isrReader = new InputStreamReader(input);
 
         /*
          * It's faster to use BufferedReader class.
          */
-        BufferedReader t_brBufferedReader =
+        @NotNull final BufferedReader t_brBufferedReader =
             new BufferedReader(t_isrReader);
 
-        String t_strLine = t_brBufferedReader.readLine();
+        @Nullable String t_strLine = t_brBufferedReader.readLine();
 
         while  (t_strLine != null)
         {
@@ -202,7 +200,9 @@ public class IOUtils
      * @return the contents of the stream, or empty if reading cannot be
                accomplished.
      */
-    public String readIfPossible(final InputStream input)
+    @NotNull
+    @SuppressWarnings("unused")
+    public String readIfPossible(@NotNull final InputStream input)
     {
         String result = "";
 
@@ -212,7 +212,7 @@ public class IOUtils
         }
         catch  (final IOException ioException)
         {
-            LogFactory.getLog(getClass()).error(
+            LogFactory.getLog(IOUtils.class).error(
                 "Cannot read file", ioException);
         }
 
@@ -222,12 +222,10 @@ public class IOUtils
     /**
      * Writes given information to the stream.
      * @param content the content to write.
-     * @precondition content != null
-     * @precondition output != null
      */
-    public void write(final String content, final OutputStream output)
+    public void write(@NotNull final String content, @NotNull final OutputStream output)
     {
-        PrintStream t_Printer = new PrintStream(output);
+        @NotNull final PrintStream t_Printer = new PrintStream(output);
         t_Printer.print(content);
         t_Printer.flush();
     }

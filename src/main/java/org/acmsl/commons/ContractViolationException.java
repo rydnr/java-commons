@@ -35,6 +35,11 @@
 package org.acmsl.commons;
 
 /*
+ * Importing JetBrains annotations..
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK classes.
  */
 import java.io.Serializable;
@@ -44,6 +49,7 @@ import java.lang.Exception;
  * Thrown whenever the general contract of a method has been violated.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public class ContractViolationException
     extends     Exception
     implements  Serializable
@@ -52,13 +58,13 @@ public class ContractViolationException
      * Builds the exception with the default logic defined in its
      * super class.
      */
-    public ContractViolationException() {};
+    public ContractViolationException() {}
 
     /**
      * Constructs the exception with given message.
      * @param message the error message.
      */
-    public ContractViolationException(final String message)
+    public ContractViolationException(@NotNull final String message)
     {
         super(message);
     }

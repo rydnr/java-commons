@@ -44,6 +44,7 @@ import org.acmsl.commons.regexpplugin.Pattern;
  * Importing Jakarta ORO classes.
  */
 import org.apache.oro.text.regex.Perl5Matcher;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Jakarta ORO-specific regexp matcher adapter.
@@ -102,7 +103,7 @@ public class Perl5MatcherOROAdapter
      * @precondition pattern instanceof PatternOROAdapter
      */
     @Override
-    public boolean contains(final String text, final Pattern pattern)
+    public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
     {
         return contains(text, pattern, getMatcher());
     }

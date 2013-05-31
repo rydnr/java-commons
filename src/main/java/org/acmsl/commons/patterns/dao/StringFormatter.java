@@ -32,12 +32,22 @@
  */
 package org.acmsl.commons.patterns.dao;
 
+/*
+ * Importing project classes.
+ */
+import org.acmsl.commons.patterns.Singleton;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Is able to format {@link ValueObjectField.String} objects.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class StringFormatter
-    implements  ValueObjectFieldFormatter<ValueObjectField.String>
+    implements  ValueObjectFieldFormatter<ValueObjectField<String>>, Singleton
 {
     /**
      * Singleton instance to avoid double-check locking.
@@ -47,13 +57,14 @@ public class StringFormatter
         /**
          * The singleton instance.
          */
-        public static final StringFormatter SINGLETON = new StringFormatter();
+        @NotNull public static final StringFormatter SINGLETON = new StringFormatter();
     }
 
     /**
      * Retrieves a StringFormatter instance.
      * @return a string formatter.
      */
+    @NotNull
     public static StringFormatter getInstance()
     {
         return StringFormatterSingletonContainer.SINGLETON;
@@ -65,7 +76,8 @@ public class StringFormatter
      * @return the String format.
      */
     @Override
-    public String format(final ValueObjectField.String stringField)
+    @NotNull
+    public String format(@NotNull final ValueObjectField<String> stringField)
     {
         return "\"" + stringField.getValue() + "\"";
     }

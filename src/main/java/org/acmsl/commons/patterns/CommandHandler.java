@@ -35,13 +35,18 @@
  */
 package org.acmsl.commons.patterns;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents objects responsible of receiving {@link Command} instances, and
  * depending on the command passed, handle it or pass it to the next
  * handler in the chain.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface CommandHandler
+public interface CommandHandler<C extends Command>
 {
     /**
      * Asks the handler to process the command. The idea is that each
@@ -52,5 +57,5 @@ public interface CommandHandler
      * @return <code>true</code> if the handler actually process the command,
      * or maybe because it's not desirable to continue the chain.
      */
-    public boolean handle(final Command command);
+    public boolean handle(@NotNull final C command);
 }

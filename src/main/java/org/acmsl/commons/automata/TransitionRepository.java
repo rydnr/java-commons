@@ -43,6 +43,7 @@ import org.acmsl.commons.patterns.Repository;
  * Identifies the fixed, well-known transitions in a particular scope of the domain.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@SuppressWarnings("unused")
 public interface TransitionRepository
     extends  Repository
 {

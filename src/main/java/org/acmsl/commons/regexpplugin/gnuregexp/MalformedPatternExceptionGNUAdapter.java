@@ -1,4 +1,3 @@
-//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 

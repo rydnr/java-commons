@@ -37,6 +37,8 @@ package org.acmsl.commons.patterns.dao;
 /**
  * Importing some JDK classes.
  */
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +48,7 @@ import java.util.List;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class ValueObjectPrimaryKey
+    implements Iterable<ValueObjectField>
 {
     /**
      * Field collection.
@@ -56,7 +59,7 @@ public class ValueObjectPrimaryKey
      * Adds a field to this primary key.
      * @param field the field to add.
      */
-    protected void add(final ValueObjectField field)
+    protected void add(@NotNull final ValueObjectField field)
     {
         m__alFields.add(field);
     }
@@ -65,47 +68,9 @@ public class ValueObjectPrimaryKey
      * Retrieves a list of all the fields included in the PK.
      * @return the iterator to browse the list.
      */
-    public ValueObjectFieldIterator iterator()
+    @NotNull
+    public Iterator<ValueObjectField> iterator()
     {
-        return new _FieldIterator(m__alFields.iterator());
-    }
-
-    /**
-     * Generic ValueObjectFieldIterator implementation.
-     * @author <a href="mailto:jsanleandro@yahoo.es"
-               >Jose San Leandro Armend�riz</a>
-     * @version $Revision: 419 $
-     */
-    private static class _FieldIterator
-        implements  ValueObjectFieldIterator
-    {
-        Iterator<ValueObjectField> m__Iterator;
-
-        /**
-         * Constructs an iterator using given generic iterator.
-         * @param iterator the actual iterator.
-         */
-        public _FieldIterator(final Iterator<ValueObjectField> iterator)
-        {
-            m__Iterator = iterator;
-        }
-
-        /**
-         * Checks whether there's more fields to browse or not.
-         * @return true if there are more fields to browse.
-         */
-        public boolean hasNext()
-        {
-            return m__Iterator.hasNext();
-        }
-
-        /**
-         * Retrieves the next field to browse.
-         * @return the next field.
-         */
-        public ValueObjectField next()
-        {
-            return m__Iterator.next();
-        }
+        return m__alFields.iterator();
     }
 }
