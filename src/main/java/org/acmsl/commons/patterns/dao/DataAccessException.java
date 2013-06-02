@@ -37,6 +37,7 @@ package org.acmsl.commons.patterns.dao;
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents abnormal situations regarding data accessing.
@@ -46,6 +47,8 @@ import org.jetbrains.annotations.NotNull;
 public class DataAccessException
     extends  RuntimeException
 {
+
+    private static final long serialVersionUID = 2013445708507857209L;
     /**
      * Specifies the DAO which throws the error.
      */
@@ -115,7 +118,7 @@ public class DataAccessException
 
         t_sbResult.append(getMessage());
 
-        Throwable t_Cause = getCause();
+        @Nullable final Throwable t_Cause = getCause();
 
         if  (t_Cause != null) 
         {

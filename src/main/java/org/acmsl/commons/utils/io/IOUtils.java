@@ -50,7 +50,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 /*
  * Importing Commons-Logging classes.
@@ -108,12 +110,13 @@ public class IOUtils
      * Reads given input stream into a String.
      * @param inputStream the input stream to read.
      * @param contentLength the length of the content.
+     * @param charset the charset.
      * @return the input stream contents, or an empty string if the operation
      * fails.
      * @exception IOException if the input stream cannot be read.
      */
     @NotNull
-    public String read(@NotNull final InputStream inputStream, final int contentLength)
+    public String read(@NotNull final InputStream inputStream, final int contentLength, @NotNull final Charset charset)
         throws IOException
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
@@ -123,7 +126,7 @@ public class IOUtils
         if  (contentLength > 0)
         {
             @NotNull final InputStreamReader t_isrReader =
-                new InputStreamReader(inputStream);
+                new InputStreamReader(inputStream, charset);
 
             @NotNull final char[] t_acContents = new char[contentLength];
 
@@ -137,15 +140,15 @@ public class IOUtils
         else
         {
             @NotNull final InputStreamReader t_isrReader =
-                new InputStreamReader(inputStream);
+                new InputStreamReader(inputStream, charset);
 
             @NotNull final char[] t_acContents = new char[BLOCK_SIZE];
 
             while  (t_isrReader.ready())
             {
-                int t_iCharsRead = t_isrReader.read(t_acContents);
+                final int t_iCharsRead = t_isrReader.read(t_acContents);
 
-                char[] t_acCharsRead =
+                @NotNull final char[] t_acCharsRead =
                     (t_iCharsRead == BLOCK_SIZE)
                     ?   t_acContents
                     :   t_CharUtils.subbuffer(
@@ -161,11 +164,12 @@ public class IOUtils
     /**
      * Reads an input stream and returns its contents.
      * @param input the input stream to be read.
+     * @param charset the charset.
      * @return the contents of the stream.
      * @throws IOException whenever the operation cannot be accomplished.
      */
     @NotNull
-    public String read(@NotNull final InputStream input)
+    public String read(@NotNull final InputStream input, @NotNull final Charset charset)
         throws  IOException
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
@@ -173,7 +177,7 @@ public class IOUtils
         /*
          * Instantiating an InputStreamReader object to read the contents.
          */
-        @NotNull final InputStreamReader t_isrReader = new InputStreamReader(input);
+        @NotNull final InputStreamReader t_isrReader = new InputStreamReader(input, charset);
 
         /*
          * It's faster to use BufferedReader class.
@@ -197,18 +201,18 @@ public class IOUtils
      * Reads the contents of an input stream and returns its contents, if
      * possible. If some exception occurs, returns an empty String.
      * @param input the input stream to be read.
-     * @return the contents of the stream, or empty if reading cannot be
-               accomplished.
+     * @param charset the charset.
+     * @return the contents of the stream, or empty if reading cannot be accomplished.
      */
     @NotNull
     @SuppressWarnings("unused")
-    public String readIfPossible(@NotNull final InputStream input)
+    public String readIfPossible(@NotNull final InputStream input, @NotNull final Charset charset)
     {
         String result = "";
 
         try
         {
-            result = read(input);
+            result = read(input, charset);
         }
         catch  (final IOException ioException)
         {
@@ -222,11 +226,18 @@ public class IOUtils
     /**
      * Writes given information to the stream.
      * @param content the content to write.
+     * @param output the output stream.
+     * @param charset the charset.
      */
-    public void write(@NotNull final String content, @NotNull final OutputStream output)
+    public void write(
+        @NotNull final String content, @NotNull final OutputStream output, @NotNull final Charset charset)
     {
-        @NotNull final PrintStream t_Printer = new PrintStream(output);
-        t_Printer.print(content);
-        t_Printer.flush();
+        @NotNull final OutputStreamWriter t_osFileWriter = new OutputStreamWriter(output, charset);
+
+        @NotNull final PrintWriter t_pwWriter = new PrintWriter(t_osFileWriter);
+
+        t_pwWriter.println(content);
+
+        t_pwWriter.close();
     }
 }

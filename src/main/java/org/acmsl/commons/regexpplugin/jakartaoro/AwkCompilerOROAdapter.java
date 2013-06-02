@@ -44,17 +44,25 @@ import org.acmsl.commons.regexpplugin.Pattern;
  * Importing ORO classes.
  */
 import org.apache.oro.text.awk.AwkCompiler;
+import org.apache.oro.text.regex.MalformedPatternException;
 
 /*
- * Importing some commons-logging classes.
+ * Importing JetBrains annotations.
  */
-import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Importing checkthread annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
 
 /**
  * Jakarta ORO-specific Awk compiler adapter. A delegation is used because
  * AwkCompiler is a final class.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class AwkCompilerOROAdapter
     implements  Compiler
 {
@@ -80,24 +88,17 @@ public class AwkCompilerOROAdapter
      * @return the Pattern associated to such regular expression.
      */
     @Override
-    public Pattern compile(final String regexp)
+    @NotNull
+    public Pattern compile(@NotNull final String regexp)
         throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
-        Pattern result = null;
+        @Nullable Pattern result = null;
 
         try
         {
-            final AwkCompiler t_Compiler = getDelegatedInstance();
+            @NotNull final AwkCompiler t_Compiler = getDelegatedInstance();
 
-            if  (t_Compiler != null)
-            {
-                result = new PatternOROAdapter(t_Compiler.compile(regexp));
-            }
-            else 
-            {
-                LogFactory.getLog(AwkCompilerOROAdapter.class).error(
-                    "Awk Compiler unavailable.");
-            }
+            result = new PatternOROAdapter(t_Compiler.compile(regexp));
         }
         catch  (final org.apache.oro.text.regex.MalformedPatternException exception)
         {
@@ -108,6 +109,13 @@ public class AwkCompilerOROAdapter
             if  (resetOptions())
             {
                 result = compile(regexp);
+            }
+
+            if (result == null)
+            {
+                throw
+                    new MalformedPatternExceptionOROAdapter(
+                        new MalformedPatternException(illegalArgumentException.getMessage()));
             }
         }
 
@@ -120,9 +128,7 @@ public class AwkCompilerOROAdapter
      */
     protected boolean resetOptions()
     {
-        boolean result;
-
-        result =
+        final boolean result =
             (   (isCaseSensitive())
              || (isMultiline()));
 
@@ -137,16 +143,17 @@ public class AwkCompilerOROAdapter
      * Retrieves an instance of AwkCompiler class.
      * @return a new (or already existing) compiler.
      */
+    @NotNull
     AwkCompiler getDelegatedInstance()
     {
-        AwkCompiler result = m__Instance;
+        @NotNull final AwkCompiler result;
 
         if  (m__Instance == null)
         {
             m__Instance = new AwkCompiler();
-
-            result = m__Instance;
         }
+
+        result = m__Instance;
 
         return result;
     }
@@ -193,5 +200,15 @@ public class AwkCompilerOROAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "AwkCompilerOROAdapter{" +
+               "caseSensitive=" + m__bCaseSensitive +
+               ", instance=" + m__Instance +
+               ", multiline=" + m__bMultiline +
+               '}';
     }
 }

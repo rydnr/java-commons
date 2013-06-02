@@ -48,10 +48,13 @@ import org.jetbrains.annotations.NotNull;
 public class RegexpEngineNotFoundException
     extends  ConfigurationException
 {
+
     /**
      * The key for this exception in the bundle.
      */
     protected static final String MESSAGE_KEY = "regexp.engine.not.found";
+
+    private static final long serialVersionUID = 1546850819042379494L;
 
     /**
      * Engine name.

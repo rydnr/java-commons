@@ -411,7 +411,7 @@ public abstract class ConfigurationManager
     {
         final long result;
 
-        String t_strValue = getProperty(name);
+        final String t_strValue = getProperty(name);
 
         if (t_strValue != null)
         {
@@ -526,7 +526,7 @@ public abstract class ConfigurationManager
     @SuppressWarnings("unused")
     public void setLongArray(@NotNull final String name, @NotNull final long[] value)
     {
-        StringBuilder propertyValue = new StringBuilder();
+        @NotNull final StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
@@ -666,7 +666,7 @@ public abstract class ConfigurationManager
     @SuppressWarnings("unused")
     public void setDoubleArray(@NotNull final String name, @NotNull final double[] value)
     {
-        StringBuilder propertyValue = new StringBuilder();
+        @NotNull final StringBuilder propertyValue = new StringBuilder();
 
         for  (int index = 0; index < value.length; index++)
         {
@@ -779,7 +779,7 @@ public abstract class ConfigurationManager
      * @param value the value.
      */
     @SuppressWarnings("unused")
-    public void setBooleanArray(@NotNull String name, @NotNull final boolean[] value)
+    public void setBooleanArray(@NotNull final String name, @NotNull final boolean[] value)
     {
         @NotNull final StringBuilder propertyValue = new StringBuilder();
 
@@ -886,7 +886,7 @@ public abstract class ConfigurationManager
         @NotNull final String propertiesFileName,
         final boolean retry)
     {
-        final InputStream propertiesFile;
+        @Nullable InputStream propertiesFile = null;
 
         final boolean startsWithSlash = propertiesFileName.startsWith("/");
 
@@ -951,5 +951,28 @@ public abstract class ConfigurationManager
                     + propertiesFileName);
             }
         }
+        finally
+        {
+            if (propertiesFile != null)
+            {
+                try
+                {
+                    propertiesFile.close();
+                }
+                catch (@NotNull final IOException cannotClose)
+                {
+                    LogFactory.getLog(ConfigurationManager.class + "." + getClass()).warn(
+                        "Could not close file: "
+                        + propertiesFileName);
+                }
+            }
+        }
+    }
+
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return "ConfigurationManager{ properties=" + m__Properties + " }";
     }
 }

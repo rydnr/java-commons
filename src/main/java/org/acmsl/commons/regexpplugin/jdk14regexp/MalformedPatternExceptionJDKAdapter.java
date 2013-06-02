@@ -49,6 +49,11 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK1.4 regexp classes.
  */
 import java.util.regex.PatternSyntaxException;
@@ -60,6 +65,8 @@ import java.util.regex.PatternSyntaxException;
 public class MalformedPatternExceptionJDKAdapter
     extends  MalformedPatternException
 {
+
+    private static final long serialVersionUID = -6996833758337854017L;
     /**
      * Private reference to the actual exception.
      */
@@ -70,9 +77,9 @@ public class MalformedPatternExceptionJDKAdapter
      * @param exception concrete exception instance to adapt.
      */
     public MalformedPatternExceptionJDKAdapter(
-        final PatternSyntaxException exception)
+        @NotNull final PatternSyntaxException exception)
     {
-        super(((exception == null) ? "" : exception.getMessage()));
+        super(exception.getMessage());
 
         immutableSetPatternSyntaxException(exception);
     }
@@ -82,7 +89,7 @@ public class MalformedPatternExceptionJDKAdapter
      * @param exception the PatternSyntaxException to adapt.
      */
     protected final void immutableSetPatternSyntaxException(
-        final PatternSyntaxException exception)
+        @NotNull final PatternSyntaxException exception)
     {
         m__Adaptee = exception;
     }
@@ -91,8 +98,9 @@ public class MalformedPatternExceptionJDKAdapter
      * Specifies the adapted exception.
      * @param exception the PatternSyntaxException to adapt.
      */
+    @SuppressWarnings("unused")
     protected void setPatternSyntaxException(
-        final PatternSyntaxException exception)
+        @NotNull final PatternSyntaxException exception)
     {
         immutableSetPatternSyntaxException(exception);
     }
@@ -101,6 +109,8 @@ public class MalformedPatternExceptionJDKAdapter
      * Retrieves the adapted exception.
      * @return such exception.
      */
+    @NotNull
+    @SuppressWarnings("unused")
     protected PatternSyntaxException getPatternSyntaxException()
     {
         return m__Adaptee;

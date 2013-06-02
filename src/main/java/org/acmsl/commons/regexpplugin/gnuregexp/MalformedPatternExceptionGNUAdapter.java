@@ -43,6 +43,11 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
  */
 import gnu.regexp.REException;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Adapts GNU Regexp 1.1.4 malformed pattern exceptions to follow this
  * API.
@@ -51,6 +56,8 @@ import gnu.regexp.REException;
 public class MalformedPatternExceptionGNUAdapter
     extends MalformedPatternException
 {
+    private static final long serialVersionUID = 4223179960140816813L;
+
     /**
      * Private reference to the actual exception.
      */
@@ -60,7 +67,7 @@ public class MalformedPatternExceptionGNUAdapter
      * Constructs an adapter for given GNU Regexp 1.1.4 exception.
      * @param exception concrete exception instance to adapt.
      */
-    public MalformedPatternExceptionGNUAdapter(final REException exception)
+    public MalformedPatternExceptionGNUAdapter(@NotNull final REException exception)
     {
         super(exception.getMessage());
 
@@ -71,7 +78,7 @@ public class MalformedPatternExceptionGNUAdapter
      * Specifies the exception to adapt.
      * @param adaptee the instance to adapt.
      */
-    protected final void immutableSetREException(final REException adaptee)
+    protected final void immutableSetREException(@NotNull final REException adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -80,7 +87,8 @@ public class MalformedPatternExceptionGNUAdapter
      * Specifies the exception to adapt.
      * @param adaptee the instance to adapt.
      */
-    protected void setREException(final REException adaptee)
+    @SuppressWarnings("unused")
+    protected void setREException(@NotNull final REException adaptee)
     {
         immutableSetREException(adaptee);
     }
@@ -89,6 +97,8 @@ public class MalformedPatternExceptionGNUAdapter
      * Retrieves the original exception.
      * @return such exception.
      */
+    @SuppressWarnings("unused")
+    @NotNull
     protected REException getREException()
     {    
         return m__Adaptee;

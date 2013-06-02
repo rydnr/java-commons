@@ -61,6 +61,8 @@ import java.text.MessageFormat;
  * Importing commons-logging classes.
  */
 import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides some useful methods when working with {@link Version}
@@ -114,68 +116,15 @@ public class VersionUtils
      * Retrieves a <code>VersionUtils</code> instance.
      * @return such instance.
      */
+    @NotNull
     public static VersionUtils getInstance()
     {
-        VersionUtils result =
+        @NotNull final VersionUtils result =
             VersionUtilsSingletonContainer.SINGLETON;
 
-        synchronized  (result)
+        synchronized (result)
         {
-            Compiler t_Compiler = getCompiler();
-
-            if  (t_Compiler == null)
-            {
-                try 
-                {
-                    t_Compiler = createCompiler(RegexpManager.getInstance());
-
-                    if  (t_Compiler != null)
-                    {
-                        immutableSetCompiler(t_Compiler);
-
-                        try 
-                        {
-                            immutableSetVersionPattern(
-                                immutableCompileVersionPattern(
-                                    DEFAULT_WILDCARD,
-                                    t_Compiler,
-                                    StringUtils.getInstance()));
-                        }
-                        catch  (final MalformedPatternException exception)
-                        {
-                            /*
-                             * This should never happen. It's a compile-time
-                             * error not detected by the compiler, but it's
-                             * nothing dynamic. So, if it fails, fix it once
-                             * and forget.
-                             */
-                            LogFactory.getLog(VersionUtils.class).error(
-                                "Invalid version pattern", exception);
-
-                            result = null;
-                        }
-                    }
-                    else 
-                    {
-                        LogFactory.getLog(VersionUtils.class).error(
-                            "compiler unavailable");
-
-                        result = null;
-                    }
-                }
-                catch  (final RegexpEngineNotFoundException exception)
-                {
-                    LogFactory.getLog(VersionUtils.class).error(
-                        "no regexp engine found", exception);
-
-                    result = null;
-                }
-                catch  (final Throwable throwable)
-                {
-                    LogFactory.getLog(VersionUtils.class).fatal(
-                        "Unknown error", throwable);
-                }
-            }
+            initialize();
         }
         
         return result;
@@ -184,13 +133,13 @@ public class VersionUtils
     /**
      * Protected constructor to avoid accidental instantiation.
      */
-    protected VersionUtils()  {};
+    protected VersionUtils()  {}
 
     /**
      * Specifies the regexp compiler.
      * @param compiler the compiler.
      */
-    private static void immutableSetCompiler(final Compiler compiler)
+    protected final static void immutableSetCompiler(@NotNull final Compiler compiler)
     {
         m__Compiler = compiler;
     }
@@ -199,7 +148,8 @@ public class VersionUtils
      * Specifies the regexp compiler.
      * @param compiler the compiler.
      */
-    protected static void setCompiler(final Compiler compiler)
+    @SuppressWarnings("unused")
+    protected static void setCompiler(@NotNull final Compiler compiler)
     {
         immutableSetCompiler(compiler);
     }
@@ -208,16 +158,96 @@ public class VersionUtils
      * Retrieves the regexp compiler.
      * @return such compiler.
      */
-    protected static Compiler getCompiler()
+    @Nullable
+    protected static final Compiler immutableGetCompiler()
     {
         return m__Compiler;
+    }
+
+    /**
+     * Retrieves the regexp compiler.
+     * @return such compiler.
+     */
+    @NotNull
+    protected static Compiler getCompiler()
+    {
+        @Nullable Compiler result = immutableGetCompiler();
+
+        if (result == null)
+        {
+            initialize();
+            result = immutableGetCompiler();
+        }
+
+        return result;
+    }
+
+    /**
+     * Initializes the regex engine.
+     */
+    protected static void initialize()
+    {
+        @Nullable RuntimeException t_Exception = null;
+
+        @Nullable Compiler t_Compiler = immutableGetCompiler();
+
+        if  (t_Compiler == null)
+        {
+            try
+            {
+                t_Compiler = createCompiler(RegexpManager.getInstance());
+
+                immutableSetCompiler(t_Compiler);
+
+                try
+                {
+                    immutableSetVersionPattern(
+                        immutableCompileVersionPattern(
+                            DEFAULT_WILDCARD,
+                            t_Compiler,
+                            StringUtils.getInstance()));
+                }
+                catch  (final MalformedPatternException exception)
+                {
+                            /*
+                             * This should never happen. It's a compile-time
+                             * error not detected by the compiler, but it's
+                             * nothing dynamic. So, if it fails, fix it once
+                             * and forget.
+                             */
+                    LogFactory.getLog(StringUtils.class).error(
+                        "Invalid sub-package pattern", exception);
+
+                    t_Exception = exception;
+                }
+            }
+            catch  (final RegexpEngineNotFoundException exception)
+            {
+                LogFactory.getLog(StringUtils.class).error(
+                    "no regexp engine found", exception);
+
+                t_Exception = exception;
+            }
+            catch  (final Throwable throwable)
+            {
+                LogFactory.getLog(StringUtils.class).fatal(
+                    "Unknown error", throwable);
+
+                t_Exception = new RuntimeException("Could not initialize StringUtils", throwable);
+            }
+
+            if (t_Exception != null)
+            {
+                throw t_Exception;
+            }
+        }
     }
 
     /**
      * Specifies the version pattern.
      * @param pattern the pattern.
      */
-    private static void immutableSetVersionPattern(final Pattern pattern)
+    private static void immutableSetVersionPattern(@NotNull final Pattern pattern)
     {
         m__VersionPattern = pattern;
     }
@@ -226,7 +256,8 @@ public class VersionUtils
      * Specifies the version pattern.
      * @param pattern the pattern.
      */
-    protected static void setVersionPattern(final Pattern pattern)
+    @SuppressWarnings("unused")
+    protected static void setVersionPattern(@NotNull final Pattern pattern)
     {
         immutableSetVersionPattern(pattern);
     }
@@ -235,6 +266,7 @@ public class VersionUtils
      * Retrieves the version pattern.
      * @return such pattern.
      */
+    @NotNull
     public static Pattern getVersionPattern()
     {
         return m__VersionPattern;
@@ -244,17 +276,21 @@ public class VersionUtils
      * Retrieves the version pattern.
      * @param wildcard the identifier used to identify "anything goes".
      * @return such pattern.
-     * @precondition wildcard != null
      */
-    public static Pattern getVersionPattern(final String wildcard)
+    @NotNull
+    public static Pattern getVersionPattern(@NotNull final String wildcard)
     {
-        Pattern result = getVersionPattern();
+        @NotNull final Pattern result;
 
         if  (!DEFAULT_WILDCARD.equalsIgnoreCase(wildcard))
         {
             result =
                 immutableCompileVersionPattern(
                     wildcard, getCompiler(), StringUtils.getInstance());
+        }
+        else
+        {
+            result = getVersionPattern();
         }
         
         return result;
@@ -266,18 +302,16 @@ public class VersionUtils
      * @param compiler the regexp compiler.
      * @param stringUtils the <code>StringUtils</code> instance.
      * @return such pattern.
-     * @precondition wildcard != null
-     * @precondition compiler != null
-     * @precondition stringUtils != null
      */
+    @NotNull
     protected static final Pattern immutableCompileVersionPattern(
-        final String wildcard,
-        final Compiler compiler,
-        final StringUtils stringUtils)
+        @NotNull final String wildcard,
+        @NotNull final Compiler compiler,
+        @NotNull final StringUtils stringUtils)
     {
-        Pattern result = null;
+        @Nullable Pattern result = null;
 
-        MessageFormat t_Formatter = new MessageFormat(VERSION_REGEXP);
+        @NotNull final MessageFormat t_Formatter = new MessageFormat(VERSION_REGEXP);
         
         try 
         {
@@ -289,7 +323,7 @@ public class VersionUtils
                             stringUtils.escapeRegexp(wildcard)
                         }));
         }
-        catch  (final MalformedPatternException exception)
+        catch  (@NotNull final MalformedPatternException exception)
         {
             /*
              * This should never happen. It's a compile-time
@@ -309,10 +343,8 @@ public class VersionUtils
      * @param version the version.
      * @param family the family.
      * @return <code>true</code> if the version is compatible.
-     * @precondition version != null
-     * @precondition family != null
      */
-    public boolean matches(final String version, final String family)
+    public boolean matches(@NotNull final String version, @NotNull final String family)
     {
         return matches(version, family, DEFAULT_WILDCARD);
     }
@@ -323,21 +355,39 @@ public class VersionUtils
      * @param family the family.
      * @param wildcard the identifier used to identify "anything goes".
      * @return <code>true</code> if the version is compatible.
-     * @precondition version != null
-     * @precondition family != null
-     * @precondition wildcard != null
      */
     public boolean matches(
-        final String version, final String family, final String wildcard)
+        @NotNull final String version, @NotNull final String family, @NotNull final String wildcard)
     {
-        return
-            matches(
-                version,
-                family,
-                wildcard,
-                getVersionPattern(wildcard),
-                createMatcher(RegexpManager.getInstance()),
-                StringValidator.getInstance());
+        boolean result = false;
+
+        @NotNull final Pattern t_VersionPattern = getVersionPattern(wildcard);
+
+        try
+        {
+            @NotNull final Matcher t_Matcher = createMatcher(RegexpManager.getInstance());
+
+            result =
+                matches(
+                    version,
+                    family,
+                    wildcard,
+                    t_VersionPattern,
+                    t_Matcher,
+                    StringValidator.getInstance());
+        }
+        catch (@NotNull final RegexpEngineNotFoundException missingEngine)
+        {
+            LogFactory.getLog(VersionUtils.class).fatal(
+                "Cannot find a suitable regex engine", missingEngine);
+        }
+        catch (@NotNull final RegexpPluginMisconfiguredException misconfiguredEngine)
+        {
+            LogFactory.getLog(VersionUtils.class).fatal(
+                "Cannot initialize regex plugin", misconfiguredEngine);
+        }
+
+        return result;
     }
 
     /**
@@ -349,37 +399,28 @@ public class VersionUtils
      * @param matcher the matcher.
      * @param stringValidator the <code>StringValidator</code> instance.
      * @return <code>true</code> if the version is compatible.
-     * @precondition version != null
-     * @precondition family != null
-     * @precondition wildcard != null
-     * @precondition pattern != null
-     * @precondition matcher != null
-     * @precondition stringValidator != null
-     * @precondition conversionUtils != null
      */
     protected boolean matches(
-        final String version,
-        final String family,
-        final String wildcard,
-        final Pattern pattern,
-        final Matcher matcher,
-        final StringValidator stringValidator)
+        @NotNull final String version,
+        @NotNull final String family,
+        @NotNull final String wildcard,
+        @NotNull final Pattern pattern,
+        @NotNull final Matcher matcher,
+        @NotNull final StringValidator stringValidator)
     {
         boolean result = false;
         
-        String[] t_astrVersion =
+        @NotNull final String[] t_astrVersion =
             parseVersion(version, pattern, matcher, stringValidator);
         
-        String[] t_astrFamily =
+        @NotNull final String[] t_astrFamily =
             parseVersion(family, pattern, matcher, stringValidator);
         
-        if  (   (t_astrVersion != null)
-             && (t_astrFamily != null)
-             && (t_astrVersion.length >= 1)
+        if  (   (t_astrVersion.length >= 1)
              && (t_astrFamily.length >= 1))
         {
-            String t_strVersionMajor = t_astrVersion[0];
-            String t_strFamilyMajor = t_astrFamily[0];
+            @Nullable final String t_strVersionMajor = t_astrVersion[0];
+            @Nullable final String t_strFamilyMajor = t_astrFamily[0];
             String t_strVersionMinor = "";
             String t_strFamilyMinor = "";
             String t_strVersionSubminor = "";
@@ -423,11 +464,8 @@ public class VersionUtils
      * @param matcher the matcher.
      * @param stringValidator the <code>StringValidator</code> instance.
      * @return <code>true</code> if the version is compatible.
-     * @precondition version != null
-     * @precondition versionPattern != null
-     * @precondition matcher != null
-     * @precondition stringValidator != null
      */
+    @NotNull
     protected String[] parseVersion(
         final String version,
         final Pattern pattern,
@@ -438,20 +476,23 @@ public class VersionUtils
 
         try
         {
-            MatchResult t_MatchResult;
+            @Nullable final MatchResult t_MatchResult;
 
             if  (   (!stringValidator.isEmpty(version))
                  && (matcher.contains(version, pattern)))
             {
                 t_MatchResult = matcher.getMatch();
 
-                result =
-                    new String[]
-                    {
-                        t_MatchResult.group(2),
-                        t_MatchResult.group(3),
-                        t_MatchResult.group(4)
-                    };
+                if (t_MatchResult != null)
+                {
+                    result =
+                        new String[]
+                        {
+                            t_MatchResult.group(2),
+                            t_MatchResult.group(3),
+                            t_MatchResult.group(4)
+                        };
+                }
            }
         }
         catch  (final MalformedPatternException exception)
@@ -482,16 +523,14 @@ public class VersionUtils
      * @param familyMajor the family's major version.
      * @param familyMinor the family's minor version.
      * @param familySubminor the family's subminor version.
-     * @precondition major != null
-     * @precondition familyMajor != null
      */
     public boolean matches(
-        final String major,
-        final String minor,
-        final String subminor,
-        final String familyMajor,
-        final String familyMinor,
-        final String familySubminor)
+        @NotNull final String major,
+        @Nullable final String minor,
+        @Nullable final String subminor,
+        @NotNull final String familyMajor,
+        @Nullable final String familyMinor,
+        @Nullable final String familySubminor)
     {
         return
             matches(
@@ -513,18 +552,15 @@ public class VersionUtils
      * @param familyMinor the family's minor version.
      * @param familySubminor the family's subminor version.
      * @param wildcard the identifier used to identify "anything goes".
-     * @precondition major != null
-     * @precondition familyMajor != null
-     * @precondition wildcard != null
      */
     public boolean matches(
-        final String major,
-        final String minor,
-        final String subminor,
-        final String familyMajor,
-        final String familyMinor,
-        final String familySubminor,
-        final String wildcard)
+        @NotNull final String major,
+        @Nullable final String minor,
+        @Nullable  final String subminor,
+        @NotNull final String familyMajor,
+        @Nullable final String familyMinor,
+        @Nullable  final String familySubminor,
+        @NotNull  final String wildcard)
     {
         return
             matches(
@@ -548,20 +584,16 @@ public class VersionUtils
      * @param familySubminor the family's subminor version.
      * @param wildcard the identifier used to identify "anything goes".
      * @param conversionUtils the <code>ConversionUtils</code> instance.
-     * @precondition major != null
-     * @precondition familyMajor != null
-     * @precondition wildcard != null
-     * @precondition conversionUtils != null
      */
     protected boolean matches(
-        final String major,
-        final String minor,
-        final String subminor,
-        final String familyMajor,
-        final String familyMinor,
-        final String familySubminor,
-        final String wildcard,
-        final ConversionUtils conversionUtils)
+        @NotNull final String major,
+        @Nullable final String minor,
+        @Nullable final String subminor,
+        @NotNull final String familyMajor,
+        @Nullable final String familyMinor,
+        @Nullable final String familySubminor,
+        @NotNull final String wildcard,
+        @NotNull final ConversionUtils conversionUtils)
     {
         boolean result = false;
 
@@ -602,7 +634,7 @@ public class VersionUtils
      * @param familyNumber the family number.
      */
     public boolean versionNumbersMatch(
-        final String number, final String familyNumber)
+        @NotNull final String number, @NotNull final String familyNumber)
     {
         return versionNumbersMatch(number, familyNumber, DEFAULT_WILDCARD);
     }
@@ -612,10 +644,11 @@ public class VersionUtils
      * @param number the version number.
      * @param familyNumber the family number.
      * @param wildcard the identifier used to identify "anything goes".
-     * @precondition wildcard != null
      */
     public boolean versionNumbersMatch(
-        final String number, final String familyNumber, final String wildcard)
+        @NotNull final String number,
+        @NotNull final String familyNumber,
+        @NotNull final String wildcard)
     {
         return
             versionNumbersMatch(
@@ -631,14 +664,12 @@ public class VersionUtils
      * @param familyNumber the family number.
      * @param wildcard the identifier used to identify "anything goes".
      * @param conversionUtils the <code>ConversionUtils</code> instance.
-     * @precondition wildcard != null
-     * @precondition conversionUtils != null
      */
     protected boolean versionNumbersMatch(
-        final String number,
-        final String familyNumber,
-        final String wildcard,
-        final ConversionUtils conversionUtils)
+        @NotNull final String number,
+        @NotNull final String familyNumber,
+        @NotNull final String wildcard,
+        @NotNull final ConversionUtils conversionUtils)
     {
         return
             (   (wildcard.equalsIgnoreCase(number))
@@ -655,10 +686,10 @@ public class VersionUtils
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
-     * @precondition regexpManager != null
      */
+    @NotNull
     protected static synchronized Compiler createCompiler(
-        final RegexpManager regexpManager)
+        @NotNull final RegexpManager regexpManager)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -669,15 +700,16 @@ public class VersionUtils
      * Creates the compiler.
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp compiler.
-     * @precondition regexpEngine != null
      */
+    @NotNull
     protected static synchronized Compiler createCompiler(
-        final RegexpEngine regexpEngine)
+        @NotNull final RegexpEngine regexpEngine)
+        throws RegexpEngineNotFoundException
     {
-        Compiler result = regexpEngine.createCompiler();
+        @NotNull final Compiler result = regexpEngine.createCompiler();
 
         result.setCaseSensitive(false);
-        
+
         return result;
     }
 
@@ -689,10 +721,10 @@ public class VersionUtils
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
-     * @precondition regexpManager != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
-        final RegexpManager regexpManager)
+        @NotNull final RegexpManager regexpManager)
       throws RegexpEngineNotFoundException,
              RegexpPluginMisconfiguredException
     {
@@ -703,10 +735,11 @@ public class VersionUtils
      * Creates the matcher.
      * @param regexpEngine the RegexpEngine instance.
      * @return the regexp matcher.
-     * @precondition regexpEngine != null
      */
+    @NotNull
     protected static synchronized Matcher createMatcher(
         final RegexpEngine regexpEngine)
+        throws RegexpEngineNotFoundException
     {
         return regexpEngine.createMatcher();
     }

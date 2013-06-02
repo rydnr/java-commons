@@ -282,22 +282,20 @@ public abstract class CheckedException
         return getMessage(locale);
     }
 
-    /**
-     * Retrieves the text defined for the exception.
-     * @return such text, using the default locale.
-     */
-    @NotNull
     @Override
+    @NotNull
     public String toString()
     {
-        return getMessage();
+        return "CheckedException{" +
+               " bundleI14able=" + m__BundleI14able +
+               " }";
     }
 
     /**
      * BundleI14able suited for CheckedException class.
      * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
      */
-    protected class _BundleI14able
+    protected static class _BundleI14able
         extends  BundleI14able
     {
         /**

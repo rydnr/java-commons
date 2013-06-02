@@ -193,12 +193,9 @@ public class CachingBundleI14able
      */
     protected void cacheBundle(@NotNull final ResourceBundle resourceBundle)
     {
-        @Nullable final String t_strBundleName = getBundleName();
+        @NotNull final String t_strBundleName = getBundleName();
 
-        if (t_strBundleName != null)
-        {
-            cacheBundle(resourceBundle, t_strBundleName, RESOURCE_BUNDLE_CACHE);
-        }
+        cacheBundle(resourceBundle, t_strBundleName, RESOURCE_BUNDLE_CACHE);
     }
     
     /**
@@ -224,18 +221,11 @@ public class CachingBundleI14able
     {
         @Nullable final ResourceBundle result;
 
-        @Nullable String t_strBundleName = getBundleName();
+        @NotNull final String t_strBundleName = getBundleName();
 
-        if (t_strBundleName != null)
-        {
-            result =
-                getCachedBundle(
-                    t_strBundleName, RESOURCE_BUNDLE_CACHE, getResetCache(), getCacheTtl());
-        }
-        else
-        {
-            result = null;
-        }
+        result =
+            getCachedBundle(
+                t_strBundleName, RESOURCE_BUNDLE_CACHE, getResetCache(), getCacheTtl());
 
         return result;
     }
@@ -292,9 +282,9 @@ public class CachingBundleI14able
     {
         boolean result = true;
 
-        Date timestamp = bundle.getTimestamp();
+        final Date timestamp = bundle.getTimestamp();
         
-        Date now = new Date();
+        final Date now = new Date();
 
         if  (now.getTime() < timestamp.getTime() + cacheTtl)
         {
@@ -500,16 +490,19 @@ public class CachingBundleI14able
             
             return result;
         }
-        
+
         /**
          * Gives the text representation of the instance.
+         *
          * @return such text.
          */
         @Override
-        @NotNull
         public String toString()
         {
-            return toString(getWrappedBundle());
+            return "TimestampResourceBundle{" +
+                   "timestamp=" + m__Timestamp +
+                   ", wrappedBundle=" + m__WrappedBundle +
+                   '}';
         }
 
         /**
@@ -522,16 +515,20 @@ public class CachingBundleI14able
             return bundle.toString();
         }
     }
-    
+
     /**
      * Retrieves the internationalized message.
+     *
      * @return such message.
      */
-    @NotNull
     @Override
+    @NotNull
     public String toString()
     {
-        return toString(Locale.getDefault());
+        return "CachingBundleI14able{" +
+               "resetCache=" + m__bResetCache +
+               ", cachingTtl=" + m__lCachingTtl +
+               '}';
     }
 
     /**

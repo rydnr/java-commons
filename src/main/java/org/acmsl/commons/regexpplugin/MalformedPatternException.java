@@ -34,7 +34,7 @@
 package org.acmsl.commons.regexpplugin;
 
 /*
- * Importing JetBrains annotations..
+ * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
 
@@ -52,6 +52,8 @@ public class MalformedPatternException
     extends     RuntimeException
     implements  Serializable
 {
+    private static final long serialVersionUID = 4064719537415799374L;
+
     /**
      * Just constructs the exception with the default logic defined in its
      * super class.

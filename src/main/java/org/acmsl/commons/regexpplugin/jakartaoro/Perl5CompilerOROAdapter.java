@@ -46,6 +46,12 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Perl5Compiler;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Jakarta ORO-specific regexp compiler adapter. This class makes possible the
  * use of ORO compilers inside this API. A delegation is used because
@@ -114,11 +120,10 @@ public class Perl5CompilerOROAdapter
      * @return the Pattern associated to such regular expression.
      * @throws org.acmsl.commons.regexpplugin.MalformedPatternException if
      * given regexp is malformed.
-     * @precondition regexp != null
      */
     @Override
-    public Pattern compile(final String regexp)
-        throws  org.acmsl.commons.regexpplugin.MalformedPatternException
+    public Pattern compile(@NotNull final String regexp)
+        throws org.acmsl.commons.regexpplugin.MalformedPatternException
     {
         return
             compile(regexp, getCompiler(), isCaseSensitive(), isMultiline());
@@ -134,17 +139,16 @@ public class Perl5CompilerOROAdapter
      * @return the Pattern associated to such regular expression.
      * @throws org.acmsl.commons.regexpplugin.MalformedPatternException if
      * given regexp is malformed.
-     * @precondition regexp != null
-     * @precondition compiler != null
      */
+    @Nullable
     protected Pattern compile(
-        final String regexp,
-        final Perl5Compiler compiler,
+        @NotNull final String regexp,
+        @NotNull final Perl5Compiler compiler,
         final boolean caseSensitive,
         final boolean multiline)
       throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
-        Pattern result = null;
+        @Nullable Pattern result = null;
 
         try
         {
@@ -187,7 +191,7 @@ public class Perl5CompilerOROAdapter
      */
     protected boolean resetOptions()
     {
-        boolean result;
+        final boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -261,5 +265,16 @@ public class Perl5CompilerOROAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
+    }
+
+    @Override
+    public String toString()
+    {
+        return
+              "Perl5CompilerOROAdapter{"
+            + " caseSensitive=" + m__bCaseSensitive
+            + " instance=" + m__Instance
+            + " multiline=" + m__bMultiline
+            + " }";
     }
 }

@@ -45,10 +45,21 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
 import gnu.regexp.RE;
 import gnu.regexp.REException;
 
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * GNU Regexp 1.1.4-specific helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class HelperGNUAdapter
     implements  Helper
 {
@@ -62,27 +73,24 @@ public class HelperGNUAdapter
      * @throws MalformedPatternException if given regexp is malformed.
      */
     @Override
-    public String replaceAll(final String input, final String pattern, final String replacement)
+    @NotNull
+    public String replaceAll(
+        @NotNull final String input, @NotNull final String pattern, @NotNull final String replacement)
         throws  MalformedPatternException
     {
-        String result = input;
+        @NotNull final String result;
 
-        if  (   (input       != null)
-             && (pattern     != null)
-             && (replacement != null))
+        try
         {
-            try 
-            {
-                final RE t_RE = new RE(pattern);
+            @NotNull final RE t_RE = new RE(pattern);
 
-                result = t_RE.substituteAll(input, replacement);
-            }
-            catch  (final REException reException)
-            {
-                throw
-                    new MalformedPatternExceptionGNUAdapter(
-                        reException);
-            }
+            result = t_RE.substituteAll(input, replacement);
+        }
+        catch  (@NotNull final REException reException)
+        {
+            throw
+                new MalformedPatternExceptionGNUAdapter(
+                    reException);
         }
 
         return result;

@@ -67,6 +67,7 @@ public class JakartaRegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @NotNull
     @Override
     public Matcher createMatcher()
     {
@@ -77,6 +78,7 @@ public class JakartaRegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @NotNull
     @Override
     public Helper createHelper()
     {

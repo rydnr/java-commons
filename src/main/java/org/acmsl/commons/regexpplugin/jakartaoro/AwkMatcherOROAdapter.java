@@ -50,8 +50,13 @@ import org.apache.oro.text.awk.AwkMatcher;
 /*
  * Importing some commons-logging classes.
  */
-import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Importing Checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
 
 /**
  * Jakarta ORO-specific regexp compiler adapter. This class makes possible the
@@ -59,6 +64,7 @@ import org.jetbrains.annotations.NotNull;
  * Perl5Compiler is a final class.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class AwkMatcherOROAdapter
     implements  Matcher
 {
@@ -79,7 +85,7 @@ public class AwkMatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected final void immutableSetAwkMatcher(final AwkMatcher adaptee)
+    protected final void immutableSetAwkMatcher(@NotNull final AwkMatcher adaptee)
     {
         m__Instance = adaptee;
     }
@@ -88,7 +94,8 @@ public class AwkMatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected void setAwkMatcher(final AwkMatcher adaptee)
+    @SuppressWarnings("unused")
+    protected void setAwkMatcher(@NotNull final AwkMatcher adaptee)
     {
         immutableSetAwkMatcher(adaptee);
     }
@@ -97,6 +104,7 @@ public class AwkMatcherOROAdapter
      * Retrieves an instance of AwkMatcher class.
      * @return the adapted matcher.
      */
+    @NotNull
     protected AwkMatcher getAwkMatcher()
     {
         return m__Instance;
@@ -111,26 +119,21 @@ public class AwkMatcherOROAdapter
     @Override
     public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
     {
-        boolean result = false;
+        final boolean result;
 
-        if  (   (pattern != null)
-             && (pattern instanceof PatternOROAdapter))
+        if  (pattern instanceof PatternOROAdapter)
         {
-            AwkMatcher t_AwkMatcher = getAwkMatcher();
+            final AwkMatcher t_AwkMatcher = getAwkMatcher();
 
-            if  (t_AwkMatcher != null)
-            {
-                result =
-                    t_AwkMatcher.contains(
-                        text,
-                        ((PatternOROAdapter) pattern).getPattern());
-            }
-            else 
-            {
-                LogFactory.getLog(AwkMatcherOROAdapter.class).error(
-                    "Awk matcher unavailable.");
-            }
+            result =
+                t_AwkMatcher.contains(
+                    text, ((PatternOROAdapter) pattern).getPattern());
         }
+        else
+        {
+            result = false;
+        }
+
 
         return result;
     }
@@ -141,19 +144,33 @@ public class AwkMatcherOROAdapter
      * @return such match result.
      */
     @Override
+    @Nullable
     public MatchResult getMatch()
     {
-        MatchResult result = null;
+        @Nullable final MatchResult result;
 
-        AwkMatcher t_AwkMatcher = getAwkMatcher();
+        @NotNull final AwkMatcher t_AwkMatcher = getAwkMatcher();
 
+        @Nullable final org.apache.oro.text.regex.MatchResult t_MatchResult = t_AwkMatcher.getMatch();
 
-        if  (t_AwkMatcher != null)
+        if (t_MatchResult != null)
         {
-            result =
-                new MatchResultOROAdapter(t_AwkMatcher.getMatch());
+            result = new MatchResultOROAdapter(t_MatchResult);
+        }
+        else
+        {
+            result = null;
         }
 
         return result;
+    }
+
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return "AwkMatcherOROAdapter{" +
+               "instance=" + m__Instance +
+               '}';
     }
 }

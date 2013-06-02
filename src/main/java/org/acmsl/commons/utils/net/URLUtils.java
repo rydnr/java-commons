@@ -106,7 +106,7 @@ public class URLUtils
 
         synchronized (result)
         {
-            @NotNull final Compiler t_Compiler = retrieveCompiler();
+            @Nullable final Compiler t_Compiler = retrieveCompiler();
 
             result.initialize(t_Compiler);
         }
@@ -139,7 +139,7 @@ public class URLUtils
      * Specifies the question mark pattern.
      * @param pattern the pattern.
      */
-    protected final void immutableSetQuestionMarkPattern(@NotNull final Pattern pattern)
+    protected static final void immutableSetQuestionMarkPattern(@NotNull final Pattern pattern)
     {
         m__QuestionMarkPattern = pattern;
     }
@@ -149,7 +149,7 @@ public class URLUtils
      * @param pattern the pattern.
      */
     @SuppressWarnings("unused")
-    protected void setQuestionMarkPattern(@NotNull final Pattern pattern)
+    protected static void setQuestionMarkPattern(@NotNull final Pattern pattern)
     {
         immutableSetQuestionMarkPattern(pattern);
     }
@@ -159,7 +159,7 @@ public class URLUtils
      * @return such pattern.
      */
     @NotNull
-    public Pattern getQuestionMarkPattern()
+    public static Pattern getQuestionMarkPattern()
     {
         return m__QuestionMarkPattern;
     }
@@ -168,7 +168,7 @@ public class URLUtils
      * Specifies the block pattern.
      * @param pattern the pattern.
      */
-    protected final void immutableSetBlockPattern(@NotNull final Pattern pattern)
+    protected static final void immutableSetBlockPattern(@NotNull final Pattern pattern)
     {
         m__BlockPattern = pattern;
     }
@@ -178,7 +178,7 @@ public class URLUtils
      * @param pattern the pattern.
      */
     @SuppressWarnings("unused")
-    protected void setBlockPattern(@NotNull final Pattern pattern)
+    protected static void setBlockPattern(@NotNull final Pattern pattern)
     {
         immutableSetBlockPattern(pattern);
     }
@@ -188,7 +188,7 @@ public class URLUtils
      * @return such pattern.
      */
     @NotNull
-    public Pattern getBlockPattern()
+    public static Pattern getBlockPattern()
     {
         return m__BlockPattern;
     }
@@ -197,7 +197,7 @@ public class URLUtils
      * Specifies the parameter pattern.
      * @param pattern the pattern.
      */
-    protected final void immutableSetParameterPattern(@NotNull final Pattern pattern)
+    protected static final void immutableSetParameterPattern(@NotNull final Pattern pattern)
     {
         m__ParameterPattern = pattern;
     }
@@ -207,7 +207,7 @@ public class URLUtils
      * @param pattern the pattern.
      */
     @SuppressWarnings("unused")
-    protected void setParameterPattern(@NotNull final Pattern pattern)
+    protected static void setParameterPattern(@NotNull final Pattern pattern)
     {
         immutableSetParameterPattern(pattern);
     }
@@ -217,7 +217,7 @@ public class URLUtils
      * @return such pattern.
      */
     @NotNull
-    public Pattern getParameterPattern()
+    public static Pattern getParameterPattern()
     {
         return m__ParameterPattern;
     }
@@ -243,7 +243,7 @@ public class URLUtils
 
         t_iQuestionPosition = extraInfo.indexOf("?");
 
-        String t_strExtraInfo =
+        @NotNull final String t_strExtraInfo =
             (t_iQuestionPosition == -1)
             ?   extraInfo
             :   (t_iQuestionPosition == extraInfo.length() - 1)
@@ -325,77 +325,91 @@ public class URLUtils
 
         if  (matcher.contains(query, questionMarkPattern))
         {
-            MatchResult t_MatchResult = matcher.getMatch();
+            @Nullable MatchResult t_MatchResult = matcher.getMatch();
 
-            t_sbResult.append(t_MatchResult.group(1));
-
-            t_sbResult.append("?");
-
-            boolean t_bFirstBlock = true;
-
-            if  (t_MatchResult.groups() > 1)
+            if (t_MatchResult != null)
             {
-                String t_strLeft = t_MatchResult.group(2);
+                @Nullable final String t_strGroup = t_MatchResult.group(1);
 
-                while  (matcher.contains(t_strLeft, blockPattern))
+                if (t_strGroup != null)
                 {
-                    t_MatchResult = matcher.getMatch();
+                    t_sbResult.append(t_sbResult);
+                }
 
-                    String t_strBlock = t_MatchResult.group(1);
+                t_sbResult.append("?");
+
+                boolean t_bFirstBlock = true;
+
+                if  (t_MatchResult.groups() > 1)
+                {
+                    @Nullable String t_strLeft = t_MatchResult.group(2);
+
+                    while  (   (t_strLeft != null)
+                            && (matcher.contains(t_strLeft, blockPattern)))
+                    {
+                        t_MatchResult = matcher.getMatch();
+
+                        if (t_MatchResult != null)
+                        {
+                            @Nullable final String t_strBlock = t_MatchResult.group(1);
+
+                            t_sbResult.append(
+                                (isMultiple)
+                                ?   t_strBlock + "&"
+                                :   (   (t_strBlock == null)
+                                     || (t_strBlock.length() == 0))
+                                    ?   name + "=" + value
+                                    :   (   (t_bFirstBlock)
+                                         || (valuePresent))
+                                        ?   parseParameter(
+                                                t_strBlock,
+                                                name,
+                                                value,
+                                                valuePresent)
+                                        :     "&"
+                                            + parseParameter(
+                                                  t_strBlock,
+                                                  name,
+                                                  value,
+                                                  valuePresent));
+
+                            if (t_bFirstBlock)
+                            {
+                                t_bFirstBlock = false;
+                            }
+
+                            t_strLeft = t_MatchResult.group(2);
+                        }
+                    }
 
                     t_sbResult.append(
-                        (isMultiple)
-                        ?   t_strBlock + "&"
-                        :   (t_strBlock.length() == 0)
+                        (   (isMultiple)
+                         && (!valuePresent))
+                        ?   t_strLeft + "&" + name + "=" + value
+                        :   (   (t_strLeft == null)
+                             || (t_strLeft.length() == 0))
                             ?   name + "=" + value
                             :   (   (t_bFirstBlock)
                                  || (valuePresent))
                                 ?   parseParameter(
-                                        t_strBlock,
+                                        t_strLeft,
                                         name,
                                         value,
                                         valuePresent)
                                 :     "&"
                                     + parseParameter(
-                                          t_strBlock,
+                                          t_strLeft,
                                           name,
                                           value,
                                           valuePresent));
-
-                    if (t_bFirstBlock)
-                    {
-                        t_bFirstBlock = false;
-                    }
-
-                    t_strLeft = t_MatchResult.group(2);
                 }
-
-                t_sbResult.append(
-                    (   (isMultiple)
-                     && (!valuePresent))
-                    ?   t_strLeft + "&" + name + "=" + value
-                    :   (t_strLeft.length() == 0)
-                        ?   name + "=" + value
-                        :   (   (t_bFirstBlock)
-                             || (valuePresent))
-                            ?   parseParameter(
-                                    t_strLeft,
-                                    name,
-                                    value,
-                                    valuePresent)
-                            :     "&"
-                                + parseParameter(
-                                      t_strLeft,
-                                      name,
-                                      value,
-                                      valuePresent));
-            }
-            else
-            {
-                t_sbResult.append("?");
-                t_sbResult.append(name);
-                t_sbResult.append("=");
-                t_sbResult.append(value);
+                else
+                {
+                    t_sbResult.append("?");
+                    t_sbResult.append(name);
+                    t_sbResult.append("=");
+                    t_sbResult.append(value);
+                }
             }
         }
         else
@@ -476,11 +490,11 @@ public class URLUtils
 
             if  (t_ParamMatchResult != null)
             {
-                String t_strName = t_ParamMatchResult.group(1);
+                @Nullable final String t_strName = t_ParamMatchResult.group(1);
 
                 String t_strValue = "";
 
-                if  (   (t_strName.equals(name))
+                if  (   (name.equals(t_strName))
                      && (!valuePresent))
                 {
                     t_strValue = value;
@@ -492,7 +506,8 @@ public class URLUtils
 
                 t_sbResult.append(t_strName);
 
-                if  (t_strValue.length() > 0)
+                if  (   (t_strValue != null)
+                     && (t_strValue.length() > 0))
                 {
                     t_sbResult.append("=");
                 }
@@ -527,9 +542,9 @@ public class URLUtils
 
         try
         {
-            @NotNull final Compiler t_Compiler = retrieveCompiler();
+            @Nullable final Compiler t_Compiler = retrieveCompiler();
 
-            @NotNull final Pattern t_Pattern =
+            @Nullable final Pattern t_Pattern =
                 t_Compiler.compile(
                     "(.*?)(\\?|&)?"
 //                        + Perl5Compiler.quotemeta(name)
@@ -541,10 +556,17 @@ public class URLUtils
 
             if  (t_Matcher.contains(query, t_Pattern))
             {
-                result =
-                    t_Matcher.contains(
-                        t_Matcher.getMatch().group(4),
-                        t_Pattern);
+                @Nullable final MatchResult t_Result = t_Matcher.getMatch();
+
+                if (t_Result != null)
+                {
+                    @Nullable final String t_strGroup = t_Result.group(4);
+
+                    if (t_strGroup != null)
+                    {
+                        result = t_Matcher.contains(t_strGroup, t_Pattern);
+                    }
+                }
             }
         }
         catch (final MalformedPatternException malformedPatternException)
@@ -578,7 +600,7 @@ public class URLUtils
      * @throws RegexpEngineNotFoundException if the system is not configured
      * properly in order to provide regexp services.
      */
-    public boolean valuePresent(String query, String name, String value)
+    public boolean valuePresent(@NotNull final String query, @NotNull final String name, @NotNull final String value)
         throws  RegexpEngineNotFoundException
     {
         boolean result = false;
@@ -653,6 +675,7 @@ public class URLUtils
      * @param regexpUtils the RegexpUtils instance.
      * @return such compiler.
      */
+    @NotNull
     protected static Compiler retrieveCompiler(@NotNull final RegexpUtils regexpUtils)
     {
         return regexpUtils.getRegexpCompiler();

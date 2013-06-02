@@ -55,7 +55,6 @@ public class GNURegexpEngine
      * Creates a compiler instance.
      * @return such instance.
      */
-    @Nullable
     @NotNull
     @Override
     public Compiler createCompiler()
@@ -67,6 +66,7 @@ public class GNURegexpEngine
      * Creates a matcher instance.
      * @return such instance.
      */
+    @NotNull
     @Override
     public Matcher createMatcher()
     {
@@ -77,6 +77,7 @@ public class GNURegexpEngine
      * Creates a helper instance.
      * @return such instance.
      */
+    @NotNull
     @Override
     public Helper createHelper()
     {

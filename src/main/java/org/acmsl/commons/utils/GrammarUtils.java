@@ -155,11 +155,23 @@ public abstract class GrammarUtils
      * @param word the word to convert.
      * @return the converted word.
      */
-    @Nullable
+    @NotNull
     public String getSingular(@NotNull final String word)
     {
-        return getSingular(word, retrieveGrammarBundleName());
+        @NotNull final String result;
 
+        @Nullable final String t_strAux = getSingular(word, retrieveGrammarBundleName());
+
+        if (t_strAux != null)
+        {
+            result = t_strAux;
+        }
+        else
+        {
+            result = word;
+        }
+
+        return result;
     }
     
     /**
@@ -186,10 +198,23 @@ public abstract class GrammarUtils
      * @param word the word to convert.
      * @return the converted word.
      */
-    @Nullable
+    @NotNull
     public String getPlural(@NotNull final String word)
     {
-        return getPlural(word, retrieveGrammarBundleName());
+        @NotNull final String result;
+
+        @Nullable final String t_strAux = getPlural(word, retrieveGrammarBundleName());
+
+        if (t_strAux != null)
+        {
+            result = t_strAux;
+        }
+        else
+        {
+            result = word;
+        }
+
+        return result;
     }
     
     /**
@@ -360,7 +385,7 @@ public abstract class GrammarUtils
      * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
      * @version $Revision: 1661 $ at $Date: 2007-01-30 15:23:13 +0100 (Tue, 30 Jan 2007) $ by $Author: chous $
      */
-    protected class _BundleI14able
+    protected static class _BundleI14able
         extends  BundleI14able
     {
         /**
@@ -376,5 +401,13 @@ public abstract class GrammarUtils
         {
             super(messageKey, propertyName, bundleName);
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "GrammarUtils{" +
+               " locale=" + m__Locale +
+               " }";
     }
 }

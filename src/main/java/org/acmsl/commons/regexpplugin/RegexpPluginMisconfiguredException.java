@@ -52,10 +52,13 @@ import org.jetbrains.annotations.NotNull;
 public class RegexpPluginMisconfiguredException
     extends  ConfigurationException
 {
+
     /**
      * The key for this exception in the bundle.
      */
     protected static final String MESSAGE_KEY = "regexpplugin.misconfigured";
+
+    private static final long serialVersionUID = 3584386048849432893L;
 
     /**
      * Builds a misconfiguration exception with given information.

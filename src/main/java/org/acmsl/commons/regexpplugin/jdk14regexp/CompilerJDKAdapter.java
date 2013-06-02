@@ -42,6 +42,16 @@ import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
+ * Importing Checkthread.org annotations,
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing JDK1.4 regexp classes.
  */
 import java.util.regex.Pattern;
@@ -52,6 +62,7 @@ import java.util.regex.PatternSyntaxException;
  * possible the use of JDK1.4 compilers within this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class CompilerJDKAdapter
     implements  Compiler
 {
@@ -73,7 +84,8 @@ public class CompilerJDKAdapter
      * @throws MalformedPatternException if the regexp is not valid.
      */
     @Override
-    public org.acmsl.commons.regexpplugin.Pattern compile(final String regexp)
+    @NotNull
+    public org.acmsl.commons.regexpplugin.Pattern compile(@NotNull final String regexp)
         throws  MalformedPatternException
     {
         return compile(regexp, isCaseSensitive(), isMultiline());
@@ -88,13 +100,14 @@ public class CompilerJDKAdapter
      * @return the Pattern associated to such regular expression.
      * @throws MalformedPatternException if the regexp is not valid.
      */
+    @NotNull
     protected org.acmsl.commons.regexpplugin.Pattern compile(
-        final String regexp,
+        @NotNull final String regexp,
         final boolean caseSensitive,
         final boolean multiline)
       throws  MalformedPatternException
     {
-        org.acmsl.commons.regexpplugin.Pattern result = null;
+        @NotNull org.acmsl.commons.regexpplugin.Pattern result;
 
         try
         {
@@ -110,7 +123,7 @@ public class CompilerJDKAdapter
                 ?  Pattern.MULTILINE
                 :  0;
 
-            Pattern t_Pattern;
+            final Pattern t_Pattern;
 
             if  (t_iOptions == 0)
             {
@@ -140,6 +153,10 @@ public class CompilerJDKAdapter
             {
                 result = compile(regexp);
             }
+            else
+            {
+                throw new MalformedPatternException("pattern compilation error");
+            }
         }
 
         return result;
@@ -151,9 +168,7 @@ public class CompilerJDKAdapter
      */
     protected boolean resetOptions()
     {
-        boolean result;
-
-        result =
+        final boolean result =
             (   (isCaseSensitive())
              || (isMultiline()));
 
@@ -226,5 +241,15 @@ public class CompilerJDKAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
+    }
+
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return "CompilerJDKAdapter{" +
+               "caseSensitive=" + m__bCaseSensitive +
+               ", multiline=" + m__bMultiline +
+               '}';
     }
 }

@@ -38,6 +38,7 @@ package org.acmsl.commons.regexpplugin.jakartaoro;
  * Importing Jakarta-ORO classes.
  */
 import org.apache.oro.text.regex.MalformedPatternException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Adapts {@link org.acmsl.commons.regexpplugin.MalformedPatternException} to follow this API.
@@ -46,6 +47,8 @@ import org.apache.oro.text.regex.MalformedPatternException;
 public class MalformedPatternExceptionOROAdapter
     extends  org.acmsl.commons.regexpplugin.MalformedPatternException
 {
+
+    private static final long serialVersionUID = 4641127769311441324L;
     /**
      * Private reference to the actual exception.
      */
@@ -56,9 +59,9 @@ public class MalformedPatternExceptionOROAdapter
      * @param exception concrete exception instance to adapt.
      */
     public MalformedPatternExceptionOROAdapter(
-        final MalformedPatternException exception)
+        @NotNull final MalformedPatternException exception)
     {
-        super(((exception == null) ? "" : exception.getMessage()));
+        super(exception.getMessage());
 
         immutableSetMalformedPatternException(exception);
     }
@@ -67,8 +70,8 @@ public class MalformedPatternExceptionOROAdapter
      * Specifies the adaptee.
      * @param adaptee the exception to adapt.
      */
-    private void immutableSetMalformedPatternException(
-        final MalformedPatternException adaptee)
+    protected final void immutableSetMalformedPatternException(
+        @NotNull final MalformedPatternException adaptee)
     {
         m__Adaptee = adaptee;
     }
@@ -77,8 +80,9 @@ public class MalformedPatternExceptionOROAdapter
      * Specifies the adaptee.
      * @param adaptee the exception to adapt.
      */
+    @SuppressWarnings("unused")
     protected void setMalformedPatternException(
-        final MalformedPatternException adaptee)
+        @NotNull final MalformedPatternException adaptee)
     {
         immutableSetMalformedPatternException(adaptee);
     }
@@ -87,6 +91,8 @@ public class MalformedPatternExceptionOROAdapter
      * Retrieves the adapted exception.
      * @return such exception.
      */
+    @NotNull
+    @SuppressWarnings("unused")
     public MalformedPatternException getMalformedPatternException()
     {
         return m__Adaptee;

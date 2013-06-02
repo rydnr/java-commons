@@ -47,6 +47,9 @@ import java.lang.Throwable;
 public class ConfigurationException
     extends  NonCheckedException
 {
+
+    private static final long serialVersionUID = 8914595828268642575L;
+
     /**
      * Creates a ConfigurationException with given message.
      * @param messageKey the key to build the exception message.

@@ -52,10 +52,16 @@ import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
 /**
  * Provides some stateless helper regexp-related services.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class RegexpUtils
     implements  Utils,
                 Singleton
@@ -63,7 +69,7 @@ public class RegexpUtils
     /**
      * Compiler used.
      */
-    private volatile static Compiler m__Compiler;
+    private static Compiler m__Compiler;
 
     /**
      * Singleton implemented to avoid the double-checked locking.
@@ -96,17 +102,7 @@ public class RegexpUtils
 
         synchronized  (result)
         {
-            @Nullable Compiler t_Compiler = result.getRegexpCompiler();
-
-            if  (t_Compiler == null)
-            {
-                t_Compiler = createCompiler(RegexpManager.getInstance());
-
-                t_Compiler.setMultiline(false);
-                t_Compiler.setCaseSensitive(false);
-
-                result.immutableSetRegexpCompiler(t_Compiler);
-            }
+            initializeRegexpCompiler();
         }
         
         return result;
@@ -116,7 +112,7 @@ public class RegexpUtils
      * Specifies the regexp compiler.
      * @param compiler the compiler.
      */
-    protected final void immutableSetRegexpCompiler(@NotNull final Compiler compiler)
+    protected static final void immutableSetRegexpCompiler(@NotNull final Compiler compiler)
     {
         m__Compiler = compiler;
     }
@@ -126,7 +122,7 @@ public class RegexpUtils
      * @param compiler the compiler.
      */
     @SuppressWarnings("unused")
-    protected void setRegexpCompiler(@NotNull final Compiler compiler)
+    protected static void setRegexpCompiler(@NotNull final Compiler compiler)
     {
         immutableSetRegexpCompiler(compiler);
     }
@@ -136,9 +132,37 @@ public class RegexpUtils
      * @return such compiler.
      */
     @Nullable
-    public Compiler getRegexpCompiler()
+    protected final static Compiler immutableGetRegexpCompiler()
     {
         return m__Compiler;
+    }
+
+    /**
+     * Retrieves the regexp compiler.
+     * @return such compiler.
+     */
+    @NotNull
+    public static Compiler getRegexpCompiler()
+    {
+        initializeRegexpCompiler();
+        return immutableGetRegexpCompiler();
+    }
+
+    /**
+     * Initializes the regexp compiler.
+     */
+    public static void initializeRegexpCompiler()
+    {
+        @Nullable Compiler t_Compiler = immutableGetRegexpCompiler();
+
+        if (t_Compiler == null)
+        {
+            t_Compiler = createCompiler(RegexpManager.getInstance());
+            immutableSetRegexpCompiler(t_Compiler);
+
+            t_Compiler.setMultiline(false);
+            t_Compiler.setCaseSensitive(false);
+        }
     }
 
     /**

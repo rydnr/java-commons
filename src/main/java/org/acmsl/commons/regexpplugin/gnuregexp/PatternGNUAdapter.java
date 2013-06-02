@@ -44,11 +44,22 @@ import org.acmsl.commons.regexpplugin.Pattern;
  */
 import gnu.regexp.RE;
 
+/*
+ * Importing Checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations,
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Adapts GNU Regexp 1.1.4 RE objects to follow the generic
  * Pattern interface defined in this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class PatternGNUAdapter
     implements  Pattern
 {
@@ -61,7 +72,7 @@ public class PatternGNUAdapter
      * Constructs a PatternGNUAdapter for given object.
      * @param adaptee the instance to be adapted.
      */
-    public PatternGNUAdapter(final RE adaptee)
+    public PatternGNUAdapter(@NotNull final RE adaptee)
     {
         immutableSetRE(adaptee);
     }
@@ -70,7 +81,7 @@ public class PatternGNUAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected final void immutableSetRE(final RE adaptee)
+    protected final void immutableSetRE(@NotNull final RE adaptee)
     {
         m__Instance = adaptee;
     }
@@ -79,7 +90,8 @@ public class PatternGNUAdapter
      * Specifies the adaptee.
      * @param adaptee the instance to adapt.
      */
-    protected void setRE(RE adaptee)
+    @SuppressWarnings("unused")
+    protected void setRE(@NotNull final RE adaptee)
     {
         immutableSetRE(adaptee);
     }
@@ -88,6 +100,7 @@ public class PatternGNUAdapter
      * Retrieves the adaptee.
      * @return such adapted instance.
      */
+    @NotNull
     protected RE getRE()
     {
         return m__Instance;
@@ -98,8 +111,17 @@ public class PatternGNUAdapter
      * Note: This method has package private access rights.
      * @return such instance.
      */
+    @NotNull
     RE getDelegatedInstance()
     {
-        return m__Instance;
+        return getRE();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "PatternGNUAdapter{" +
+               " instance=" + m__Instance +
+               '}';
     }
 }

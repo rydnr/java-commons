@@ -128,7 +128,7 @@ public class HttpServletUtils
      * Specifies the name-value pair regexp.
      * @param regexp such regexp.
      */
-    protected final void immutableSetNameValuePairRegexp(@NotNull final Pattern regexp)
+    protected static final void immutableSetNameValuePairRegexp(@NotNull final Pattern regexp)
     {
         m__NameValuePairRegexp = regexp;
     }
@@ -137,7 +137,7 @@ public class HttpServletUtils
      * Specifies the name-value pair regexp.
      * @param regexp such regexp.
      */
-    protected void setNameValuePairRegexp(@NotNull final Pattern regexp)
+    protected static void setNameValuePairRegexp(@NotNull final Pattern regexp)
     {
         immutableSetNameValuePairRegexp(regexp);
     }
@@ -147,7 +147,7 @@ public class HttpServletUtils
      * @return such regexp.
      */
     @Nullable
-    protected Pattern getNameValuePairRegexp()
+    protected static Pattern getNameValuePairRegexp()
     {
         return m__NameValuePairRegexp;
     }
@@ -177,11 +177,7 @@ public class HttpServletUtils
         @NotNull final Locale locale,
         @NotNull final String localeParameter)
     {
-        return
-            addParameter(
-                url,
-                localeParameter,
-                locale.getLanguage());
+        return addParameter(url, localeParameter, locale.getLanguage());
     }
 
     /**
@@ -238,7 +234,7 @@ public class HttpServletUtils
 
         questionPosition = extraInfo.indexOf("?");
 
-        String params =
+        @NotNull final String params =
             (questionPosition == -1)
             ?  extraInfo
             :  (questionPosition == extraInfo.length() - 1)
@@ -340,8 +336,7 @@ public class HttpServletUtils
     @NotNull
     public String getServletPath(@NotNull final HttpServletRequest request)
     {
-        return
-            removeServletInfo(request.getServletPath());
+        return removeServletInfo(request.getServletPath());
     }
 
     /**
@@ -357,7 +352,7 @@ public class HttpServletUtils
 
         @NotNull final StringTokenizer tokenizer = new StringTokenizer(servletPath, "/");
 
-        int totalTokens = tokenizer.countTokens();
+        final int totalTokens = tokenizer.countTokens();
 
         int tokenIndex = 1;
 

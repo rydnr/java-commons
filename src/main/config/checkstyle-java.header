@@ -1,4 +1,3 @@
-//;-*- mode: java -*-
 /*
                         ACM-SL Commons
 
@@ -24,47 +23,8 @@
 
  ******************************************************************************
  *
- * Filename: RegexpEngine.java
+ * Filename: 
  *
- * Author: Jose San Leandro Armendariz
- *
- * Description: Represents a regexp engine.
+ * Author: 
  *
  */
-package org.acmsl.commons.regexpplugin;
-
-/*
- * Importing JetBrains annotations.
- */
-import org.jetbrains.annotations.NotNull;
-
-/**
- * Represents a regexp engine.
- * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
- */
-public interface RegexpEngine
-{
-    /**
-     * Creates a compiler instance.
-     * @return such instance.
-     */
-    @NotNull
-    public Compiler createCompiler()
-        throws RegexpEngineNotFoundException;
-
-    /**
-     * Creates a matcher instance.
-     * @return such instance.
-     */
-    @NotNull
-    public Matcher createMatcher()
-        throws RegexpEngineNotFoundException;
-
-    /**
-     * Creates a helper instance.
-     * @return such instance.
-     */
-    @NotNull
-    public Helper createHelper()
-        throws RegexpEngineNotFoundException;
-}

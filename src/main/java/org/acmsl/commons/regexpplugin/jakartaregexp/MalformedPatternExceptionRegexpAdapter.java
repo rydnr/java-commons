@@ -44,6 +44,11 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
  */
 import org.apache.regexp.RESyntaxException;
 
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Adapts jakarta ORO malformed pattern exceptions to follow this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
@@ -51,6 +56,8 @@ import org.apache.regexp.RESyntaxException;
 public class MalformedPatternExceptionRegexpAdapter
     extends  MalformedPatternException
 {
+
+    private static final long serialVersionUID = 932988612842352909L;
     /**
      * Private reference to the actual exception.
      */
@@ -61,9 +68,9 @@ public class MalformedPatternExceptionRegexpAdapter
      * @param exception concrete exception instance to adapt.
      */
     public MalformedPatternExceptionRegexpAdapter(
-        final RESyntaxException exception)
+        @NotNull final RESyntaxException exception)
     {
-        super(((exception == null) ? "" : exception.getMessage()));
+        super(exception.getMessage());
 
         immutableSetRESyntaxException(exception);
     }
@@ -73,7 +80,7 @@ public class MalformedPatternExceptionRegexpAdapter
      * @param exception the exception to adapt.
      */
     protected final void immutableSetRESyntaxException(
-        final RESyntaxException exception)
+        @NotNull final RESyntaxException exception)
     {
         m__Adaptee = exception;
     }
@@ -82,7 +89,8 @@ public class MalformedPatternExceptionRegexpAdapter
      * Specifies the adaptee.
      * @param exception the exception to adapt.
      */
-    protected void setRESyntaxException(final RESyntaxException exception)
+    @SuppressWarnings("unused")
+    protected void setRESyntaxException(@NotNull final RESyntaxException exception)
     {
         immutableSetRESyntaxException(exception);
     }
@@ -91,6 +99,8 @@ public class MalformedPatternExceptionRegexpAdapter
      * Retrieves the adapted exception.
      * @return such exception.
      */
+    @SuppressWarnings("unused")
+    @NotNull
     protected RESyntaxException getRESyntaxException()
     {
         return m__Adaptee;

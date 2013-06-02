@@ -48,6 +48,7 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import gnu.regexp.RE;
 import gnu.regexp.REMatchEnumeration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * GNU Regexp 1.1.4 matcher adapter. This class makes possible
@@ -83,21 +84,17 @@ public class MatcherGNUAdapter
     {
         boolean result = false;
 
-        if  (   (pattern != null)
-             && (pattern instanceof PatternGNUAdapter))
+        if  (pattern instanceof PatternGNUAdapter)
         {
-            RE t_RE = ((PatternGNUAdapter) pattern).getDelegatedInstance();
+            @NotNull final RE t_RE = ((PatternGNUAdapter) pattern).getDelegatedInstance();
 
-            if  (t_RE != null)
-            {
-                setREMatchEnumeration(t_RE.getMatchEnumeration(text));
+            setREMatchEnumeration(t_RE.getMatchEnumeration(text));
 
-                setGroups(t_RE.getNumSubs());
+            setGroups(t_RE.getNumSubs());
 
-                result =
-                    (   (getREMatchEnumeration() != null)
-                     && (getREMatchEnumeration().hasMoreMatches()));
-            }
+            result =
+                (   (getREMatchEnumeration() != null)
+                 && (getREMatchEnumeration().hasMoreMatches()));
         }
 
         return result;
@@ -105,9 +102,9 @@ public class MatcherGNUAdapter
 
     /**
      * Sets the match enumeration.
-     * @param matchEnumeration such instance.
+     * @param reMatchEnumeration such instance.
      */
-    protected void setREMatchEnumeration(final REMatchEnumeration reMatchEnumeration)
+    protected void setREMatchEnumeration(@NotNull final REMatchEnumeration reMatchEnumeration)
     {
         m__REMatchEnumeration = reMatchEnumeration;
     }
@@ -116,6 +113,7 @@ public class MatcherGNUAdapter
      * Retrieves the match enumeration.
      * @return such instance.
      */
+    @NotNull
     protected REMatchEnumeration getREMatchEnumeration()
     {
         return m__REMatchEnumeration;
@@ -145,18 +143,22 @@ public class MatcherGNUAdapter
      * @return such match result.
      */
     @Override
+    @Nullable
     public MatchResult getMatch()
     {
-        MatchResult result = null;
+        return
+            new MatchResultGNUAdapter(
+                getREMatchEnumeration().nextMatch(),
+                getGroups());
+    }
 
-        if  (getREMatchEnumeration() != null)
-        {
-            result =
-                new MatchResultGNUAdapter(
-                    getREMatchEnumeration().nextMatch(),
-                    getGroups());
-        }
-
-        return result;
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return "MatcherGNUAdapter{" +
+               " groups=" + m__iGroups +
+               ", REMatchEnumeration=" + m__REMatchEnumeration +
+               " }";
     }
 }
