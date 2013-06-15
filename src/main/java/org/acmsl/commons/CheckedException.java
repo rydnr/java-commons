@@ -286,9 +286,7 @@ public abstract class CheckedException
     @NotNull
     public String toString()
     {
-        return "CheckedException{" +
-               " bundleI14able=" + m__BundleI14able +
-               " }";
+        return m__BundleI14able.toString();
     }
 
     /**

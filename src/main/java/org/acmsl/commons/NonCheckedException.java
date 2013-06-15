@@ -292,7 +292,7 @@ public abstract class NonCheckedException
     @Override
     public String toString()
     {
-        return getMessage();
+        return m__BundleI14able.toString();
     }
 
     /**
