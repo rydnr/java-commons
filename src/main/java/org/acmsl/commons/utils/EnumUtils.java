@@ -33,7 +33,7 @@
  * Time: 09:55
  *
  */
-package org.acmsl.queryj.commons.utils;
+package org.acmsl.commons.utils;
 
 /*
  * Importing JetBrains annotations.
