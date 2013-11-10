@@ -39,7 +39,6 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
  * Importing some ACM-SL classes.
  */
 import org.acmsl.commons.regexpplugin.MatchResult;
-import org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter;
 
 /*
  * Importing JDK1.4 regexp classes.
@@ -48,9 +47,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * Importing Commons-Logging classes.
+ * Importing JetBrains annotations.
  */
-import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -76,38 +74,22 @@ public class MatcherJDKAdapter
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
      * @return <code>true</code> if the pattern is found.
-     * @precondition text != null
-     * @precondition pattern != null
-     * @precondition pattern instanceof PatternJDKAdapter
      */
     @Override
     public boolean contains(
         @NotNull final String text,
         @NotNull final org.acmsl.commons.regexpplugin.Pattern pattern)
     {
-        boolean result = false;
+        final boolean result;
 
-        Pattern t_Pattern =
+        final Pattern t_Pattern =
             ((PatternJDKAdapter) pattern).getPattern();
 
-        Matcher t_Matcher = null;
+        final @NotNull Matcher t_Matcher = t_Pattern.matcher(text);
 
-        if  (t_Pattern != null)
-        {
-            t_Matcher = t_Pattern.matcher(text);
-        }
-        else 
-        {
-            LogFactory.getLog(MatcherJDKAdapter.class).error(
-                "pattern not accessible");
-        }
+        result = t_Matcher.find();
 
-        if  (t_Matcher != null)
-        {
-            result = t_Matcher.find();
-
-            setMatcher(t_Matcher);
-        }
+        setMatcher(t_Matcher);
 
         return result;
     }
@@ -155,10 +137,18 @@ public class MatcherJDKAdapter
      * <i>contains</i> method.
      * @param matcher the matcher.
      * @return such match result.
-     * @precondition matcher != null
      */
     protected MatchResult getMatch(final Matcher matcher)
     {
         return new MatchResultJDKAdapter(matcher);
+    }
+
+    @NotNull
+    @Override
+    public String toString()
+    {
+        return
+              "{ \"class\": \"" + MatcherJDKAdapter.class.getName() + "\""
+            + ", \"matcher\": \"" + this.m__Matcher + "\" }";
     }
 }

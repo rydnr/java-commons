@@ -35,6 +35,16 @@
 package org.acmsl.commons.regexpplugin.jdk14regexp;
 
 /*
+ * Importing some checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing some Jetbrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing some JDK1.4 classes.
  */
 import java.util.regex.Pattern;
@@ -44,6 +54,7 @@ import java.util.regex.Pattern;
  * {@link Pattern} interface defined in this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class PatternJDKAdapter
     implements  org.acmsl.commons.regexpplugin.Pattern
 {
@@ -56,7 +67,7 @@ public class PatternJDKAdapter
      * Constructs a PatternJDKAdapter for given object.
      * @param adaptee the instance to be adapted.
      */
-    public PatternJDKAdapter(final Pattern adaptee)
+    public PatternJDKAdapter(@NotNull final Pattern adaptee)
     {
         immutableSetPattern(adaptee);
     }
@@ -66,7 +77,7 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @param adaptee the adaptee.
      */
-    protected final void immutableSetPattern(final Pattern adaptee)
+    protected final void immutableSetPattern(@NotNull final Pattern adaptee)
     {
         m__Instance = adaptee;
     }
@@ -76,7 +87,8 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @param adaptee the adaptee.
      */
-    void setPattern(final Pattern adaptee)
+    @SuppressWarnings("unused")
+    void setPattern(@NotNull final Pattern adaptee)
     {
         immutableSetPattern(adaptee);
     }
@@ -86,8 +98,16 @@ public class PatternJDKAdapter
      * Note: This method has package private access rights.
      * @return such instance.
      */
+    @NotNull
     Pattern getPattern()
     {
         return m__Instance;
+    }
+
+    @NotNull
+    @Override
+    public String toString()
+    {
+        return "{ 'class': 'PatternJDKAdapter', 'instance': '" + m__Instance + "' }";
     }
 }

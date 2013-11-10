@@ -71,7 +71,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * Specifies a new chain.
      * @param list the new list.
      */
-    private void immutableSetCore(final List<C> list)
+    private void immutableSetCore(@NotNull final List<C> list)
     {
         m__lCore = list;
     }
@@ -81,7 +81,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * @param list the new list.
      */
     @SuppressWarnings("unused")
-    protected void setCore(final List<C> list)
+    protected void setCore(@NotNull final List<C> list)
     {
         immutableSetCore(list);
     }
@@ -93,6 +93,16 @@ public class ArrayListChainAdapter<C extends CommandHandler>
     protected List<C> getCore()
     {
         return m__lCore;
+    }
+
+    /**
+     * Retrieves the core of this chain.
+     * @return such collection.
+     */
+    @NotNull
+    public List<C> getHandlers()
+    {
+        return new ArrayList<C>(getCore());
     }
 
     /**
@@ -235,5 +245,14 @@ public class ArrayListChainAdapter<C extends CommandHandler>
         }
 
         return result;
+    }
+
+    @NotNull
+    @Override
+    public String toString()
+    {
+        return
+            "{ \"class\": \"" + ArrayListChainAdapter.class.getName() + "\""
+            + ", \"core\": \"" + this.m__lCore + "\" }";
     }
 }

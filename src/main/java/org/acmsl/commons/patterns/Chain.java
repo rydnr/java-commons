@@ -40,6 +40,8 @@ package org.acmsl.commons.patterns;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * Represents chain objects, as they are modelled by GoF's Chain Of
  * Responsibility design pattern.
@@ -81,6 +83,13 @@ public interface Chain<CH extends CommandHandler>
      */
     @Nullable
     public CH get(final int commandHandlerIndex);
+
+    /**
+     * Retrieves the list of handlers.
+     * @return such list.
+     */
+    @NotNull
+    public List<CH> getHandlers();
 
     /**
      * Checks this chain is empty.
