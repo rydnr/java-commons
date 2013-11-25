@@ -50,7 +50,9 @@ package org.acmsl.commons.regexpplugin.jdk14regexp;
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.regex.Pattern;
 // JUnitDoclet end import
 
 /*
@@ -101,7 +103,7 @@ extends TestCase
   * Creates a PatternJDKAdapterTest with given name.
   * @param name such name.
   */
-  public PatternJDKAdapterTest(String name)
+  public PatternJDKAdapterTest(@NotNull final String name)
   {
     // JUnitDoclet begin method PatternJDKAdapterTest
     super(name);
@@ -117,7 +119,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter(null);
+    return new org.acmsl.commons.regexpplugin.jdk14regexp.PatternJDKAdapter(Pattern.compile(""));
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -163,7 +165,7 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(@NotNull final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(PatternJDKAdapterTest.class);

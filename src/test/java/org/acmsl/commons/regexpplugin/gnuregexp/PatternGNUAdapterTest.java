@@ -50,6 +50,7 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
 * Importing project classes.
 */
 // JUnitDoclet begin import
+import gnu.regexp.RE;
 import org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter;
 // JUnitDoclet end import
 
@@ -57,6 +58,7 @@ import org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter;
 * Importing JUnit classes.
 */
 import junit.framework.TestCase;
+import org.jetbrains.annotations.NotNull;
 
 /*
 This file is part of  JUnitDoclet, a project to generate basic
@@ -101,7 +103,7 @@ extends TestCase
   * Creates a PatternGNUAdapterTest with given name.
   * @param name such name.
   */
-  public PatternGNUAdapterTest(String name)
+  public PatternGNUAdapterTest(@NotNull final String name)
   {
     // JUnitDoclet begin method PatternGNUAdapterTest
     super(name);
@@ -117,7 +119,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter(null);
+    return new org.acmsl.commons.regexpplugin.gnuregexp.PatternGNUAdapter(new RE(""));
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -125,6 +127,7 @@ extends TestCase
   * Performs any required steps before each test.
   * @throws Exception if an unexpected situation occurs.
   */
+  @Override
   protected void setUp()
   throws Exception
   {
@@ -138,6 +141,7 @@ extends TestCase
   * Performs any required steps after each test.
   * @throws Exception if an unexpected situation occurs.
   */
+  @Override
   protected void tearDown()
   throws Exception
   {
@@ -163,7 +167,7 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(@NotNull final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(PatternGNUAdapterTest.class);
