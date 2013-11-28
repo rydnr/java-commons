@@ -80,6 +80,10 @@
       <artifactId>ST4</artifactId>
       <version>4.0.7</version>
     </dependency>
+    <!--dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+    </dependency-->
     <dependency>
       <groupId>org.junit</groupId>
       <artifactId>junit</artifactId>

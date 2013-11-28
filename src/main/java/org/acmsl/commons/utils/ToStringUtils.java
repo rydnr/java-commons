@@ -65,8 +65,12 @@ import org.stringtemplate.v4.STGroupFile;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -166,13 +170,14 @@ public class ToStringUtils
      * @param arg the element value.
      * @return the decorated instance.
      */
-    protected Object decorateElement(@NotNull final String name, @NotNull final Object arg)
+    @SuppressWarnings("unchecked")
+    protected Decorator<?> decorateElement(@NotNull final String name, @NotNull final Object arg)
     {
-        @NotNull final Object result;
+        @NotNull final Decorator<?> result;
 
         if (arg instanceof String)
         {
-            result = new Decorator<String>(name, (String) arg);
+            result = new StringDecorator(name, (String) arg);
         }
         else if (arg instanceof Boolean)
         {
@@ -197,6 +202,21 @@ public class ToStringUtils
         else if (arg instanceof Date)
         {
             result = new DateDecorator(name, (Date) arg);
+        }
+        else if (arg instanceof Collection<?>)
+        {
+            @NotNull final List<Decorator<?>> aux =
+                new ArrayList<Decorator<?>>(((Collection<Object>) arg).size());
+
+            for (@NotNull final Object item: (Collection<Object>) arg)
+            {
+                aux.add(decorateElement("", item));
+            }
+            result = new CollectionDecorator(name, aux);
+        }
+        else if (arg instanceof Object[])
+        {
+            result = new CollectionDecorator(name, Arrays.asList(arg));
         }
         else
         {
@@ -380,6 +400,48 @@ public class ToStringUtils
     }
 
     /**
+     * A String decorator.
+     */
+    private static class StringDecorator
+        extends Decorator<String>
+    {
+        /**
+         * Creates a string decorator.
+         * @param name the name.
+         * @param arg the string value.
+         */
+        public StringDecorator(@NotNull final String name, @NotNull final String arg)
+        {
+            super(name, arg);
+        }
+
+        /**
+         * Generates a JSON text representing the instance.
+         * @return such text.
+         */
+        @NotNull
+        public String toString()
+        {
+            @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
+
+            @NotNull final ST template = stGroup.getInstanceOf("toStringImpl");
+
+            template.add("obj", this);
+            template.add("fClass", "");
+            template.add("attrs", new HashMap<String, Object>(0));
+
+            @NotNull final String result = template.render();
+
+            return result;
+        }
+
+        public boolean representedAsString()
+        {
+            return true;
+        }
+    }
+
+    /**
      * A date decorator.
      */
     private static class DateDecorator
@@ -424,6 +486,87 @@ public class ToStringUtils
         public String getValue()
         {
             return new SimpleDateFormat("YYYY-MM-ddHH:mm:ss.SSSZ").format(getArg());
+        }
+    }
+
+    /**
+     * A date decorator.
+     */
+    static class CollectionDecorator<T extends Collection<Object>>
+        extends Decorator<T>
+    {
+        /**
+         * Creates a date decorator.
+         * @param name the name.
+         * @param arg the date value.
+         */
+        public CollectionDecorator(@NotNull final String name, @NotNull final T arg)
+        {
+            super(name, arg);
+        }
+
+        /**
+         * Checks whether the wrapped instance is compound.
+         * @return {@code true} in such case.
+         */
+        @Override
+        @SuppressWarnings("unused")
+        public boolean isCompound()
+        {
+            return true;
+        }
+
+        /**
+         * Checks whether the wrapped instance is a collection.
+         * @return {@code true} in such case.
+         */
+        public boolean isCollection()
+        {
+            return true;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isRepresentedAsString()
+        {
+            return false;
+        }
+
+        /**
+         * Generates a JSON text representing the instance.
+         * @return such text.
+         */
+        @Override
+        public String toString()
+        {
+            @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
+
+            @NotNull final ST template = stGroup.getInstanceOf("toJson");
+
+            @NotNull final String name = getName();
+
+            if (!name.isEmpty())
+            {
+                template.add("name", name);
+            }
+
+            @NotNull final T value = getArg();
+
+            @NotNull final List<Decorator<?>> aux =
+                new ArrayList<Decorator<?>>((value).size());
+
+            for (@NotNull final Object item: value)
+            {
+                aux.add(ToStringUtils.getInstance().decorateElement("", item));
+            }
+
+            template.add("attr", aux.toString());
+
+            @NotNull final String result = template.render();
+
+            return result;
         }
     }
 }

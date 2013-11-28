@@ -49,7 +49,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -167,7 +169,7 @@ public class ToStringUtilsTest
 
         @NotNull final String actual = normalize(d.toString());
 
-//        assertEquals("Invalid JSON", expected, actual);
+        assertEquals("Invalid JSON", expected, actual);
 
         @NotNull final Dummy otherDummy = new Dummy();
         otherDummy.fancyName = "d1_1";
@@ -204,10 +206,88 @@ public class ToStringUtilsTest
 
         @NotNull final String actual2 = normalize(d.toString());
 
-        @NotNull final String aux = otherDummy.toString();
-
         assertEquals("Invalid JSON (2)", expected2, actual2);
 
+        @NotNull final List<Dummy> otherDummies = new ArrayList<Dummy>();
+        @NotNull final StringBuilder otherDummiesToString = new StringBuilder();
+        for (int i = 0; i < 3; i++)
+        {
+            @NotNull final Dummy dummy1 = new Dummy();
+            dummy1.fancyName = "d1_1_" + i;
+            dummy1.fancyAge = 156L + i;
+            dummy1.fancyValue = 40D + i;
+            dummy1.fancyAmount = new BigDecimal(i);
+            calendar.set(Calendar.YEAR, 2001 + i);
+            calendar.set(Calendar.MONTH, Calendar.FEBRUARY + i);
+            calendar.set(Calendar.DAY_OF_MONTH, 2 + i);
+            calendar.set(Calendar.HOUR_OF_DAY, 12 + i);
+            calendar.set(Calendar.MINUTE, 3 + i);
+            calendar.set(Calendar.SECOND, 4 + i);
+            calendar.set(Calendar.MINUTE, 5 + i);
+            dummy1.fancyDate = calendar.getTime();
+            otherDummies.add(dummy1);
+            if (i > 0)
+            {
+                otherDummiesToString.append(',');
+            }
+            otherDummiesToString.append(dummy1.toString());
+        }
+
+        d.children = otherDummies;
+
+        @NotNull final List otherStuff = new ArrayList<Object>(5);
+        @NotNull final StringBuilder otherStuffToString = new StringBuilder("\"otherStuff\": [");
+        for (int i = 0; i < 5; i++)
+        {
+            @NotNull final String stuff = "stuff_" + i;
+            otherStuff.add(stuff);
+            if (i > 0)
+            {
+                otherStuffToString.append(',');
+            }
+            otherStuffToString.append('"');
+            otherStuffToString.append(stuff);
+            otherStuffToString.append('"');
+        }
+        otherStuffToString.append(']');
+
+        d.otherStuff = (List<String>) otherStuff;
+
+        @NotNull final String aux2 =
+            new ToStringUtils.CollectionDecorator<Collection<Object>>(
+                "otherStuff", (Collection<Object>) otherStuff)
+                .toString();
+
+        assertEquals(
+            "otherStuff failed",
+            normalize(otherStuffToString.toString()),
+            normalize(aux2));
+
+        @NotNull final String expected3 =
+            normalize(
+                  "{ \"class\": \"" + Dummy.class.getName() + '"'
+                + ", \"fancyAge\": 15"
+                + ", \"children\": [" + otherDummiesToString + "]"
+                + ", \"otherStuff\": [" + otherStuffToString + "]"
+                + ", \"fancyAmount\": 13131"
+                + ", \"fancyChild\":"
+                +   " { \"class\": \"" + Dummy.class.getName() + '"'
+                +    ", \"fancyAmount\": " + otherDummy.fancyAmount
+                +    ", \"fancyDate\": \"" + new SimpleDateFormat("YYYY-MM-ddHH:mm:ss.SSSZ").format(otherDummy.fancyDate) + '"'
+                +    ", \"fancyValue\": " + otherDummy.fancyValue
+                +    ", \"fancyName\": \"" + otherDummy.fancyName + '"'
+                +    ", \"fancyAge\": " + otherDummy.fancyAge
+                +    " } "
+                + ", \"fancyDate\": \"" + new SimpleDateFormat("YYYY-MM-ddHH:mm:ss.SSSZ").format(d.fancyDate) + '"'
+                + ", \"fancyValue\": " + d.fancyValue
+                + ", \"fancyName\": \"" + d.fancyName + '"'
+                + "}");
+
+        @NotNull final String actual3 = normalize(d.toString());
+
+        @NotNull final String aux = d.toString();
+
+        assertEquals("Invalid JSON (3)", expected3, actual3);
     }
 
     @NotNull

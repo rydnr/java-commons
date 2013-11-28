@@ -65,7 +65,10 @@ toStringImpl(obj, fClass, attrs) ::= <<
 <        if(obj.representedAsString)>"<obj.value>"
 <        else><obj.value>
 <        endif>
-<      else><obj>
+<      else>
+<        if(obj.values)><obj.values:{ a | a<toStringImpl(obj=a, fClass=a, attrs=a)> }; separator=", ">
+<        else><obj>
+<        endif>
 <      endif>
 <    endif>
 <  endif>
@@ -77,6 +80,7 @@ toJson(name, attr) ::= <<
  Generates a JSON representation of given attribute.
  @param attr the attribute.
 !>
-"<name>": <if(attr.array)>[ <attr:{ a | <toStringImpl(obj=a.value, name=a.key, fClass=a.value.class, attrs=a.value.attrs)> }; separator=", "> ]
+<if(name)>"<name>": <endif>
+<if(attr.collection)>[ <attr.value:{ a | <toStringImpl(obj=a, fClass=a, attrs=a)> }; separator=", "> ]
 <else><toStringImpl(obj=attr, fClass=attr.class, attrs="")><endif>
 >>
