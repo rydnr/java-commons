@@ -100,7 +100,7 @@ public class RegexpUtils
     {
         @NotNull final RegexpUtils result = RegexpUtilsSingletonContainer.SINGLETON;
 
-        synchronized  (result)
+        synchronized  (RegexpUtils.class)
         {
             initializeRegexpCompiler();
         }

@@ -147,7 +147,7 @@ public class StringUtils
     {
         @NotNull final StringUtils result = StringUtilsSingletonContainer.SINGLETON;
 
-        synchronized  (result)
+        synchronized  (StringUtils.class)
         {
             initialize();
         }

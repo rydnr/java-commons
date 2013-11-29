@@ -128,11 +128,27 @@ public class IOUtils
             @NotNull final InputStreamReader t_isrReader =
                 new InputStreamReader(inputStream, charset);
 
-            @NotNull final char[] t_acContents = new char[contentLength];
+            @NotNull char[] t_acContents = new char[contentLength];
+
+            int bytesRead = 0;
+            int totalBytesRead = 0;
 
             if  (t_isrReader.ready())
             {
-                t_isrReader.read(t_acContents);
+                while (totalBytesRead < contentLength)
+                {
+                    bytesRead = t_isrReader.read(t_acContents);
+
+                    totalBytesRead += bytesRead;
+
+                    if (bytesRead < contentLength)
+                    {
+                        @NotNull final char[] aux = new char[bytesRead];
+                        System.arraycopy(t_acContents, 0, aux, 0, bytesRead);
+                        t_sbResult.append(aux);
+                        t_acContents = new char[contentLength - bytesRead];
+                    }
+                }
             }
 
             t_sbResult.append(t_acContents);

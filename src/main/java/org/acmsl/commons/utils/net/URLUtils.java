@@ -104,9 +104,9 @@ public class URLUtils
     {
         @NotNull final URLUtils result =  URLUtilsSingletonContainer.SINGLETON;
 
-        synchronized (result)
+        synchronized (URLUtils.class)
         {
-            @Nullable final Compiler t_Compiler = retrieveCompiler();
+            @NotNull final Compiler t_Compiler = retrieveCompiler();
 
             result.initialize(t_Compiler);
         }

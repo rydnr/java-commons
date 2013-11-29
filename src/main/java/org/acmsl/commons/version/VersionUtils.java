@@ -122,7 +122,7 @@ public class VersionUtils
         @NotNull final VersionUtils result =
             VersionUtilsSingletonContainer.SINGLETON;
 
-        synchronized (result)
+        synchronized (VersionUtils.class)
         {
             initialize();
         }
