@@ -40,6 +40,16 @@ import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
+/*
  * Importing JDK1.4 classes.
  */
 import java.util.regex.PatternSyntaxException;
@@ -48,6 +58,7 @@ import java.util.regex.PatternSyntaxException;
  * JDK 1.4-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class HelperJDKAdapter
     implements  Helper
 {
@@ -59,16 +70,14 @@ public class HelperJDKAdapter
      * @param replacement the replacement text.
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
-     * @precondition input != null
-     * @precondition pattern != null
-     * @precondition replacement != null
      */
     @Override
+    @NotNull
     public String replaceAll(
-        final String input, final String pattern, final String replacement)
+        @NotNull final String input, @NotNull final String pattern, @NotNull final String replacement)
       throws  MalformedPatternException
     {
-        String result;
+        @NotNull final String result;
 
         try 
         {

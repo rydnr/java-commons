@@ -36,6 +36,7 @@ package org.acmsl.commons.utils;
 /*
  * Importing project classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
@@ -71,8 +72,8 @@ public class ClassLoaderUtils
     /**
      * A cached empty class array.
      */
-    public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
-    
+    public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[0];
+
     /**
      * A cached empty object array.
      */
@@ -111,7 +112,7 @@ public class ClassLoaderUtils
      * @return the location.
      */
     @Nullable
-    public String findLocation(@NotNull final Class classInstance)
+    public <T> String findLocation(@NotNull final Class<T> classInstance)
     {
         return findLocation(classInstance, false);
     }
@@ -124,12 +125,12 @@ public class ClassLoaderUtils
      * @return the location.
      */
     @Nullable
-    public String findLocation(
-        @NotNull final Class classInstance, final boolean fullSearch)
+    public <T> String findLocation(
+        @NotNull final Class<T> classInstance, final boolean fullSearch)
     {
         return
             findLocation(
-                classInstance.getName() + ".class",
+                classInstance.getName() + Literals.CLASS,
                 classInstance.getClassLoader(),
                 fullSearch);
     }
@@ -175,11 +176,11 @@ public class ClassLoaderUtils
         {
             String resourceName = resource;
 
-            if  (resourceName.endsWith(".class"))
+            if  (resourceName.endsWith(Literals.CLASS))
             {
                 resourceName =
                     resource.substring(
-                        0, resource.lastIndexOf(".class"));
+                        0, resource.lastIndexOf(Literals.CLASS));
             }
 
             URL url = loader.getResource(resourceName);
@@ -222,7 +223,7 @@ public class ClassLoaderUtils
     {
         @NotNull final StringBuilder result = new StringBuilder();
 
-        String actualClassPath = trimBrackets(classPath);
+        @NotNull final String actualClassPath = trimBrackets(classPath);
 
         @NotNull final StringTokenizer t_Tokenizer =
             new StringTokenizer(actualClassPath, ":;,[]", false);
@@ -231,7 +232,7 @@ public class ClassLoaderUtils
 
         boolean nonFirstItem = false;
 
-        String resourceName = resource;
+        @NotNull final String resourceName = resource;
 
         while  (t_Tokenizer.hasMoreTokens())
         {
@@ -271,7 +272,7 @@ public class ClassLoaderUtils
     @NotNull
     public String printClassPath(@NotNull final ClassLoader classLoader)
     {
-        StringBuilder result = new StringBuilder();
+        @NotNull final StringBuilder result = new StringBuilder();
 
         result.append(printAntClassPath(classLoader));
 
@@ -279,7 +280,7 @@ public class ClassLoaderUtils
 
         result.append(printSunClassPath(classLoader));
 
-        ClassLoader parent = classLoader.getParent();
+        @Nullable final ClassLoader parent = classLoader.getParent();
 
         if  (parent != null)
         {
@@ -303,7 +304,7 @@ public class ClassLoaderUtils
 
         try
         {
-            @Nullable Class classInstance = classLoader.getClass();
+            @Nullable Class<?> classInstance = classLoader.getClass();
 
             while  (classInstance != null)
             {
@@ -313,7 +314,7 @@ public class ClassLoaderUtils
                 {
                     method =
                         classInstance.getMethod(
-                            "getClasspath", EMPTY_CLASS_ARRAY);
+                            Literals.GET_CLASSPATH, EMPTY_CLASS_ARRAY);
 
                 }
                 catch  (final NoSuchMethodException firstNoSuchMethodException)
@@ -322,7 +323,7 @@ public class ClassLoaderUtils
                     {
                         method =
                             classInstance.getDeclaredMethod(
-                                "getClasspath", EMPTY_CLASS_ARRAY);
+                                Literals.GET_CLASSPATH, EMPTY_CLASS_ARRAY);
                     }
                     catch  (final NoSuchMethodException otherException)
                     {
@@ -384,7 +385,7 @@ public class ClassLoaderUtils
 
         try
         {
-            @Nullable Class classInstance = instance.getClass();
+            @Nullable Class<?> classInstance = instance.getClass();
 
             while  (classInstance != null)
             {
@@ -393,7 +394,7 @@ public class ClassLoaderUtils
                 try
                 {
                     method =
-                        classInstance.getMethod("getURLs", EMPTY_CLASS_ARRAY);
+                        classInstance.getMethod(Literals.GET_UR_LS, EMPTY_CLASS_ARRAY);
 
                 }
                 catch  (final NoSuchMethodException firstNoSuchMethodException)
@@ -402,7 +403,7 @@ public class ClassLoaderUtils
                     {
                         method =
                             classInstance.getDeclaredMethod(
-                                "getURLs", EMPTY_CLASS_ARRAY);
+                                Literals.GET_UR_LS, EMPTY_CLASS_ARRAY);
                     }
                     catch  (final NoSuchMethodException otherException)
                     {
@@ -491,7 +492,7 @@ public class ClassLoaderUtils
 
         try
         {
-            @Nullable Class classInstance = classLoader.getClass();
+            @Nullable Class<?> classInstance = classLoader.getClass();
 
             while  (classInstance != null)
             {
@@ -501,7 +502,7 @@ public class ClassLoaderUtils
                 {
                     method =
                         classInstance.getMethod(
-                            "getBootstrapClassPath", EMPTY_CLASS_ARRAY);
+                            Literals.GET_BOOTSTRAP_CLASS_PATH, EMPTY_CLASS_ARRAY);
                 }
                 catch  (final NoSuchMethodException firstNoSuchMethodException)
                 {
@@ -509,7 +510,7 @@ public class ClassLoaderUtils
                     {
                         method =
                             classInstance.getDeclaredMethod(
-                                "getBootstrapClassPath", EMPTY_CLASS_ARRAY);
+                                Literals.GET_BOOTSTRAP_CLASS_PATH, EMPTY_CLASS_ARRAY);
                     }
                     catch  (final NoSuchMethodException otherNoSuchMethodException)
                     {
@@ -580,7 +581,7 @@ public class ClassLoaderUtils
     {
         @NotNull final String result;
 
-        int dotIndex = resource.lastIndexOf(".");
+        final int dotIndex = resource.lastIndexOf(".");
 
         if  (dotIndex >= 0)
         {
@@ -653,12 +654,12 @@ public class ClassLoaderUtils
             {
                 try
                 {
-                    InputStream inputStream = new FileInputStream(file);
+                    @NotNull final InputStream inputStream = new FileInputStream(file);
 
-                    ZipInputStream zipInputStream =
+                    @NotNull final ZipInputStream zipInputStream =
                         new ZipInputStream(inputStream);
 
-                    String entryName =
+                    @NotNull final String entryName =
                         replace(resource, "\\.", "/") + suffix;
 
                     ZipEntry entry;

@@ -50,6 +50,7 @@ package org.acmsl.commons.utils;
 * Importing project classes.
 */
 // JUnitDoclet begin import
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.utils.ConversionUtils;
 // JUnitDoclet end import
 
@@ -182,7 +183,7 @@ extends TestCase
             Boolean.TRUE.toString().equals(
                 t_ConversionUtils.toString(Boolean.TRUE.toString())));
         assertTrue("a".equals(t_ConversionUtils.toString("a")));
-        assertTrue("something else".equals(t_ConversionUtils.toString("something else")));
+        assertTrue(Literals.SOMETHING_ELSE.equals(t_ConversionUtils.toString(Literals.SOMETHING_ELSE)));
     // JUnitDoclet end method toString
   }
   
@@ -207,16 +208,16 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method toBoolean
-        ConversionUtils t_ConversionUtils =
+        final ConversionUtils t_ConversionUtils =
             ConversionUtils.getInstance();
 
         assertNotNull(t_ConversionUtils);
 
         assertTrue(t_ConversionUtils.toBoolean("true"));
         assertTrue(t_ConversionUtils.toBoolean(Boolean.TRUE.toString()));
-        assertTrue(!t_ConversionUtils.toBoolean("false"));
+        assertTrue(!t_ConversionUtils.toBoolean(Literals.FALSE_L));
         assertTrue(!t_ConversionUtils.toBoolean(Boolean.FALSE.toString()));
-        assertTrue(!t_ConversionUtils.toBoolean("something else"));
+        assertTrue(!t_ConversionUtils.toBoolean(Literals.SOMETHING_ELSE));
     // JUnitDoclet end method toBoolean
   }
   
@@ -249,7 +250,7 @@ extends TestCase
         assertTrue(t_ConversionUtils.toInt("2") == 2);
         assertTrue(t_ConversionUtils.toInt("-2") == -2);
         assertTrue(t_ConversionUtils.toInt("1232323") == 1232323);
-        assertTrue(t_ConversionUtils.toInt("something else") == 0);
+        assertTrue(t_ConversionUtils.toInt(Literals.SOMETHING_ELSE) == 0);
     // JUnitDoclet end method toInt
   }
   
@@ -282,7 +283,7 @@ extends TestCase
         assertTrue(t_ConversionUtils.toLong("2") == 2);
         assertTrue(t_ConversionUtils.toLong("-2") == -2);
         assertTrue(t_ConversionUtils.toLong("1232323") == 1232323);
-        assertTrue(t_ConversionUtils.toLong("something else") == 0);
+        assertTrue(t_ConversionUtils.toLong(Literals.SOMETHING_ELSE) == 0);
     // JUnitDoclet end method toLong
   }
   
@@ -315,7 +316,7 @@ extends TestCase
         assertTrue(t_ConversionUtils.toFloat("2.0") == 2.0);
         assertTrue(t_ConversionUtils.toFloat("-2.0") == -2.0);
         assertTrue(t_ConversionUtils.toFloat("1232323.0") == 1232323.0);
-        assertTrue(t_ConversionUtils.toFloat("something else") == 0.0);
+        assertTrue(t_ConversionUtils.toFloat(Literals.SOMETHING_ELSE) == 0.0);
     // JUnitDoclet end method toFloat
   }
   
@@ -348,7 +349,7 @@ extends TestCase
         assertTrue(t_ConversionUtils.toDouble("2.0") == 2.0);
         assertTrue(t_ConversionUtils.toDouble("-2.0") == -2.0);
         assertTrue(t_ConversionUtils.toDouble("1232323.0") == 1232323.0);
-        assertTrue(t_ConversionUtils.toDouble("something else") == 0.0);
+        assertTrue(t_ConversionUtils.toDouble(Literals.SOMETHING_ELSE) == 0.0);
     // JUnitDoclet end method toDouble
   }
   
@@ -380,7 +381,7 @@ extends TestCase
 
         assertTrue(Character.getNumericValue(t_ConversionUtils.toChar("2")) == 2);
         assertTrue(Character.getNumericValue(t_ConversionUtils.toChar("3")) == 3);
-        assertTrue(Character.getNumericValue(t_ConversionUtils.toChar("something else")) == -1);
+        assertTrue(Character.getNumericValue(t_ConversionUtils.toChar(Literals.SOMETHING_ELSE)) == -1);
     // JUnitDoclet end method toChar
   }
   
@@ -412,7 +413,7 @@ extends TestCase
 
         assertTrue(t_ConversionUtils.toShort("2") == 2);
         assertTrue(t_ConversionUtils.toShort("-2") == -2);
-        assertTrue(t_ConversionUtils.toShort("something else") == 0);
+        assertTrue(t_ConversionUtils.toShort(Literals.SOMETHING_ELSE) == 0);
     // JUnitDoclet end method toShort
   }
   
@@ -444,7 +445,7 @@ extends TestCase
 
         assertTrue(t_ConversionUtils.toByte("2") == 2);
         assertTrue(t_ConversionUtils.toByte("-2") == -2);
-        assertTrue(t_ConversionUtils.toByte("something else") == 0);
+        assertTrue(t_ConversionUtils.toByte(Literals.SOMETHING_ELSE) == 0);
     // JUnitDoclet end method toByte
   }
   

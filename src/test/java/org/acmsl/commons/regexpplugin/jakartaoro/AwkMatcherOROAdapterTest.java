@@ -101,7 +101,7 @@ extends TestCase
   * Creates a AwkMatcherOROAdapterTest with given name.
   * @param name such name.
   */
-  public AwkMatcherOROAdapterTest(String name)
+  public AwkMatcherOROAdapterTest(final String name)
   {
     // JUnitDoclet begin method AwkMatcherOROAdapterTest
     super(name);
@@ -187,7 +187,7 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(AwkMatcherOROAdapterTest.class);

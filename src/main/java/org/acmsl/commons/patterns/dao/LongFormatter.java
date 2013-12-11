@@ -48,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class LongFormatter
-    implements  ValueObjectFieldFormatter<ValueObjectField<Long>>, Singleton
+    implements  ValueObjectFieldFormatter<Long, ValueObjectField<Long>>, Singleton
 {
     /**
      * Singleton instance implemented to avoid double-check locking.

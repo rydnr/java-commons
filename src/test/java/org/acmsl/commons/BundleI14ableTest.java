@@ -111,7 +111,7 @@ extends TestCase
   * Creates a BundleI14ableTest with given name.
   * @param name such name.
   */
-  public BundleI14ableTest(String name)
+  public BundleI14ableTest(final String name)
   {
     // JUnitDoclet begin method BundleI14ableTest
     super(name);
@@ -221,7 +221,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method setUsingClassLoader isUsingClassLoader
-    boolean[] t_aTests = {true, false};
+    final boolean[] t_aTests = {true, false};
     
     for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
     {
@@ -262,7 +262,7 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(BundleI14ableTest.class);

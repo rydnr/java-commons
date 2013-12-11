@@ -64,7 +64,7 @@ public abstract class AbstractModel<C extends Controller>
      * Builds a Model object managed by given controller.
      * @param controller the controller entity.
      */
-    protected AbstractModel(@NotNull C controller)
+    protected AbstractModel(@NotNull final C controller)
     {
         attach(controller);
     }
@@ -88,5 +88,13 @@ public abstract class AbstractModel<C extends Controller>
     public boolean isNew()
     {
         return m__bIsNew;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "AbstractModel{" +
+               "m__bIsNew=" + m__bIsNew +
+               '}';
     }
 }

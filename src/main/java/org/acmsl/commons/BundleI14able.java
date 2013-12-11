@@ -256,7 +256,7 @@ public class BundleI14able
      * Retrieves the system property name.
      * @return such property.
      */
-    @Nullable
+    @NotNull
     public String getSystemProperty()
     {
         return m__strSystemProperty;
@@ -468,7 +468,7 @@ public class BundleI14able
             if  (useClassLoader)
             {
                 // Identify the class loader we will be using
-                ClassLoader t_AnotherClassLoader = 
+                final ClassLoader t_AnotherClassLoader =
                     AccessController.doPrivileged(
                         new PrivilegedAction<ClassLoader>()
                         {
@@ -551,7 +551,7 @@ public class BundleI14able
 
         try
         {
-            String t_strBundleName =
+            final String t_strBundleName =
                 System.getProperty(systemProperty);
 
             if (t_strBundleName != null)
@@ -562,7 +562,7 @@ public class BundleI14able
         catch  (final SecurityException securityException)
         {
             LogFactory.getLog(BundleI14able.class).info(
-                "Could not load environment property " + systemProperty,
+                Literals.COULD_NOT_LOAD_ENVIRONMENT_PROPERTY + systemProperty,
                 securityException);
         }
 
@@ -637,7 +637,7 @@ public class BundleI14able
     protected final ResourceBundle secondTry(
         @NotNull final String bundleName,
         @NotNull final Locale locale,
-        @NotNull ClassLoader classLoader)
+        @NotNull final ClassLoader classLoader)
         throws MissingResourceException
     {
         @Nullable ResourceBundle result = null;
@@ -699,7 +699,7 @@ public class BundleI14able
                         + locale.getLanguage() + "_"
                         + locale.getCountry() + "_"
                         + locale.getVariant()
-                        + ".properties"));
+                        + Literals.PROPERTIES));
         }
         catch  (final FileNotFoundException firstFileNotFoundException)
         {
@@ -759,7 +759,7 @@ public class BundleI14able
                         bundleName + "_"
                         + locale.getLanguage() + "_ "
                         + locale.getCountry()
-                        + ".properties"));
+                        + Literals.PROPERTIES));
         }
         catch  (final FileNotFoundException secondFileNotFoundException)
         {
@@ -818,7 +818,7 @@ public class BundleI14able
                     new FileInputStream(
                         bundleName + "_"
                         + locale.getLanguage()
-                        + ".properties"));
+                        + Literals.PROPERTIES));
         }
         catch  (final FileNotFoundException thirdFileNotFoundException)
         {
@@ -873,7 +873,7 @@ public class BundleI14able
                 new PropertyResourceBundle(
                     new FileInputStream(
                         bundleName
-                        + ".properties"));
+                        + Literals.PROPERTIES));
         }
         catch  (final FileNotFoundException thirdFileNotFoundException)
         {
@@ -1035,7 +1035,7 @@ public class BundleI14able
         @NotNull final ResourceBundle bundle,
         @NotNull final StringValidator stringValidator)
     {
-        Collection<Object> t_cResult = new ArrayList<Object>();
+        @NotNull final Collection<Object> t_cResult = new ArrayList<Object>();
 
         for  (int t_iIndex = 0; t_iIndex < params.length; t_iIndex++)
         {

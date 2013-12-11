@@ -93,15 +93,15 @@ public class ValueObjectFieldTest
 // JUnitDoclet end extends_implements
 {
   // JUnitDoclet begin class
-    org.acmsl.commons.patterns.dao.ValueObjectField intField = null;
-    org.acmsl.commons.patterns.dao.ValueObjectField longField = null;
-    org.acmsl.commons.patterns.dao.ValueObjectField stringField = null;
+    org.acmsl.commons.patterns.dao.ValueObjectField<Integer> intField = null;
+    org.acmsl.commons.patterns.dao.ValueObjectField<Long> longField = null;
+    org.acmsl.commons.patterns.dao.ValueObjectField<String> stringField = null;
 
     /**
      * Specifies the int field.
      * @param field the int field.
      */
-    protected void setIntField(ValueObjectField field)
+    protected void setIntField(final ValueObjectField<Integer> field)
     {
         intField = field;
     }
@@ -110,7 +110,7 @@ public class ValueObjectFieldTest
      * Retrieves the int field.
      * @return such field.
      */
-    public ValueObjectField getIntField()
+    public ValueObjectField<Integer> getIntField()
     {
         return intField;
     }
@@ -119,7 +119,7 @@ public class ValueObjectFieldTest
      * Specifies the long field.
      * @param field the long field.
      */
-    protected void setLongField(ValueObjectField field)
+    protected void setLongField(final ValueObjectField<Long> field)
     {
         longField = field;
     }
@@ -128,7 +128,7 @@ public class ValueObjectFieldTest
      * Retrieves the long field.
      * @return such field.
      */
-    public ValueObjectField getLongField()
+    public ValueObjectField<Long> getLongField()
     {
         return longField;
     }
@@ -137,7 +137,7 @@ public class ValueObjectFieldTest
      * Specifies the string field.
      * @param field the string field.
      */
-    protected void setStringField(ValueObjectField field)
+    protected void setStringField(final ValueObjectField<String> field)
     {
         stringField = field;
     }
@@ -146,7 +146,7 @@ public class ValueObjectFieldTest
      * Retrieves the string field.
      * @return such field.
      */
-    public ValueObjectField getStringField()
+    public ValueObjectField<String> getStringField()
     {
         return stringField;
     }

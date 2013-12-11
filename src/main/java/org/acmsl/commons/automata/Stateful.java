@@ -47,7 +47,7 @@ import java.io.Serializable;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 @SuppressWarnings("unused")
-public interface Stateful<S extends State, T extends Transition>
+public interface Stateful<S extends State, T extends Transition<S, ?>>
     extends  Serializable
 {
     /**
@@ -61,7 +61,7 @@ public interface Stateful<S extends State, T extends Transition>
     /**
      * Accepts given transition.
      * @param transition the transition.
-     * @return the new state  this stateful instance has just reached.
+     * @return the new state this stateful instance has just reached.
      */
     @SuppressWarnings("unused")
     @NotNull

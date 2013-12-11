@@ -50,7 +50,6 @@ package org.acmsl.commons.patterns;
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.patterns.Subject;
 // JUnitDoclet end import
 
 /*
@@ -101,7 +100,7 @@ extends TestCase
   * Creates a SubjectTest with given name.
   * @param name such name.
   */
-  public SubjectTest(String name)
+  public SubjectTest(final String name)
   {
     // JUnitDoclet begin method SubjectTest
     super(name);
@@ -152,6 +151,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.Subject#attach(org.acmsl.commons.patterns.Observer)
   */
+  @SuppressWarnings("unused")
   public void testAttach()
   throws Exception
   {
@@ -164,6 +164,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.Subject#detach(org.acmsl.commons.patterns.Observer)
   */
+  @SuppressWarnings("unused")
   public void testDetach()
   throws Exception
   {
@@ -176,6 +177,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.Subject#inform()
   */
+  @SuppressWarnings("unused")
   public void testInform()
   throws Exception
   {
@@ -186,8 +188,8 @@ extends TestCase
   /**
   * Tests SubjectTestobservers()
   * @throws Exception if an unexpected situation occurs.
-  * @see org.acmsl.commons.patterns.Subject#observers()
   */
+  @SuppressWarnings("unused")
   public void testObservers()
   throws Exception
   {
@@ -211,10 +213,18 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(SubjectTest.class);
     // JUnitDoclet end method testcase.main
   }
+
+    @Override
+    public String toString()
+    {
+        return "SubjectTest{" +
+               "subject=" + subject +
+               '}';
+    }
 }

@@ -47,7 +47,7 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class StringFormatter
-    implements  ValueObjectFieldFormatter<ValueObjectField<String>>, Singleton
+    implements  ValueObjectFieldFormatter<String, ValueObjectField<String>>, Singleton
 {
     /**
      * Singleton instance to avoid double-check locking.

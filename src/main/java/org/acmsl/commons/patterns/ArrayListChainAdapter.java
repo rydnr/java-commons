@@ -51,27 +51,27 @@ import java.util.List;
  * Adapts {@link ArrayList} objects to implement the {@link Chain} interface.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public class ArrayListChainAdapter<C extends CommandHandler>
-    implements  Chain<C>
+public class ArrayListChainAdapter<C extends Command, E extends Exception, CH extends CommandHandler<C, E>>
+    implements  Chain<C, E, CH>
 {
     /**
      * Actual storing object.
      */
-    private List<C> m__lCore;
+    private List<CH> m__lCore;
 
     /**
      * Constructs an ArrayListChainAdapter.
      */
     public ArrayListChainAdapter()
     {
-        immutableSetCore(new ArrayList<C>());
+        immutableSetCore(new ArrayList<CH>());
     }
 
     /**
      * Specifies a new chain.
      * @param list the new list.
      */
-    private void immutableSetCore(@NotNull final List<C> list)
+    private void immutableSetCore(@NotNull final List<CH> list)
     {
         m__lCore = list;
     }
@@ -81,7 +81,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * @param list the new list.
      */
     @SuppressWarnings("unused")
-    protected void setCore(@NotNull final List<C> list)
+    protected void setCore(@NotNull final List<CH> list)
     {
         immutableSetCore(list);
     }
@@ -90,7 +90,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * Retrieves the core of this chain.
      * @return such collection.
      */
-    protected List<C> getCore()
+    protected List<CH> getCore()
     {
         return m__lCore;
     }
@@ -100,9 +100,9 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * @return such collection.
      */
     @NotNull
-    public List<C> getHandlers()
+    public List<CH> getHandlers()
     {
-        return new ArrayList<C>(getCore());
+        return new ArrayList<CH>(getCore());
     }
 
     /**
@@ -110,9 +110,9 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * @param commandHandler the commandHandler to be added.
      */
     @Override
-    public void add(@NotNull final C commandHandler)
+    public void add(@NotNull final CH commandHandler)
     {
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -125,9 +125,10 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * @param commandHandler the commandHandler to be added.
      */
     @Override
-    public void addFirst(@NotNull final C commandHandler)
+    @SuppressWarnings("unused")
+    public void addFirst(@NotNull final CH commandHandler)
     {
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -142,11 +143,11 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * this chain.
      */
     @Override
-    public boolean contains(@NotNull final C commandHandler)
+    public boolean contains(@NotNull final CH commandHandler)
     {
         boolean result = false;
 
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -163,11 +164,12 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      * or -1 if doesn't participate in this chain.
      */
     @Override
-    public int indexOf(@NotNull final C commandHandler)
+    @SuppressWarnings("unused")
+    public int indexOf(@NotNull final CH commandHandler)
     {
         int result = -1;
 
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -184,13 +186,13 @@ public class ArrayListChainAdapter<C extends CommandHandler>
      */
     @Override
     @Nullable
-    public C get(final int commandHandlerIndex)
+    public CH get(final int commandHandlerIndex)
     {
-        @Nullable final C result;
+        @Nullable final CH result;
 
         if  (commandHandlerIndex >= 0)
         {
-            @Nullable final List<C> t_lCore = getCore();
+            @Nullable final List<CH> t_lCore = getCore();
 
             if  (t_lCore != null)
             {
@@ -218,7 +220,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
     {
         boolean result = false;
 
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {
@@ -237,7 +239,7 @@ public class ArrayListChainAdapter<C extends CommandHandler>
     {
         int result = 0;
 
-        @Nullable final List<C> t_lCore = getCore();
+        @Nullable final List<CH> t_lCore = getCore();
 
         if  (t_lCore != null)
         {

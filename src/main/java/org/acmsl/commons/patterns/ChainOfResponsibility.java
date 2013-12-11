@@ -47,7 +47,7 @@ import org.jetbrains.annotations.Nullable;
  * Responsibility design pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface ChainOfResponsibility<C extends CommandHandler>
+public interface ChainOfResponsibility<C extends Command, E extends Exception, CH extends CommandHandler<C, E>>
 {
     /**
      * Retrieves the link of the chain just after the one given commandHandler
@@ -56,5 +56,6 @@ public interface ChainOfResponsibility<C extends CommandHandler>
      * @return the next handler in the chain.
      */
     @Nullable
-    public C getNextChainLink(@Nullable final C commandHandler);
+    @SuppressWarnings("unused")
+    public CH getNextChainLink(@Nullable final CH commandHandler);
 }

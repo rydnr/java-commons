@@ -667,19 +667,9 @@ public class URLUtils
     protected static Compiler retrieveCompiler()
         throws  RegexpEngineNotFoundException
     {
-        return retrieveCompiler(RegexpUtils.getInstance());
+        return RegexpUtils.getRegexpCompiler();
     }
 
-    /**
-     * Retrieves the regexp compiler.
-     * @param regexpUtils the RegexpUtils instance.
-     * @return such compiler.
-     */
-    @NotNull
-    protected static Compiler retrieveCompiler(@NotNull final RegexpUtils regexpUtils)
-    {
-        return regexpUtils.getRegexpCompiler();
-    }
     /**
      * Creates the matcher.
      * @return the regexp matcher.

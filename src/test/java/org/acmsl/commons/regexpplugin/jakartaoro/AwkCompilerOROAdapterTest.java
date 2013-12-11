@@ -101,7 +101,7 @@ extends TestCase
   * Creates a AwkCompilerOROAdapterTest with given name.
   * @param name such name.
   */
-  public AwkCompilerOROAdapterTest(String name)
+  public AwkCompilerOROAdapterTest(final String name)
   {
     // JUnitDoclet begin method AwkCompilerOROAdapterTest
     super(name);
@@ -167,7 +167,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method setCaseSensitive isCaseSensitive
-    boolean[] t_aTests = {true, false};
+    final boolean[] t_aTests = {true, false};
     
     for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
     {
@@ -187,7 +187,7 @@ extends TestCase
   throws Exception
   {
     // JUnitDoclet begin method setMultiline isMultiline
-    boolean[] t_aTests = {true, false};
+    final boolean[] t_aTests = {true, false};
     
     for (int t_iTestIndex = 0; t_iTestIndex < t_aTests.length; t_iTestIndex++)
     {
@@ -215,7 +215,7 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(AwkCompilerOROAdapterTest.class);

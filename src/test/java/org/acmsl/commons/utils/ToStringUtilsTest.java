@@ -36,22 +36,33 @@
 package org.acmsl.commons.utils;
 
 /*
- * Importing JetBrains annotations.
+ * Importing JUnit classes.
  */
 import junit.framework.TestCase;
+
+/*
+ * Importing project classes.
+ */
+import org.acmsl.commons.Literals;
+
+/*
+ * Importing JetBrains annotations.
+ */
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /*
  * Importing checkthread.org annotations.
  */
 import org.checkthread.annotations.ThreadSafe;
-import org.jetbrains.annotations.Nullable;
 
+/*
+ * Importing JDK classes.
+ */
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -120,7 +131,7 @@ public class ToStringUtilsTest
             }
             if (otherStuff != null)
             {
-                args.put("otherStuff", otherStuff);
+                args.put(Literals.OTHER_STUFF, otherStuff);
             }
             if (children != null)
             {
@@ -235,7 +246,7 @@ public class ToStringUtilsTest
 
         d.children = otherDummies;
 
-        @NotNull final List otherStuff = new ArrayList<Object>(5);
+        @NotNull final List<String> otherStuff = new ArrayList<String>(5);
         @NotNull final StringBuilder otherStuffToString = new StringBuilder("\"otherStuff\": [");
         for (int i = 0; i < 5; i++)
         {
@@ -251,11 +262,11 @@ public class ToStringUtilsTest
         }
         otherStuffToString.append(']');
 
-        d.otherStuff = (List<String>) otherStuff;
+        d.otherStuff = otherStuff;
 
         @NotNull final String aux2 =
-            new ToStringUtils.CollectionDecorator<Collection<Object>>(
-                "otherStuff", (Collection<Object>) otherStuff)
+            new ToStringUtils.CollectionDecorator<String>(
+                Literals.OTHER_STUFF, otherStuff)
                 .toString();
 
         assertEquals(

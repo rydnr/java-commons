@@ -97,7 +97,7 @@ public class CharUtils
         if  (   (start  > -1)
              && (offset >  0))
         {
-            int t_iEnd =
+            final int t_iEnd =
                 (start + offset >= buffer.length)
                 ?   buffer.length
                 :   start + offset;

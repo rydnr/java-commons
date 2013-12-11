@@ -42,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents entities able to format {@link ValueObject} fields.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface ValueObjectFieldFormatter<F extends ValueObjectField>
+public interface ValueObjectFieldFormatter<V, F extends ValueObjectField<V>>
 {
     /**
      * Formats the field in a correct way.

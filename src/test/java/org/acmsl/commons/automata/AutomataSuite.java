@@ -101,7 +101,7 @@ public class AutomataSuite
   
   public static TestSuite suite()
   {
-    TestSuite suite;
+    final TestSuite suite;
     
     suite =
     new TestSuite("unittests.org.acmsl.commons.automata");
@@ -115,7 +115,7 @@ public class AutomataSuite
     return suite;
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testsuite.main
     junit.textui.TestRunner.run(suite());

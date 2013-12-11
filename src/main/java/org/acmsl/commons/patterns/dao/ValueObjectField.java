@@ -49,7 +49,7 @@ public class ValueObjectField<V>
     /**
      * Formatter.
      */
-    @NotNull private ValueObjectFieldFormatter<ValueObjectField<V>> m__Formatter;
+    @NotNull private ValueObjectFieldFormatter<V, ValueObjectField<V>> m__Formatter;
 
     /**
      * The value.
@@ -65,7 +65,7 @@ public class ValueObjectField<V>
     public ValueObjectField(
         @NotNull final java.lang.String name,
         @NotNull final V value,
-        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
+        @NotNull final ValueObjectFieldFormatter<V, ValueObjectField<V>> formatter)
     {
         immutableSetName(name);
         immutableSetValue(value);
@@ -76,7 +76,7 @@ public class ValueObjectField<V>
      * Sets field's name.
      * @param name the name of the field.
      */
-    private void immutableSetName(java.lang.String name)
+    private void immutableSetName(@NotNull final java.lang.String name)
     {
         m__strName = name;
     }
@@ -86,7 +86,7 @@ public class ValueObjectField<V>
      * @param name the name of the field.
      */
     @SuppressWarnings("unused")
-    protected void setName(@NotNull java.lang.String name)
+    protected void setName(@NotNull final java.lang.String name)
     {
         immutableSetName(name);
     }
@@ -135,7 +135,7 @@ public class ValueObjectField<V>
      * @param formatter the formatter itself.
      */
     protected final void immutableSetFormatter(
-        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
+        @NotNull final ValueObjectFieldFormatter<V, ValueObjectField<V>> formatter)
     {
         m__Formatter = formatter;
     }
@@ -146,7 +146,7 @@ public class ValueObjectField<V>
      */
     @SuppressWarnings("unused")
     protected void setFormatter(
-        @NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
+        @NotNull final ValueObjectFieldFormatter<V, ValueObjectField<V>> formatter)
     {
         immutableSetFormatter(formatter);
     }
@@ -156,7 +156,7 @@ public class ValueObjectField<V>
      * @return this field's associated formatter.
      */
     @NotNull
-    public ValueObjectFieldFormatter<ValueObjectField<V>> getFormatter()
+    public ValueObjectFieldFormatter<V, ValueObjectField<V>> getFormatter()
     {
         return m__Formatter;
     }
@@ -166,10 +166,13 @@ public class ValueObjectField<V>
      * @return this field in String format.
      */
     @Override
-    @NotNull
     public java.lang.String toString()
     {
-        return toString(getFormatter());
+        return "ValueObjectField{" +
+               "formatter=" + m__Formatter +
+               ", name='" + m__strName + '\'' +
+               ", value=" + m__Value +
+               '}';
     }
 
     /**
@@ -178,7 +181,7 @@ public class ValueObjectField<V>
      * @return this field in String format.
      */
     @NotNull
-    protected java.lang.String toString(@NotNull final ValueObjectFieldFormatter<ValueObjectField<V>> formatter)
+    protected java.lang.String toString(@NotNull final ValueObjectFieldFormatter<V, ValueObjectField<V>> formatter)
     {
         return formatter.format(this);
     }

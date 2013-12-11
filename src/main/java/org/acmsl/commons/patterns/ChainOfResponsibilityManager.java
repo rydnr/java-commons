@@ -47,8 +47,8 @@ import org.jetbrains.annotations.Nullable;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 @SuppressWarnings("unused")
-public abstract class ChainOfResponsibilityManager<C extends Command, CH extends CommandHandler<C, E>, E extends CheckedException>
-    implements  ChainOfResponsibility<CH>,
+public abstract class ChainOfResponsibilityManager<C extends Command, E extends CheckedException, CH extends CommandHandler<C, E>>
+    implements  ChainOfResponsibility<C, E, CH>,
                 CommandSender<C, E>,
                 Manager
 {
@@ -89,7 +89,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * @return the chain.
      */
     @SuppressWarnings("unused")
-    protected final Chain<CH> immutableGetChain()
+    protected final Chain<C, E, CH> immutableGetChain()
     {
         return immutableGetChain(immutableGetChainInitialized());
     }
@@ -100,9 +100,9 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * @return the chain.
      */
     @NotNull
-    protected Chain<CH> immutableGetChain(final boolean chainInitialized)
+    protected Chain<C, E, CH> immutableGetChain(final boolean chainInitialized)
     {
-        @NotNull final Chain<CH> result;
+        @NotNull final Chain<C, E, CH> result;
 
         if  (!chainInitialized)
         {
@@ -124,7 +124,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * @return the chain itself.
      */
     @NotNull
-    protected abstract Chain<CH> getChain();
+    protected abstract Chain<C, E, CH> getChain();
 
     /**
      * Adds given command handler to the chain.
@@ -142,7 +142,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     protected void add(@NotNull final CH commandHandler, final boolean chainInitialized)
     {
-        @NotNull final Chain<CH> t_Chain;
+        @NotNull final Chain<C, E, CH> t_Chain;
 
         if  (chainInitialized)
         {
@@ -162,7 +162,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * @param chain the chain.
      */
     protected void add(
-        @NotNull final CH commandHandler, @NotNull final Chain<CH> chain)
+        @NotNull final CH commandHandler, @NotNull final Chain<C, E, CH> chain)
     {
         if  (!chain.contains(commandHandler))
         {
@@ -188,7 +188,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
     protected void addFirst(
         @NotNull final CH commandHandler, final boolean chainInitialized)
     {
-        @NotNull final Chain<CH> t_Chain;
+        @NotNull final Chain<C, E, CH> t_Chain;
 
         if  (chainInitialized)
         {
@@ -208,7 +208,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      * @param chain the chain.
      */
     protected void addFirst(
-        @NotNull final CH commandHandler, @NotNull final Chain<CH> chain)
+        @NotNull final CH commandHandler, @NotNull final Chain<C, E, CH> chain)
     {
         if  (!chain.contains(commandHandler))
         {
@@ -243,7 +243,7 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
     protected CH getNextChainLink(
         @Nullable final CH commandHandler, final boolean chainInitialized)
     {
-        @NotNull final Chain<CH> t_Chain;
+        @NotNull final Chain<C, E, CH> t_Chain;
 
         if  (chainInitialized)
         {
@@ -266,11 +266,11 @@ public abstract class ChainOfResponsibilityManager<C extends Command, CH extends
      */
     @Nullable
     protected CH getNextChainLink(
-        @Nullable final CH commandHandler, @NotNull final Chain<CH> chain)
+        @Nullable final CH commandHandler, @NotNull final Chain<C, E, CH> chain)
     {
         @Nullable final CH result;
 
-        @NotNull final Chain<CH> t_Chain = chain;
+        @NotNull final Chain<C, E, CH> t_Chain = chain;
 
         if  (!t_Chain.isEmpty())
         {

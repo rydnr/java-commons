@@ -47,19 +47,19 @@ import java.util.List;
  * Represents primary keys that uniquely identifies each {@link ValueObject}.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public class ValueObjectPrimaryKey
-    implements Iterable<ValueObjectField>
+public class ValueObjectPrimaryKey<V>
+    implements Iterable<ValueObjectField<V>>
 {
     /**
      * Field collection.
      */
-    private List<ValueObjectField> m__alFields= new ArrayList<ValueObjectField>();
+    private List<ValueObjectField<V>> m__alFields= new ArrayList<ValueObjectField<V>>();
 
     /**
      * Adds a field to this primary key.
      * @param field the field to add.
      */
-    protected void add(@NotNull final ValueObjectField field)
+    protected void add(@NotNull final ValueObjectField<V> field)
     {
         m__alFields.add(field);
     }
@@ -69,8 +69,16 @@ public class ValueObjectPrimaryKey
      * @return the iterator to browse the list.
      */
     @NotNull
-    public Iterator<ValueObjectField> iterator()
+    public Iterator<ValueObjectField<V>> iterator()
     {
         return m__alFields.iterator();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ValueObjectPrimaryKey{" +
+               "fields=" + m__alFields +
+               '}';
     }
 }

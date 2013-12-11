@@ -50,7 +50,6 @@ package org.acmsl.commons.patterns;
 * Importing project classes.
 */
 // JUnitDoclet begin import
-import org.acmsl.commons.patterns.ArrayListChainAdapter;
 // JUnitDoclet end import
 
 /*
@@ -101,7 +100,7 @@ extends TestCase
   * Creates a ArrayListChainAdapterTest with given name.
   * @param name such name.
   */
-  public ArrayListChainAdapterTest(String name)
+  public ArrayListChainAdapterTest(final String name)
   {
     // JUnitDoclet begin method ArrayListChainAdapterTest
     super(name);
@@ -152,6 +151,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#add(org.acmsl.commons.patterns.CommandHandler)
   */
+  @SuppressWarnings("unused")
   public void testAdd()
   throws Exception
   {
@@ -164,6 +164,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#addFirst(org.acmsl.commons.patterns.CommandHandler)
   */
+  @SuppressWarnings("unused")
   public void testAddFirst()
   throws Exception
   {
@@ -176,6 +177,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#contains(org.acmsl.commons.patterns.CommandHandler)
   */
+  @SuppressWarnings("unused")
   public void testContains()
   throws Exception
   {
@@ -188,6 +190,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#indexOf(org.acmsl.commons.patterns.CommandHandler)
   */
+  @SuppressWarnings("unused")
   public void testIndexOf()
   throws Exception
   {
@@ -200,6 +203,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#get(int)
   */
+  @SuppressWarnings("unused")
   public void testGet()
   throws Exception
   {
@@ -212,6 +216,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#isEmpty()
   */
+  @SuppressWarnings("unused")
   public void testIsEmpty()
   throws Exception
   {
@@ -224,6 +229,7 @@ extends TestCase
   * @throws Exception if an unexpected situation occurs.
   * @see org.acmsl.commons.patterns.ArrayListChainAdapter#size()
   */
+  @SuppressWarnings("unused")
   public void testSize()
   throws Exception
   {
@@ -247,10 +253,18 @@ extends TestCase
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
     junit.textui.TestRunner.run(ArrayListChainAdapterTest.class);
     // JUnitDoclet end method testcase.main
   }
+
+    @Override
+    public String toString()
+    {
+        return "ArrayListChainAdapterTest{" +
+               "arraylistchainadapter=" + arraylistchainadapter +
+               '}';
+    }
 }

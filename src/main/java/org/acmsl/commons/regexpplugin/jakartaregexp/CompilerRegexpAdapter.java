@@ -40,6 +40,7 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 import org.acmsl.commons.regexpplugin.Pattern;
@@ -53,9 +54,9 @@ import org.apache.regexp.REProgram;
 import org.apache.regexp.RESyntaxException;
 
 /*
- * Importing some Commons-Logging classes.
+ * Importing JetBrains annotations.
  */
-import org.apache.commons.logging.LogFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Jakarta Regexp-specific regexp compiler adapter. This class makes
@@ -188,10 +189,10 @@ public class CompilerRegexpAdapter
      * @param regexp the regular expression to compile.
      * @return the Pattern associated to such regular expression.
      * @throws MalformedPatternException if given regexp is malformed.
-     * @precondition regexp != null
      */
     @Override
-    public Pattern compile(final String regexp)
+    @NotNull
+    public Pattern compile(@NotNull final String regexp)
         throws  MalformedPatternException
     {
         return
@@ -208,17 +209,16 @@ public class CompilerRegexpAdapter
      * @param multiline the multiline.
      * @return the Pattern associated to such regular expression.
      * @throws MalformedPatternException if given regexp is malformed.
-     * @precondition regexp != null
-     * @precondition compiler != null
      */
+    @NotNull
     public Pattern compile(
-        final String regexp,
-        final RECompiler compiler,
+        @NotNull final String regexp,
+        @NotNull final RECompiler compiler,
         final boolean caseSensitive,
         final boolean multiline)
       throws  MalformedPatternException
     {
-        Pattern result = null;
+        @NotNull Pattern result = null;
 
         try
         {
@@ -266,7 +266,7 @@ public class CompilerRegexpAdapter
      */
     protected boolean resetOptions()
     {
-        boolean result;
+        final boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -280,5 +280,16 @@ public class CompilerRegexpAdapter
         }
 
         return result;
+    }
+
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return "CompilerRegexpAdapter{" +
+               Literals.M_B_CASE_SENSITIVE + m__bCaseSensitive +
+               ", m__Instance=" + m__Instance +
+               Literals.M_B_MULTILINE + m__bMultiline +
+               '}';
     }
 }

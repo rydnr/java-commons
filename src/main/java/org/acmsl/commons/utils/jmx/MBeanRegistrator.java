@@ -300,21 +300,21 @@ public class MBeanRegistrator
         
         if  (result == null)
         {
-            List mbeanServers = MBeanServerFactory.findMBeanServer(null);
+            @NotNull final List<MBeanServer> mbeanServers = MBeanServerFactory.findMBeanServer(null);
 
-            Iterator serverIterator = mbeanServers.iterator();
+            @NotNull final Iterator<MBeanServer> serverIterator = mbeanServers.iterator();
 
             while  (serverIterator.hasNext())
             {
-                MBeanServer mbeanServer = (MBeanServer) serverIterator.next();
+                @NotNull final MBeanServer mbeanServer = serverIterator.next();
 
                 mbeanServer.queryMBeans(null, null);
             }
 
             result =
                 (mbeanServers.size() > 0)
-                ?  (MBeanServer) mbeanServers.get(0)
-                :   MBeanServerFactory.createMBeanServer();
+                ?  mbeanServers.get(0)
+                :  MBeanServerFactory.createMBeanServer();
 
             setMBeanServer(result);
         }

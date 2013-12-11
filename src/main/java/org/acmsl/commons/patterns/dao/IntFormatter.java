@@ -48,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
 public class IntFormatter
-    implements  ValueObjectFieldFormatter<ValueObjectField<Integer>>, Singleton
+    implements  ValueObjectFieldFormatter<Integer, ValueObjectField<Integer>>, Singleton
 {
     /**
      * Singleton implemented to avoid double-check locking.

@@ -38,7 +38,6 @@ package org.acmsl.commons.regexpplugin.jakartaregexp;
  */
 import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
-import org.acmsl.commons.regexpplugin.jakartaregexp.MalformedPatternExceptionRegexpAdapter;
 
 /*
  * Importing Jakarta Regexp classes.
@@ -46,10 +45,21 @@ import org.acmsl.commons.regexpplugin.jakartaregexp.MalformedPatternExceptionReg
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
 
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Jakarta Regexp-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class HelperRegexpAdapter
     implements  Helper
 {
@@ -61,20 +71,18 @@ public class HelperRegexpAdapter
      * @param replacement the replacement text.
      * @return the updated input.
      * @throws MalformedPatternException if given regexp is malformed.
-     * @precondition input != null
-     * @precondition pattern != null
-     * @precondition replacement != null
      */
     @Override
+    @NotNull
     public String replaceAll(
-        final String input, final String pattern, final String replacement)
+        @NotNull final String input, @NotNull final String pattern, @NotNull final String replacement)
       throws  MalformedPatternException
     {
-        String result;
+        @NotNull final String result;
 
         try 
         {
-            final RE t_RE = new RE(pattern);
+            @NotNull final RE t_RE = new RE(pattern);
 
             result = t_RE.subst(input, replacement);
         }

@@ -39,6 +39,7 @@ package org.acmsl.commons.utils;
 /*
  * Importing ACM-SL Java Commons classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Utils;
 
 /*
@@ -91,7 +92,7 @@ public class ToStringUtils
     /**
      * The ST template.
      */
-    protected static final String ST_TEMPLATE = "toString";
+    protected static final String ST_TEMPLATE = Literals.TO_STRING;
 
     /**
      * Singleton implemented to avoid the double-checked locking.
@@ -123,7 +124,7 @@ public class ToStringUtils
      */
     @NotNull
     public <T> String toJson(
-        @NotNull final T instance, @NotNull final Class fileClass, @NotNull final Map<String, Object> args)
+        @NotNull final T instance, @NotNull final Class<T> fileClass, @NotNull final Map<String, Object> args)
     {
         @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
 
@@ -133,7 +134,7 @@ public class ToStringUtils
 
         context.put("obj", instance);
         context.put("fileClass", fileClass);
-        context.put("attrs", decorate(args));
+        context.put(Literals.ATTRS, decorate(args));
 
         template.add("C", context);
 
@@ -212,11 +213,11 @@ public class ToStringUtils
             {
                 aux.add(decorateElement("", item));
             }
-            result = new CollectionDecorator(name, aux);
+            result = new CollectionDecorator<Decorator<?>>(name, aux);
         }
         else if (arg instanceof Object[])
         {
-            result = new CollectionDecorator(name, Arrays.asList(arg));
+            result = new CollectionDecorator<Object>(name, Arrays.asList(arg));
         }
         else
         {
@@ -297,10 +298,10 @@ public class ToStringUtils
          * Retrieves the file class.
          * @return such class.
          */
-        @SuppressWarnings("unused")
-        public Class getFileClass()
+        @SuppressWarnings("unused, unchecked")
+        public Class<T> getFileClass()
         {
-            return this.arg.getClass();
+            return (Class<T>) this.arg.getClass();
         }
 
         /**
@@ -379,7 +380,7 @@ public class ToStringUtils
         {
             @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
 
-            @NotNull final ST template = stGroup.getInstanceOf("toJson");
+            @NotNull final ST template = stGroup.getInstanceOf(Literals.TO_JSON);
 
             template.add("name", this.name);
             template.add("attr", this.arg);
@@ -428,7 +429,7 @@ public class ToStringUtils
 
             template.add("obj", this);
             template.add("fClass", "");
-            template.add("attrs", new HashMap<String, Object>(0));
+            template.add(Literals.ATTRS, new HashMap<String, Object>(0));
 
             @NotNull final String result = template.render();
 
@@ -492,15 +493,15 @@ public class ToStringUtils
     /**
      * A date decorator.
      */
-    static class CollectionDecorator<T extends Collection<Object>>
-        extends Decorator<T>
+    static class CollectionDecorator<T>
+        extends Decorator<Collection<T>>
     {
         /**
          * Creates a date decorator.
          * @param name the name.
          * @param arg the date value.
          */
-        public CollectionDecorator(@NotNull final String name, @NotNull final T arg)
+        public CollectionDecorator(@NotNull final String name, @NotNull final Collection<T> arg)
         {
             super(name, arg);
         }
@@ -543,7 +544,7 @@ public class ToStringUtils
         {
             @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
 
-            @NotNull final ST template = stGroup.getInstanceOf("toJson");
+            @NotNull final ST template = stGroup.getInstanceOf(Literals.TO_JSON);
 
             @NotNull final String name = getName();
 
@@ -552,7 +553,7 @@ public class ToStringUtils
                 template.add("name", name);
             }
 
-            @NotNull final T value = getArg();
+            @NotNull final Collection<T> value = getArg();
 
             @NotNull final List<Decorator<?>> aux =
                 new ArrayList<Decorator<?>>((value).size());

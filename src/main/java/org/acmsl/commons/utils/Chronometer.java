@@ -173,33 +173,27 @@ public class Chronometer
     {
         @NotNull final StringBuilder result = new StringBuilder();
         
-        long delta = end - start;
+        final long delta = end - start;
 
-        long years = intervalInYears(delta);
-        long days = intervalInDays(delta, years);
-        long hours = intervalInHours(delta, days, years);
-        long minutes =
-            intervalInMinutes(
-                delta, hours, days, years);
-        long seconds =
-            intervalInSeconds(
-                delta, minutes, hours, days, years);
-        long milliseconds =
-            intervalInMilliseconds(
-                delta, seconds, minutes, hours, days, years);
+        final long years = intervalInYears(delta);
+        final long days = intervalInDays(delta, years);
+        final long hours = intervalInHours(delta, days, years);
+        final long minutes = intervalInMinutes(delta, hours, days, years);
+        final long seconds = intervalInSeconds(delta, minutes, hours, days, years);
+        final long milliseconds = intervalInMilliseconds(delta, seconds, minutes, hours, days, years);
 
-        long[] timeMetrics =
+        final long[] timeMetrics =
             new long[] 
             {
                 years, days, hours, minutes, seconds, milliseconds
             };
 
-        String[] actualSeparators =
+        final String[] actualSeparators =
             new String[] { "y", "d", "h", "m", "s", "ms"};
 
         int separatorIndex = 0;
 
-        int actualSeparatorCount = actualSeparators.length;
+        final int actualSeparatorCount = actualSeparators.length;
         
         for  (int index = 0; index < actualSeparatorCount; index++)
         {
@@ -610,5 +604,13 @@ public class Chronometer
              - (hours * MILLISECONDS_PER_HOUR)
              - (days * MILLISECONDS_PER_DAY)
              - (years * MILLISECONDS_PER_YEAR));
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Chronometer{" +
+               "m__lStart=" + m__lStart +
+               '}';
     }
 }

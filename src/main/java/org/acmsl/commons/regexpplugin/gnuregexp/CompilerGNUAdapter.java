@@ -38,6 +38,7 @@ package org.acmsl.commons.regexpplugin.gnuregexp;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.Pattern;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
@@ -47,6 +48,11 @@ import org.acmsl.commons.regexpplugin.MalformedPatternException;
  */
 import gnu.regexp.RE;
 import gnu.regexp.REException;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GNU Regexp 1.1.4-specific compiler adapter. This class makes
@@ -71,12 +77,14 @@ public class CompilerGNUAdapter
      * to apply such rule on concrete text contents.
      * @param regexp the regular expression to compile.
      * @return the Pattern associated to such regular expression.
-     * @param MalformedPatternException if given regexp is malformed.
+     * @throws MalformedPatternException if given regexp is malformed.
      */
-    public Pattern compile(final String regexp)
+    @NotNull
+    @Override
+    public Pattern compile(@NotNull final String regexp)
         throws  MalformedPatternException
     {
-        org.acmsl.commons.regexpplugin.Pattern result = null;
+        @NotNull org.acmsl.commons.regexpplugin.Pattern result = null;
 
         try
         {
@@ -92,7 +100,7 @@ public class CompilerGNUAdapter
                 ?   RE.REG_MULTILINE
                 :   0;
 
-            RE t_RE;
+            @NotNull final RE t_RE;
 
             if  (t_iOptions == 0)
             {
@@ -124,9 +132,9 @@ public class CompilerGNUAdapter
      * Resets the compiler options.
      * @return true if the options actually changed.
      */
-    private boolean resetOptions()
+    protected final boolean resetOptions()
     {
-        boolean result;
+        final boolean result;
 
         result =
             (   (isCaseSensitive())
@@ -183,5 +191,14 @@ public class CompilerGNUAdapter
     public boolean isMultiline()
     {
         return m__bMultiline;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "CompilerGNUAdapter{" +
+               Literals.M_B_CASE_SENSITIVE + m__bCaseSensitive +
+               Literals.M_B_MULTILINE + m__bMultiline +
+               '}';
     }
 }

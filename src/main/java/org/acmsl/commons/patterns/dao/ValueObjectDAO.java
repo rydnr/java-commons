@@ -54,7 +54,7 @@ public interface ValueObjectDAO<VO extends ValueObject>
      * @return the information associated to such id in the underlying
      * persistence layer.
      */
-    public VO find(@NotNull final ValueObjectPrimaryKey pk);
+    public VO find(@NotNull final ValueObjectPrimaryKey<String> pk);
 
     /**
      * Stores the value object into the persistent layer.
@@ -63,7 +63,7 @@ public interface ValueObjectDAO<VO extends ValueObject>
      * @return true if the operation ends up successfully.
      */
     public VO insert(
-        @NotNull final ValueObject valueObject, final boolean reload);
+        @NotNull final VO valueObject, final boolean reload);
 
     /**
      * Removes a value object in the persistence layer.

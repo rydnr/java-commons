@@ -47,7 +47,7 @@ import java.util.List;
  * Responsibility design pattern.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-public interface Chain<CH extends CommandHandler>
+public interface Chain<C extends Command, E extends Exception, CH extends CommandHandler<C, E>>
 {
     /**
      * Adds a new commandHandler to the chain.

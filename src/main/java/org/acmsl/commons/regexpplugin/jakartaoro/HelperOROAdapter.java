@@ -53,10 +53,22 @@ import org.apache.oro.text.regex.Util;
  */
 import org.apache.commons.logging.LogFactory;
 
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Jakarta ORO-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class HelperOROAdapter
     implements  Helper
 {
@@ -67,51 +79,47 @@ public class HelperOROAdapter
      * @param pattern the pattern to replace.
      * @param replacement the replacement text.
      * @return the updated input.
-     * @throws MalformedPatternException if given regexp is malformed.
+     * @throws org.acmsl.commons.regexpplugin.MalformedPatternException if given regexp is malformed.
      */
     @Override
+    @NotNull
     public String replaceAll(
-        final String input, final String pattern, final String replacement)
+        @NotNull final String input, @NotNull final String pattern, @NotNull final String replacement)
       throws  org.acmsl.commons.regexpplugin.MalformedPatternException
     {
-        String result = null;
+        @Nullable String result = null;
 
-        if  (   (input       != null)
-             && (pattern     != null)
-             && (replacement != null))
+        try
         {
-            try
-            {
-                result =
-                    Util.substitute(
-                        new Perl5Matcher(),
-                        new Perl5Compiler().compile(pattern),
-                        new StringSubstitution(
+            result =
+                Util.substitute(
+                    new Perl5Matcher(),
+                    new Perl5Compiler().compile(pattern),
+                    new StringSubstitution(
 //                            Perl5Compiler.quotemeta(replacement)),
-                            replacement),
-                        input,
-                        Util.SUBSTITUTE_ALL);
-            }
-            catch  (final MalformedPatternException malformedPatternException)
-            {
-                throw
-                    new
-                        org.acmsl.commons.regexpplugin
-                            .MalformedPatternException(
-                                "Invalid pattern: " + pattern,
-                                malformedPatternException);
-            }
-            catch  (final NoSuchMethodError incompatibleVersionError)
-            {
-                String location = findLocation(Util.class);
+                        replacement),
+                    input,
+                    Util.SUBSTITUTE_ALL);
+        }
+        catch  (final MalformedPatternException malformedPatternException)
+        {
+            throw
+                new
+                    org.acmsl.commons.regexpplugin
+                        .MalformedPatternException(
+                            "Invalid pattern: " + pattern,
+                            malformedPatternException);
+        }
+        catch  (final NoSuchMethodError incompatibleVersionError)
+        {
+            @Nullable final String location = findLocation(Util.class);
 
-                // This happens on Oro 2.0.8 if another Oro version
-                // is loaded first.
-                LogFactory.getLog(HelperOROAdapter.class).fatal(
-                      "Incompatible Oro version, loaded from: "
-                    + ((location != null) ? "[" + location + "]" : ""),
-                    incompatibleVersionError);
-            }
+            // This happens on Oro 2.0.8 if another Oro version
+            // is loaded first.
+            LogFactory.getLog(HelperOROAdapter.class).fatal(
+                  "Incompatible Oro version, loaded from: "
+                + ((location != null) ? "[" + location + "]" : ""),
+                incompatibleVersionError);
         }
 
         if  (result == null) 
@@ -131,9 +139,9 @@ public class HelperOROAdapter
      * Finds the location of given instance.
      * @param classInstance the class to locate.
      * @return such information.
-     * @precondition classInstance != null
      */
-    protected String findLocation(final Class classInstance)
+    @Nullable
+    protected <T> String findLocation(@NotNull final Class<T> classInstance)
     {
         return findLocation(classInstance, ClassLoaderUtils.getInstance());
     }
@@ -142,11 +150,10 @@ public class HelperOROAdapter
      * Finds the location of given instance.
      * @param classInstance the class to locate.
      * @return such information.
-     * @precondition classInstance != null
-     * @precondition classLoaderUtils != null
      */
-    protected String findLocation(
-        final Class classInstance, final ClassLoaderUtils classLoaderUtils)
+    @Nullable
+    protected <T> String findLocation(
+        @NotNull final Class<T> classInstance, @NotNull final ClassLoaderUtils classLoaderUtils)
     {
         return classLoaderUtils.findLocation(classInstance, true);
     }

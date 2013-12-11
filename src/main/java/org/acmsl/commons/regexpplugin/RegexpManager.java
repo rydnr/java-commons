@@ -37,6 +37,7 @@ package org.acmsl.commons.regexpplugin;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Manager;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.utils.ReflectionUtils;
@@ -290,7 +291,7 @@ public class RegexpManager
             catch  (final SecurityException securityException)
             {
                 LogFactory.getLog(RegexpManager.class).info(
-                    "Could not load environment property " + ENGINE_PROPERTY,
+                    Literals.COULD_NOT_LOAD_ENVIRONMENT_PROPERTY + ENGINE_PROPERTY,
                     securityException);
             }
         }

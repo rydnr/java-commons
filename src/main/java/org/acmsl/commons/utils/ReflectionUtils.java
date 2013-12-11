@@ -2,7 +2,7 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-today  Jose San Leandro Armend&aacute;riz
+    Copyright (C) 2002-today  Jose San Leandro Armendariz
                               chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
@@ -35,6 +35,7 @@ package org.acmsl.commons.utils;
 /*
  * Importing project classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 
@@ -112,15 +113,15 @@ public class ReflectionUtils
      */
     @SuppressWarnings("unchecked")
     @NotNull
-    public Class[] retrieveSuperClasses(@NotNull final Class classInstance)
+    public <T extends U, U> Class<U>[] retrieveSuperClasses(@NotNull final Class<T> classInstance)
     {
-        @NotNull final Class[] result;
+        @NotNull final Class<U>[] result;
 
-        @NotNull final Collection<Class> t_cSuperClasses = new ArrayList<Class>();
+        @NotNull final Collection<Class<U>> t_cSuperClasses = new ArrayList<Class<U>>();
 
-        t_cSuperClasses.add(classInstance);
+        t_cSuperClasses.add((Class<U>) classInstance);
 
-        t_cSuperClasses.addAll(retrieveParentClasses(classInstance));
+        t_cSuperClasses.addAll(this.<T, U>retrieveParentClasses(classInstance));
 
         result = t_cSuperClasses.toArray(new Class[t_cSuperClasses.size()]);
 
@@ -132,23 +133,24 @@ public class ReflectionUtils
      * @param objectClass the object class.
      */
     @NotNull
-    protected Collection<Class> retrieveParentClasses(@NotNull final Class objectClass)
+    protected <T extends U, U> Collection<Class<U>> retrieveParentClasses(@NotNull final Class<T> objectClass)
     {
-        @NotNull final Collection<Class> result;
+        @NotNull final Collection<Class<U>> result;
 
-        @Nullable final Class parent = objectClass.getSuperclass();
+        @SuppressWarnings("unchecked")
+        @Nullable final Class<U> parent = (Class<U>) objectClass.getSuperclass();
 
         if  (parent != null)
         {
-            result = new ArrayList<Class>();
+            result = new ArrayList<Class<U>>();
 
             result.add(parent);
 
-            result.addAll(retrieveParentClasses(parent));
+            result.addAll(this.<U, U>retrieveParentClasses(parent));
         }
         else
         {
-            result = new ArrayList<Class>(0);
+            result = new ArrayList<Class<U>>(0);
         }
 
         return result;
@@ -164,13 +166,13 @@ public class ReflectionUtils
      * @return such member instance.
      */
     @NotNull
-    public Field[] getMember(@NotNull final Class classInstance, @NotNull final Class type)
+    public <C, T> Field[] getMember(@NotNull final Class<C> classInstance, @NotNull final Class<T> type)
     {
         @NotNull final Collection<Field> t_cResult = new ArrayList<Field>();
 
-        @NotNull final Class[] t_aClasses = retrieveSuperClasses(classInstance);
+        @NotNull final Class<?>[] t_aClasses = retrieveSuperClasses(classInstance);
         
-        for  (@NotNull final Class t_Class : t_aClasses)
+        for  (@NotNull final Class<?> t_Class : t_aClasses)
         {
             t_cResult.addAll(getClassMembersAsCollection(t_Class, type));
         }
@@ -188,7 +190,7 @@ public class ReflectionUtils
      * @return such member instance.
      */
     @NotNull
-    public Field[] getClassMembers(@NotNull final Class classInstance, @NotNull final Class type)
+    public <C, T> Field[] getClassMembers(@NotNull final Class<C> classInstance, @NotNull final Class<T> type)
     {
         @NotNull final Field[] result;
         
@@ -218,8 +220,8 @@ public class ReflectionUtils
      */
     @SuppressWarnings("unchecked")
     @NotNull
-    public Collection<Field> getClassMembersAsCollection(
-        @NotNull final Class classInstance, @NotNull final Class type)
+    public <C, T> Collection<Field> getClassMembersAsCollection(
+        @NotNull final Class<C> classInstance, @NotNull final Class<T> type)
     {
         @NotNull final Collection<Field> result = new ArrayList<Field>();
 
@@ -240,8 +242,8 @@ public class ReflectionUtils
             catch  (final Throwable classLoadingProblem)
             {
                 System.err.println(
-                      "Error using Commons-Logging. This can happen "
-                    + "due to Log4J class-loading issues.");
+                      Literals.ERROR_USING_COMMONS_LOGGING_THIS_CAN_HAPPEN
+                    + Literals.DUE_TO_LOG4_J_CLASS_LOADING_ISSUES);
 
                 classLoadingProblem.printStackTrace(System.err);
             }
@@ -253,7 +255,7 @@ public class ReflectionUtils
             {
                 if  (t_CurrentField != null)
                 {
-                    @Nullable final Class t_CurrentMemberClass = t_CurrentField.getType();
+                    @Nullable final Class<?> t_CurrentMemberClass = t_CurrentField.getType();
 
                     if  (   (t_CurrentMemberClass != null)
                          && (   (t_CurrentMemberClass.equals(type)
@@ -298,8 +300,8 @@ public class ReflectionUtils
             catch  (final Throwable classLoadingProblem)
             {
                 System.err.println(
-                        "Error using Commons-Logging. This can happen "
-                      + "due to Log4J class-loading issues.");
+                        Literals.ERROR_USING_COMMONS_LOGGING_THIS_CAN_HAPPEN
+                      + Literals.DUE_TO_LOG4_J_CLASS_LOADING_ISSUES);
 
                 classLoadingProblem.printStackTrace(System.err);
             }

@@ -206,10 +206,11 @@ public class UniqueLogFactory
      * instance cannot be returned
      */
     @Nullable
+    @SuppressWarnings("unchecked")
     public Log getInstance(@NotNull final Class clazz)
         throws LogConfigurationException
     {
-        return getInstance(clazz, getLog());
+        return getInstance((Class<Object>) clazz, getLog());
     }
 
     /**
@@ -221,12 +222,12 @@ public class UniqueLogFactory
      * instance cannot be returned
      */
     @Nullable
-    protected Log getInstance(@NotNull final Class clazz, @Nullable final Log log)
+    protected <T> Log getInstance(@NotNull final Class<T> clazz, @Nullable final Log log)
         throws LogConfigurationException
     {
         @Nullable final Log result;
         
-        LogFactory t_LogFactory = LogFactory.getFactory();
+        @Nullable final LogFactory t_LogFactory = LogFactory.getFactory();
         
         if  (t_LogFactory != null)
         {
@@ -284,7 +285,7 @@ public class UniqueLogFactory
         
         if  (log == null)
         {
-            LogFactory t_LogFactory = LogFactory.getFactory();
+            @Nullable final LogFactory t_LogFactory = LogFactory.getFactory();
         
             if  (t_LogFactory != null)
             {
