@@ -116,6 +116,30 @@ public class ToStringUtils
     }
 
     /**
+     * Converts given list to JSON.
+     * @param list the list.
+     * @return the JSON-formatted list.
+     */
+    @NotNull
+    public <T> String toJson(@Nullable final List<T> list)
+    {
+        @NotNull final StringBuilder result = new StringBuilder("[ ");
+
+        if (list != null)
+        {
+            for (@Nullable final T item : list)
+            {
+                if (item != null)
+                {
+                    result.append(toJson(item, item.getClass(), new HashMap<String, Object>(0)));
+                }
+            }
+        }
+
+        return result.toString();
+    }
+
+    /**
      * Generates a JSON-formatted string representation of given instance.
      * @param instance the instance.
      * @param fileClass the file class.
@@ -124,13 +148,15 @@ public class ToStringUtils
      */
     @NotNull
     public <T> String toJson(
-        @NotNull final T instance, @NotNull final Class<T> fileClass, @NotNull final Map<String, Object> args)
+        @NotNull final T instance,
+        @NotNull final Class fileClass,
+        @NotNull final Map<String, Object> args)
     {
         @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
 
         @NotNull final ST template = stGroup.getInstanceOf(ST_TEMPLATE);
 
-        @NotNull final Map<String, Object> context = new HashMap<String, Object>(3);
+        @NotNull final Map<String, Object> context = new HashMap<>(3);
 
         context.put("obj", instance);
         context.put("fileClass", fileClass);
@@ -150,7 +176,7 @@ public class ToStringUtils
      */
     protected Map<String, Object> decorate(@NotNull final Map<String, Object> args)
     {
-        @NotNull final Map<String, Object> result = new HashMap<String, Object>(args.size());
+        @NotNull final Map<String, Object> result = new HashMap<>(args.size());
 
         for (@NotNull final Map.Entry<String, Object> arg : args.entrySet())
         {
@@ -182,23 +208,23 @@ public class ToStringUtils
         }
         else if (arg instanceof Boolean)
         {
-            result = new Decorator<Boolean>(name, (Boolean) arg);
+            result = new Decorator<>(name, arg);
         }
         else if (arg instanceof Integer)
         {
-            result = new Decorator<Integer>(name, (Integer) arg);
+            result = new Decorator<>(name, arg);
         }
         else if (arg instanceof Long)
         {
-            result = new Decorator<Long>(name, (Long) arg);
+            result = new Decorator<>(name, arg);
         }
         else if (arg instanceof Float)
         {
-            result = new Decorator<Float>(name, (Float) arg);
+            result = new Decorator<>(name, arg);
         }
         else if (arg instanceof Double)
         {
-            result = new Decorator<Double>(name, (Double) arg);
+            result = new Decorator<>(name, arg);
         }
         else if (arg instanceof Date)
         {
@@ -207,21 +233,21 @@ public class ToStringUtils
         else if (arg instanceof Collection<?>)
         {
             @NotNull final List<Decorator<?>> aux =
-                new ArrayList<Decorator<?>>(((Collection<Object>) arg).size());
+                new ArrayList<>(((Collection<Object>) arg).size());
 
             for (@NotNull final Object item: (Collection<Object>) arg)
             {
                 aux.add(decorateElement("", item));
             }
-            result = new CollectionDecorator<Decorator<?>>(name, aux);
+            result = new CollectionDecorator<>(name, aux);
         }
         else if (arg instanceof Object[])
         {
-            result = new CollectionDecorator<Object>(name, Arrays.asList(arg));
+            result = new CollectionDecorator<>(name, Arrays.asList(arg));
         }
         else
         {
-            result = new Decorator<Object>(name, arg);
+            result = new Decorator<>(name, arg);
         }
 
         return result;
@@ -333,20 +359,14 @@ public class ToStringUtils
         {
             final boolean result;
 
-            if (   (this.arg instanceof Boolean)
-                || (this.arg instanceof Integer)
-                || (this.arg instanceof Long)
-                || (this.arg instanceof Float)
-                || (this.arg instanceof Double)
-                || (this.arg instanceof BigInteger)
-                || (this.arg instanceof BigDecimal))
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
+            result =
+                    (this.arg instanceof Boolean)
+                 || (this.arg instanceof Integer)
+                 || (this.arg instanceof Long)
+                 || (this.arg instanceof Float)
+                 || (this.arg instanceof Double)
+                 || (this.arg instanceof BigInteger)
+                 || (this.arg instanceof BigDecimal);
 
             return result;
         }
@@ -355,27 +375,7 @@ public class ToStringUtils
          * Generates a JSON text representing the instance.
          * @return such text.
          */
-        @Override
-        public String toString()
-        {
-            @NotNull final String result;
-
-            if (isCompound())
-            {
-                result = toStringCompound();
-            }
-            else
-            {
-                result = toStringSimple();
-            }
-
-            return result;
-        }
-
-        /**
-         * Generates a JSON text representing the instance.
-         * @return such text.
-         */
+        @SuppressWarnings("unused")
         protected String toStringSimple()
         {
             @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);
@@ -394,9 +394,24 @@ public class ToStringUtils
          * Generates a JSON text representing the instance.
          * @return such text.
          */
+        @SuppressWarnings("unused")
         protected String toStringCompound()
         {
             return getValue();
+        }
+
+        /**
+         * Generates a JSON text representing the instance.
+         *
+         * @return such text.
+         */
+        @Override
+        public String toString()
+        {
+            return
+                  "{ \"class\": \"" + Decorator.class.getName() + '"'
+                + ", \"name\": \"" + name + '"'
+                + ", \"arg\": \"" + arg + "\" ";
         }
     }
 
@@ -436,6 +451,7 @@ public class ToStringUtils
             return result;
         }
 
+        @SuppressWarnings("unused")
         public boolean representedAsString()
         {
             return true;
@@ -556,7 +572,7 @@ public class ToStringUtils
             @NotNull final Collection<T> value = getArg();
 
             @NotNull final List<Decorator<?>> aux =
-                new ArrayList<Decorator<?>>((value).size());
+                new ArrayList<>((value).size());
 
             for (@NotNull final Object item: value)
             {

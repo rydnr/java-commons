@@ -68,7 +68,7 @@ public class UniqueLogFactory
      * Specifies the {@link Log} instance.
      * @param log the log instance.
      */
-    protected static final void immutableSetLog(@NotNull final Log log)
+    protected static void immutableSetLog(@NotNull final Log log)
     {
         m__Log = log;
     }
@@ -99,7 +99,7 @@ public class UniqueLogFactory
      * Specifies the singleton instance.
      * @param singleton such instance.
      */
-    protected static final void immutableSetSingleton(
+    protected static void immutableSetSingleton(
         @NotNull final LogFactory singleton)
     {
         m__Singleton = singleton;
@@ -140,7 +140,7 @@ public class UniqueLogFactory
      * @return such instance.
      */
     @Nullable
-    public static final LogFactory getInstance()
+    public static LogFactory getInstance()
     {
         return getSingleton();
     }
@@ -171,7 +171,7 @@ public class UniqueLogFactory
      * Initializes the log factory.
      * @param log the log instance.
      */
-    public static final void initializeInstance(@NotNull final Log log)
+    public static void initializeInstance(@NotNull final Log log)
     {
         setSingleton(new UniqueLogFactory(log));
     }
@@ -206,6 +206,7 @@ public class UniqueLogFactory
      * instance cannot be returned
      */
     @Nullable
+    @Override
     @SuppressWarnings("unchecked")
     public Log getInstance(@NotNull final Class clazz)
         throws LogConfigurationException

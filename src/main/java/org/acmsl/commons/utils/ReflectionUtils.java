@@ -117,13 +117,13 @@ public class ReflectionUtils
     {
         @NotNull final Class<U>[] result;
 
-        @NotNull final Collection<Class<U>> t_cSuperClasses = new ArrayList<Class<U>>();
+        @NotNull final Collection<Class<U>> t_cSuperClasses = new ArrayList<>();
 
         t_cSuperClasses.add((Class<U>) classInstance);
 
         t_cSuperClasses.addAll(this.<T, U>retrieveParentClasses(classInstance));
 
-        result = t_cSuperClasses.toArray(new Class[t_cSuperClasses.size()]);
+        result = t_cSuperClasses.toArray((Class<U>[]) new Class[t_cSuperClasses.size()]);
 
         return result;
     }
@@ -142,7 +142,7 @@ public class ReflectionUtils
 
         if  (parent != null)
         {
-            result = new ArrayList<Class<U>>();
+            result = new ArrayList<>();
 
             result.add(parent);
 
@@ -150,7 +150,7 @@ public class ReflectionUtils
         }
         else
         {
-            result = new ArrayList<Class<U>>(0);
+            result = new ArrayList<>(0);
         }
 
         return result;
@@ -168,7 +168,7 @@ public class ReflectionUtils
     @NotNull
     public <C, T> Field[] getMember(@NotNull final Class<C> classInstance, @NotNull final Class<T> type)
     {
-        @NotNull final Collection<Field> t_cResult = new ArrayList<Field>();
+        @NotNull final Collection<Field> t_cResult = new ArrayList<>();
 
         @NotNull final Class<?>[] t_aClasses = retrieveSuperClasses(classInstance);
         
@@ -223,7 +223,7 @@ public class ReflectionUtils
     public <C, T> Collection<Field> getClassMembersAsCollection(
         @NotNull final Class<C> classInstance, @NotNull final Class<T> type)
     {
-        @NotNull final Collection<Field> result = new ArrayList<Field>();
+        @NotNull final Collection<Field> result = new ArrayList<>();
 
         @Nullable Field[] t_Aux = null;
         
@@ -340,10 +340,6 @@ public class ReflectionUtils
             {
                 result =
                     (ClassLoader) t_Method.invoke(Thread.currentThread(), (Class<?>) null);
-            }
-            catch  (final IllegalAccessException illegalAccessException)
-            {
-                throw illegalAccessException;
             }
             catch  (final InvocationTargetException invocationTargetException)
             {
