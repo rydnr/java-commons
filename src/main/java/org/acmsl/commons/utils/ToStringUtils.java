@@ -149,7 +149,7 @@ public class ToStringUtils
     @NotNull
     public <T> String toJson(
         @NotNull final T instance,
-        @NotNull final Class fileClass,
+        @NotNull final Class<?> fileClass,
         @NotNull final Map<String, Object> args)
     {
         @NotNull final STGroup stGroup = new STGroupFile(TO_JSON);

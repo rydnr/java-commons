@@ -1,7 +1,7 @@
 /*
-                      Project tests
+                      Java Commons
 
-Copyright (C) 2003  Jose San Leandro Armend?riz
+Copyright (C) 2003-today Jose San Leandro Armendariz
 jsanleandro@yahoo.es
 chousz@yahoo.com
 
@@ -159,7 +159,7 @@ public class ValueObjectFieldTest
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField<Integer>(
+            new org.acmsl.commons.patterns.dao.ValueObjectField<>(
                 "int", 1, IntFormatter.getInstance());
     }
   
@@ -171,7 +171,7 @@ public class ValueObjectFieldTest
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField<Long>(
+            new org.acmsl.commons.patterns.dao.ValueObjectField<>(
                 "long", 1L, LongFormatter.getInstance());
     }
   
@@ -183,7 +183,7 @@ public class ValueObjectFieldTest
         throws Exception
     {
         return
-            new org.acmsl.commons.patterns.dao.ValueObjectField<String>(
+            new org.acmsl.commons.patterns.dao.ValueObjectField<>(
                 "string", "a", StringFormatter.getInstance());
     }
   
@@ -193,7 +193,7 @@ public class ValueObjectFieldTest
   * Creates a ValueObjectFieldTest with given name.
   * @param name such name.
   */
-  public ValueObjectFieldTest(String name)
+  public ValueObjectFieldTest(final String name)
   {
     // JUnitDoclet begin method ValueObjectFieldTest
         super(name);
@@ -209,7 +209,7 @@ public class ValueObjectFieldTest
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance
-    return new org.acmsl.commons.patterns.dao.ValueObjectField<String>("unknown", "a", StringFormatter.getInstance());
+    return new org.acmsl.commons.patterns.dao.ValueObjectField<>("unknown", "a", StringFormatter.getInstance());
     // JUnitDoclet end method testcase.createInstance
   }
   
@@ -304,7 +304,7 @@ public class ValueObjectFieldTest
     // JUnitDoclet end method testcase.testVault
   }
   
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     // JUnitDoclet begin method testcase.main
         junit.textui.TestRunner.run(ValueObjectFieldTest.class);
