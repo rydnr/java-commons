@@ -56,6 +56,8 @@ package org.acmsl.commons.patterns.dao;
 * Importing JUnit classes.
 */
 import junit.framework.TestCase;
+import org.acmsl.commons.Literals;
+import org.omg.CORBA.UNKNOWN;
 
 /*
 This file is part of  JUnitDoclet, a project to generate basic

@@ -60,6 +60,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
 /*
@@ -82,6 +83,41 @@ public class FileUtils
     implements  Utils,
                 Singleton
 {
+    /**
+     * Retrieves the {@link File} associated to given {@link FileInputStream}, if possible.
+     * @param inputStream the input stream.
+     * @return the file.
+     */
+    @Nullable
+    public File retrieveFile(@NotNull final FileInputStream inputStream)
+    {
+        @Nullable final File result;
+
+        @Nullable String t_strPath = null;
+
+        try
+        {
+            @Nullable final Field field = inputStream.getClass().getDeclaredField("path");
+            field.setAccessible(true);
+            t_strPath = (String) field.get(inputStream);
+        }
+        catch (@NotNull final Throwable noField)
+        {
+            System.err.println(noField.getMessage());
+        }
+
+        if (t_strPath == null)
+        {
+            result = null;
+        }
+        else
+        {
+            result = new File(t_strPath);
+        }
+
+        return result;
+    }
+
     /**
      * Singleton implemented to avoid the double-checked locking.
      */
