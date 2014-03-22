@@ -37,6 +37,7 @@ package org.acmsl.commons.version;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Compiler;
@@ -216,7 +217,7 @@ public class VersionUtils
                              * and forget.
                              */
                     LogFactory.getLog(StringUtils.class).error(
-                        "Invalid sub-package pattern", exception);
+                        Literals.INVALID_SUB_PACKAGE_PATTERN, exception);
 
                     t_Exception = exception;
                 }
@@ -224,16 +225,16 @@ public class VersionUtils
             catch  (final RegexpEngineNotFoundException exception)
             {
                 LogFactory.getLog(StringUtils.class).error(
-                    "no regexp engine found", exception);
+                    Literals.NO_REGEXP_ENGINE_FOUND, exception);
 
                 t_Exception = exception;
             }
             catch  (final Throwable throwable)
             {
                 LogFactory.getLog(StringUtils.class).fatal(
-                    "Unknown error", throwable);
+                    Literals.UNKNOWN_ERROR, throwable);
 
-                t_Exception = new RuntimeException("Could not initialize StringUtils", throwable);
+                t_Exception = new RuntimeException(Literals.COULD_NOT_INITIALIZE_STRING_UTILS, throwable);
             }
 
             if (t_Exception != null)
@@ -498,7 +499,7 @@ public class VersionUtils
         catch  (final MalformedPatternException exception)
         {
             LogFactory.getLog(VersionUtils.class).error(
-                "Malformed pattern (possibly due to quote symbol conflict)",
+                Literals.MALFORMED_PATTERN_POSSIBLY_DUE_TO_QUOTE_SYMBOL_CONFLICT,
                 exception);
         }
         catch  (final RegexpEngineNotFoundException exception)
@@ -509,7 +510,7 @@ public class VersionUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(getClass()).error(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
         
         return result;

@@ -36,6 +36,7 @@ package org.acmsl.commons.utils.io;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Helper;
@@ -792,7 +793,7 @@ public class FileUtils
              * they escape all compiler checks.
              */
             LogFactory.getLog(FileUtils.class).warn(
-                "Malformed static patterns are fatal coding errors.",
+                Literals.MALFORMED_STATIC_PATTERNS_ARE_FATAL_CODING_ERRORS,
                 malformedPatternException);
         }
         catch  (final RegexpEngineNotFoundException regengNotFoundException)
@@ -803,7 +804,7 @@ public class FileUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(FileUtils.class).fatal(
-                "Cannot find any regexp engine.",
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE,
                 regengNotFoundException);
         }
         catch  (final RegexpPluginMisconfiguredException

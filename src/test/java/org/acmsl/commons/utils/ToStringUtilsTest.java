@@ -1,5 +1,5 @@
 /*
-                        queryj
+                        Java Commons
 
     Copyright (C) 2002-today  Jose San Leandro Armendariz
                               chous@acm-sl.org
@@ -36,11 +36,6 @@
 package org.acmsl.commons.utils;
 
 /*
- * Importing JUnit classes.
- */
-import junit.framework.TestCase;
-
-/*
  * Importing project classes.
  */
 import org.acmsl.commons.Literals;
@@ -52,9 +47,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /*
- * Importing checkthread.org annotations.
+ * Importing JUnit classes.
  */
-import org.checkthread.annotations.ThreadSafe;
+import org.junit.Assert;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /*
  * Importing JDK classes.
@@ -74,21 +71,10 @@ import java.util.Map;
  * @since 3.0
  * Created: 2013/11/24 07:18
  */
-@ThreadSafe
-@SuppressWarnings("unused")
+//@RunWith(JUnit4.class)
 public class ToStringUtilsTest
-    extends TestCase
     implements  org.acmsl.commons.patterns.Test
 {
-    /**
-     * Constructs a test case with the given name.
-     * @param name the test case name.
-     */
-    public ToStringUtilsTest(@NotNull final String name)
-    {
-        super(name);
-    }
-
     protected static class Dummy
     {
         @Nullable private String fancyName;
@@ -147,12 +133,11 @@ public class ToStringUtilsTest
      * method.
      * @see ToStringUtils
      */
-    @SuppressWarnings("unused")
-    public void testToJson()
+    public void to_json_works()
     {
         @NotNull final ToStringUtils t_ToStringUtils = ToStringUtils.getInstance();
 
-        assertNotNull(t_ToStringUtils);
+        Assert.assertNotNull(t_ToStringUtils);
 
         @NotNull final Dummy d = new Dummy();
         d.fancyName = "d1";
@@ -180,7 +165,7 @@ public class ToStringUtilsTest
 
         @NotNull final String actual = normalize(d.toString());
 
-        assertEquals("Invalid JSON", expected, actual);
+        Assert.assertEquals("Invalid JSON", expected, actual);
 
         @NotNull final Dummy otherDummy = new Dummy();
         otherDummy.fancyName = "d1_1";
@@ -217,7 +202,7 @@ public class ToStringUtilsTest
 
         @NotNull final String actual2 = normalize(d.toString());
 
-        assertEquals("Invalid JSON (2)", expected2, actual2);
+        Assert.assertEquals("Invalid JSON (2)", expected2, actual2);
 
         @NotNull final List<Dummy> otherDummies = new ArrayList<Dummy>();
         @NotNull final StringBuilder otherDummiesToString = new StringBuilder();
@@ -269,7 +254,7 @@ public class ToStringUtilsTest
                 Literals.OTHER_STUFF, otherStuff)
                 .toString();
 
-        assertEquals(
+        Assert.assertEquals(
             "otherStuff failed",
             normalize(otherStuffToString.toString()),
             normalize(aux2));
@@ -298,7 +283,7 @@ public class ToStringUtilsTest
 
         @NotNull final String aux = d.toString();
 
-        assertEquals("Invalid JSON (3)", expected3, actual3);
+        Assert.assertEquals("Invalid JSON (3)", expected3, actual3);
     }
 
     @NotNull

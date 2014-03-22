@@ -36,6 +36,7 @@ package org.acmsl.commons.utils;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.regexpplugin.Compiler;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 /*
@@ -101,6 +103,27 @@ public class StringUtils
             ";",
             ":"
         };
+
+    /**
+     * The Non-alphanumeric regexp.
+     */
+    static final java.util.regex.Pattern NON_ALPHANUMERIC_REGEXP = java.util.regex.Pattern.compile("\\W+");
+
+    /**
+     * The separator regexp.
+     */
+    static final java.util.regex.Pattern SEPARATOR_REGEXP = java.util.regex.Pattern.compile(DEFAULT_SEPARATOR + "+");
+
+    /**
+     * Matches separator followed by lower case letters.
+     */
+    static final java.util.regex.Pattern SEPARATOR_PLUS_LOWERCASE_REGEXP =
+        java.util.regex.Pattern.compile("(.*?)" + DEFAULT_SEPARATOR + "(.)(.*)?");
+
+    /**
+     * The english locale.
+     */
+    protected static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     /**
      * Singleton implemented to avoid the double-checked locking.
@@ -238,7 +261,7 @@ public class StringUtils
                              * and forget.
                              */
                     LogFactory.getLog(StringUtils.class).error(
-                        "Invalid sub-package pattern", exception);
+                        Literals.INVALID_SUB_PACKAGE_PATTERN, exception);
 
                     t_Exception = exception;
                 }
@@ -320,16 +343,16 @@ public class StringUtils
             catch  (final RegexpEngineNotFoundException exception)
             {
                 LogFactory.getLog(StringUtils.class).error(
-                    "no regexp engine found", exception);
+                    Literals.NO_REGEXP_ENGINE_FOUND, exception);
 
                 t_Exception = exception;
             }
             catch  (final Throwable throwable)
             {
                 LogFactory.getLog(StringUtils.class).fatal(
-                    "Unknown error", throwable);
+                    Literals.UNKNOWN_ERROR, throwable);
 
-                t_Exception = new RuntimeException("Could not initialize StringUtils", throwable);
+                t_Exception = new RuntimeException(Literals.COULD_NOT_INITIALIZE_STRING_UTILS, throwable);
             }
 
             if (t_Exception != null)
@@ -821,7 +844,7 @@ public class StringUtils
     @NotNull
     public String softNormalize(@NotNull final String value, final char separator)
     {
-        return softNormalize(value, "" + separator);
+        return softNormalize(value, String.valueOf(separator));
     }
 
     /**
@@ -866,41 +889,31 @@ public class StringUtils
         {
             @NotNull final Helper t_Helper = createHelper(RegexpManager.getInstance());
 
-            result =
-                t_Helper.replaceAll(
-                    result, "\\s+", separator);
+            result = t_Helper.replaceAll(result, "\\s+", separator);
 
-            result =
-                t_Helper.replaceAll(
-                    result, separator, SEPARATOR_TOKEN);
+            result = t_Helper.replaceAll(result, separator, SEPARATOR_TOKEN);
 
             final int t_iLength = extraSeparators.length;
 
             for  (int t_iIndex = 0; t_iIndex < t_iLength; t_iIndex++)
             {
-                result =
-                    t_Helper.replaceAll(
-                        result,
-                        extraSeparators[t_iIndex],
-                        SEPARATOR_TOKEN);
+                result = t_Helper.replaceAll(result, extraSeparators[t_iIndex], SEPARATOR_TOKEN);
             }
 
             result = t_Helper.replaceAll(result, "\\W", "");
 
-            result =
-                t_Helper.replaceAll(
-                    result, SEPARATOR_TOKEN, separator);
+            result = t_Helper.replaceAll(result, SEPARATOR_TOKEN, separator);
         }
         catch (final MalformedPatternException exception)
         {
             LogFactory.getLog(StringUtils.class).fatal(
-                "Malformed pattern",
+                Literals.MALFORMED_PATTERN,
                 exception);
         }
         catch (final RegexpEngineNotFoundException exception)
         {
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.",
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE,
                 exception);
         }
 
@@ -913,14 +926,15 @@ public class StringUtils
      * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
      * characters.
      * @param value the value to normalize.
+     * @param locale the locale.
      * @return the normalized version.
      */
     @NotNull
-    public String normalize(@NotNull final String value)
+    public String normalize(@NotNull final String value, @NotNull final Locale locale)
     {
         return
             softNormalize(
-                capitalize(value, DEFAULT_SEPARATOR), DEFAULT_SEPARATOR);
+                capitalize(value, locale, DEFAULT_SEPARATOR), DEFAULT_SEPARATOR);
     }
 
     /**
@@ -929,15 +943,16 @@ public class StringUtils
      * <i>capitalization</i> and <i>removal</i> of all non-alphanumeric
      * characters.
      * @param value the value to normalize.
+     * @param locale the locale.
      * @param separator the word separator.
      * @return the normalized version.
      */
     @NotNull
-    public String normalize(@NotNull final String value, final char separator)
+    public String normalize(@NotNull final String value, final Locale locale, final char separator)
     {
         return
             softNormalize(
-                capitalize(value, separator), "" + separator);
+                capitalize(value, locale, separator), "" + separator);
     }
 
     /**
@@ -945,55 +960,112 @@ public class StringUtils
      * separator. For instance,
      * <code>capitalize("asd-efg", '-').equals("AsdEfg")</code>.
      * @param text the text to process.
+     * @param locale the locale.
      * @return the capitalized string.
      */
     @NotNull
-    public String capitalize(@NotNull final String text)
+    public String
+    capitalize(@NotNull final String text, final Locale locale)
     {
-        String result = text;
+        @NotNull final StringBuilder result = new StringBuilder();
 
+        String aux;
         try
         {
-            @NotNull final Helper t_Helper = createHelper(RegexpManager.getInstance());
+            aux = NON_ALPHANUMERIC_REGEXP.matcher(text).replaceAll(String.valueOf(DEFAULT_SEPARATOR));
 
-            result = t_Helper.replaceAll(result, "\\W+", "_");
+            aux = SEPARATOR_REGEXP.matcher(aux).replaceAll(String.valueOf(DEFAULT_SEPARATOR));
 
-            result = t_Helper.replaceAll(result, "_+", "_");
+            @NotNull java.util.regex.Matcher t_Matcher = SEPARATOR_PLUS_LOWERCASE_REGEXP.matcher(aux);
 
-            result = capitalize(result, DEFAULT_SEPARATOR);
+            if (t_Matcher.matches())
+            {
+                String rest;
+
+                do
+                {
+                    final StringBuilder t_sbAux = new StringBuilder();
+
+                    t_sbAux.append(t_Matcher.group(1).toLowerCase(locale));
+                    t_sbAux.append(t_Matcher.group(2).toUpperCase(locale));
+
+                    result.append(t_sbAux.toString());
+
+                    rest = t_Matcher.group(3);
+
+                    t_Matcher = SEPARATOR_PLUS_LOWERCASE_REGEXP.matcher(rest);
+                }
+                while (t_Matcher.matches());
+
+                if (rest != null)
+                {
+                    result.append(rest.toLowerCase(locale));
+                }
+            }
+            else
+            {
+                result.append(aux);
+            }
         }
         catch (final MalformedPatternException exception)
         {
             LogFactory.getLog(StringUtils.class).fatal(
-                "Malformed pattern", exception);
+                Literals.MALFORMED_PATTERN, exception);
         }
         catch (final RegexpEngineNotFoundException exception)
         {
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
 
-        return result;
+        return capitalizeFirst(result.toString(), locale);
     }
-    
+
+    /**
+     * Capitalizes the first letter of given text.
+     * @param text the text.
+     * @param locale the locale.
+     * @return the capitalized version.
+     */
+    @NotNull
+    public String capitalizeFirst(@NotNull final String text, @NotNull final Locale locale)
+    {
+        @NotNull final StringBuilder result = new StringBuilder();
+
+        if (text.length() > 0)
+        {
+            result.append(String.valueOf(text.charAt(0)).toUpperCase(locale));
+
+            if (text.length() > 1)
+            {
+                result.append(text.substring(1));
+            }
+        }
+
+        return result.toString();
+    }
+
     /**
      * Capitalizes the words contained in given string, using a concrete char
      * separator. For instance,
      * <code>capitalize("asd-efg", '-').equals("AsdEfg")</code>.
      * @param text the text to process.
+     * @param locale the locale.
      * @param separator the word separator.
      * @return the capitalized string.
      */
     @NotNull
-    public String capitalize(@NotNull final String text, final char separator)
+    public String capitalize(@NotNull final String text, final Locale locale, final char separator)
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder(text.length());
 
+        @NotNull final String aux = text; //.toLowerCase(locale);
+
         boolean t_bToUpper = true;
 
-        for  (int t_iIndex = 0; t_iIndex < text.length(); t_iIndex++)
+        for  (int t_iIndex = 0; t_iIndex < aux.length(); t_iIndex++)
         {
-            if (text.charAt(t_iIndex) == separator)
+            if (aux.charAt(t_iIndex) == separator)
             {
                 t_bToUpper = true;
                 continue;
@@ -1002,13 +1074,13 @@ public class StringUtils
             if (t_bToUpper)
             {
                 t_sbResult.append(
-                    Character.toUpperCase(text.charAt(t_iIndex)));
+                    Character.toUpperCase(aux.charAt(t_iIndex)));
 
                 t_bToUpper = false;
                 continue;
             }
 
-            t_sbResult.append(text.charAt(t_iIndex));
+            t_sbResult.append(String.valueOf(aux.charAt(t_iIndex)));
         }
 
         return t_sbResult.toString();
@@ -1022,11 +1094,11 @@ public class StringUtils
      * @return the processed string.
      */
     @NotNull
-    public String toJavaMethod(@NotNull final String text, final char separator)
+    public String toJavaMethod(@NotNull final String text, final Locale locale, final char separator)
     {
         @NotNull final StringBuilder t_sbResult = new StringBuilder();
 
-        @NotNull final String t_strText = normalize(text, separator);
+        @NotNull final String t_strText = normalize(text, locale, separator);
 
         if  (t_strText.length() > 0)
         {
@@ -1056,6 +1128,25 @@ public class StringUtils
     public String toJavaMethod(
         @NotNull final String text, final char separator, @NotNull final String[] words)
     {
+        return toJavaMethod(text, DEFAULT_LOCALE, separator, words);
+    }
+
+    /**
+     * Capitalizes the contents, using given separator, and word list.
+     * This is the same as, replacing all words from the list in the
+     * input to its capitalized versions, and finally
+     * applying <code>toJavaMethod(text, separator)</code> to the result.
+     * @param text the text.
+     * @param locale the locale.
+     * @param separator the separator.
+     * @param words the predefined words.
+     * @return the token collection.
+     */
+    @SuppressWarnings("unused")
+    @NotNull
+    public String toJavaMethod(
+        @NotNull final String text, final Locale locale, final char separator, @NotNull final String[] words)
+    {
         @NotNull String result = text;
 
         try
@@ -1068,10 +1159,10 @@ public class StringUtils
                     t_Helper.replaceAll(
                         result,
                         words[t_iIndex],
-                        capitalize(words[t_iIndex], separator));
+                        capitalize(words[t_iIndex], DEFAULT_LOCALE, separator));
             }
 
-            result = toJavaMethod(result, separator);
+            result = toJavaMethod(result, DEFAULT_LOCALE, separator);
         }
         catch  (final MalformedPatternException exception)
         {
@@ -1083,7 +1174,7 @@ public class StringUtils
              * they escape all compiler checks.
              */
             LogFactory.getLog(StringUtils.class).warn(
-                "Malformed static patterns are fatal coding errors.",
+                Literals.MALFORMED_STATIC_PATTERNS_ARE_FATAL_CODING_ERRORS,
                 exception);
         }
         catch  (final RegexpEngineNotFoundException exception)
@@ -1094,7 +1185,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.",
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE,
                 exception);
         }
         
@@ -1133,7 +1224,7 @@ public class StringUtils
         @NotNull final StringValidator stringValidator,
         @NotNull final Compiler compiler)
     {
-        @NotNull final List<String> result = new ArrayList<String>();
+        @NotNull final List<String> result = new ArrayList<>();
 
         String t_strText = text;
 
@@ -1173,7 +1264,7 @@ public class StringUtils
         catch  (final MalformedPatternException exception)
         {
             LogFactory.getLog(StringUtils.class).error(
-                "Malformed pattern (possibly due to quote symbol conflict)",
+                Literals.MALFORMED_PATTERN_POSSIBLY_DUE_TO_QUOTE_SYMBOL_CONFLICT,
                 exception);
         }
         catch  (final RegexpEngineNotFoundException exception)
@@ -1184,7 +1275,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).error(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
         
         return result;
@@ -1199,7 +1290,7 @@ public class StringUtils
     @NotNull
     public String extractPackageName(@NotNull final String text)
     {
-        return capitalize(extractPackageGroup(text, 2), DEFAULT_SEPARATOR);
+        return capitalize(extractPackageGroup(text, 2), DEFAULT_LOCALE, DEFAULT_SEPARATOR);
     }
 
     /**
@@ -1254,7 +1345,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
 
         if (result == null)
@@ -1348,7 +1439,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
 
         return t_sbResult.toString();
@@ -1504,7 +1595,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
 
         return t_sbResult.toString();
@@ -1613,7 +1704,7 @@ public class StringUtils
              * class that use regexps will not work.
              */
             LogFactory.getLog(StringUtils.class).fatal(
-                "Cannot find any regexp engine.", exception);
+                Literals.CANNOT_FIND_ANY_REGEXP_ENGINE, exception);
         }
 
         return t_sbResult.toString();
@@ -1886,7 +1977,7 @@ public class StringUtils
     @NotNull
     public String[] split(@NotNull final String value, @NotNull final String[] separators)
     {
-        @NotNull final Collection<String> t_cResult = new ArrayList<String>();
+        @NotNull final Collection<String> t_cResult = new ArrayList<>();
 
         @Nullable String t_strSeparator = null;
         
@@ -1968,7 +2059,7 @@ public class StringUtils
     @NotNull
     public String[] trim(@NotNull final String[] values)
     {
-        @NotNull final Collection<String> t_cResult = new ArrayList<String>();
+        @NotNull final Collection<String> t_cResult = new ArrayList<>(values.length);
         
         String t_strCurrentLine;
         

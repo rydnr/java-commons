@@ -37,6 +37,7 @@ package org.acmsl.commons.utils.net;
 /*
  * Importing some ACM-SL classes.
  */
+import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Singleton;
 import org.acmsl.commons.patterns.Utils;
 import org.acmsl.commons.regexpplugin.Compiler;
@@ -583,7 +584,7 @@ public class URLUtils
         catch  (final RegexpEngineNotFoundException regexpEngineNotFoundException)
         {
             LogFactory.getLog(URLUtils.class).error(
-                "no regexp engine found",
+                Literals.NO_REGEXP_ENGINE_FOUND,
                 regexpEngineNotFoundException);
         }
 

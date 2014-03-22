@@ -67,4 +67,13 @@ public interface Literals
     String OTHER_STUFF = "otherStuff";
     String TO_JSON = "toJson";
     String TO_STRING = "toString";
+    String NO_REGEXP_ENGINE_FOUND = "no regexp engine found";
+    String UNKNOWN_ERROR = "Unknown error";
+    String COULD_NOT_INITIALIZE_STRING_UTILS = "Could not initialize StringUtils";
+    String MALFORMED_STATIC_PATTERNS_ARE_FATAL_CODING_ERRORS = "Malformed static patterns are fatal coding errors.";
+    String CANNOT_FIND_ANY_REGEXP_ENGINE = "Cannot find any regexp engine.";
+    String MALFORMED_PATTERN = "Malformed pattern";
+    String MALFORMED_PATTERN_POSSIBLY_DUE_TO_QUOTE_SYMBOL_CONFLICT =
+        "Malformed pattern (possibly due to quote symbol conflict)";
+    String INVALID_SUB_PACKAGE_PATTERN = "Invalid sub-package pattern";
 }

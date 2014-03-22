@@ -1,7 +1,7 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armend�riz
+    Copyright (C) 2002-2005  Jose San Leandro Armendariz
                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
@@ -22,25 +22,18 @@
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecaba�as
+                    Urb. Valdecabanas
                     Boadilla del monte
                     28660 Madrid
                     Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: StringUtilsTest.java
  *
- * Author: Jose San Leandro Armend�riz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Performs some unit tests on StringUtils class.
- *
- * File version: $Revision: 1493 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: StringUtilsTest.java 1493 2006-08-29 06:35:52Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -49,50 +42,48 @@ package org.acmsl.commons.utils;
  * Importing some JDK classes.
  */
 import java.io.File;
+import java.util.Locale;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
 
 /*
  * Importing JUnit classes.
  */
-import junit.framework.TestCase;
-import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Performs some unit tests on StringUtils class.
- * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro Armend�riz</a>
+ * @author <a href="mailto:java-commons@acm-sl.org">Jose San Leandro Armendariz</a>
  * @see org.acmsl.commons.utils.StringUtils
  */
+@RunWith(JUnit4.class)
 public class StringUtilsTest
-    extends     TestCase
     implements  org.acmsl.commons.patterns.Test
 {
-    /**
-     * Constructs a test case with the given name.
-     * @param name the test case name.
-     */
-    public StringUtilsTest(@NotNull final String name)
-    {
-        super(name);
-    }
-
     /**
      * Tests the <code>StringUtils.replace(text, original, replacement)</code>
      * method.
      * @see StringUtils#replace(String,String,String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testReplace()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
-        assertEquals(
+        Assert.assertEquals(
             "replace(\"com.foo.bar\", \".\", \"-\") failed.",
             "com-foo-bar",
             t_StringUtils.replace("com.foo.bar", ".", "-"));
 
-        assertEquals(
+        Assert.assertEquals(
             "replace(\"com.foo.bar\", \"f\", \"-\") failed.",
             "com.-oo.bar",
             t_StringUtils.replace("com.foo.bar", "f", "-"));
@@ -103,16 +94,16 @@ public class StringUtilsTest
      * method.
      * @see StringUtils#escapeRegexp(String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testEscapeRegexp()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         @NotNull final String t_strInput = "c$om.(foo)*.bar^";
 
-        assertEquals(
+        Assert.assertEquals(
             "escapeRegexp(\"" + t_strInput + "\") failed.",
             "c\\$om\\.\\(foo\\)\\*\\.bar\\^", // c\$om\.\(foo\)\*\.bar\^
             t_StringUtils.escapeRegexp(t_strInput));
@@ -122,39 +113,39 @@ public class StringUtilsTest
      * Tests the StringUtils.packageToFilePath(packageName) method.
      * @see StringUtils#packageToFilePath(String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testPackageToFilePath()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"com.foo.bar\") failed.",
             "com" + File.separator + "foo" + File.separator + "bar",
             t_StringUtils.packageToFilePath("com.foo.bar"));
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"com\") failed.",
             "com",
             t_StringUtils.packageToFilePath("com"));
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"com.\") failed.",
             "com",
             t_StringUtils.packageToFilePath("com."));
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"com..\") failed.",
             "com",
             t_StringUtils.packageToFilePath("com.."));
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"..com...\") failed.",
             "com",
             t_StringUtils.packageToFilePath("..com..."));
 
-        assertEquals(
+        Assert.assertEquals(
             "packageToFilePath(\"..com...foo..bar....\") failed.",
             "com" + File.separator + "foo" + File.separator + "bar",
             t_StringUtils.packageToFilePath("..com...foo..bar...."));
@@ -164,12 +155,12 @@ public class StringUtilsTest
      * Tests the StringUtils.justify(text, margin) method.
      * @see StringUtils#justify(String,int)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testJustify()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput1 = "To be justified just after the \"just\"";
 
@@ -178,9 +169,9 @@ public class StringUtilsTest
         String t_strJustified =
             t_StringUtils.justify(t_strInput1, t_iInput2);
 
-        assertNotNull(t_strJustified);
+        Assert.assertNotNull(t_strJustified);
 
-        assertEquals(
+        Assert.assertEquals(
             "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just\nafter the \"just\"",
             t_strJustified);
@@ -189,9 +180,9 @@ public class StringUtilsTest
 
         t_strJustified = t_StringUtils.justify(t_strInput1, t_iInput2);
 
-        assertNotNull(t_strJustified);
+        Assert.assertNotNull(t_strJustified);
 
-        assertEquals(
+        Assert.assertEquals(
             "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just\nafter the \"just\"",
             t_strJustified);
@@ -203,9 +194,9 @@ public class StringUtilsTest
         t_strJustified =
             t_StringUtils.justify(t_strInput1, t_iInput2);
 
-        assertNotNull(t_strJustified);
+        Assert.assertNotNull(t_strJustified);
 
-        assertEquals(
+        Assert.assertEquals(
             "justify(\"" + t_strInput1 + "\", \"" + t_iInput2 + "\") failed.",
             "To be justified just after\nthe \"after\"",
             t_strJustified);
@@ -215,19 +206,19 @@ public class StringUtilsTest
      * Tests the StringUtils.uncapitalize(text, separator) method.
      * @see StringUtils#unCapitalize(String,String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testUncapitalize()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput = "thisIsATest";
 
         String t_strUnCapitalized =
             t_StringUtils.unCapitalize(t_strInput, "-");
 
-        assertEquals(
+        Assert.assertEquals(
             "unCapitalize(" + t_strInput + ", \"-\") failed.",
             "this-is-a-test",
             t_strUnCapitalized);
@@ -237,7 +228,7 @@ public class StringUtilsTest
         t_strUnCapitalized =
             t_StringUtils.unCapitalize(t_strInput, "-");
 
-        assertEquals(
+        Assert.assertEquals(
             "unCapitalize(" + t_strInput + ", \"-\") failed.",
             "this-is-another-test",
             t_strUnCapitalized);
@@ -247,7 +238,7 @@ public class StringUtilsTest
         t_strUnCapitalized =
             t_StringUtils.unCapitalize(t_strInput, "-");
 
-        assertEquals(
+        Assert.assertEquals(
             "unCapitalize(" + t_strInput + ", \"-\") failed.",
             "this-is-yet-another-test",
             t_strUnCapitalized);
@@ -257,19 +248,19 @@ public class StringUtilsTest
      * Tests the StringUtils.uncapitalizeStart(text, separator) method.
      * @see StringUtils#unCapitalize(String,String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testUncapitalizeStart()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput = "ThisIsATest";
 
         String t_strUnCapitalized =
             t_StringUtils.unCapitalizeStart(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "unCapitalizeStart(" + t_strInput + ", \"-\") failed.",
             "thisIsATest",
             t_strUnCapitalized);
@@ -279,7 +270,7 @@ public class StringUtilsTest
         t_strUnCapitalized =
             t_StringUtils.unCapitalizeStart(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "unCapitalizeStart(" + t_strInput + ", \"-\") failed.",
             "thisIsAnotherTest",
             t_strUnCapitalized);
@@ -289,12 +280,12 @@ public class StringUtilsTest
      * Tests the StringUtils.applyToEachLine(text, format) method.
      * @see StringUtils#applyToEachLine(String,String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testApplyToEachLine()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput = " line 1   \n    and line 2";
 
@@ -302,7 +293,7 @@ public class StringUtilsTest
             t_StringUtils.applyToEachLine(
                 t_strInput, "||{0}{1}//");
 
-        assertEquals(
+        Assert.assertEquals(
             "applyToEachLine(\"" + t_strInput + "\"||{0}{1}//\") failed.",
             "||line 1//\n||   and line 2//\n",
             t_strOutput);
@@ -313,7 +304,7 @@ public class StringUtilsTest
             t_StringUtils.applyToEachLine(
                 t_strInput, "||{0}{1}//");
 
-        assertEquals(
+        Assert.assertEquals(
             "applyToEachLine(\"" + t_strInput + "\"||{0}{1}//\") failed.",
             "||line 1//\n||.   and line 2//\n",
             t_strOutput);
@@ -332,7 +323,7 @@ public class StringUtilsTest
             t_StringUtils.applyToEachLine( 
                 t_strInput, "{0}|{1}");
 
-        assertEquals(
+        Assert.assertEquals(
             "applyToEachLine(\"" + t_strInput + "\", \"{0}{1}\") failed.",
               "|update customers\n" 
             + "|set name = ?\n" 
@@ -349,19 +340,19 @@ public class StringUtilsTest
      * Tests the StringUtils.retrieveMinimumIndentInAllLines(text) method.
      * @see StringUtils#retrieveMinimumIndentInAllLines(String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testRetrieveMinimumIndentInAllLines()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput = " line 1   \n    and line 2";
 
         int t_iOutput =
             t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "retrieveMinimumIndentInAllLines(\"" + t_strInput + "\") failed.",
             1,
             t_iOutput);
@@ -371,7 +362,7 @@ public class StringUtilsTest
         t_iOutput =
             t_StringUtils.retrieveMinimumIndentInAllLines(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "retrieveMinimumIndentInAllLines(\"" + t_strInput + "\") failed.",
             1,
             t_iOutput);
@@ -381,19 +372,19 @@ public class StringUtilsTest
      * Tests the StringUtils.removeFirstAndLastBlankLines(text) method.
      * @see StringUtils#removeFirstAndLastBlankLines(String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testRemoveFirstAndLastBlankLines()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput = " line 1   \n    and line 2";
 
         String t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
             t_strInput,
             t_strOutput);
@@ -403,7 +394,7 @@ public class StringUtilsTest
         t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
             "line 1   \n    and line 2\n",
             t_strOutput);
@@ -414,7 +405,7 @@ public class StringUtilsTest
         t_strOutput =
             t_StringUtils.removeFirstAndLastBlankLines(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "removeFirstAndLastBlankLines(\"" + t_strInput + "\") failed.",
             t_strInput,
             t_strOutput);
@@ -422,41 +413,71 @@ public class StringUtilsTest
 
     /**
      * Tests the <code>StringUtils.capitalize(String)</code> method.
-     * @see org.acmsl.commons.utils.StringUtils#capitalize(String)
+     * @see org.acmsl.commons.utils.StringUtils#capitalize(String, Locale)
      */
-    @SuppressWarnings("unused")
-    public void testCapitalize()
+    @Test
+    public void capitalize_works_for_lowercase()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         @NotNull final String t_strInput = "ab-cd_ef  gh+ijk;;_|l~~@m  2n=o4p";
 
-        @NotNull final String t_strOutput = t_StringUtils.capitalize(t_strInput);
+        @NotNull final String t_strOutput = t_StringUtils.capitalize(t_strInput, Locale.ENGLISH);
 
-        assertEquals(
+        Assert.assertEquals(
             "capitalize(\"" + t_strInput + "\") failed.",
             "AbCdEfGhIjkLM2nO4p",
             t_strOutput);
+    }
+
+    @Test
+    public void capitalize_works_for_upper_cased_strings()
+    {
+        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
+
+        Assert.assertNotNull(t_StringUtils);
+
+        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("G_CYCLE_TYPES", Locale.ENGLISH));
+    }
+
+    @Test
+    public void capitalize_works_for_mixed_cased_strings()
+    {
+        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
+
+        Assert.assertNotNull(t_StringUtils);
+
+        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("GCycleTypes", Locale.ENGLISH));
+    }
+
+    @Test
+    public void capitalize_first_works()
+    {
+        @NotNull final StringUtils instance = StringUtils.getInstance();
+
+        Assert.assertNotNull(instance);
+
+        Assert.assertEquals("Abc", instance.capitalizeFirst("abc", Locale.ENGLISH));
     }
 
     /**
      * Tests the <code>StringUtils.escape(String, char)</code> method.
      * @see org.acmsl.commons.utils.StringUtils#escape(String, char)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testEscape()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         @NotNull final String t_strInput = "ab ()\" .cde  \" f g ^\\\"";
 
         @NotNull final String t_strOutput = t_StringUtils.escape(t_strInput, '\"');
 
-        assertEquals(
+        Assert.assertEquals(
             "escape(\"" + t_strInput + "\") failed.",
             "ab ()\\\" .cde  \\\" f g ^\\\\\"",
             t_strOutput);
@@ -467,19 +488,19 @@ public class StringUtilsTest
      * method.
      * @see org.acmsl.commons.utils.StringUtils#softNormalize(String, String)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testSoftNormalize()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         String t_strInput;
         t_strInput = "number of    \nbets";
 
         String t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
 
-        assertEquals(
+        Assert.assertEquals(
             "softNormalize(\"" + t_strInput + "\") failed.",
             "number_of_bets",
             t_strOutput);
@@ -488,7 +509,7 @@ public class StringUtilsTest
 
         t_strOutput = t_StringUtils.softNormalize(t_strInput, "_");
 
-        assertEquals(
+        Assert.assertEquals(
             "softNormalize(\"" + t_strInput + "\") failed.",
             t_strInput,
             t_strOutput);
@@ -497,7 +518,7 @@ public class StringUtilsTest
 
         t_strOutput = t_StringUtils.softNormalize(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "softNormalize(\"" + t_strInput + "\") failed.",
             "allocate_in_different_clubs",
             t_strOutput);
@@ -506,7 +527,7 @@ public class StringUtilsTest
 
         t_strOutput = t_StringUtils.softNormalize(t_strInput);
 
-        assertEquals(
+        Assert.assertEquals(
             "softNormalize(\"" + t_strInput + "\") failed.",
             "n_1",
             t_strOutput);
@@ -515,20 +536,20 @@ public class StringUtilsTest
     /**
      * Tests the <code>StringUtils.normalize()</code>
      * method.
-     * @see org.acmsl.commons.utils.StringUtils#normalize(String)
+     * @see org.acmsl.commons.utils.StringUtils#normalize(String, Locale)
      */
-    @SuppressWarnings("unused")
+    @Test
     public void testNormalize()
     {
         @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
 
-        assertNotNull(t_StringUtils);
+        Assert.assertNotNull(t_StringUtils);
 
         @NotNull final String t_strInput = "multiple.bet.result";
 
-        @NotNull final String t_strOutput = t_StringUtils.normalize(t_strInput);
+        @NotNull final String t_strOutput = t_StringUtils.normalize(t_strInput, Locale.ENGLISH);
 
-        assertEquals(
+        Assert.assertEquals(
             "normalize(\"" + t_strInput + "\") failed.",
             "Multiple_bet_result",
             t_strOutput);
