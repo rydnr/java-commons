@@ -119,6 +119,7 @@ public class CachingBundleI14able
      * @param messageKey the key to build the exception message.
      * @param systemProperty the name of the bundle.
      * @param bundleName the bundle name.
+     * @param ttl the time to live.
      */
     @SuppressWarnings("unused")
     public CachingBundleI14able(
@@ -446,6 +447,7 @@ public class CachingBundleI14able
          * Gets an object for the given key from this resource bundle.
          * @param key the key.
          * @param bundle the bundle.
+         * @return the object.
          */
         @Nullable
         protected Object handleGetObject(@NotNull final String key, @NotNull final ResourceBundle bundle)
@@ -506,7 +508,8 @@ public class CachingBundleI14able
         }
 
         /**
-         * Gives the text representation of the instance.
+         * Gives the text representation of given bundle.
+         * @param bundle the {@link ResourceBundle}.
          * @return such text.
          */
         @NotNull

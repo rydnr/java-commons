@@ -524,6 +524,7 @@ public class VersionUtils
      * @param familyMajor the family's major version.
      * @param familyMinor the family's minor version.
      * @param familySubminor the family's subminor version.
+     * @return {@code true} if the versions match.
      */
     public boolean matches(
         @NotNull final String major,
@@ -553,6 +554,7 @@ public class VersionUtils
      * @param familyMinor the family's minor version.
      * @param familySubminor the family's subminor version.
      * @param wildcard the identifier used to identify "anything goes".
+     * @return {@code true} if the versions match.
      */
     public boolean matches(
         @NotNull final String major,
@@ -585,6 +587,7 @@ public class VersionUtils
      * @param familySubminor the family's subminor version.
      * @param wildcard the identifier used to identify "anything goes".
      * @param conversionUtils the <code>ConversionUtils</code> instance.
+     * @return {@code true} if the versions match.
      */
     protected boolean matches(
         @NotNull final String major,
@@ -633,6 +636,7 @@ public class VersionUtils
      * Checks whether concrete version numbers match.
      * @param number the version number.
      * @param familyNumber the family number.
+     * @return {@code true} if the versions match.
      */
     public boolean versionNumbersMatch(
         @NotNull final String number, @NotNull final String familyNumber)
@@ -645,6 +649,7 @@ public class VersionUtils
      * @param number the version number.
      * @param familyNumber the family number.
      * @param wildcard the identifier used to identify "anything goes".
+     * @return {@code true} if the versions match.
      */
     public boolean versionNumbersMatch(
         @NotNull final String number,
@@ -665,6 +670,7 @@ public class VersionUtils
      * @param familyNumber the family number.
      * @param wildcard the identifier used to identify "anything goes".
      * @param conversionUtils the <code>ConversionUtils</code> instance.
+     * @return {@code true} if the versions match.
      */
     protected boolean versionNumbersMatch(
         @NotNull final String number,

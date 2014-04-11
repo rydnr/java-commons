@@ -56,6 +56,9 @@ import org.jetbrains.annotations.NotNull;
 public class MalformedPatternExceptionGNUAdapter
     extends MalformedPatternException
 {
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 4223179960140816813L;
 
     /**

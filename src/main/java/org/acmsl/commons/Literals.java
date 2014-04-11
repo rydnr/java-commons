@@ -49,31 +49,130 @@ import org.checkthread.annotations.ThreadSafe;
 @ThreadSafe
 public interface Literals
 {
+    /**
+     * String literal: "Could not load environment property ".
+     */
     String COULD_NOT_LOAD_ENVIRONMENT_PROPERTY = "Could not load environment property ";
+
+    /**
+     * String literal: ".properties".
+     */
     String PROPERTIES = ".properties";
-    String M_B_CASE_SENSITIVE = "m__bCaseSensitive=";
-    String M_B_MULTILINE = ", m__bMultiline=";
-    String FALSE = "false";
+
+    /**
+     * String literal: "caseSensitive: ".
+     */
+    String M_B_CASE_SENSITIVE = "caseSensitive: ";
+
+    /**
+     * String literal: ", multiline: ".
+     */
+    String M_B_MULTILINE = ", multiline: ";
+
+    /**
+     * String literal: {@code String.valueOf(Boolean.FALSE)}.
+     */
+    String FALSE = String.valueOf(Boolean.FALSE);
+
+    /**
+     * String literal: {@code Literals.FALSE}.
+     */
     String FALSE_L = FALSE;
+
+    /**
+     * String literal: "something else".
+     */
     String SOMETHING_ELSE = "something else";
+
+    /**
+     * String literal: "due to Log4J class-loading issues.".
+     */
     String DUE_TO_LOG4_J_CLASS_LOADING_ISSUES = "due to Log4J class-loading issues.";
+
+    /**
+     * String literal: "Error using Commons-Logging. This can happen ".
+     */
     String ERROR_USING_COMMONS_LOGGING_THIS_CAN_HAPPEN =
         "Error using Commons-Logging. This can happen ";
-    String ATTRS = "attrs";
+
+    /**
+     * String literal: "attributes".
+     */
+    String ATTRS = "attributes";
+
+    /**
+     * String literal: ".class".
+     */
     String CLASS = ".class";
+
+    /**
+     * String literal: "getClasspath".
+     */
     String GET_CLASSPATH = "getClasspath";
+
+    /**
+     * String literal: "getURLs".
+     */
     String GET_UR_LS = "getURLs";
+
+    /**
+     * String literal: "getBootstrapClassPath".
+     */
     String GET_BOOTSTRAP_CLASS_PATH = "getBootstrapClassPath";
+
+    /**
+     * String literal: "otherStuff".
+     */
     String OTHER_STUFF = "otherStuff";
+
+    /**
+     * String literal: "toJson".
+     */
     String TO_JSON = "toJson";
+
+    /**
+     * String literal: "toString".
+     */
     String TO_STRING = "toString";
+
+    /**
+     * String literal: "no regexp engine found".
+     */
     String NO_REGEXP_ENGINE_FOUND = "no regexp engine found";
+
+    /**
+     * String literal: "Unknown error".
+     */
     String UNKNOWN_ERROR = "Unknown error";
+
+    /**
+     * String literal: "Could not initialize StringUtils".
+     */
     String COULD_NOT_INITIALIZE_STRING_UTILS = "Could not initialize StringUtils";
+
+    /**
+     * String literal: "Malformed static patterns are fatal coding errors.".
+     */
     String MALFORMED_STATIC_PATTERNS_ARE_FATAL_CODING_ERRORS = "Malformed static patterns are fatal coding errors.";
+
+    /**
+     * String literal: "Cannot find any regexp engine.".
+     */
     String CANNOT_FIND_ANY_REGEXP_ENGINE = "Cannot find any regexp engine.";
+
+    /**
+     * String literal: "Malformed pattern".
+     */
     String MALFORMED_PATTERN = "Malformed pattern";
+
+    /**
+     * String literal: "Malformed pattern (possibly due to quote symbol conflict)".
+     */
     String MALFORMED_PATTERN_POSSIBLY_DUE_TO_QUOTE_SYMBOL_CONFLICT =
         "Malformed pattern (possibly due to quote symbol conflict)";
+
+    /**
+     * String literal: "Invalid sub-package pattern".
+     */
     String INVALID_SUB_PACKAGE_PATTERN = "Invalid sub-package pattern";
 }

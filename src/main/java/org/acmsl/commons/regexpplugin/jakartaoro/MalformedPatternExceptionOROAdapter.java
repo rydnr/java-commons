@@ -47,8 +47,11 @@ import org.jetbrains.annotations.NotNull;
 public class MalformedPatternExceptionOROAdapter
     extends  org.acmsl.commons.regexpplugin.MalformedPatternException
 {
-
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 4641127769311441324L;
+
     /**
      * Private reference to the actual exception.
      */

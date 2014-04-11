@@ -62,6 +62,10 @@ public abstract class CheckedException
                 I14able
 {
     /**
+     *
+     */
+    private static final long serialVersionUID = -3846927911305191628L;
+    /**
      * The wrapped object.
      */
     @NotNull private BundleI14able m__BundleI14able;

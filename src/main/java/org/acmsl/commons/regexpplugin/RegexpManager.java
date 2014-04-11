@@ -519,6 +519,7 @@ public class RegexpManager
      * Check cached engines (keyed by contextClassLoader).
      * @param contextClassLoader the context class loader.
      * @param engines the cached engines.
+     * @return the {@link RegexpEngine}.
      */
     @Nullable
     protected RegexpEngine getCachedEngine(
@@ -564,6 +565,7 @@ public class RegexpManager
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
+     * @return the {@link RegexpEngine}.
      */
     @SuppressWarnings("unused")
     public RegexpEngine createEngine(@NotNull final String engineClass)
@@ -585,6 +587,7 @@ public class RegexpManager
      * cannot be created.
      * @throws RegexpPluginMisconfiguredException if RegexpPlugin is
      * misconfigured.
+     * @return the {@link RegexpEngine}.
      */
     @SuppressWarnings("unchecked")
     @NotNull

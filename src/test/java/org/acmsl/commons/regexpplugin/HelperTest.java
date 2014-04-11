@@ -1,7 +1,7 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
+    Copyright (C) 2002-2003  Jose San Leandro Armendariz
                              jsanleandro@yahoo.es
                              chousz@yahoo.com
 
@@ -23,35 +23,25 @@
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jsr000@terra.es
     Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
+                    Urb. Valdecabanas
                     Boadilla del monte
                     28660 Madrid
                     Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: HelperTest.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Performs some unit tests on Helper class.
- *
- * Last modified by: $Author: chous $ at $Date: 2006-04-02 12:15:23 +0200 (Sun, 02 Apr 2006) $
- *
- * File version: $Revision: 548 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: HelperTest.java 548 2006-04-02 10:15:23Z chous $
  *
  */
 package org.acmsl.commons.regexpplugin;
 
 /*
- * Importing some ACM-SL classes.
+ * Importing some ACM-SL Commons classes.
  */
-import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.gnuregexp.GNURegexpEngine;
 import org.acmsl.commons.regexpplugin.gnuregexp.HelperGNUAdapter;
 import org.acmsl.commons.regexpplugin.jakartaoro.HelperOROAdapter;
@@ -60,28 +50,24 @@ import org.acmsl.commons.regexpplugin.jakartaregexp.HelperRegexpAdapter;
 import org.acmsl.commons.regexpplugin.jakartaregexp.JakartaRegexpEngine;
 import org.acmsl.commons.regexpplugin.jdk14regexp.HelperJDKAdapter;
 import org.acmsl.commons.regexpplugin.jdk14regexp.JDKRegexpEngine;
-import org.acmsl.commons.regexpplugin.RegexpEngine;
-import org.acmsl.commons.regexpplugin.RegexpEngineNotFoundException;
-import org.acmsl.commons.regexpplugin.RegexpManager;
 
 /**
  * Importing JUnit classes.
  */
-import junit.framework.TestCase;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Performs some unit tests on Helper class.
- * @testfamily JUnit
- * @testkind testcase
- * @testsetup Default TestCase
- * @testedclass org.acmsl.commons.regexpplugin.Helper
  * @see org.acmsl.commons.regexpplugin.RegexpManager
  * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 548 $
+           >Jose San Leandro Armendï¿½riz</a>
  */
+@RunWith(JUnit4.class)
 public class HelperTest
-    extends     TestCase
     implements  org.acmsl.commons.patterns.Test
 {
     /**
@@ -105,168 +91,134 @@ public class HelperTest
     public static final String SUCCESS = "This is a tested test.";
 
     /**
-     * Constructs a test case with the given name.
-     * @param name the test case name.
-     */
-    public HelperTest(String name)
-    {
-        super(name);
-    }
-
-    /**
-     * Tests the helper.replaceAll() method.
+     * Tests the helper.replaceAll() method with the default engine.
      * @see Helper#replaceAll(String,String,String)
      */
-    public void testDefaultReplaceAll()
+    @Test
+    public void replaceAll_works_with_the_default_engine()
     {
         try
         {
-            RegexpManager t_RegexpManager = RegexpManager.getInstance();
+            @NotNull final RegexpManager t_RegexpManager = RegexpManager.getInstance();
 
-            assertNotNull(t_RegexpManager);
+            @NotNull final RegexpEngine t_RegexpEngine = t_RegexpManager.getEngine();
 
-            RegexpEngine t_RegexpEngine = t_RegexpManager.getEngine();
+            @NotNull final Helper t_Helper = t_RegexpEngine.createHelper();
 
-            assertNotNull(t_RegexpEngine);
-
-            Helper t_Helper = t_RegexpEngine.createHelper();
-
-            assertNotNull(t_Helper);
-
-            String t_strResult =
+            @NotNull final String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertNotNull(t_strResult);
+            Assert.assertNotNull(t_strResult);
 
-            assertTrue(t_strResult.equals(SUCCESS));
+            Assert.assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
-            fail("" + throwable);
+            Assert.fail("" + throwable);
         }
     }
 
     /**
-     * Tests the helper.replaceAll() method.
-     * @see Helper#replaceAll(String,String,String)
+     * Tests the helper.replaceAll() method with the ORO engine.
+     * @see HelperOROAdapter#replaceAll(String,String,String)
      */
-    public void testJakartaOroReplaceAll()
+    @Test
+    public void replaceAll_works_with_the_ORO_engine()
     {
         try
         {
-            RegexpEngine t_RegexpEngine = new ORORegexpEngine();
+            @NotNull final RegexpEngine t_RegexpEngine = new ORORegexpEngine();
 
-            assertNotNull(t_RegexpEngine);
+            @NotNull final Helper t_Helper = t_RegexpEngine.createHelper();
 
-            Helper t_Helper = t_RegexpEngine.createHelper();
+            Assert.assertTrue(t_Helper instanceof HelperOROAdapter);
 
-            assertNotNull(t_Helper);
-
-            assertTrue(t_Helper instanceof HelperOROAdapter);
-
-            String t_strResult =
+            @NotNull final String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertNotNull(t_strResult);
-
-            assertTrue(t_strResult.equals(SUCCESS));
+            Assert.assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
-            fail("" + throwable);
+            Assert.fail("" + throwable);
         }
     }
 
     /**
-     * Tests the helper.replaceAll() method.
-     * @see Helper#replaceAll(String,String,String)
+     * Tests the helper.replaceAll() method with the Jakarta Regexp engine.
+     * @see HelperRegexpAdapter#replaceAll(String,String,String)
      */
-    public void testJakartaRegexpReplaceAll()
+    @Test
+    public void replaceAll_works_with_the_JakartaRegexp_engine()
     {
         try
         {
-            RegexpEngine t_RegexpEngine = new JakartaRegexpEngine();
+            @NotNull final RegexpEngine t_RegexpEngine = new JakartaRegexpEngine();
 
-            assertNotNull(t_RegexpEngine);
+            @NotNull final Helper t_Helper = t_RegexpEngine.createHelper();
 
-            Helper t_Helper = t_RegexpEngine.createHelper();
+            Assert.assertTrue(t_Helper instanceof HelperRegexpAdapter);
 
-            assertNotNull(t_Helper);
-
-            assertTrue(t_Helper instanceof HelperRegexpAdapter);
-
-            String t_strResult =
+            @NotNull final String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertNotNull(t_strResult);
-
-            assertTrue(t_strResult.equals(SUCCESS));
+            Assert.assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
-            fail("" + throwable);
+            Assert.fail("" + throwable);
         }
     }
 
     /**
-     * Tests the helper.replaceAll() method.
-     * @see Helper#replaceAll(String,String,String)
+     * Tests the helper.replaceAll() method with the JDK engine.
+     * @see HelperJDKAdapter#replaceAll(String,String,String)
      */
-    public void testJDKReplaceAll()
+    @Test
+    public void replaceAll_works_with_the_JDK_engine()
     {
         try
         {
-            RegexpEngine t_RegexpEngine = new JDKRegexpEngine();
+            @NotNull final RegexpEngine t_RegexpEngine = new JDKRegexpEngine();
 
-            assertNotNull(t_RegexpEngine);
+            @NotNull final Helper t_Helper = t_RegexpEngine.createHelper();
 
-            Helper t_Helper = t_RegexpEngine.createHelper();
+            Assert.assertTrue(t_Helper instanceof HelperJDKAdapter);
 
-            assertNotNull(t_Helper);
-
-            assertTrue(t_Helper instanceof HelperJDKAdapter);
-
-            String t_strResult =
+            @NotNull final String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertNotNull(t_strResult);
-
-            assertTrue(t_strResult.equals(SUCCESS));
+            Assert.assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
-            fail("" + throwable);
+            Assert.fail("" + throwable);
         }
     }
 
     /**
-     * Tests the helper.replaceAll() method.
-     * @see org.acmsl.regexpplugin.Helper
+     * Tests the helper.replaceAll() method with the GNU Regexp engine.
+     * @see HelperGNUAdapter#replaceAll(String,String,String)
      */
-    public void testGNUReplaceAll()
+    @Test
+    public void replaceAll_works_with_the_GNURegex_engine()
     {
         try
         {
-            RegexpEngine t_RegexpEngine = new GNURegexpEngine();
+            @NotNull final RegexpEngine t_RegexpEngine = new GNURegexpEngine();
 
-            assertNotNull(t_RegexpEngine);
+            @NotNull final Helper t_Helper = t_RegexpEngine.createHelper();
 
-            Helper t_Helper = t_RegexpEngine.createHelper();
+            Assert.assertTrue(t_Helper instanceof HelperGNUAdapter);
 
-            assertNotNull(t_Helper);
-
-            assertTrue(t_Helper instanceof HelperGNUAdapter);
-
-            String t_strResult =
+            @NotNull final String t_strResult =
                 t_Helper.replaceAll(INPUT, TEXT_TO_REPLACE, REPLACEMENT_TEXT);
 
-            assertNotNull(t_strResult);
-
-            assertTrue(t_strResult.equals(SUCCESS));
+            Assert.assertTrue(t_strResult.equals(SUCCESS));
         }
-        catch  (final Throwable throwable)
+        catch  (@NotNull final Throwable throwable)
         {
-            fail("" + throwable);
+            Assert.fail("" + throwable);
         }
     }
 }

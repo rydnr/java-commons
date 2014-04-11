@@ -50,6 +50,10 @@ import org.acmsl.commons.patterns.Observable;
 public interface Model<C extends Controller>
     extends Observable<C>
 {
+    /**
+     * Checks whether the model is new.
+     * @return such condition.
+     */
     @SuppressWarnings("unused")
     boolean isNew();
 }

@@ -62,6 +62,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
+import java.nio.channels.Channel;
 import java.nio.charset.Charset;
 
 /*
@@ -149,6 +150,7 @@ public class FileUtils
     /**
      * Reads a file pointed by given path, and returns its contents.
      * @param filePath the path to the file to be read.
+     * @param charset the {@link Charset}.
      * @return the contents of the file.
      * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the operation is forbidden because of
@@ -166,6 +168,7 @@ public class FileUtils
     /**
      * Reads a file and returns its contents.
      * @param file the file to be read.
+     * @param charset the {@link Charset}.
      * @return the contents of the file.
      * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the operation is forbidden because of
@@ -268,6 +271,7 @@ public class FileUtils
     /**
      * Reads a file and returns its contents.
      * @param file the file to be read.
+     * @param charset the {@link Charset}.
      * @return the contents of the file.
      * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the operation is forbidden because of
@@ -291,6 +295,7 @@ public class FileUtils
      * exception occurs, it's ignored, and returns an empty String. This method
      * is used to avoid declaring try/catch blocks in client code.
      * @param filePath the path to the file to be read.
+     * @param charset the {@link Charset}.
      * @return the contents of the file, or empty if reading cannot be
      * accomplished.
      */
@@ -348,6 +353,7 @@ public class FileUtils
      * occurs, it's ignored, and returns an empty String. This method is used
      * to avoid declaring try/catch blocks in client code.
      * @param file the file to be read.
+     * @param charset the {@link Charset}.
      * @return the contents of the file, or empty if reading cannot be
      * accomplished.
      */
@@ -598,6 +604,7 @@ public class FileUtils
      * Copies the contents of a file to another.
      * @param original the content to copy.
      * @param destination the file to be overwritten.
+     * @param charset the {@link Charset}.
      * @throws SecurityException if the security manager forbids this
      * operation.
      * @throws IOException if any other I/O error occurs.
@@ -613,6 +620,7 @@ public class FileUtils
      * Copies the contents of a file (referred by given path) to another.
      * @param originalPath the path of the file to copy.
      * @param destinationPath the path of the file to be overwritten.
+     * @param charset the {@link Charset}.
      * @return <code>true</code> if the operation ends up successfully.
      */
     @SuppressWarnings("unused")
@@ -627,6 +635,7 @@ public class FileUtils
      * Copies the contents of a file to another.
      * @param original the content to copy.
      * @param destination the file to be overwritten.
+     * @param charset the {@link Charset}.
      * @return <code>true</code> if the operation ends up successfully.
      */
     public boolean copyIfPossible(
@@ -678,6 +687,7 @@ public class FileUtils
      * Moves a file.
      * @param originalFile the file to move.
      * @param destinationFile the new file.
+     * @param charset the {@link Charset}.
      * @throws FileNotFoundException if the file is not found.
      * @throws SecurityException if the security manager forbids this
      * operation.
@@ -700,6 +710,7 @@ public class FileUtils
      * Moves a file, if possible.
      * @param originalFile the file to move.
      * @param destinationFile the new file.
+     * @param charset the {@link Charset}.
      * @return <code>true</code> if the operation ends up successfully.
      */
     public boolean moveIfPossible(
@@ -750,6 +761,7 @@ public class FileUtils
      * Moves a file from one path to another, if possible.
      * @param filePath the path of the file to move.
      * @param destinationPath the new file's path.
+     * @param charset the {@link Charset}.
      * @return <code>true</code> if the operation ends up successfully.
      */
     @SuppressWarnings("unused")

@@ -195,6 +195,7 @@ public class ValueObjectField<V>
         /**
          * Constructs a field using given name.
          * @param name the name of the field.
+         * @param value the value.
          */
         public Int(@NotNull final java.lang.String name, final int value)
         {

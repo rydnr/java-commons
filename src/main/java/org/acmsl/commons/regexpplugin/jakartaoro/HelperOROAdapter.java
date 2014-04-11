@@ -138,6 +138,7 @@ public class HelperOROAdapter
     /**
      * Finds the location of given instance.
      * @param classInstance the class to locate.
+     * @param <T> the class type.
      * @return such information.
      */
     @Nullable
@@ -149,6 +150,8 @@ public class HelperOROAdapter
     /**
      * Finds the location of given instance.
      * @param classInstance the class to locate.
+     * @param classLoaderUtils the {@link ClassLoaderUtils} instance.
+     * @param <T> the class type.
      * @return such information.
      */
     @Nullable

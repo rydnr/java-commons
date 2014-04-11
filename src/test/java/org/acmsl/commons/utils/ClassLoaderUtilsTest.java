@@ -1,7 +1,7 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2005  Jose San Leandro Armendáriz
+    Copyright (C) 2002-2005  Jose San Leandro Armendariz
                              chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
@@ -22,33 +22,21 @@
     Thanks to ACM S.L. for distributing this library under the GPL license.
     Contact info: jose.sanleandro@acm-sl.com
     Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
+                    Urb. Valdecabanas
                     Boadilla del monte
                     28660 Madrid
                     Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: ClassLoaderUtilsTest.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Performs some unit tests on ClassLoaderUtils class.
  *
- * File version: $Revision: 548 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: StringUtilsTest.java 548 2006-04-02 10:15:23Z chous $
- *
  */
 package org.acmsl.commons.utils;
-
-/*
- * Importing some ACM-SL classes.
- */
-import org.acmsl.commons.utils.ClassLoaderUtils;
 
 /*
  * Importing some JDK classes.
@@ -62,55 +50,53 @@ import java.util.zip.ZipOutputStream;
 /*
  * Importing JUnit classes.
  */
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+/*
+ * Importing JetBrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Performs some unit tests on StringUtils class.
  * @author <a href="mailto:chous@acm-sl.org"
- *         >Jose San Leandro Armendáriz</a>
+ *         >Jose San Leandro Armendï¿½riz</a>
  * @version $Revision: 548 $
- * @testfamily JUnit
- * @testkind testcase
- * @testsetup Default TestCase
- * @testedclass org.acmsl.commons.utils.ClassLoaderUtils
  * @see org.acmsl.commons.utils.ClassLoaderUtils
  */
+@RunWith(JUnit4.class)
 public class ClassLoaderUtilsTest
-    extends     TestCase
     implements  org.acmsl.commons.patterns.Test
 {
-    /**
-     * Constructs a test case with the given name.
-     * @param name the test case name.
-     */
-    public ClassLoaderUtilsTest(final String name)
-    {
-        super(name);
-    }
-
     /**
      * Tests the <code>ClassLoaderUtils.findLocation(Class)</code> method.
      * @see org.acmsl.commons.utils.ClassLoaderUtils#findLocation(Class)
      */
-    public void testFindLocation()
+    @Test
+    public void findLocation_works()
     {
-        ClassLoaderUtils classLoaderUtils = ClassLoaderUtils.getInstance();
+        @NotNull final ClassLoaderUtils classLoaderUtils =
+            ClassLoaderUtils.getInstance();
         
-        assertNotNull("getInstance() failed.", classLoaderUtils);
+        Assert.assertNotNull("getInstance() failed.", classLoaderUtils);
 
-        String location =
+        @Nullable final String location =
             classLoaderUtils.findLocation(String.class);
 
-        assertNotNull(
+        Assert.assertNotNull(
             "findLocation(String.class) failed.",
             location);
 
         // See #161 (http://www.acm-sl.org/issues/161)
-//        assertFalse(
+//        Assert.assertFalse(
 //            "findLocation(String.class) returned an empty string.",
 //            "".equals(location));
 
-//        assertTrue(
+//        Assert.assertTrue(
 //            "findLocation(String.class) failed. (" + location + ") doesn't end with rt.jar",
 //            location.endsWith("rt.jar"));
     }
@@ -118,26 +104,27 @@ public class ClassLoaderUtilsTest
     /**
      * Tests the <code>ClassLoaderUtils.pathContainsClass(String,String)</code>
      * method.
-     * @see org.acmsl.commons.utils.ClassLoaderUtils#pathContainsClass(String,String)
+     * @see org.acmsl.commons.utils.ClassLoaderUtils#pathContainsResource(String,String)
      */
-    public void testPathContainsClass()
+    @Test
+    public void pathContainsClass_works()
     {
-        ClassLoaderUtils classLoaderUtils = ClassLoaderUtils.getInstance();
+        @NotNull final ClassLoaderUtils classLoaderUtils = ClassLoaderUtils.getInstance();
         
-        assertNotNull(classLoaderUtils);
+        Assert.assertNotNull(classLoaderUtils);
 
         try
         {
-            File tempFile =
+            @NotNull final File tempFile =
                 File.createTempFile(
                     "acmslcommons", "classloaderutilstest.zip");
 
-            OutputStream fileOutputStream = new FileOutputStream(tempFile);
+            @NotNull final OutputStream fileOutputStream = new FileOutputStream(tempFile);
 
-            ZipOutputStream zipOutputStream =
+            @NotNull final ZipOutputStream zipOutputStream =
                 new ZipOutputStream(fileOutputStream);
 
-            ZipEntry zipEntry = new ZipEntry("test/package/my.class");
+            @NotNull final ZipEntry zipEntry = new ZipEntry("test/package/my.class");
 
             zipOutputStream.putNextEntry(zipEntry);
 
@@ -145,14 +132,14 @@ public class ClassLoaderUtilsTest
 
             fileOutputStream.close();
 
-            boolean pathContainsResource =
+            @NotNull final boolean pathContainsResource =
                 classLoaderUtils.pathContainsResource(
                     tempFile.getAbsolutePath(), "test.package.my", "class");
 
             tempFile.delete();
 
         // See #161 (http://www.acm-sl.org/issues/161)
-//            assertTrue(
+//            Assert.assertTrue(
 //                  "pathContainsClass(\""
 //                + tempFile.getAbsolutePath()
 //                + "\", \"test.package.my\") failed.",
@@ -161,7 +148,7 @@ public class ClassLoaderUtilsTest
         }
         catch  (final Throwable throwable)
         {
-            fail(throwable.getMessage());
+            Assert.fail(throwable.getMessage());
         }
     }
 }

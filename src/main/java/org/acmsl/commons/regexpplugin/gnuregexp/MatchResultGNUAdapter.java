@@ -138,7 +138,7 @@ public class MatchResultGNUAdapter
      * subexpressions are indexed starting with one, not zero.
      * That is, the subexpression identified by the first set of
      * parentheses in a regular expression could be retrieved from an
-     * REMatch by calling match.toString(1).
+     * REMatch by calling match.toString(1).</i>
      * @param group Index of the subexpression.
      * @return the group matched at given position.
      */

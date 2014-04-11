@@ -109,6 +109,7 @@ public class ClassLoaderUtils
     /**
      * Tries to find the location where given class was loaded.
      * @param classInstance the class to check.
+     * @param <T> the type.
      * @return the location.
      */
     @Nullable
@@ -122,6 +123,7 @@ public class ClassLoaderUtils
      * @param classInstance the class to check.
      * @param fullSearch whether to perform a full search or get
      * the first match.
+     * @param <T> the type.
      * @return the location.
      */
     @Nullable

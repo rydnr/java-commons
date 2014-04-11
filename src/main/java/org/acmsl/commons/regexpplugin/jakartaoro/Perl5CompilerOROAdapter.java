@@ -204,7 +204,7 @@ public class Perl5CompilerOROAdapter
         return result;
     }
 
-    /*
+    /**
      * Sets whether the compiler should care about case sensitiveness
      * or not.
      * @param caseSensitive true for differentiate upper from lower case.
@@ -230,6 +230,7 @@ public class Perl5CompilerOROAdapter
      * or not.
      * @return true if upper from lower cases are processed differently.
      */
+    @Override
     public boolean isCaseSensitive()
     {
         return m__bCaseSensitive;

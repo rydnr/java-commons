@@ -56,6 +56,7 @@ public interface CommandSender<C extends Command, E extends CheckedException>
      * @param command the command that represents which actions should
      * be done.
      * @return <code>true</code> if the command is processed by the chain.
+     * @throws E in case of error.
      */
     @SuppressWarnings("unused")
     public boolean send(@NotNull final C command)

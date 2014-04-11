@@ -56,6 +56,7 @@ public interface CommandHandler<C extends Command, E extends Exception>
      * @param command the command to process (or not).
      * @return <code>true</code> if the handler actually process the command,
      * or maybe because it's not desirable to continue the chain.
+     * @throws E in case of error.
      */
     public boolean handle(@NotNull final C command)
         throws E;

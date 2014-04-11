@@ -101,7 +101,7 @@ public class ReflectionUtils
      * @return the ordered collection of superclasses.
      */
     @NotNull
-    public Class[] retrieveSuperClasses(@NotNull final Object object)
+    public Class<?>[] retrieveSuperClasses(@NotNull final Object object)
     {
         return retrieveSuperClasses(object.getClass());
     }
@@ -109,6 +109,8 @@ public class ReflectionUtils
     /**
      * Retrieves the parent classes of given class.
      * @param classInstance the class to analyze.
+     * @param <T> the type.
+     * @param <U> the parent class type.
      * @return the ordered collection of superclasses.
      */
     @SuppressWarnings("unchecked")
@@ -123,7 +125,7 @@ public class ReflectionUtils
 
         t_cSuperClasses.addAll(this.<T, U>retrieveParentClasses(classInstance));
 
-        result = t_cSuperClasses.toArray((Class<U>[]) new Class[t_cSuperClasses.size()]);
+        result = t_cSuperClasses.toArray((Class<U>[]) new Class<?>[t_cSuperClasses.size()]);
 
         return result;
     }
@@ -131,6 +133,9 @@ public class ReflectionUtils
     /**
      * Recursively retrieves the parent classes.
      * @param objectClass the object class.
+     * @param <T> the type.
+     * @param <U> the parent class type.
+     * @return the parent classes.
      */
     @NotNull
     protected <T extends U, U> Collection<Class<U>> retrieveParentClasses(@NotNull final Class<T> objectClass)
@@ -164,6 +169,8 @@ public class ReflectionUtils
      * @param classInstance the class instance.
      * @param type the type to match.
      * @return such member instance.
+     * @param <C> the class type.
+     * @param <T> the type.
      */
     @NotNull
     public <C, T> Field[] getMember(@NotNull final Class<C> classInstance, @NotNull final Class<T> type)
@@ -187,6 +194,8 @@ public class ReflectionUtils
      * without explicit permissions.
      * @param classInstance the class instance.
      * @param type the type to match.
+     * @param <C> the class type.
+     * @param <T> the type.
      * @return such member instance.
      */
     @NotNull
@@ -216,6 +225,8 @@ public class ReflectionUtils
      * without explicit permissions.
      * @param classInstance the class instance.
      * @param type the type to match.
+     * @param <C> the class type.
+     * @param <T> the type.
      * @return such fields.
      */
     @SuppressWarnings("unchecked")

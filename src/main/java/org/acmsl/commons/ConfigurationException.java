@@ -47,7 +47,9 @@ import java.lang.Throwable;
 public class ConfigurationException
     extends  NonCheckedException
 {
-
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 8914595828268642575L;
 
     /**

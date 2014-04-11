@@ -160,6 +160,7 @@ public class UniqueLogFactory
      * @param clazz the class name.
      * @return the log instance.
      */
+    @SuppressWarnings("unchecked")
     @Nullable
     public static Log getLog(@NotNull @SuppressWarnings("unused") final Class clazz)
     {
@@ -231,6 +232,8 @@ public class UniqueLogFactory
      * @param log the cached log instance.
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
+     * @param <T> the type.
+     * @return the instance.
      */
     @Nullable
     protected <T> Log getInstance(@NotNull final Class<T> clazz, @Nullable final Log log)
@@ -287,6 +290,7 @@ public class UniqueLogFactory
      * @param log the possibly cached log instance.
      * @throws LogConfigurationException if a suitable <code>Log</code>
      * instance cannot be returned
+     * @return the log instance.
      */
     @Nullable
     public Log getInstance(@NotNull final String name, @Nullable final Log log)

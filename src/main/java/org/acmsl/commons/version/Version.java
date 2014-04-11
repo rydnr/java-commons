@@ -34,6 +34,8 @@
  */
 package org.acmsl.commons.version;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Is included in all classes in which version information is
  * susceptible of being requested.
@@ -47,16 +49,10 @@ public class Version
     private String m__strVersionInformation;
 
     /**
-     * Invalid (undefined) version.
-     */
-    public static final Version INVALID = new Version("Undefined") {};
-
-    /**
      * Constructs a Version object with given information.
      * @param versionInfo the information about the version.
-     * @precondition versionInfo != null
      */
-    public Version(final String versionInfo)
+    public Version(@NotNull final String versionInfo)
     {
         immutableSetVersionInformation(versionInfo);
     }
@@ -65,7 +61,7 @@ public class Version
      * Specifies the version information.
      * @param versionInfo the new version.
      */
-    private void immutableSetVersionInformation(final String versionInfo)
+    private void immutableSetVersionInformation(@NotNull final String versionInfo)
     {
         m__strVersionInformation = versionInfo;
     }
@@ -74,7 +70,8 @@ public class Version
      * Specifies the version information.
      * @param versionInfo the new version.
      */
-    protected void setVersionInformation(final String versionInfo)
+    @SuppressWarnings("unused")
+    protected void setVersionInformation(@NotNull final String versionInfo)
     {
         immutableSetVersionInformation(versionInfo);
     }
@@ -83,8 +80,24 @@ public class Version
      * Retrieves the version information.
      * @return a detailed description of the version.
      */
+    @NotNull
     public String getVersionInformation()
     {
         return m__strVersionInformation;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NotNull
+    @Override
+    public String toString()
+    {
+        return
+              "{"
+            + " \"versionInformation\": \"" + this.m__strVersionInformation + '"'
+            + ", \"class\": \"" + Version.class.getSimpleName() + '"'
+            + ", \"package\": \"" + Version.class.getPackage().getName() + '"'
+            + " }";
     }
 }

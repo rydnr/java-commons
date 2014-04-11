@@ -51,7 +51,7 @@ public interface MatchResult
      * Taken from Jakarta ORO javadoc:
      * <i>Returns the contents of the parenthesized subgroups of a match,
      * counting parentheses from left to right and starting from 1. Group 0
-     * always refers to the entire match. <br/>
+     * always refers to the entire match. <br>
      * For example, if the pattern foo(\d+)
      * is used to extract a match from the input abfoo123 , then group(0) will
      * return foo123 and group(1) will return 123 . group(2) will return null

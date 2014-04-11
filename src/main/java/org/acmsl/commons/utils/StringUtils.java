@@ -126,6 +126,16 @@ public class StringUtils
     protected static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     /**
+     * Checks whether given value is null or empty.
+     * @param value the value to check.
+     * @return {@code true} in such case.
+     */
+    public boolean isEmpty(@Nullable final String value)
+    {
+        return (value == null) || ("".equals(value.trim()));
+    }
+
+    /**
      * Singleton implemented to avoid the double-checked locking.
      */
     private static class StringUtilsSingletonContainer
@@ -1002,6 +1012,10 @@ public class StringUtils
                     result.append(rest.toLowerCase(locale));
                 }
             }
+            else if (aux.equals(aux.toUpperCase(locale)))
+            {
+                result.append(aux.toLowerCase(locale));
+            }
             else
             {
                 result.append(aux);
@@ -1090,6 +1104,7 @@ public class StringUtils
      * Normalizes the words contained in given string, using a concrete char
      * separator. The first letter is always in lower case.
      * @param text the text to process.
+     * @param locale the locale.
      * @param separator the word separator.
      * @return the processed string.
      */

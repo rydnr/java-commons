@@ -67,6 +67,7 @@ public abstract class GrammarUtils
 
     /**
      * Protected constructor to avoid accidental instantiation.
+     * @param locale the locale.
      */
     protected GrammarUtils(@NotNull final Locale locale)
     {

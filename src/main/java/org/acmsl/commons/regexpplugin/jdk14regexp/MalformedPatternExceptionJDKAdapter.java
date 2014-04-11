@@ -65,8 +65,11 @@ import java.util.regex.PatternSyntaxException;
 public class MalformedPatternExceptionJDKAdapter
     extends  MalformedPatternException
 {
-
+    /**
+     * The serial vension id.
+     */
     private static final long serialVersionUID = -6996833758337854017L;
+
     /**
      * Private reference to the actual exception.
      */

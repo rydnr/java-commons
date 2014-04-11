@@ -102,7 +102,7 @@ public class ArrayListChainAdapter<C extends Command, E extends Exception, CH ex
     @NotNull
     public List<CH> getHandlers()
     {
-        return new ArrayList<CH>(getCore());
+        return new ArrayList<>(getCore());
     }
 
     /**

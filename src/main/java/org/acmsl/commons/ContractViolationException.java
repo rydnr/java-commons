@@ -54,7 +54,9 @@ public class ContractViolationException
     extends     Exception
     implements  Serializable
 {
-
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = -7559538644770345174L;
 
     /**

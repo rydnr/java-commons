@@ -587,6 +587,7 @@ public class HttpServletUtils
      * @param key the key.
      * @param request the request.
      * @param session the session.
+     * @param context the context.
      * @return <code>true</code> if the object has been removed successfully.
      */
     public boolean remove(

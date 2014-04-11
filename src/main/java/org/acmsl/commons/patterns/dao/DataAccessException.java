@@ -47,8 +47,11 @@ import org.jetbrains.annotations.Nullable;
 public class DataAccessException
     extends  RuntimeException
 {
-
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 2013445708507857209L;
+
     /**
      * Specifies the DAO which throws the error.
      */
@@ -69,6 +72,7 @@ public class DataAccessException
      * Builds a DataAccessException to wrap given one.
      * @param message the message.
      * @param cause the exception to wrap.
+     * @param dao the {@link DAO}.
      */
     public DataAccessException(
         @NotNull final String message, @NotNull final Throwable cause, @NotNull final DAO dao)

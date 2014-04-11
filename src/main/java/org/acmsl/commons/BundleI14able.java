@@ -392,7 +392,7 @@ public class BundleI14able
         immutableSetRetryBundles(flag);
     }
     
-    /*
+    /**
      * Retrieves whether to retry the bundle retrieval.
      * @return such condition.
      */

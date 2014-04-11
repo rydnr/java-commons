@@ -61,6 +61,11 @@ public abstract class NonCheckedException
                 I14able
 {
     /**
+     * The serial version id.
+     */
+    private static final long serialVersionUID = -8970660738598246985L;
+
+    /**
      * The wrapped object.
      */
     @NotNull private BundleI14able m__BundleI14able;

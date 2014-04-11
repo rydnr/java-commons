@@ -58,6 +58,9 @@ public class RegexpPluginMisconfiguredException
      */
     protected static final String MESSAGE_KEY = "regexpplugin.misconfigured";
 
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 3584386048849432893L;
 
     /**

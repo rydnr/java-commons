@@ -412,57 +412,6 @@ public class StringUtilsTest
     }
 
     /**
-     * Tests the <code>StringUtils.capitalize(String)</code> method.
-     * @see org.acmsl.commons.utils.StringUtils#capitalize(String, Locale)
-     */
-    @Test
-    public void capitalize_works_for_lowercase()
-    {
-        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
-
-        Assert.assertNotNull(t_StringUtils);
-
-        @NotNull final String t_strInput = "ab-cd_ef  gh+ijk;;_|l~~@m  2n=o4p";
-
-        @NotNull final String t_strOutput = t_StringUtils.capitalize(t_strInput, Locale.ENGLISH);
-
-        Assert.assertEquals(
-            "capitalize(\"" + t_strInput + "\") failed.",
-            "AbCdEfGhIjkLM2nO4p",
-            t_strOutput);
-    }
-
-    @Test
-    public void capitalize_works_for_upper_cased_strings()
-    {
-        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
-
-        Assert.assertNotNull(t_StringUtils);
-
-        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("G_CYCLE_TYPES", Locale.ENGLISH));
-    }
-
-    @Test
-    public void capitalize_works_for_mixed_cased_strings()
-    {
-        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
-
-        Assert.assertNotNull(t_StringUtils);
-
-        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("GCycleTypes", Locale.ENGLISH));
-    }
-
-    @Test
-    public void capitalize_first_works()
-    {
-        @NotNull final StringUtils instance = StringUtils.getInstance();
-
-        Assert.assertNotNull(instance);
-
-        Assert.assertEquals("Abc", instance.capitalizeFirst("abc", Locale.ENGLISH));
-    }
-
-    /**
      * Tests the <code>StringUtils.escape(String, char)</code> method.
      * @see org.acmsl.commons.utils.StringUtils#escape(String, char)
      */
@@ -553,5 +502,65 @@ public class StringUtilsTest
             "normalize(\"" + t_strInput + "\") failed.",
             "Multiple_bet_result",
             t_strOutput);
+    }
+
+    /**
+     * Tests the <code>StringUtils.capitalize(String)</code> method.
+     * @see org.acmsl.commons.utils.StringUtils#capitalize(String, Locale)
+     */
+    @Test
+    public void capitalize_works_for_lowercase()
+    {
+        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
+
+        Assert.assertNotNull(t_StringUtils);
+
+        @NotNull final String t_strInput = "ab-cd_ef  gh+ijk;;_|l~~@m  2n=o4p";
+
+        @NotNull final String t_strOutput = t_StringUtils.capitalize(t_strInput, Locale.ENGLISH);
+
+        Assert.assertEquals(
+            "capitalize(\"" + t_strInput + "\") failed.",
+            "AbCdEfGhIjkLM2nO4p",
+            t_strOutput);
+    }
+
+    @Test
+    public void capitalize_works_for_upper_cased_strings()
+    {
+        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
+
+        Assert.assertNotNull(t_StringUtils);
+
+        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("G_CYCLE_TYPES", Locale.ENGLISH));
+        Assert.assertEquals("Name", t_StringUtils.capitalize("NAME", Locale.ENGLISH));
+    }
+
+    @Test
+    public void capitalize_works_for_mixed_cased_strings()
+    {
+        @NotNull final StringUtils t_StringUtils = StringUtils.getInstance();
+
+        Assert.assertNotNull(t_StringUtils);
+
+        Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("GCycleTypes", Locale.ENGLISH));
+    }
+
+    @Test
+    public void capitalize_first_works()
+    {
+        @NotNull final StringUtils instance = StringUtils.getInstance();
+
+        Assert.assertNotNull(instance);
+
+        Assert.assertEquals("Abc", instance.capitalizeFirst("abc", Locale.ENGLISH));
+    }
+
+    @Test
+    public void isEmpty_works_for_empty_strings()
+    {
+        @NotNull final StringUtils instance = StringUtils.getInstance();
+
+        Assert.assertTrue(instance.isEmpty(""));
     }
 }

@@ -56,8 +56,11 @@ import org.jetbrains.annotations.NotNull;
 public class MalformedPatternExceptionRegexpAdapter
     extends  MalformedPatternException
 {
-
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 932988612842352909L;
+
     /**
      * Private reference to the actual exception.
      */

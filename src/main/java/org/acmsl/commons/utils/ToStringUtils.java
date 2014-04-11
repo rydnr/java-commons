@@ -118,6 +118,7 @@ public class ToStringUtils
     /**
      * Converts given list to JSON.
      * @param list the list.
+     * @param <T> the type.
      * @return the JSON-formatted list.
      */
     @NotNull
@@ -144,6 +145,7 @@ public class ToStringUtils
      * @param instance the instance.
      * @param fileClass the file class.
      * @param args the instance fields.
+     * @param <T> the type.
      * @return the JSON representation.
      */
     @NotNull
@@ -451,6 +453,10 @@ public class ToStringUtils
             return result;
         }
 
+        /**
+         * Checks whether it's represented as string.
+         * @return {@code true}.
+         */
         @SuppressWarnings("unused")
         public boolean representedAsString()
         {

@@ -52,6 +52,9 @@ public class MalformedPatternException
     extends     RuntimeException
     implements  Serializable
 {
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 4064719537415799374L;
 
     /**

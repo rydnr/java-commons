@@ -70,6 +70,7 @@ public class SaxUtilsTest
 {
     /**
      * Tests retrieveSystemIdFile()
+     * @throws IOException
      */
     @Test
     public void retrieves_the_actual_file_in_a_SAXException()

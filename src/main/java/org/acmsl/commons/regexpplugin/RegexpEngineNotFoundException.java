@@ -54,6 +54,9 @@ public class RegexpEngineNotFoundException
      */
     protected static final String MESSAGE_KEY = "regexp.engine.not.found";
 
+    /**
+     * The serial version id.
+     */
     private static final long serialVersionUID = 1546850819042379494L;
 
     /**
