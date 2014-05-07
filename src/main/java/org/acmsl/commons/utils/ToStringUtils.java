@@ -124,7 +124,9 @@ public class ToStringUtils
     @NotNull
     public <T> String toJson(@Nullable final List<T> list)
     {
-        @NotNull final StringBuilder result = new StringBuilder("[ ");
+        @NotNull String result = null;
+
+        @NotNull final StringBuilder aux = new StringBuilder("[ ");
 
         if (list != null)
         {
@@ -132,12 +134,22 @@ public class ToStringUtils
             {
                 if (item != null)
                 {
-                    result.append(toJson(item, item.getClass(), new HashMap<String, Object>(0)));
+//                    result.append(toJson(item, item.getClass(), new HashMap<String, Object>(0)));
+                    aux.append(item);
                 }
             }
+
+            result = aux.toString();
+
+            if (result.endsWith(","))
+            {
+                result = result.substring(0, result.length() - 1);
+            }
+
+            result = result + " ]";
         }
 
-        return result.toString();
+        return result;
     }
 
     /**
