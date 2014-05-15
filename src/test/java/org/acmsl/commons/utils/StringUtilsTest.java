@@ -525,6 +525,9 @@ public class StringUtilsTest
             t_strOutput);
     }
 
+    /**
+     * Checks whether capitalize() works for upper cased strings.
+     */
     @Test
     public void capitalize_works_for_upper_cased_strings()
     {
@@ -536,6 +539,9 @@ public class StringUtilsTest
         Assert.assertEquals("Name", t_StringUtils.capitalize("NAME", Locale.ENGLISH));
     }
 
+    /**
+     * Checks whether capitalize() works for mixed-cased strings.
+     */
     @Test
     public void capitalize_works_for_mixed_cased_strings()
     {
@@ -546,8 +552,11 @@ public class StringUtilsTest
         Assert.assertEquals("GCycleTypes", t_StringUtils.capitalize("GCycleTypes", Locale.ENGLISH));
     }
 
+    /**
+     * Checks whether capitalizeFirst() works.
+     */
     @Test
-    public void capitalize_first_works()
+    public void capitalizeFirst_works()
     {
         @NotNull final StringUtils instance = StringUtils.getInstance();
 
@@ -556,11 +565,26 @@ public class StringUtilsTest
         Assert.assertEquals("Abc", instance.capitalizeFirst("abc", Locale.ENGLISH));
     }
 
+    /**
+     * Checks whether isEmpty() works for empty strings.
+     */
     @Test
     public void isEmpty_works_for_empty_strings()
     {
         @NotNull final StringUtils instance = StringUtils.getInstance();
 
         Assert.assertTrue(instance.isEmpty(""));
+    }
+
+    /**
+     * Checks whether capitalize() preserves camel case.
+     */
+    @Test
+    public void capitalize_preserves_camelCase()
+    {
+        @NotNull final StringUtils instance = StringUtils.getInstance();
+
+        Assert.assertEquals(
+            "TestWithCamelCaseExample", instance.capitalize("test.with.CamelCase.example", Locale.ENGLISH));
     }
 }

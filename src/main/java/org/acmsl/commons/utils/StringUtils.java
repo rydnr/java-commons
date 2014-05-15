@@ -996,7 +996,19 @@ public class StringUtils
                 {
                     final StringBuilder t_sbAux = new StringBuilder();
 
-                    t_sbAux.append(t_Matcher.group(1).toLowerCase(locale));
+                    final String t_strFirstGroup = t_Matcher.group(1);
+
+                    final String t_strFirst;
+
+                    if (t_strFirstGroup.equals(t_strFirstGroup.toUpperCase(locale)))
+                    {
+                        t_strFirst = t_strFirstGroup.toLowerCase(locale);
+                    }
+                    else
+                    {
+                        t_strFirst = t_strFirstGroup;
+                    }
+                    t_sbAux.append(t_strFirst);
                     t_sbAux.append(t_Matcher.group(2).toUpperCase(locale));
 
                     result.append(t_sbAux.toString());
