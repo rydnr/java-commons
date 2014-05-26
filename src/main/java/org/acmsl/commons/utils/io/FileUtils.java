@@ -121,6 +121,86 @@ public class FileUtils
     }
 
     /**
+     * Retrieves the file name from an absolute path.
+     * @param filePath the path.
+     * @return just the file name (no folder information).
+     */
+    @NotNull
+    public String getFileName(@NotNull final String filePath)
+    {
+        @NotNull final String result;
+
+        final int lastSeparatorPosition = filePath.lastIndexOf(File.separator);
+
+        if (lastSeparatorPosition > -1)
+        {
+            if (lastSeparatorPosition < filePath.length() - 1)
+            {
+                result = filePath.substring(lastSeparatorPosition + 1);
+            }
+            else
+            {
+                result = "";
+            }
+        }
+        else
+        {
+            result = filePath;
+        }
+
+        return result;
+    }
+
+    /**
+     * Strips the last extension.
+     * @param filePath the file path.
+     * @return the file path, after removing the last extension.
+     */
+    @NotNull
+    public String stripExtension(@NotNull final String filePath)
+    {
+        @NotNull final String result;
+
+        final int lastDotPosition = filePath.lastIndexOf(".");
+
+        if (lastDotPosition > -1)
+        {
+            result = filePath.substring(0, lastDotPosition);
+        }
+        else
+        {
+            result = filePath;
+        }
+
+        return result;
+    }
+
+    /**
+     * Removes all extensions from a given file name.
+     * @param filePath the path.
+     * @return the file path, with no extensions.
+     */
+    @NotNull
+    public String stripExtensions(@NotNull final String filePath)
+    {
+        @NotNull final String result;
+
+        @NotNull String aux = filePath;
+        @NotNull String aux2;
+
+        do
+        {
+            aux2 = aux;
+            aux = stripExtension(aux);
+        }
+        while (!aux.equals(aux2));
+
+        result = aux;
+
+        return result;
+    }
+
+    /**
      * Singleton implemented to avoid the double-checked locking.
      */
     private static class FileUtilsSingletonContainer

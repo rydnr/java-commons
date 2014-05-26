@@ -60,7 +60,7 @@ import java.io.FileInputStream;
  * @since 3.0
  * Created: 2014/03/03 08:41
  */
-//@RunWith(JUnit4.class)
+@RunWith(JUnit4.class)
 public class FileUtilsTest
 {
     /**
@@ -81,6 +81,54 @@ public class FileUtilsTest
         t_InputStream.close();
 
         t_File.delete();
+
+    }
+
+    /**
+     * Checks getFileName() strips all folder information from an absolute path.
+     */
+    @Test
+    public void getFileName_retrieves_just_the_filename_part()
+    {
+        @NotNull final FileUtils instance = FileUtils.getInstance();
+
+        @NotNull final String filePath =
+            File.separator + "tmp" + File.separator + "a" + File.separator + "b" + File.separator + "c.ext";
+
+        Assert.assertEquals("c.ext", instance.getFileName(filePath));
+    }
+
+    /**
+     * Checks stripExtension() removes the last extension.
+     */
+    @Test
+    public void stripExtension_removes_the_last_extension()
+    {
+        @NotNull final FileUtils instance = FileUtils.getInstance();
+
+        @NotNull final String filePath =
+            File.separator + "tmp" + File.separator + "a" + File.separator + "b" + File.separator + "c.ext";
+
+        Assert.assertEquals(
+            File.separator + "tmp" + File.separator + "a" + File.separator + "b" + File.separator + "c",
+            instance.stripExtension(filePath));
+
+    }
+
+    /**
+     * Checks stripExtensions() removes all extensions.
+     */
+    @Test
+    public void stripExtensions_removes_all_extensions()
+    {
+        @NotNull final FileUtils instance = FileUtils.getInstance();
+
+        @NotNull final String filePath =
+            File.separator + "tmp" + File.separator + "a" + File.separator + "b" + File.separator + "c.ext1.ext2.ext3";
+
+        Assert.assertEquals(
+            File.separator + "tmp" + File.separator + "a" + File.separator + "b" + File.separator + "c",
+            instance.stripExtensions(filePath));
 
     }
 }
