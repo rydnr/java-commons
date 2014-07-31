@@ -41,7 +41,7 @@
   </issueManagement>
 
   <ciManagement>
-    <system>Hudson</system>
+    <system>Jenkins</system>
     <url>http://jenkins.acm-sl.org/job/java-commons</url>
     <notifiers>
       <notifier>
