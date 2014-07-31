@@ -28,6 +28,35 @@
     <version>latest-SNAPSHOT</version>
   </parent>
 
+  <scm>
+    <connection>scm:git:http://github.com/rydnr/java-commons.git</connection>
+    <developerConnection>scm:git:http://github.com/rydnr/java-commons.git</developerConnection>
+    <url>scm:git:http://github.com/rydnr/java-commons.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <issueManagement>
+    <system>github</system>
+    <url>http://github.com/rydnr/java-commons.git/</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://jenkins.acm-sl.org/job/java-commons</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnSuccess>true</sendOnSuccess>
+        <sendOnWarning>true</sendOnWarning>
+        <configuration>
+          <address>jenkins@acm-sl.org</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+
   <dependencies>
     <dependency>
       <groupId>commons-logging</groupId>
