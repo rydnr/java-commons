@@ -480,6 +480,15 @@ public class StringUtilsTest
             "softNormalize(\"" + t_strInput + "\") failed.",
             "n_1",
             t_strOutput);
+
+        t_strInput = "n_1";
+
+        t_strOutput = t_StringUtils.softNormalize(t_strInput);
+
+        Assert.assertEquals(
+            "softNormalize(\"" + t_strInput + "\") failed.",
+            "n_1",
+            t_strOutput);
     }
 
     /**

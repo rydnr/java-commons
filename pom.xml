@@ -6,7 +6,7 @@
   <groupId>org.acmsl</groupId>
   <artifactId>acmsl-commons</artifactId>
   <packaging>jar</packaging>
-  <version>0.7.1-SNAPSHOT</version>
+  <version>latest-SNAPSHOT</version>
   <name>ACM-SL Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
@@ -22,63 +22,55 @@
     <url>http://www.acm-sl.org</url>
   </organization>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <parent>
+    <groupId>org.acmsl</groupId>
+    <artifactId>acmsl-pom</artifactId>
+    <version>latest-SNAPSHOT</version>
+  </parent>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
+      <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
+      <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.7.0</version>
     </dependency>
     <dependency>
       <groupId>gnu-regexp</groupId>
       <artifactId>gnu-regexp</artifactId>
-      <version>1.1.4</version>
     </dependency>
     <dependency>
-      <groupId>regexp</groupId>
-      <artifactId>regexp</artifactId>
-      <version>1.2</version>
+      <groupId>jakarta-regexp</groupId>
+      <artifactId>jakarta-regexp</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache</groupId>
+      <groupId>oro</groupId>
       <artifactId>oro</artifactId>
-      <version>2.0.8</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.3</version>
+      <artifactId>javax.servlet-api</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>mx4j</groupId>
       <artifactId>mx4j</artifactId>
-      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.jetbrains</groupId>
       <artifactId>annotations</artifactId>
-      <version>11.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.checkthread</groupId>
       <artifactId>checkthread-annotations</artifactId>
-      <version>1.0.9</version>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>ST4</artifactId>
-      <version>4.0.7</version>
     </dependency>
     <!--dependency>
       <groupId>com.googlecode.json-simple</groupId>
@@ -87,41 +79,21 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.9</version>
       <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+
   <distributionManagement>
     <repository>
       <id>acmsl-libs-releases</id>
       <name>acmsl-libs-releases</name>
-      <url>http://maven.acm-sl.org/artifactory/libs-releases-local</url>
+      <url>http://maven.acm-sl.org/artifactory/libs-release-local</url>
     </repository>
     <snapshotRepository>
       <id>acmsl-libs-snapshots</id>
       <name>acmsl-libs-snapshots</name>
-      <url>http://maven.acm-sl.org/artifactory/libs-snapshots-local</url>
+      <url>http://maven.acm-sl.org/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
 </project>

@@ -1,9 +1,8 @@
 /*
                         ACM-SL Commons
 
-    Copyright (C) 2002-2003  Jose San Leandro Armendáriz
-                             jsanleandro@yahoo.es
-                             chousz@yahoo.com
+    Copyright (C) 2002-2003  Jose San Leandro Armendariz
+                             chous@acm-sl.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
@@ -21,27 +20,20 @@
 
 
     Thanks to ACM S.L. for distributing this library under the GPL license.
-    Contact info: jsr000@terra.es
+    Contact info: josesanleandro@gmail.com
     Postal Address: c/Playa de Lagoa, 1
-                    Urb. Valdecabañas
+                    Urb. Valdecabanas
                     Boadilla del monte
                     28660 Madrid
                     Spain
 
  ******************************************************************************
  *
- * Filename: $RCSfile$
+ * Filename: StringValidatorTest.java
  *
- * Author: Jose San Leandro Armendáriz
+ * Author: Jose San Leandro Armendariz
  *
  * Description: Performs some unit tests on StringValidator class.
- *
- * File version: $Revision: 548 $
- *
- * Project version: $Name$
- *                  ("Name" means no concrete version has been checked out)
- *
- * $Id: StringValidatorTest.java 548 2006-04-02 10:15:23Z chous $
  *
  */
 package org.acmsl.commons.utils;
@@ -63,9 +55,8 @@ import junit.framework.TestCase;
 
 /**
  * Performs some unit tests on StringValidator class.
- * @author <a href="mailto:jsanleandro@yahoo.es"
-           >Jose San Leandro Armendáriz</a>
- * @version $Revision: 548 $
+ * @author <a href="mailto:chous@acm-sl.org"
+           >Jose San Leandro Armendariz</a>
  * @testfamily JUnit
  * @testkind testcase
  * @testsetup Default TestCase

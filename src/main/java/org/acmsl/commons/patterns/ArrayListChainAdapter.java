@@ -42,6 +42,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
+/*
  * Importing some JDK classes.
  */
 import java.util.ArrayList;
@@ -49,8 +54,13 @@ import java.util.List;
 
 /**
  * Adapts {@link ArrayList} objects to implement the {@link Chain} interface.
- * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
+ * @param <C> the command.
+ * @param <E> the exception.
+ * @param <CH> the command handler.
+ * @author <a href="mailto:queryj@acm-sl.org">Jose San Leandro Armendariz</a>
+ * @since 2.0
  */
+@ThreadSafe
 public class ArrayListChainAdapter<C extends Command, E extends Exception, CH extends CommandHandler<C, E>>
     implements  Chain<C, E, CH>
 {
@@ -249,12 +259,15 @@ public class ArrayListChainAdapter<C extends Command, E extends Exception, CH ex
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @NotNull
     @Override
     public String toString()
     {
         return
-            "{ \"class\": \"" + ArrayListChainAdapter.class.getName() + "\""
+            "{ \"class\": \"" + ArrayListChainAdapter.class.getSimpleName() + "\""
             + ", \"core\": \"" + this.m__lCore + "\" }";
     }
 }

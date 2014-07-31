@@ -52,6 +52,7 @@ import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.junit.Test;
 
 /*
  * Importing JDK classes.
@@ -71,27 +72,60 @@ import java.util.Map;
  * @since 3.0
  * Created: 2013/11/24 07:18
  */
-//@RunWith(JUnit4.class)
+@RunWith(JUnit4.class)
 public class ToStringUtilsTest
     implements  org.acmsl.commons.patterns.Test
 {
+    /**
+     * Dummy class with attributes.
+     */
     protected static class Dummy
     {
+        /**
+         * The fancy name.
+         */
         @Nullable private String fancyName;
+        /**
+         * The fancy age.
+         */
         private long fancyAge;
+        /**
+         * The fancy value.
+         */
         private double fancyValue;
+        /**
+         * The fancy amount.
+         */
         @Nullable private BigDecimal fancyAmount;
+        /**
+         * The fancy date.
+         */
         @Nullable private Date fancyDate;
+        /**
+         * The fancy child.
+         */
         @Nullable private Dummy fancyChild;
+        /**
+         * The other names.
+         */
         @Nullable private String[] otherNames;
+        /**
+         * The other stuff.
+         */
         @Nullable private List<String> otherStuff;
+        /**
+         * The children.
+         */
         @Nullable private List<Dummy> children;
 
+        /**
+         * {@inheritDoc}
+         */
         @NotNull
         @Override
         public String toString()
         {
-            @NotNull final Map<String, Object> args = new HashMap<String, Object>();
+            @NotNull final Map<String, Object> args = new HashMap<>();
             if (fancyName != null)
             {
                 args.put("fancyName", fancyName);
@@ -250,7 +284,7 @@ public class ToStringUtilsTest
         d.otherStuff = otherStuff;
 
         @NotNull final String aux2 =
-            new ToStringUtils.CollectionDecorator<String>(
+            new ToStringUtils.CollectionDecorator<>(
                 Literals.OTHER_STUFF, otherStuff)
                 .toString();
 
@@ -281,14 +315,77 @@ public class ToStringUtilsTest
 
         @NotNull final String actual3 = normalize(d.toString());
 
-        @NotNull final String aux = d.toString();
-
         Assert.assertEquals("Invalid JSON (3)", expected3, actual3);
     }
 
+    /**
+     * Normalizes given text.
+     * @param text the text to normalize.
+     * @return the normalized test.
+     */
     @NotNull
     protected String normalize(@NotNull final String text)
     {
         return text.replaceAll("\n", "").replaceAll("\\s*", "");
+    }
+
+    /**
+     * Checks whether auditToString() detects recursive calls.
+     */
+    @Test
+    public void auditToString_detects_recursive_calls()
+    {
+        @NotNull final ToStringUtils instance = ToStringUtils.getInstance();
+
+        @NotNull final Dummy tested1 =
+            new Dummy()
+            {
+                /**
+                 * Recursive toString().
+                 * @return the text representing the state of the instance.
+                 */
+                @NotNull
+                @Override
+                public String toString()
+                {
+                    return "Me, " + instance.auditToString(this);
+                }
+            };
+
+        Assert.assertEquals("Me, Me, ", tested1.toString());
+    }
+
+    /**
+     * Checks whether stackTraceContainsToString() detects a recursive call to toString()
+     * correctly.
+     */
+    @Test
+    public void stackTraceContainsToString_detects_recursive_calls_to_toString()
+    {
+        @NotNull final ToStringUtils instance = ToStringUtils.getInstance();
+
+        @NotNull final StackTraceElement[] stackTrace = new StackTraceElement[6];
+
+        stackTrace[0] = new StackTraceElement(String.class.getName(), "toString", "String.java", 33);
+        stackTrace[1] = new StackTraceElement(Long.class.getName(), "toString", "Long.java", 37);
+        stackTrace[2] = new StackTraceElement(Dummy.class.getName(), "toString", "Dummy.java", 68);
+        stackTrace[3] = new StackTraceElement(Float.class.getName(), "toString", "Float.java", 133);
+        stackTrace[4] = new StackTraceElement(Integer.class.getName(), "toString", "Integer.java", 192);
+        stackTrace[5] = new StackTraceElement(Character.class.getName(), "toString", "Character.java", 115);
+
+        Assert.assertFalse(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, String.class));
+        Assert.assertFalse(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Long.class));
+        Assert.assertFalse(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Dummy.class));
+        Assert.assertFalse(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Double.class));
+
+        stackTrace[3] = new StackTraceElement(String.class.getName(), "toString", "String.java", 33);
+        stackTrace[4] = new StackTraceElement(Long.class.getName(), "toString", "Long.java", 37);
+        stackTrace[5] = new StackTraceElement(Dummy.class.getName(), "toString", "Dummy.java", 68);
+
+        Assert.assertTrue(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, String.class));
+        Assert.assertTrue(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Long.class));
+        Assert.assertTrue(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Dummy.class));
+        Assert.assertFalse(instance.stackTraceContainsRecursiveToStringCalls(stackTrace, Double.class));
+
     }
 }

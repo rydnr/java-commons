@@ -43,6 +43,11 @@ import org.acmsl.commons.Literals;
 import org.acmsl.commons.patterns.Utils;
 
 /*
+ * Importing Apache Commons Logging classes.
+ */
+import org.apache.commons.logging.LogFactory;
+
+/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -124,9 +129,11 @@ public class ToStringUtils
     @NotNull
     public <T> String toJson(@Nullable final List<T> list)
     {
-        @NotNull String result = null;
+        @NotNull final String result;
 
-        @NotNull final StringBuilder aux = new StringBuilder("[ ");
+        @Nullable String aux = null;
+
+        @NotNull final StringBuilder builder = new StringBuilder("[ ");
 
         if (list != null)
         {
@@ -134,19 +141,28 @@ public class ToStringUtils
             {
                 if (item != null)
                 {
-//                    result.append(toJson(item, item.getClass(), new HashMap<String, Object>(0)));
-                    aux.append(item);
+//                    builder.append(toJson(item, item.getClass(), new HashMap<String, Object>(0)));
+                    builder.append(item);
                 }
             }
 
-            result = aux.toString();
+            aux = builder.toString();
 
-            if (result.endsWith(","))
+            if (aux.endsWith(","))
             {
-                result = result.substring(0, result.length() - 1);
+                aux = builder.substring(0, builder.length() - 1);
             }
 
-            result = result + " ]";
+            aux = aux + " ]";
+        }
+
+        if (aux == null)
+        {
+            result = "";
+        }
+        else
+        {
+            result = aux;
         }
 
         return result;
@@ -262,6 +278,102 @@ public class ToStringUtils
         else
         {
             result = new Decorator<>(name, arg);
+        }
+
+        return result;
+    }
+
+    /**
+     * Audits a call to toString(), to avoid infinite loops.
+     * @param <T> the class type.
+     * @param instance the instance to call toString() on.
+     * @return the result of calling toString() on given instance,
+     * unless an infinite loop is detected, in which an empty string
+     * is returned.
+     */
+    @NotNull
+    public <T> String auditToString(@NotNull final T instance)
+    {
+        @NotNull final String result;
+
+        if (stackTraceContainsRecursiveToStringCalls(instance.getClass()))
+        {
+            LogFactory.getLog("toString-monitor").error(
+                "Detected recursive calls to " + instance.getClass() + "#toString()");
+
+            new RuntimeException("dummy").printStackTrace(System.err);
+
+            System.exit(1);
+
+            result = "";
+        }
+        else
+        {
+            result = instance.toString();
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks whether given stack trace contains recursive calls to given class' toString() method.
+     * @param <T> the class type.
+     * @param clazz the class.
+     * @return {@code true} in such case.
+     */
+    public <T> boolean stackTraceContainsRecursiveToStringCalls(@NotNull final Class<T> clazz)
+    {
+        return stackTraceContainsRecursiveToStringCalls(new RuntimeException("").getStackTrace(), clazz);
+    }
+
+    /**
+     * Checks whether given stack trace contains recursive calls to given class' toString() method.
+     * @param <T> the class type.
+     * @param stackTrace the stack trace.
+     * @param clazz the class.
+     * @return {@code true} in such case.
+     */
+    protected <T> boolean stackTraceContainsRecursiveToStringCalls(
+        @NotNull final StackTraceElement[] stackTrace, @NotNull final Class<T> clazz)
+    {
+        return stackTraceContainsRecursiveCalls(stackTrace, clazz, "toString");
+    }
+
+    /**
+     * Checks whether given stack trace contains recursive calls to given class' method.
+     * @param <T> the class type.
+     * @param stackTrace the stack trace.
+     * @param clazz the class.
+     * @param methodName the method name.
+     * @return {@code true} in such case.
+     */
+    protected <T> boolean stackTraceContainsRecursiveCalls(
+        @NotNull final StackTraceElement[] stackTrace,
+        @NotNull final Class<T> clazz,
+        @NotNull final String methodName)
+    {
+        boolean result = false;
+
+        int count = 0;
+
+        for (@Nullable final StackTraceElement stackEntry : stackTrace)
+        {
+            if (stackEntry != null)
+            {
+                @Nullable final String className = stackEntry.getClassName();
+                if (   (className != null)
+                       && (className.equals(clazz.getName()))
+                       && (methodName.equals(stackEntry.getMethodName())))
+                {
+                    count++;
+                }
+
+                if (count == 2)
+                {
+                    result = true;
+                    break;
+                }
+            }
         }
 
         return result;
@@ -449,6 +561,7 @@ public class ToStringUtils
          * Generates a JSON text representing the instance.
          * @return such text.
          */
+        @Override
         @NotNull
         public String toString()
         {
@@ -526,6 +639,7 @@ public class ToStringUtils
 
     /**
      * A date decorator.
+     * @param <T> the type.
      */
     static class CollectionDecorator<T>
         extends Decorator<Collection<T>>

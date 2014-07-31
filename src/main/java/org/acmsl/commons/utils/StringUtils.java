@@ -974,8 +974,7 @@ public class StringUtils
      * @return the capitalized string.
      */
     @NotNull
-    public String
-    capitalize(@NotNull final String text, final Locale locale)
+    public String capitalize(@NotNull final String text, final Locale locale)
     {
         @NotNull final StringBuilder result = new StringBuilder();
 
