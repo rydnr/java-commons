@@ -4,10 +4,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.acmsl</groupId>
-  <artifactId>acmsl-commons</artifactId>
+  <artifactId>java-commons</artifactId>
   <packaging>jar</packaging>
   <version>latest-SNAPSHOT</version>
-  <name>ACM-SL Commons</name>
+  <name>ACM-SL Java Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
   <licenses>
