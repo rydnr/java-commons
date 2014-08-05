@@ -43,11 +43,23 @@ import org.acmsl.commons.regexpplugin.MatchResult;
  */
 import org.apache.regexp.RE;
 
+/*
+ * Importing Jetbrains annotations.
+ */
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
+
 /**
  * Represents the result of match in a regexp parsing process using
  * Jakarta Regexp package.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class MatchResultRegexpAdapter
     implements  MatchResult
 {
@@ -61,7 +73,7 @@ public class MatchResultRegexpAdapter
      * Regexp-specific instance.
      * @param matchResult Jakarta Regexp match result object to adapt.
      */
-    public MatchResultRegexpAdapter(final RE matchResult)
+    public MatchResultRegexpAdapter(@NotNull final RE matchResult)
     {
         immutableSetRE(matchResult);
     }
@@ -70,7 +82,7 @@ public class MatchResultRegexpAdapter
      * Specifies the instance to adapt.
      * @param matchResult the adaptee.
      */
-    protected final void immutableSetRE(final RE matchResult)
+    protected final void immutableSetRE(@NotNull final RE matchResult)
     {
         m__Adaptee = matchResult;
     }
@@ -79,7 +91,7 @@ public class MatchResultRegexpAdapter
      * Specifies the instance to adapt.
      * @param matchResult the adaptee.
      */
-    protected void setRE(final RE matchResult)
+    protected void setRE(@NotNull final RE matchResult)
     {
         immutableSetRE(matchResult);
     }
@@ -88,6 +100,7 @@ public class MatchResultRegexpAdapter
      * Retrieves the adapted instance.
      * @return such instance.
      */
+    @NotNull
     public RE getRE()
     {
         return m__Adaptee;
@@ -100,6 +113,7 @@ public class MatchResultRegexpAdapter
      * @param group Nesting level of subexpression.
      * @return A string containing the indicated pattern subgroup.
      */
+    @Nullable
     public String group(final int group)
     {
         return group(group, getRE());
@@ -112,9 +126,8 @@ public class MatchResultRegexpAdapter
      * @param group Nesting level of subexpression.
      * @param re the RE instance.
      * @return a string containing the indicated pattern subgroup.
-     * @precondition re != null
      */
-    protected String group(final int group, final RE re)
+    protected String group(final int group, @NotNull final RE re)
     {
         return re.getParen(group);
     }
@@ -136,10 +149,22 @@ public class MatchResultRegexpAdapter
      * after a successful match.</i>.
      * @param re the RE instance.
      * @return such value.
-     * @precondition re != null
      */
-    protected int groups(final RE re)
+    protected int groups(@NotNull final RE re)
     {
         return re.getParenCount();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return
+              "{ \"adaptee\": \"" + m__Adaptee.hashCode() + '"'
+            + ", \"class\": \"MatchResultRegexpAdapter\""
+            + ", \"package\": \"org.acmsl.commons.regexpplugin.jakartaregexp\" }";
     }
 }
