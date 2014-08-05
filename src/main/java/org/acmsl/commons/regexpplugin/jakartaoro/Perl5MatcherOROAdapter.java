@@ -44,12 +44,23 @@ import org.acmsl.commons.regexpplugin.Pattern;
  * Importing Jakarta ORO classes.
  */
 import org.apache.oro.text.regex.Perl5Matcher;
+
+/*
+ * Importing Jetbrains annotations.
+ */
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
 
 /**
  * Jakarta ORO-specific regexp matcher adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class Perl5MatcherOROAdapter
     implements  Matcher
 {
@@ -70,7 +81,7 @@ public class Perl5MatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the matcher to adapt.
      */
-    protected final void immutableSetMatcher(final Perl5Matcher adaptee)
+    protected final void immutableSetMatcher(@NotNull final Perl5Matcher adaptee)
     {
         m__Instance = adaptee;
     }
@@ -79,7 +90,7 @@ public class Perl5MatcherOROAdapter
      * Specifies the adaptee.
      * @param adaptee the matcher to adapt.
      */
-    protected void setMatcher(final Perl5Matcher adaptee)
+    protected void setMatcher(@NotNull final Perl5Matcher adaptee)
     {
         immutableSetMatcher(adaptee);
     }
@@ -88,6 +99,7 @@ public class Perl5MatcherOROAdapter
      * Retrieves an instance of Perl5Matcher class.
      * @return a the adapted matcher.
      */
+    @NotNull
     protected Perl5Matcher getMatcher()
     {
         return m__Instance;
@@ -98,9 +110,6 @@ public class Perl5MatcherOROAdapter
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
      * @return <code>true</code> if the pattern is found.
-     * @precondition text != null
-     * @precondition pattern != null
-     * @precondition pattern instanceof PatternOROAdapter
      */
     @Override
     public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
@@ -114,13 +123,9 @@ public class Perl5MatcherOROAdapter
      * @param pattern the regular expression to apply.
      * @param matcher the matcher.
      * @return <code>true</code> if the pattern is found.
-     * @precondition text != null
-     * @precondition pattern != null
-     * @precondition pattern instanceof PatternOROAdapter
-     * @precondition matcher != null
      */
     protected boolean contains(
-        final String text, final Pattern pattern, final Perl5Matcher matcher)
+        @NotNull final String text, @NotNull final Pattern pattern, @NotNull final Perl5Matcher matcher)
     {
         return
             matcher.contains(
@@ -133,6 +138,7 @@ public class Perl5MatcherOROAdapter
      * @return such match result.
      */
     @Override
+    @Nullable
     public MatchResult getMatch()
     {
         return getMatch(getMatcher());
@@ -143,10 +149,23 @@ public class Perl5MatcherOROAdapter
      * <i>contains</i> method.
      * @param matcher the matcher.
      * @return such match result.
-     * @precondition matcher != null
      */
-    protected MatchResult getMatch(final Perl5Matcher matcher)
+    @Nullable
+    protected MatchResult getMatch(@NotNull final Perl5Matcher matcher)
     {
         return new MatchResultOROAdapter(matcher.getMatch());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @NotNull
+    @Override
+    public String toString()
+    {
+        return
+              "{ \"adaptee\": \"" + m__Instance.hashCode() + '"'
+            + ", \"class\": \"Perl5MatcherOROAdapter\""
+            + ", \"package\": \"org.acmsl.commons.regexplugin.jakartaoro\" }";
     }
 }

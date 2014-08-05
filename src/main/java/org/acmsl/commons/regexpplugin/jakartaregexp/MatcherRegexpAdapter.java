@@ -43,13 +43,23 @@ import org.acmsl.commons.regexpplugin.Pattern;
  * Importing some Jakarta Regexp classes.
  */
 import org.apache.regexp.RE;
-import org.apache.regexp.REProgram;
+
+/*
+ * Importing Jetbrains annotations.
+ */
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/*
+ * Importing checkthread.org annotations.
+ */
+import org.checkthread.annotations.ThreadSafe;
 
 /**
  * Implements a {@link Matcher} in Jakarta Regexp package.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
+@ThreadSafe
 public class MatcherRegexpAdapter
     implements  Matcher
 {
@@ -67,7 +77,7 @@ public class MatcherRegexpAdapter
      * Sets the instance to adapt.
      * @param adaptee the re object to adapt.
      */
-    protected final void immutableSetRE(final RE adaptee)
+    protected final void immutableSetRE(@NotNull final RE adaptee)
     {
         m__RE = adaptee;
     }
@@ -76,7 +86,7 @@ public class MatcherRegexpAdapter
      * Sets the instance to adapt.
      * @param adaptee the re object to adapt.
      */
-    protected void setRE(final RE adaptee)
+    protected void setRE(@NotNull final RE adaptee)
     {
         immutableSetRE(adaptee);
     }
@@ -85,6 +95,7 @@ public class MatcherRegexpAdapter
      * Retrieves the adapted instance.
      * @return the RE object.
      */
+    @NotNull
     public RE getRE()
     {
         return m__RE;
@@ -95,17 +106,13 @@ public class MatcherRegexpAdapter
      * @param text the text to analyze.
      * @param pattern the regular expression to apply.
      * @return <code>true</code> if the pattern is found.
-     * @precondition pattern != null
-     * @precondition pattern instanceof PatternRegexpAdapter
      */
     @Override
-    public boolean contains(
-        @NotNull final String text, @NotNull final Pattern pattern)
+    public boolean contains(@NotNull final String text, @NotNull final Pattern pattern)
     {
-        boolean result;
+        final boolean result;
 
-        PatternRegexpAdapter t_PatternAdapter =
-            (PatternRegexpAdapter) pattern;
+        final PatternRegexpAdapter t_PatternAdapter = (PatternRegexpAdapter) pattern;
 
         final RE t_RE = t_PatternAdapter.getRE();
 
@@ -122,6 +129,7 @@ public class MatcherRegexpAdapter
      * @return such match result.
      */
     @Override
+    @Nullable
     public MatchResult getMatch()
     {
         return getMatch(getRE());
@@ -132,10 +140,23 @@ public class MatcherRegexpAdapter
      * <i>contains</i> method.
      * @param re the RE instance.
      * @return such match result.
-     * @precondition re != null
      */
-    protected MatchResult getMatch(final RE re)
+    protected MatchResult getMatch(@NotNull final RE re)
     {
         return new MatchResultRegexpAdapter(re);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @NotNull
+    public String toString()
+    {
+        return
+              "{ \"adaptee\": \"" + m__RE.hashCode() + '"'
+            + ", \"class\": \"MatcherRegexpAdapter\""
+            + ", \"package\": \"org.acmsl.commons.regexpplugin.jakartaregexp"
+            + '}';
     }
 }

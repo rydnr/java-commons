@@ -69,28 +69,32 @@
     <dependency>
       <groupId>gnu-regexp</groupId>
       <artifactId>gnu-regexp</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>jakarta-regexp</groupId>
       <artifactId>jakarta-regexp</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>oro</groupId>
       <artifactId>oro</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>mx4j</groupId>
       <artifactId>mx4j</artifactId>
-      <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.checkthread</groupId>
