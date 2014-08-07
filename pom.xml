@@ -79,7 +79,7 @@
     <dependency>
       <groupId>oro</groupId>
       <artifactId>oro</artifactId>
-      <optional>true</optional>
+      <optional>false</optional>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
