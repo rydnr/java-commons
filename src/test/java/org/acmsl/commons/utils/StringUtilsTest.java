@@ -596,4 +596,19 @@ public class StringUtilsTest
         Assert.assertEquals(
             "TestWithCamelCaseExample", instance.capitalize("test.with.CamelCase.example", Locale.ENGLISH));
     }
+
+    /**
+     * Checks whether unquote() removes leading and trailing quotes.
+     */
+    @Test
+    public void unquote_removes_quotes()
+    {
+        @NotNull final StringUtils instance = StringUtils.getInstance();
+
+        Assert.assertEquals("abc", instance.unquote("\"abc\"", '"'));
+        Assert.assertEquals("abcd", instance.unquote("'abcd'"));
+        Assert.assertEquals(" ", instance.unquote("\" \"", '"'));
+        Assert.assertEquals(" ", instance.unquote("' '"));
+        Assert.assertEquals(" ", instance.unquote(" "));
+    }                            
 }

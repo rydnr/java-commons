@@ -797,7 +797,7 @@ public class StringUtils
         final char quote,
         @NotNull final StringValidator stringValidator)
     {
-        @NotNull String result = "";
+        @NotNull String result = text;
 
         if  (!stringValidator.isEmpty(text))
         {
