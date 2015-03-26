@@ -6,7 +6,7 @@
   <groupId>org.acmsl</groupId>
   <artifactId>java-commons</artifactId>
   <packaging>jar</packaging>
-  <version>latest-SNAPSHOT</version>
+  <version>3.1.95</version>
   <name>ACM-SL Java Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.acmsl</groupId>
     <artifactId>acmsl-pom</artifactId>
-    <version>latest-SNAPSHOT</version>
+    <version>3.1.95</version>
   </parent>
 
   <scm>
