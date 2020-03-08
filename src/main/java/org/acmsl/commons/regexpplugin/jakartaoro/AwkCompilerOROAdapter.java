@@ -52,17 +52,11 @@ import org.apache.oro.text.regex.MalformedPatternException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/*
- * Importing checkthread annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Jakarta ORO-specific Awk compiler adapter. A delegation is used because
  * AwkCompiler is a final class.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class AwkCompilerOROAdapter
     implements  Compiler
 {

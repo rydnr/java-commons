@@ -45,11 +45,6 @@ import org.acmsl.commons.regexpplugin.Pattern;
 import gnu.regexp.RE;
 
 /*
- * Importing Checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations,
  */
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +54,6 @@ import org.jetbrains.annotations.NotNull;
  * Pattern interface defined in this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class PatternGNUAdapter
     implements  Pattern
 {

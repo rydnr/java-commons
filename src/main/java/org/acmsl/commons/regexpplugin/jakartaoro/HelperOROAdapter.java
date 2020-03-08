@@ -54,11 +54,6 @@ import org.apache.oro.text.regex.Util;
 import org.apache.commons.logging.LogFactory;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -68,7 +63,6 @@ import org.jetbrains.annotations.Nullable;
  * Jakarta ORO-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class HelperOROAdapter
     implements  Helper
 {

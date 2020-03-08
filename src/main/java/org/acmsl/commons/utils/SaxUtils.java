@@ -42,11 +42,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing SAX classes.
  */
 import org.xml.sax.SAXException;
@@ -64,7 +59,6 @@ import java.lang.reflect.Field;
  * @since 3.0
  * Created: 2014/03/03 09:50
  */
-@ThreadSafe
 public class SaxUtils
 {
     /**

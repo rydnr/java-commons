@@ -35,11 +35,6 @@
 package org.acmsl.commons.regexpplugin.jdk14regexp;
 
 /*
- * Importing some checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing some Jetbrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +49,6 @@ import java.util.regex.Pattern;
  * {@link Pattern} interface defined in this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class PatternJDKAdapter
     implements  org.acmsl.commons.regexpplugin.Pattern
 {

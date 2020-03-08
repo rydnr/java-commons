@@ -42,11 +42,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing some JDK classes.
  */
 import java.util.ArrayList;
@@ -60,7 +55,6 @@ import java.util.List;
  * @author <a href="mailto:queryj@acm-sl.org">Jose San Leandro Armendariz</a>
  * @since 2.0
  */
-@ThreadSafe
 public class ArrayListChainAdapter<C extends Command, E extends Exception, CH extends CommandHandler<C, E>>
     implements  Chain<C, E, CH>
 {

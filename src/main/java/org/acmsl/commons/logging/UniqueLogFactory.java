@@ -50,17 +50,11 @@ import org.apache.commons.logging.LogFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * {@link LogFactory} implementation that uses a
  * cached {@link Log} instance.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class UniqueLogFactory
     extends  LogFactory
 {

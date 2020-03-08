@@ -40,11 +40,6 @@ import org.acmsl.commons.regexpplugin.Helper;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +53,6 @@ import java.util.regex.PatternSyntaxException;
  * JDK 1.4-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class HelperJDKAdapter
     implements  Helper
 {

@@ -42,11 +42,6 @@ import org.acmsl.commons.regexpplugin.Compiler;
 import org.acmsl.commons.regexpplugin.MalformedPatternException;
 
 /*
- * Importing Checkthread.org annotations,
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +57,6 @@ import java.util.regex.PatternSyntaxException;
  * possible the use of JDK1.4 compilers within this API.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class CompilerJDKAdapter
     implements  Compiler
 {

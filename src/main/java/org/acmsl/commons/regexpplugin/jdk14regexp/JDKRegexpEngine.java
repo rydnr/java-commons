@@ -42,11 +42,6 @@ import org.acmsl.commons.regexpplugin.Matcher;
 import org.acmsl.commons.regexpplugin.RegexpEngine;
 
 /*
- * Importing Checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +50,6 @@ import org.jetbrains.annotations.NotNull;
  * Adapts JDK 1.4 Regexp package to be used as a RegexpPlugin implementation.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class JDKRegexpEngine
     implements RegexpEngine
 {

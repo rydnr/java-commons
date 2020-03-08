@@ -97,11 +97,6 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.checkthread</groupId>
-      <artifactId>checkthread-annotations</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>ST4</artifactId>
     </dependency>

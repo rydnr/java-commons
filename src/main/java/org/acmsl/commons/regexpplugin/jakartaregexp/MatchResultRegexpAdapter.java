@@ -49,17 +49,11 @@ import org.apache.regexp.RE;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Represents the result of match in a regexp parsing process using
  * Jakarta Regexp package.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class MatchResultRegexpAdapter
     implements  MatchResult
 {

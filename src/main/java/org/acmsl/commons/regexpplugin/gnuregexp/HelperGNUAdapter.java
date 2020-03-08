@@ -46,11 +46,6 @@ import gnu.regexp.RE;
 import gnu.regexp.REException;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +54,6 @@ import org.jetbrains.annotations.NotNull;
  * GNU Regexp 1.1.4-specific helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class HelperGNUAdapter
     implements  Helper
 {

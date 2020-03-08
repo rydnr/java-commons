@@ -53,18 +53,12 @@ import org.apache.oro.text.awk.AwkMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/*
- * Importing Checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Jakarta ORO-specific regexp compiler adapter. This class makes possible the
  * use of ORO compilers inside this API. A delegation is used because
  * Perl5Compiler is a final class.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class AwkMatcherOROAdapter
     implements  Matcher
 {

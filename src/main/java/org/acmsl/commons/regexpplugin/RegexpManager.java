@@ -69,17 +69,11 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
-/*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Manages which regexp engine to use, acting as a facade hiding all
  * details of building or retrieving implementations.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class RegexpManager
     implements  Manager,
                 Singleton

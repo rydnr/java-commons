@@ -52,16 +52,10 @@ import org.acmsl.commons.regexpplugin.RegexpPluginMisconfiguredException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Provides some stateless helper regexp-related services.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class RegexpUtils
     implements  Utils,
                 Singleton

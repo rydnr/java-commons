@@ -41,11 +41,6 @@ package org.acmsl.commons.utils;
 import org.jetbrains.annotations.NotNull;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JDK classes.
  */
 import java.util.Locale;
@@ -56,7 +51,6 @@ import java.util.Locale;
  * @since 0.8
  * Created: 2013/08/14 09:55
  */
-@ThreadSafe
 public class EnumUtils
 {
     /**

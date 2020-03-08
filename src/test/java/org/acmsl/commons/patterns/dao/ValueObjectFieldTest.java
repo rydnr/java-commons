@@ -207,7 +207,7 @@ public class ValueObjectFieldTest
   * @return such instance.
   
   */
-  public org.acmsl.commons.patterns.dao.ValueObjectField createInstance()
+  public org.acmsl.commons.patterns.dao.ValueObjectField<String> createInstance()
   throws Exception
   {
     // JUnitDoclet begin method testcase.createInstance

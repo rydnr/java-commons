@@ -35,18 +35,12 @@
  */
 package org.acmsl.commons;
 
-/*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
 /**
  * Literals for Java Commons.
  * @author <a href="mailto:queryj@acm-sl.org">Jose San Leandro</a>
  * @since 3.0
  * Created: 2013/11/29 07:45
  */
-@ThreadSafe
 public interface Literals
 {
     /**

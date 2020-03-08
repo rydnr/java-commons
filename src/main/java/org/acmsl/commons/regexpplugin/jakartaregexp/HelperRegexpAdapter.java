@@ -46,11 +46,6 @@ import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing JetBrains annotations.
  */
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +54,6 @@ import org.jetbrains.annotations.NotNull;
  * Jakarta Regexp-specific regexp helper adapter.
  * @author <a href="mailto:chous@acm-sl.org">Jose San Leandro Armendariz</a>
  */
-@ThreadSafe
 public class HelperRegexpAdapter
     implements  Helper
 {

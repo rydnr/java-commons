@@ -54,11 +54,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /*
- * Importing checkthread.org annotations.
- */
-import org.checkthread.annotations.ThreadSafe;
-
-/*
  * Importing StringTemplate classes.
  */
 import org.stringtemplate.v4.ST;
@@ -85,7 +80,6 @@ import java.util.Map;
  * @since 0.7.1
  * Created: 2013/11/22 07:00
  */
-@ThreadSafe
 public class ToStringUtils
     implements Utils
 {
