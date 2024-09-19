@@ -29,20 +29,20 @@
   </parent>
 
   <scm>
-    <connection>scm:git:http://github.com/rydnr/java-commons.git</connection>
-    <developerConnection>scm:git:http://github.com/rydnr/java-commons.git</developerConnection>
-    <url>scm:git:http://github.com/rydnr/java-commons.git</url>
+    <connection>scm:git:https://github.com/rydnr/java-commons.git</connection>
+    <developerConnection>scm:git:https://github.com/rydnr/java-commons.git</developerConnection>
+    <url>scm:git:https://github.com/rydnr/java-commons.git</url>
     <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
     <system>github</system>
-    <url>http://github.com/rydnr/java-commons.git/</url>
+    <url>https://github.com/rydnr/java-commons.git/</url>
   </issueManagement>
 
   <ciManagement>
     <system>Jenkins</system>
-    <url>http://jenkins.acm-sl.org/job/java-commons</url>
+    <url>https://jenkins.acm-sl.org/job/java-commons</url>
     <notifiers>
       <notifier>
         <type>mail</type>
@@ -118,8 +118,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
           <compilerArgument>-Xlint:all</compilerArgument>
           <compilerArgument>-Xdoclint:all</compilerArgument>
           <compilerArgument>-Xlint:unchecked</compilerArgument>
