@@ -30,9 +30,8 @@
 
   <scm>
     <connection>scm:git:https://github.com/rydnr/java-commons.git</connection>
-    <developerConnection>scm:git:https://github.com/rydnr/java-commons.git</developerConnection>
-    <url>scm:git:https://github.com/rydnr/java-commons.git</url>
-    <tag>HEAD</tag>
+    <developerConnection>scm:git:git@github.com/rydnr/java-commons.git</developerConnection>
+    <url>https://github.com/rydnr/java-commons.git</url>
   </scm>
 
   <issueManagement>
