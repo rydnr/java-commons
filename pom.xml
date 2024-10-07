@@ -22,6 +22,7 @@
     <url>http://www.acm-sl.org</url>
   </organization>
 
+  <!-- dummy change to test jenkins auto-tagging -->
   <parent>
     <groupId>org.acmsl</groupId>
     <artifactId>acmsl-pom</artifactId>
