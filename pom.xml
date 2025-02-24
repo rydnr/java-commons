@@ -42,7 +42,7 @@
 
   <ciManagement>
     <system>Jenkins</system>
-    <url>https://jenkins.acm-sl.org/job/java-commons</url>
+    <url>https://jenkins.acm-sl.org/job/rydnr.java-commons</url>
     <notifiers>
       <notifier>
         <type>mail</type>
