@@ -131,13 +131,6 @@ pipeline {
                         git add pom.xml
                         git commit -m "Pointing ${GROUP_ID}/${ARTIFACT_ID} to latest-SNAPSHOT again"
 
-                        cd "${WORKSPACE}";
-
-                        mvn versions:set -DnewVersion="latest-SNAPSHOT"
-                        xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" -u "/x:project/x:parent/x:version" -v "latest-SNAPSHOT" pom.xml
-
-                        git add pom.xml
-                        git commit -m "Pointing ${GROUP_ID}/${PARENT_ARTIFACT_ID} to latest-SNAPSHOT again"
                         git push origin ${ORIGIN_BRANCH}
                     '''
                 }
