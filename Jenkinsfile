@@ -70,7 +70,7 @@ pipeline {
             steps {
                 withMaven(maven: 'maven') {  // Enables Jenkins to track SNAPSHOT dependencies
                     sh '''
-                        cd "${WORKSPACE}"/${ARTIFACT_ID};
+                        cd "${WORKSPACE}";
                         mvn clean deploy
                     '''
                 }
