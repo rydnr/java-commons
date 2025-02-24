@@ -4,7 +4,7 @@
   <groupId>org.acmsl</groupId>
   <artifactId>java-commons</artifactId>
   <packaging>jar</packaging>
-  <version>latest-SNAPSHOT</version>
+  <version>3.3.0041</version>
   <name>ACM-SL Java Commons</name>
   <url>http://www.acm-sl.org</url>
   <inceptionYear>2002</inceptionYear>
@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.acmsl</groupId>
     <artifactId>acmsl-pom</artifactId>
-    <version>latest-SNAPSHOT</version>
+    <version>3.3.0041</version>
   </parent>
   <scm>
     <connection>scm:git:https://github.com/rydnr/java-commons.git</connection>
