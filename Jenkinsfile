@@ -90,9 +90,9 @@ pipeline {
                 script {
                     sh '''
                         cd "${WORKSPACE}";
-                        cp "${WORKSPACE}"/../../_get-new-version/workspace/target/.version "${WORKSPACE}"/${ARTIFACT_ID}/target/.version;
+                        cp "${WORKSPACE}"/../../_get-new-version/workspace/target/.version "${WORKSPACE}"/target/.version;
 
-                        export NEW_VERSION="$(cat "${WORKSPACE}"/${ARTIFACT_ID}/target/.version)";
+                        export NEW_VERSION="$(cat "${WORKSPACE}"/target/.version)";
                         export NEW_GIT_TAG="${ARTIFACT_ID}-${NEW_VERSION}";
 
                         mvn versions:set -DnewVersion="${NEW_VERSION}"
@@ -113,10 +113,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        cd "${WORKSPACE}"/${ARTIFACT_ID};
-                        cp "${WORKSPACE}"/../../_get-new-version/workspace/target/.version "${WORKSPACE}"/${ARTIFACT_ID}/target/.version;
+                        cd "${WORKSPACE}";
 
-                        export NEW_VERSION="$(cat "${WORKSPACE}"/${ARTIFACT_ID}/target/.version)";
+                        export NEW_VERSION="$(cat "${WORKSPACE}"/target/.version)";
                         export NEW_GIT_TAG="${ARTIFACT_ID}-${NEW_VERSION}";
 
                         mvn versions:set -DnewVersion="${NEW_VERSION}"
@@ -137,7 +136,7 @@ pipeline {
             steps {
                 withMaven(maven: 'maven') {
                     sh '''
-                        cd "${WORKSPACE}"/${ARTIFACT_ID};
+                        cd "${WORKSPACE}";
                         mvn -Prelease release:perform
                     '''
                 }
@@ -148,7 +147,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        cd "${WORKSPACE}"/${ARTIFACT_ID};
+                        cd "${WORKSPACE}";
 
                         mvn versions:set -DnewVersion="latest-SNAPSHOT"
                         xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" -u "/x:project/x:parent/x:version" -v "latest-SNAPSHOT" pom.xml
