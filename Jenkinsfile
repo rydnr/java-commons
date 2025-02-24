@@ -85,30 +85,6 @@ pipeline {
             }
         }
 
-        stage('Update Version & Tag Release of parent') {
-            steps {
-                script {
-                    sh '''
-                        cd "${WORKSPACE}";
-                        cp "${WORKSPACE}"/../../_get-new-version/workspace/target/.version "${WORKSPACE}"/target/.version;
-
-                        export NEW_VERSION="$(cat "${WORKSPACE}"/target/.version)";
-                        export NEW_GIT_TAG="${ARTIFACT_ID}-${NEW_VERSION}";
-
-                        mvn versions:set -DnewVersion="${NEW_VERSION}"
-                        xmlstarlet ed --inplace -N x="http://maven.apache.org/POM/4.0.0" -u "/x:project/x:parent/x:version" -v "${NEW_VERSION}" pom.xml
-
-                        /usr/local/bin/prepare-release.sh "${GROUP_ID}" "${PARENT_ARTIFACT_ID}" "${NEW_VERSION}" "${GIT_REPO}"
-
-                        git add pom.xml
-                        git commit -m "Releasing ${PARENT_ARTIFACT_ID}: ${NEW_VERSION}"
-                        git tag -a "${NEW_GIT_TAG}" -m "Releasing ${PARENT_ARTIFACT_ID}: ${NEW_VERSION}"
-                        git push origin --tags
-                    '''
-                }
-            }
-        }
-
         stage('Update Version & Tag Release') {
             steps {
                 script {
