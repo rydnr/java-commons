@@ -131,7 +131,7 @@ pipeline {
                         git add pom.xml
                         git commit -m "Pointing ${GROUP_ID}/${ARTIFACT_ID} to latest-SNAPSHOT again"
 
-                        git push origin ${ORIGIN_BRANCH}
+                        git push origin HEAD:${ORIGIN_BRANCH}
                     '''
                 }
             }
