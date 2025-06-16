@@ -56,8 +56,8 @@
   </distributionManagement>
   <properties>
     <javac.encoding>UTF-8</javac.encoding>
-    <javac.source>17</javac.source>
-    <javac.target>17</javac.target>
+    <javac.source>8</javac.source>
+    <javac.target>8</javac.target>
     <maven.build.timestamp.format>D</maven.build.timestamp.format>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -439,6 +439,24 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.13.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>5.13.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>1.13.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.mariadb.jdbc</groupId>
         <artifactId>mariadb-java-client</artifactId>
         <version>3.5.3</version>
@@ -634,8 +652,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.10.1</version>
           <configuration>
-            <source>17</source>
-            <target>17</target>
+            <source>${javac.source}</source>
+            <target>${javac.target}</target>
             <encoding>UTF-8</encoding>
             <compilerArgs>
               <arg>-Xlint:all</arg>
