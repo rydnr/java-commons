@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <groupId>org.acmsl.commons</groupId>
   <artifactId>java-commons</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
-  
+
   <name>Java Commons</name>
   <description>Extracted from ByteHot monorepo - java commons</description>
   <url>https://github.com/rydnr/java-commons</url>
   <inceptionYear>2025</inceptionYear>
-  
+
   <organization>
     <name>ACM-SL</name>
     <url>http://www.acm-sl.org</url>
   </organization>
-  
+
   <licenses>
     <license>
       <name>GNU General Public License v3.0</name>
@@ -27,32 +24,32 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <developers>
     <developer>
       <name>José San Leandro</name>
-      <email>rydnr@acm-sl.org</email>
+      <email>github@acm-sl.org</email>
       <url>https://github.com/rydnr</url>
     </developer>
   </developers>
-  
+
   <scm>
     <connection>scm:git:https://github.com/rydnr/java-commons.git</connection>
     <developerConnection>scm:git:git@github.com:rydnr/java-commons.git</developerConnection>
     <url>https://github.com/rydnr/java-commons</url>
   </scm>
-  
+
   <issueManagement>
     <system>github</system>
     <url>https://github.com/rydnr/java-commons/issues</url>
   </issueManagement>
-  
+
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
+
     <!-- Plugin versions -->
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
@@ -60,14 +57,15 @@
     <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-    
+    <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
+
     <!-- Dependency versions -->
     <lombok.version>1.18.30</lombok.version>
     <checker-qual.version>3.39.0</checker-qual.version>
     <junit.version>5.10.1</junit.version>
     <assertj.version>3.24.2</assertj.version>
   </properties>
-  
+
   <dependencies>
     <!-- Commons logging -->
     <dependency>
@@ -75,14 +73,14 @@
       <artifactId>commons-logging</artifactId>
       <version>1.2</version>
     </dependency>
-    
+
     <!-- Commons beanutils -->
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.9.4</version>
     </dependency>
-    
+
     <!-- Optional regex dependencies -->
     <dependency>
       <groupId>gnu-regexp</groupId>
@@ -90,28 +88,28 @@
       <version>1.1.4</version>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>jakarta-regexp</groupId>
       <artifactId>jakarta-regexp</artifactId>
       <version>1.4</version>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>oro</groupId>
       <artifactId>oro</artifactId>
       <version>2.0.8</version>
       <optional>true</optional>
     </dependency>
-    
+
     <!-- StringTemplate -->
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>ST4</artifactId>
       <version>4.3.4</version>
     </dependency>
-    
+
     <!-- Jackson for JSON serialization -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -128,7 +126,7 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.15.2</version>
     </dependency>
-    
+
     <!-- Optional servlet API -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -136,7 +134,7 @@
       <version>4.0.1</version>
       <optional>true</optional>
     </dependency>
-    
+
     <!-- MX4J for JMX -->
     <dependency>
       <groupId>mx4j</groupId>
@@ -144,7 +142,7 @@
       <version>3.0.2</version>
       <optional>true</optional>
     </dependency>
-    
+
     <!-- Lombok for reducing boilerplate -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -152,14 +150,14 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    
+
     <!-- Checker Framework annotations -->
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker-qual</artifactId>
       <version>${checker-qual.version}</version>
     </dependency>
-    
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -173,7 +171,7 @@
       <version>${assertj.version}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- Legacy JUnit 4 support for existing test classes -->
     <dependency>
       <groupId>junit</groupId>
@@ -188,7 +186,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
+
   <build>
     <plugins>
       <!-- Compiler plugin -->
@@ -204,14 +202,14 @@
           </compilerArgs>
         </configuration>
       </plugin>
-      
+
       <!-- Surefire plugin for tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
       </plugin>
-      
+
       <!-- Source plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -226,7 +224,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <!-- Javadoc plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -244,9 +242,20 @@
           <doclint>none</doclint>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>${central-publishing-maven-plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>ossrh</publishingServerId>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <!-- Release profile for Maven Central -->
     <profile>
@@ -267,8 +276,14 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
           </plugin>
-          
+
           <!-- Nexus staging plugin -->
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
@@ -283,7 +298,7 @@
           </plugin>
         </plugins>
       </build>
-      
+
       <distributionManagement>
         <snapshotRepository>
           <id>ossrh</id>
